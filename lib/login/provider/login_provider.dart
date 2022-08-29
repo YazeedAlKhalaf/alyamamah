@@ -127,7 +127,7 @@ class LoginNotifier extends StateNotifier<LoginState> {
 
     final response = await client.get(
       Uri.parse(
-        'https://cors-anywhere.herokuapp.com/https://edugate.yu.edu.sa/yu/resources/common/commonServies/actorDetails/1/1/1',
+        'https://edugate.yu.edu.sa/yu/resources/common/commonServies/actorDetails/1/1/1',
       ),
       headers: {
         'Authorization':

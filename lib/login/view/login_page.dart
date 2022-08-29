@@ -1,3 +1,4 @@
+import 'package:alyamamah/l10n/l10n.dart';
 import 'package:alyamamah/login/provider/login_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,7 +24,7 @@ class LoginPage extends ConsumerWidget {
                 width: 150,
               ),
               Text(
-                "Login",
+                context.l10n.login,
                 style: Theme.of(context).textTheme.displayLarge,
               ),
               const SizedBox(height: 24),
@@ -31,7 +32,7 @@ class LoginPage extends ConsumerWidget {
                 onChanged: loginNotifier.setUsername,
                 decoration: InputDecoration(
                   border: const UnderlineInputBorder(),
-                  labelText: 'Username',
+                  labelText: context.l10n.username,
                   filled: true,
                   fillColor: Theme.of(context).colorScheme.surfaceVariant,
                 ),
@@ -42,7 +43,7 @@ class LoginPage extends ConsumerWidget {
                 onChanged: loginNotifier.setPassword,
                 decoration: InputDecoration(
                   border: const UnderlineInputBorder(),
-                  labelText: 'Password',
+                  labelText: context.l10n.password,
                   filled: true,
                   fillColor: Theme.of(context).colorScheme.surfaceVariant,
                 ),
@@ -51,7 +52,7 @@ class LoginPage extends ConsumerWidget {
               CheckboxListTile(
                 value: loginState.rememberMe,
                 onChanged: loginNotifier.setRememberMe,
-                title: const Text("Remember me"),
+                title: Text(context.l10n.password),
               ),
               const SizedBox(height: 24),
               if (loginState.isLoading)
@@ -62,7 +63,7 @@ class LoginPage extends ConsumerWidget {
                     await loginNotifier.login();
                   },
                   child: Text(
-                    "Login",
+                    context.l10n.login,
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ),

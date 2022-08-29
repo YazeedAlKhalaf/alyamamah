@@ -1,3 +1,4 @@
+import 'package:alyamamah/l10n/l10n.dart';
 import 'package:alyamamah/login/view/login_page.dart';
 import 'package:flutter/material.dart';
 
@@ -7,6 +8,8 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      supportedLocales: AppLocalizations.supportedLocales,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: const ColorScheme(

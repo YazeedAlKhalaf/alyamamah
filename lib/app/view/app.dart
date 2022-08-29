@@ -16,6 +16,7 @@ class App extends ConsumerWidget {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       locale: locale,
       theme: ThemeData(
+        fontFamily: 'Cairo',
         useMaterial3: true,
         colorScheme: const ColorScheme(
           brightness: Brightness.light,

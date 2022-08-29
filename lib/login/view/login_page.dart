@@ -21,16 +21,21 @@ class LoginPage extends ConsumerWidget {
               const SizedBox(height: 24),
               Image.asset(
                 "assets/images/yamamah-logo.png",
-                width: 150,
+                width: 250,
               ),
-              Text(
-                context.l10n.login,
-                style: Theme.of(context).textTheme.displayLarge,
+              Row(
+                children: <Widget>[
+                  Text(
+                    context.l10n.login,
+                    style: Theme.of(context).textTheme.displayLarge,
+                  ),
+                ],
               ),
               const SizedBox(height: 24),
               TextField(
                 onChanged: loginNotifier.setUsername,
                 decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.person_rounded),
                   border: const UnderlineInputBorder(),
                   labelText: context.l10n.username,
                   filled: true,
@@ -39,9 +44,16 @@ class LoginPage extends ConsumerWidget {
               ),
               const SizedBox(height: 24),
               TextField(
-                obscureText: true,
+                obscureText: loginState.showPassword,
                 onChanged: loginNotifier.setPassword,
                 decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.lock_rounded),
+                  suffixIcon: IconButton(
+                    onPressed: loginNotifier.toggleShowPassword,
+                    icon: loginState.showPassword
+                        ? const Icon(Icons.visibility_rounded)
+                        : const Icon(Icons.visibility_off_rounded),
+                  ),
                   border: const UnderlineInputBorder(),
                   labelText: context.l10n.password,
                   filled: true,
@@ -49,23 +61,41 @@ class LoginPage extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: 24),
-              CheckboxListTile(
-                value: loginState.rememberMe,
-                onChanged: loginNotifier.setRememberMe,
-                title: Text(context.l10n.password),
+              GestureDetector(
+                onTap: () {
+                  loginNotifier.setRememberMe(!loginState.rememberMe);
+                },
+                child: Row(
+                  children: <Widget>[
+                    Checkbox(
+                      value: loginState.rememberMe,
+                      onChanged: loginNotifier.setRememberMe,
+                    ),
+                    Text(
+                      context.l10n.remember_me,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: 24),
               if (loginState.isLoading)
                 const Center(child: CircularProgressIndicator()),
               if (!loginState.isLoading)
-                ElevatedButton(
-                  onPressed: () async {
-                    await loginNotifier.login();
-                  },
-                  child: Text(
-                    context.l10n.login,
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: FilledButton(
+                        onPressed: () async {
+                          await loginNotifier.login();
+                        },
+                        child: Text(
+                          context.l10n.login,
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               const SizedBox(height: 24),
               if (loginState.error != null)

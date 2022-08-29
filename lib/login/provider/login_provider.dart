@@ -10,6 +10,7 @@ class LoginState {
   final bool rememberMe;
   final String? error;
   final bool isLoading;
+  final bool showPassword;
 
   LoginState({
     this.username = '',
@@ -17,6 +18,7 @@ class LoginState {
     this.rememberMe = false,
     this.error,
     this.isLoading = false,
+    this.showPassword = false,
   });
 
   LoginState copyWith({
@@ -25,6 +27,7 @@ class LoginState {
     bool? rememberMe,
     String? error,
     bool? isLoading,
+    bool? showPassword,
   }) {
     return LoginState(
       username: username ?? this.username,
@@ -32,6 +35,7 @@ class LoginState {
       rememberMe: rememberMe ?? this.rememberMe,
       error: error ?? this.error,
       isLoading: isLoading ?? this.isLoading,
+      showPassword: showPassword ?? this.showPassword,
     );
   }
 
@@ -42,6 +46,7 @@ class LoginState {
       'rememberMe': rememberMe,
       'error': error,
       'isLoading': isLoading,
+      'showPassword': showPassword,
     };
   }
 
@@ -52,6 +57,7 @@ class LoginState {
       rememberMe: map['rememberMe'] as bool,
       error: map['error'] != null ? map['error'] as String : null,
       isLoading: map['isLoading'] as bool,
+      showPassword: map['showPassword'] as bool,
     );
   }
 
@@ -62,7 +68,7 @@ class LoginState {
 
   @override
   String toString() {
-    return 'LoginState(username: $username, password: $password, rememberMe: $rememberMe, error: $error, isLoading: $isLoading)';
+    return 'LoginState(username: $username, password: $password, rememberMe: $rememberMe, error: $error, isLoading: $isLoading, showPassword: $showPassword)';
   }
 
   @override
@@ -73,7 +79,8 @@ class LoginState {
         other.password == password &&
         other.rememberMe == rememberMe &&
         other.error == error &&
-        other.isLoading == isLoading;
+        other.isLoading == isLoading &&
+        other.showPassword == showPassword;
   }
 
   @override
@@ -82,7 +89,8 @@ class LoginState {
         password.hashCode ^
         rememberMe.hashCode ^
         error.hashCode ^
-        isLoading.hashCode;
+        isLoading.hashCode ^
+        showPassword.hashCode;
   }
 }
 
@@ -108,6 +116,12 @@ class LoginNotifier extends StateNotifier<LoginState> {
   void setPassword(String value) {
     state = state.copyWith(
       password: value,
+    );
+  }
+
+  void toggleShowPassword() {
+    state = state.copyWith(
+      showPassword: !state.showPassword,
     );
   }
 

@@ -40,6 +40,21 @@ class App extends StatelessWidget {
           surfaceTint: Color(0xff974800),
           surfaceVariant: Color(0xffF4DED3),
           outline: Color(0xff84746A),
+          onSurfaceVariant: Color(0xff52443C),
+          outlineVariant: null,
+          shadow: Color(0xff000000),
+          scrim: null,
+        ),
+        textTheme: const TextTheme(
+          displayLarge: TextStyle(
+            color: Colors.black,
+            fontSize: 57,
+            fontWeight: FontWeight.normal,
+          ),
+          bodyLarge: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.normal,
+          ),
         ),
       ),
       home: const LoginPage(),

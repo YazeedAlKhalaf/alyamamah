@@ -53,15 +53,15 @@ class LoginPage extends ConsumerWidget {
               ),
               const SizedBox(height: 24),
               TextField(
-                obscureText: loginState.showPassword,
+                obscureText: !loginState.showPassword,
                 onChanged: loginNotifier.setPassword,
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.lock_rounded),
                   suffixIcon: IconButton(
                     onPressed: loginNotifier.toggleShowPassword,
                     icon: loginState.showPassword
-                        ? const Icon(Icons.visibility_rounded)
-                        : const Icon(Icons.visibility_off_rounded),
+                        ? const Icon(Icons.visibility_off_rounded)
+                        : const Icon(Icons.visibility_rounded),
                   ),
                   border: const UnderlineInputBorder(),
                   labelText: context.l10n.password,

@@ -1,15 +1,20 @@
+import 'package:alyamamah/app/provider/locale_provider.dart';
 import 'package:alyamamah/l10n/l10n.dart';
 import 'package:alyamamah/login/view/login_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class App extends StatelessWidget {
+class App extends ConsumerWidget {
   const App({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final locale = ref.watch(localeProvider);
+
     return MaterialApp(
       supportedLocales: AppLocalizations.supportedLocales,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
+      locale: locale,
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: const ColorScheme(

@@ -1,3 +1,4 @@
+import 'package:alyamamah/app/view/toggle_locale_button.dart';
 import 'package:alyamamah/l10n/l10n.dart';
 import 'package:alyamamah/login/provider/login_provider.dart';
 import 'package:flutter/material.dart';
@@ -17,12 +18,20 @@ class LoginPage extends ConsumerWidget {
           padding: const EdgeInsets.all(24),
           child: Column(
             children: <Widget>[
-              Row(),
+              const SizedBox(height: 24),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: const <Widget>[
+                  ToggleLocaleButton(),
+                ],
+              ),
               const SizedBox(height: 24),
               Image.asset(
                 "assets/images/yamamah-logo.png",
                 width: 250,
+                fit: BoxFit.fill,
               ),
+              const SizedBox(height: 24),
               Row(
                 children: <Widget>[
                   Text(

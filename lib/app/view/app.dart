@@ -57,9 +57,9 @@ class App extends ConsumerWidget {
             fontSize: 57,
             fontWeight: FontWeight.normal,
           ),
-          bodyLarge: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.normal,
+          labelLarge: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
           ),
         ),
       ),

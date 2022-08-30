@@ -91,20 +91,11 @@ class LoginPage extends ConsumerWidget {
               if (loginState.isLoading)
                 const Center(child: CircularProgressIndicator()),
               if (!loginState.isLoading)
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: FilledButton(
-                        onPressed: () async {
-                          await loginNotifier.login();
-                        },
-                        child: Text(
-                          context.l10n.login,
-                          style: Theme.of(context).textTheme.bodyLarge,
-                        ),
-                      ),
-                    ),
-                  ],
+                FilledButton(
+                  onPressed: () async {
+                    await loginNotifier.login();
+                  },
+                  child: Text(context.l10n.login),
                 ),
               const SizedBox(height: 24),
               if (loginState.error != null)

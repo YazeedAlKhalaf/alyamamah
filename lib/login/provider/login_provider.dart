@@ -1,8 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import 'package:alyamamah/app/misc/constants.dart';
+import 'package:alyamamah/app/repository/yamamah_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginState {
   final String username;
@@ -95,11 +98,18 @@ class LoginState {
 }
 
 final loginProvider = StateNotifierProvider<LoginNotifier, LoginState>(
-  (ref) => LoginNotifier(),
+  (ref) => LoginNotifier(
+    yamamahRepository: YamamahRepository(client: Client()),
+  ),
 );
 
 class LoginNotifier extends StateNotifier<LoginState> {
-  LoginNotifier() : super(LoginState());
+  LoginNotifier({
+    required YamamahRepository yamamahRepository,
+  })  : _yamamahRepository = yamamahRepository,
+        super(LoginState());
+
+  final YamamahRepository _yamamahRepository;
 
   void setRememberMe(bool? value) {
     state = state.copyWith(
@@ -126,42 +136,38 @@ class LoginNotifier extends StateNotifier<LoginState> {
   }
 
   Future<void> login() async {
-    if (state.username.isEmpty || state.password.isEmpty) {
+    try {
+      if (state.username.isEmpty || state.password.isEmpty) {
+        state = state.copyWith(
+          error: 'username or password cannot be empty.',
+        );
+        return;
+      }
+
       state = state.copyWith(
-        error: 'username or password cannot be empty.',
+        isLoading: true,
+      );
+
+      await _yamamahRepository.login(
+        username: state.username,
+        password: state.password,
+      );
+    } on YamamahException {
+      state = state.copyWith(
+        isLoading: false,
+        error: 'something went wrong while trying to log you in.',
       );
       return;
     }
 
-    state = state.copyWith(
-      isLoading: true,
-    );
-
-    final client = Client();
-
-    final response = await client.get(
-      Uri.parse(
-        'https://edugate.yu.edu.sa/yu/resources/common/commonServies/actorDetails/1/1/1',
-      ),
-      headers: {
-        'Authorization':
-            'Basic ${base64Encode('${state.username}:${state.password}'.runes.toList())}',
-      },
-    );
-
-    state = state.copyWith(
-      isLoading: false,
-    );
-
-    print(response.body);
-
-    if (response.statusCode == 200) {
-      state = state.copyWith();
-      return;
+    if (state.rememberMe) {
+      final sharedPrefs = await SharedPreferences.getInstance();
+      await sharedPrefs.setString(Constants.usernameKey, state.username);
+      await sharedPrefs.setString(Constants.passwordKey, state.password);
     }
 
     state = state.copyWith(
-      error: 'something went wrong while trying to log you in.',
+      isLoading: false,
     );
   }
 }

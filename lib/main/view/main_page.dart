@@ -1,5 +1,5 @@
 import 'package:alyamamah/l10n/l10n.dart';
-import 'package:alyamamah/main/view/provider/main_provider.dart';
+import 'package:alyamamah/main/provider/main_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

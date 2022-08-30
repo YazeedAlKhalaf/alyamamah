@@ -1,3 +1,4 @@
+import 'package:alyamamah/app/provider/authentication_provider.dart';
 import 'package:alyamamah/app/view/toggle_locale_button.dart';
 import 'package:alyamamah/l10n/l10n.dart';
 import 'package:alyamamah/login/provider/login_provider.dart';
@@ -11,6 +12,7 @@ class LoginPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final loginNotifier = ref.read(loginProvider.notifier);
     final loginState = ref.watch(loginProvider);
+    final authenticationNotifier = ref.read(authenticationProvider.notifier);
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -94,6 +96,7 @@ class LoginPage extends ConsumerWidget {
                 FilledButton(
                   onPressed: () async {
                     await loginNotifier.login();
+                    await authenticationNotifier.updateAuthenticationState();
                   },
                   child: Text(context.l10n.login),
                 ),

@@ -3,5 +3,8 @@
   "login": "Login",
   "username": "Username",
   "password": "Password",
-  "remember_me": "Remember me"
+  "remember_me": "Remember me",
+  "home": "Home",
+  "courses": "Courses",
+  "profile": "Profile"
 }

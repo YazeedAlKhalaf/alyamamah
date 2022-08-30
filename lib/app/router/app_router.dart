@@ -1,4 +1,5 @@
 import 'package:alyamamah/login/view/login_page.dart';
+import 'package:alyamamah/main/view/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -23,7 +24,7 @@ class AppRouter {
         GoRoute(
           path: '/',
           builder: (BuildContext context, GoRouterState state) {
-            return const Scaffold(body: Center(child: Text('main page')));
+            return const MainPage();
           },
         ),
         GoRoute(

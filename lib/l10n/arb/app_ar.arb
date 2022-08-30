@@ -3,5 +3,8 @@
   "login": "تسجيل دخول",
   "username": "اسم المستخدم",
   "password": "كلمة المرور",
-  "remember_me": "تذكرني"
+  "remember_me": "تذكرني",
+  "home": "الرئيسية",
+  "courses": "المقررات",
+  "profile": "الملف الشخصي"
 }

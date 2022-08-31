@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:alyamamah/app/misc/constants.dart';
 import 'package:alyamamah/app/repository/yamamah_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginState {
@@ -99,7 +98,7 @@ class LoginState {
 
 final loginProvider = StateNotifierProvider<LoginNotifier, LoginState>(
   (ref) => LoginNotifier(
-    yamamahRepository: YamamahRepository(client: Client()),
+    yamamahRepository: ref.read(yamamahRepositoryProvider),
   ),
 );
 
@@ -135,7 +134,9 @@ class LoginNotifier extends StateNotifier<LoginState> {
     );
   }
 
-  Future<void> login() async {
+  Future<void> login({
+    required Function() onSuccess,
+  }) async {
     try {
       if (state.username.isEmpty || state.password.isEmpty) {
         state = state.copyWith(
@@ -146,28 +147,30 @@ class LoginNotifier extends StateNotifier<LoginState> {
 
       state = state.copyWith(
         isLoading: true,
+        error: null,
       );
 
       await _yamamahRepository.login(
         username: state.username,
         password: state.password,
       );
-    } on YamamahException {
+
+      if (state.rememberMe) {
+        final sharedPrefs = await SharedPreferences.getInstance();
+        await sharedPrefs.setString(Constants.usernameKey, state.username);
+        await sharedPrefs.setString(Constants.passwordKey, state.password);
+      }
+
+      onSuccess();
+
       state = state.copyWith(
         isLoading: false,
-        error: 'something went wrong while trying to log you in.',
       );
-      return;
+    } on YamamahException catch (e) {
+      state = state.copyWith(
+        isLoading: false,
+        error: e.message,
+      );
     }
-
-    if (state.rememberMe) {
-      final sharedPrefs = await SharedPreferences.getInstance();
-      await sharedPrefs.setString(Constants.usernameKey, state.username);
-      await sharedPrefs.setString(Constants.passwordKey, state.password);
-    }
-
-    state = state.copyWith(
-      isLoading: false,
-    );
   }
 }

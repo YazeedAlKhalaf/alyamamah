@@ -10,9 +10,9 @@ class LoginPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final authenticationState = ref.read(authenticationProvider);
     final loginNotifier = ref.read(loginProvider.notifier);
     final loginState = ref.watch(loginProvider);
-    final authenticationNotifier = ref.read(authenticationProvider.notifier);
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -43,7 +43,8 @@ class LoginPage extends ConsumerWidget {
                 ],
               ),
               const SizedBox(height: 24),
-              TextField(
+              TextFormField(
+                initialValue: authenticationState.username,
                 onChanged: loginNotifier.setUsername,
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.person_rounded),
@@ -54,7 +55,8 @@ class LoginPage extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: 24),
-              TextField(
+              TextFormField(
+                initialValue: authenticationState.password,
                 obscureText: !loginState.showPassword,
                 onChanged: loginNotifier.setPassword,
                 decoration: InputDecoration(
@@ -95,8 +97,16 @@ class LoginPage extends ConsumerWidget {
               if (!loginState.isLoading)
                 FilledButton(
                   onPressed: () async {
-                    await loginNotifier.login();
-                    await authenticationNotifier.updateAuthenticationState();
+                    await loginNotifier.login(
+                      onSuccess: () async {
+                        final authenticationNotifier = ref.read(
+                          authenticationProvider.notifier,
+                        );
+                        await authenticationNotifier.updateAuthenticationState(
+                          isLoggedIn: true,
+                        );
+                      },
+                    );
                   },
                   child: Text(context.l10n.login),
                 ),

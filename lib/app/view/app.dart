@@ -1,6 +1,7 @@
 import 'package:alyamamah/app/provider/authentication_provider.dart';
 import 'package:alyamamah/app/provider/locale_provider.dart';
 import 'package:alyamamah/app/router/app_router.dart';
+import 'package:alyamamah/app/view/splash_page.dart';
 import 'package:alyamamah/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,13 +18,7 @@ class _AppState extends ConsumerState<App> {
   void initState() {
     super.initState();
 
-    updateAuthenticationState();
     updateLocale();
-  }
-
-  Future<void> updateAuthenticationState() async {
-    final authenticationNotifier = ref.read(authenticationProvider.notifier);
-    await authenticationNotifier.updateAuthenticationState();
   }
 
   Future<void> updateLocale() async {
@@ -36,8 +31,7 @@ class _AppState extends ConsumerState<App> {
     final locale = ref.watch(localeProvider);
     final authenticationState = ref.watch(authenticationProvider);
     final goRouter = AppRouter.getGoRouter(
-      showSplashScreen: authenticationState.isLoading,
-      loggedIn: authenticationState.sessionId != null,
+      loggedIn: authenticationState.isLoggedIn,
     );
 
     return MaterialApp.router(
@@ -95,6 +89,13 @@ class _AppState extends ConsumerState<App> {
           ),
         ),
       ),
+      builder: (BuildContext context, Widget? child) {
+        if (authenticationState.isGettingLoginInfo) {
+          return const SplashPage();
+        }
+
+        return child!;
+      },
     );
   }
 }

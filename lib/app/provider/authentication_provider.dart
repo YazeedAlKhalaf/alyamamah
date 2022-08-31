@@ -2,39 +2,52 @@
 import 'dart:convert';
 
 import 'package:alyamamah/app/misc/constants.dart';
+import 'package:alyamamah/app/repository/yamamah_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthenticationState {
-  final String? sessionId;
-  final bool isLoading;
+  final bool isLoggedIn;
+  final bool isGettingLoginInfo;
+  final String username;
+  final String password;
 
   AuthenticationState({
-    this.sessionId,
-    this.isLoading = false,
+    this.isLoggedIn = false,
+    this.isGettingLoginInfo = true,
+    this.username = '',
+    this.password = '',
   });
 
   AuthenticationState copyWith({
-    String? sessionId,
-    bool? isLoading,
+    bool? isLoggedIn,
+    bool? isGettingLoginInfo,
+    String? username,
+    String? password,
   }) {
     return AuthenticationState(
-      sessionId: sessionId ?? this.sessionId,
-      isLoading: isLoading ?? this.isLoading,
+      isLoggedIn: isLoggedIn ?? this.isLoggedIn,
+      isGettingLoginInfo: isGettingLoginInfo ?? this.isGettingLoginInfo,
+      username: username ?? this.username,
+      password: password ?? this.password,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'sessionId': sessionId,
-      'isLoading': isLoading,
+      'isLoggedIn': isLoggedIn,
+      'isGettingLoginInfo': isGettingLoginInfo,
+      'username': username,
+      'password': password,
     };
   }
 
   factory AuthenticationState.fromMap(Map<String, dynamic> map) {
     return AuthenticationState(
-      sessionId: map['sessionId'] != null ? map['sessionId'] as String : null,
-      isLoading: map['isLoading'] as bool,
+      isLoggedIn: map['isLoggedIn'] as bool,
+      isGettingLoginInfo: map['isGettingLoginInfo'] as bool,
+      username: map['username'] as String,
+      password: map['password'] as String,
     );
   }
 
@@ -44,48 +57,94 @@ class AuthenticationState {
       AuthenticationState.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  String toString() =>
-      'AuthenticationState(sessionId: $sessionId, isLoading: $isLoading)';
+  String toString() {
+    return 'AuthenticationState(isLoggedIn: $isLoggedIn, isGettingLoginInfo: $isGettingLoginInfo, username: $username, password: $password)';
+  }
 
   @override
   bool operator ==(covariant AuthenticationState other) {
     if (identical(this, other)) return true;
 
-    return other.sessionId == sessionId && other.isLoading == isLoading;
+    return other.isLoggedIn == isLoggedIn &&
+        other.isGettingLoginInfo == isGettingLoginInfo &&
+        other.username == username &&
+        other.password == password;
   }
 
   @override
-  int get hashCode => sessionId.hashCode ^ isLoading.hashCode;
+  int get hashCode {
+    return isLoggedIn.hashCode ^
+        isGettingLoginInfo.hashCode ^
+        username.hashCode ^
+        password.hashCode;
+  }
 }
 
 final authenticationProvider =
     StateNotifierProvider<AuthenticationNotifier, AuthenticationState>(
-  (ref) => AuthenticationNotifier(),
+  (ref) => AuthenticationNotifier(
+    yamamahRepository: ref.read(yamamahRepositoryProvider),
+  ),
 );
 
 class AuthenticationNotifier extends StateNotifier<AuthenticationState> {
-  AuthenticationNotifier() : super(AuthenticationState());
+  AuthenticationNotifier({
+    required YamamahRepository yamamahRepository,
+  })  : _yamamahRepository = yamamahRepository,
+        super(AuthenticationState());
 
-  Future<void> updateAuthenticationState() async {
+  final YamamahRepository _yamamahRepository;
+
+  Future<void> loginWithUsernameAndPasswordIfFound() async {
+    final sharedPrefs = await SharedPreferences.getInstance();
+    final username = sharedPrefs.getString(Constants.usernameKey);
+    final password = sharedPrefs.getString(Constants.passwordKey);
     state = state.copyWith(
-      isLoading: true,
+      username: username,
+      password: password,
     );
 
-    final sharedPrefs = await SharedPreferences.getInstance();
-    final sessionId = sharedPrefs.getString(Constants.jSessionIdKey);
+    if (username != null && password != null) {
+      try {
+        await _yamamahRepository.login(
+          username: username,
+          password: password,
+        );
+
+        state = state.copyWith(
+          isGettingLoginInfo: false,
+          isLoggedIn: true,
+        );
+      } on YamamahException {
+        state = state.copyWith(
+          isGettingLoginInfo: false,
+          isLoggedIn: false,
+        );
+      }
+      return;
+    }
 
     state = state.copyWith(
-      sessionId: sessionId,
-      isLoading: false,
+      isGettingLoginInfo: false,
+      isLoggedIn: false,
+    );
+  }
+
+  Future<void> updateAuthenticationState({
+    required bool isLoggedIn,
+  }) async {
+    state = state.copyWith(
+      isLoggedIn: isLoggedIn,
     );
   }
 
   Future<void> logout() async {
     final sharedPrefs = await SharedPreferences.getInstance();
-    await sharedPrefs.remove(Constants.jSessionIdKey);
+    await sharedPrefs.remove(Constants.usernameKey);
+    await sharedPrefs.remove(Constants.passwordKey);
 
     state = state.copyWith(
-      sessionId: null,
+      isLoggedIn: false,
     );
   }
 }

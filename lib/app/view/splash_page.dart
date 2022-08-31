@@ -1,4 +1,5 @@
 import 'package:alyamamah/app/provider/authentication_provider.dart';
+import 'package:alyamamah/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -31,7 +32,7 @@ class _SplashPageState extends ConsumerState<SplashPage> {
           const Center(child: CircularProgressIndicator()),
           const SizedBox(height: 24),
           Text(
-            'Loading...',
+            context.l10n.loading,
             style: Theme.of(context).textTheme.headlineSmall,
           ),
         ],

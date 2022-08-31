@@ -79,4 +79,13 @@ class AuthenticationNotifier extends StateNotifier<AuthenticationState> {
       isLoading: false,
     );
   }
+
+  Future<void> logout() async {
+    final sharedPrefs = await SharedPreferences.getInstance();
+    await sharedPrefs.remove(Constants.jSessionIdKey);
+
+    state = state.copyWith(
+      sessionId: null,
+    );
+  }
 }

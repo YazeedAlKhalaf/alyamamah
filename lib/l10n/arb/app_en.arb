@@ -7,5 +7,18 @@
   "home": "Home",
   "courses": "Courses",
   "profile": "Profile",
-  "loading": "Loading..."
+  "loading": "Loading...",
+  "hi_name": "Hi {name}!",
+  "@hi_name": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "my_schedule": "My Schedule",
+  "absences": "Absences",
+  "penalties": "Penalties",
+  "more_coming_soon": "More coming soon!",
+  "logout": "Logout"
 }

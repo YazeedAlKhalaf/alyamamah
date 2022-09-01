@@ -1,3 +1,4 @@
+import 'package:alyamamah/home/view/home_page.dart';
 import 'package:alyamamah/l10n/l10n.dart';
 import 'package:alyamamah/main/provider/main_provider.dart';
 import 'package:alyamamah/profile/view/profile_page.dart';
@@ -16,7 +17,7 @@ class MainPage extends ConsumerWidget {
       body: IndexedStack(
         index: mainState.navigationBarIndex,
         children: const [
-          Text('home'),
+          HomePage(),
           Text('course'),
           ProfilePage(),
         ],

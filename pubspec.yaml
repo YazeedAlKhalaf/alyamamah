@@ -7,15 +7,16 @@ environment:
   sdk: ">=2.17.6 <3.0.0"
 
 dependencies:
+  dio: 4.0.6
+  dio_cookie_manager: 2.0.0
+  cookie_jar: 3.0.1
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
   flutter_riverpod: 2.0.0-dev.9
   go_router: 4.3.0
-  dio: 4.0.6
-  dio_cookie_manager: 2.0.0
-  cookie_jar: 3.0.1
+  intl: 0.17.0
   logging: 1.0.2
   shared_preferences: 2.0.15
 

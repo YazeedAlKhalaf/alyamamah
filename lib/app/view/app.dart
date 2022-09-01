@@ -83,6 +83,10 @@ class _AppState extends ConsumerState<App> {
             fontSize: 57,
             fontWeight: FontWeight.normal,
           ),
+          headlineLarge: TextStyle(
+            fontSize: 32,
+            fontWeight: FontWeight.normal,
+          ),
           labelLarge: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w500,

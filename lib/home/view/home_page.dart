@@ -8,85 +8,83 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              pinned: true,
-              title: Text(
-                context.l10n.hi_name('YAZEED'),
-                style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                      color: Theme.of(context).colorScheme.onBackground,
-                    ),
-                textAlign: TextAlign.center,
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            pinned: true,
+            title: Text(
+              context.l10n.hi_name('YAZEED'),
+              style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                    color: Theme.of(context).colorScheme.onBackground,
+                  ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  const SizedBox(height: 12),
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: HomeCard(
+                          title: context.l10n.my_schedule,
+                          icon: Icons.table_chart_rounded,
+                          onTap: () {
+                            // TODO: go to my schedule page
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: HomeCard(
+                          title: context.l10n.absences,
+                          icon: Icons.person_off_rounded,
+                          onTap: () {
+                            // TODO: go to absences page
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: HomeCard(
+                          title: context.l10n.penalties,
+                          icon: Icons.warning_rounded,
+                          onTap: () {
+                            // TODO: go to penalties page
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: HomeCard(
+                          title: context.l10n.more_coming_soon,
+                          icon: Icons.hourglass_bottom_rounded,
+                          onTap: () {},
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    const SizedBox(height: 12),
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: HomeCard(
-                            title: context.l10n.my_schedule,
-                            icon: Icons.table_chart_rounded,
-                            onTap: () {
-                              // TODO: go to my schedule page
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: HomeCard(
-                            title: context.l10n.absences,
-                            icon: Icons.person_off_rounded,
-                            onTap: () {
-                              // TODO: go to absences page
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: HomeCard(
-                            title: context.l10n.penalties,
-                            icon: Icons.warning_rounded,
-                            onTap: () {
-                              // TODO: go to penalties page
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: HomeCard(
-                            title: context.l10n.more_coming_soon,
-                            icon: Icons.hourglass_bottom_rounded,
-                            onTap: () {},
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

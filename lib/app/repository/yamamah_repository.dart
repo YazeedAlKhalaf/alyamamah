@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:alyamamah/app/model/student_schedule_course.dart';
 import 'package:alyamamah/app/provider/locale_provider.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
@@ -16,6 +17,8 @@ final yamamahRepositoryProvider = Provider(
 
 class YamamahRepository {
   static final logger = Logger('YamamahRepository');
+
+  static const baseUrl = 'https://edugate.yu.edu.sa';
 
   YamamahRepository({
     required Dio client,
@@ -42,7 +45,7 @@ class YamamahRepository {
       logger.info('username: $username | password: $password');
 
       final response = await _client.get<Map<String, dynamic>>(
-        'https://edugate.yu.edu.sa/yu/resources/common/commonServies/actorDetails/1/1/1',
+        '$baseUrl/yu/resources/common/commonServies/actorDetails/1/1/1',
         options: Options(
           headers: {
             'Authorization': 'Basic $authorizationEncoded',
@@ -65,6 +68,31 @@ class YamamahRepository {
       }
     } catch (e) {
       logger.severe('error in login: $e');
+      if (e is YamamahException) {
+        rethrow;
+      }
+
+      throw YamamahException();
+    }
+  }
+
+  Future<List<StudentScheduleCourse>> getStudentSchedule() async {
+    try {
+      final response = await _client.get(
+        '$baseUrl/yu/resources/student/schedule/studentSchedule/20221',
+      );
+
+      print('response status code: ${response.statusCode}');
+      print("response: ${response.data.toString().substring(0, 50)}");
+
+      final parsedJson = json.decode(json.encode(response.data));
+      final studentScheduleCourses = List<StudentScheduleCourse>.from(
+        parsedJson.map((e) => StudentScheduleCourse.fromMap(e)),
+      );
+
+      return studentScheduleCourses;
+    } catch (e) {
+      print('error in getting student schedule: $e');
       if (e is YamamahException) {
         rethrow;
       }

@@ -1,5 +1,6 @@
 import 'package:alyamamah/login/view/login_page.dart';
 import 'package:alyamamah/main/view/main_page.dart';
+import 'package:alyamamah/my_schedule/view/my_schedule_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -20,6 +21,12 @@ class AppRouter {
           path: '/login',
           builder: (BuildContext context, GoRouterState state) {
             return const LoginPage();
+          },
+        ),
+        GoRoute(
+          path: '/my-schedule',
+          builder: (BuildContext context, GoRouterState state) {
+            return const MySchedulePage();
           },
         ),
       ],

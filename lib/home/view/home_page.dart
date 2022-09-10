@@ -1,6 +1,7 @@
 import 'package:alyamamah/home/view/home_card.dart';
 import 'package:alyamamah/l10n/l10n.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -34,7 +35,7 @@ class HomePage extends StatelessWidget {
                           title: context.l10n.my_schedule,
                           icon: Icons.table_chart_rounded,
                           onTap: () {
-                            // TODO: go to my schedule page
+                            context.push('/my-schedule');
                           },
                         ),
                       ),

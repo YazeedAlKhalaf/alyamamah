@@ -54,7 +54,6 @@ class _MySchedulePageState extends ConsumerState<MySchedulePage> {
               SizedBox(
                 height: 50,
                 child: ListView.builder(
-                  // TODO: make sure the selected day is shown
                   scrollDirection: Axis.horizontal,
                   itemCount: Day.values.length,
                   itemBuilder: (context, index) {

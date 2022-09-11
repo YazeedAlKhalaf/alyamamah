@@ -32,8 +32,11 @@ class StudentScheduleDay extends StatelessWidget {
         )
         .toList()
       ..sort(
-        (a, b) => a.timeTable.first.startTime.hour
-            .compareTo(b.timeTable.first.startTime.hour),
+        (a, b) =>
+            (a.timeTable.first.startTime.hour * 60) +
+            a.timeTable.first.startTime.minute.compareTo(
+                (b.timeTable.first.startTime.hour * 60) +
+                    b.timeTable.first.startTime.minute),
       );
     // get breaks by comparing the end time of the previous course with the start time of the next course
     final breaks =

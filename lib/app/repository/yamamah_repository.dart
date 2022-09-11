@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ui';
 
 import 'package:alyamamah/app/model/student_schedule_course.dart';
 import 'package:alyamamah/app/provider/locale_provider.dart';
@@ -66,6 +67,42 @@ class YamamahRepository {
         logger.severe('no set-cookie header');
         throw YamamahException();
       }
+    } catch (e) {
+      logger.severe('error in login: $e');
+      if (e is YamamahException) {
+        rethrow;
+      }
+
+      throw YamamahException();
+    }
+  }
+
+  Future changeLanguage({
+    required Locale currentLocale,
+  }) async {
+    try {
+      const username = '202211123';
+      const password = '2214083764';
+
+      final languageCode = currentLocale.languageCode;
+      logger.info("language $languageCode");
+
+      final authorizationEncoded = base64Encode(
+        '$username:$password'.runes.toList(),
+      );
+      logger.info('username: $username | password: $password');
+
+      final response = await _client.get<Map<String, dynamic>>(
+        '$baseUrl/yu/resources/common/commonServies/changeLanguage/${languageCode == 'ar' ? '2' : '1'}',
+        options: Options(
+          headers: {
+            'Authorization': 'Basic $authorizationEncoded',
+            'langId': languageCode == 'ar' ? '0' : '1',
+          },
+        ),
+      );
+      logger.info('response status code: ${response.statusCode}');
+      logger.info("response: ${response.data.toString().substring(0, 50)}");
     } catch (e) {
       logger.severe('error in login: $e');
       if (e is YamamahException) {

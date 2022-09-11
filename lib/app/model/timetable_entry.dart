@@ -64,18 +64,23 @@ class TimetableEntry {
     for (String dayFromDaysRaw in daysRaw) {
       switch (dayFromDaysRaw) {
         case 'U':
+        case '1':
           days.add(Day.sunday);
           break;
         case 'M':
+        case '2':
           days.add(Day.monday);
           break;
         case 'T':
+        case '3':
           days.add(Day.tuesday);
           break;
         case 'W':
+        case '4':
           days.add(Day.wednesday);
           break;
         case 'TH':
+        case '5':
           days.add(Day.thursday);
           break;
       }
@@ -85,9 +90,14 @@ class TimetableEntry {
     final timeParts = time.split('-');
 
     final startTimeRaw = timeParts[0].trim();
-    final isStartTimeRawPM = startTimeRaw.contains('PM');
-    final startTimeRawWithoutAMPM =
-        startTimeRaw.replaceAll('AM', '').replaceAll('PM', '').trim();
+    final isStartTimeRawPM =
+        startTimeRaw.contains('PM') || startTimeRaw.contains('ص');
+    final startTimeRawWithoutAMPM = startTimeRaw
+        .replaceAll('AM', '')
+        .replaceAll('PM', '')
+        .replaceAll('ص', '')
+        .replaceAll('م', '')
+        .trim();
     final startTimeRawParts = startTimeRawWithoutAMPM.split(':');
     final startTime = TimeOfDay(
       hour: int.parse(startTimeRawParts[0]) + (isStartTimeRawPM ? 12 : 0),
@@ -95,9 +105,14 @@ class TimetableEntry {
     );
 
     final endTimeRaw = timeParts[1].trim();
-    final isEndTimeRawPM = endTimeRaw.contains('PM');
-    final endTimeRawWithoutAMPM =
-        endTimeRaw.replaceAll('AM', '').replaceAll('PM', '').trim();
+    final isEndTimeRawPM =
+        endTimeRaw.contains('PM') || endTimeRaw.contains('ص');
+    final endTimeRawWithoutAMPM = endTimeRaw
+        .replaceAll('AM', '')
+        .replaceAll('PM', '')
+        .replaceAll('ص', '')
+        .replaceAll('م', '')
+        .trim();
     final endTimeRawParts = endTimeRawWithoutAMPM.split(':');
     final endTime = TimeOfDay(
       hour: int.parse(endTimeRawParts[0]) + (isEndTimeRawPM ? 12 : 0),

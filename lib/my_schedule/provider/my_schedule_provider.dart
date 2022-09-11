@@ -48,7 +48,7 @@ class MyScheduleState {
 }
 
 final myScheduleProvider =
-    StateNotifierProvider<MyScheduleNotifier, MyScheduleState>(
+    StateNotifierProvider.autoDispose<MyScheduleNotifier, MyScheduleState>(
   (ref) => MyScheduleNotifier(
     yamamahRepository: ref.read(yamamahRepositoryProvider),
   ),

@@ -2,14 +2,56 @@ import 'package:alyamamah/app/model/student_schedule_course.dart';
 import 'package:alyamamah/app/model/timetable_entry.dart';
 import 'package:flutter/material.dart';
 
-class BreakBlock {
+extension TimeOfDayExtension on TimeOfDay {
+  bool isBefore(TimeOfDay t2) {
+    if (hour < t2.hour) {
+      return true;
+    }
+
+    if (hour > t2.hour) {
+      return false;
+    }
+
+    // if we reach this, it means the hours are equal
+    return minute < t2.minute;
+  }
+}
+
+abstract class ScheduleBlock {
   final TimeOfDay startTime;
   final TimeOfDay endTime;
+  final StudentScheduleCourse? course;
 
-  BreakBlock({
+  ScheduleBlock({
     required this.startTime,
     required this.endTime,
+    required this.course,
   });
+
+  bool get isBreak => course == null;
+}
+
+class BreakBlock extends ScheduleBlock {
+  BreakBlock({
+    required TimeOfDay startTime,
+    required TimeOfDay endTime,
+  }) : super(
+          startTime: startTime,
+          endTime: endTime,
+          course: null,
+        );
+}
+
+class CoureBlock extends ScheduleBlock {
+  CoureBlock({
+    required TimeOfDay startTime,
+    required TimeOfDay endTime,
+    required StudentScheduleCourse course,
+  }) : super(
+          startTime: startTime,
+          endTime: endTime,
+          course: course,
+        );
 }
 
 class StudentScheduleDay extends StatelessWidget {
@@ -31,13 +73,15 @@ class StudentScheduleDay extends StatelessWidget {
           ),
         )
         .toList()
-      ..sort(
-        (a, b) =>
-            (a.timeTable.first.startTime.hour * 60) +
-            a.timeTable.first.startTime.minute.compareTo(
-                (b.timeTable.first.startTime.hour * 60) +
-                    b.timeTable.first.startTime.minute),
-      );
+      ..sort((a, b) => a.timeTable
+              .firstWhere((element) => element.days.contains(day))
+              .startTime
+              .isBefore(b.timeTable
+                  .firstWhere((element) => element.days.contains(day))
+                  .endTime)
+          ? -1
+          : 1);
+
     // get breaks by comparing the end time of the previous course with the start time of the next course
     final breaks =
         studentScheduleFilteredByDay.map<BreakBlock?>((currentCourse) {

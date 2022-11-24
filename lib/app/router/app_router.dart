@@ -30,7 +30,7 @@ class AppRouter {
           },
         ),
       ],
-      redirect: (GoRouterState state) {
+      redirect: (BuildContext context, GoRouterState state) {
         final loggingIn = state.subloc == '/login';
         if (!loggedIn) {
           return loggingIn ? null : '/login';

@@ -10,15 +10,15 @@ dependencies:
   dio: 4.0.6
   dio_cookie_manager: 2.0.0
   cookie_jar: 3.0.1
-  collection: 1.16.0
+  collection: 1.17.0
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  flutter_riverpod: 2.0.0-dev.9
-  go_router: 4.4.1
+  flutter_riverpod: 2.1.1
+  go_router: 5.2.0
   intl: 0.17.0
-  logging: 1.0.2
+  logging: 1.1.0
   shared_preferences: 2.0.15
 
 dev_dependencies:

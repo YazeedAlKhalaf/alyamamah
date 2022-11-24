@@ -41,6 +41,7 @@ class _AppState extends ConsumerState<App> {
       supportedLocales: AppLocalizations.supportedLocales,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       locale: locale,
+      themeMode: ThemeMode.dark,
       theme: ThemeData(
         fontFamily: 'Cairo',
         useMaterial3: true,

@@ -42,3 +42,10 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# don't check in golden failure output
+**/failures/*.png
+
+# coverage related
+coverage/
+test/coverage_helper_test.dart

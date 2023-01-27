@@ -1,3 +1,6 @@
 {
-  "@@locale": "en"
+  "@@locale": "en",
+  "login": "Login",
+  "username": "Username",
+  "password": "Password"
 }

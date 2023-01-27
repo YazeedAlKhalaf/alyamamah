@@ -1,3 +1,6 @@
 {
-  "@@locale": "ar"
+  "@@locale": "ar",
+  "login": "تسجيل دخول",
+  "username": "اسم المستخدم",
+  "password": "كلمة المرور"
 }

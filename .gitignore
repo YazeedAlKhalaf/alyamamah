@@ -49,3 +49,6 @@ app.*.map.json
 # coverage related
 coverage/
 test/coverage_helper_test.dart
+
+# test related
+reports/

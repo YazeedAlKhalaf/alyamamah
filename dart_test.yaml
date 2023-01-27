@@ -1,2 +1,4 @@
 tags:
   golden:
+file_reporters:
+  json: reports/test-results.json

@@ -2,5 +2,7 @@
   "@@locale": "ar",
   "login": "تسجيل دخول",
   "username": "اسم المستخدم",
-  "password": "كلمة المرور"
+  "password": "كلمة المرور",
+  "unknown_service_error": "خطأ خدمة غير معروف",
+  "invalid_credentials": "اسم المستخدم أو كلمة المرور خاطئة"
 }

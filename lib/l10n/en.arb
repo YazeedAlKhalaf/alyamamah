@@ -2,5 +2,7 @@
   "@@locale": "en",
   "login": "Login",
   "username": "Username",
-  "password": "Password"
+  "password": "Password",
+  "unknown_service_error": "Unknown service error",
+  "invalid_credentials": "The username or password is wrong"
 }

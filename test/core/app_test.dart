@@ -1,15 +1,26 @@
 import 'package:alyamamah/core/app.dart';
+import 'package:alyamamah/core/services/shared_prefs/shared_prefs_service.dart';
 import 'package:alyamamah/core/themes/themes.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   group('App |', () {
+    late MockSharedPreferences mockSharedPreferences;
+
+    setUp(() {
+      mockSharedPreferences = MockSharedPreferences();
+    });
+
     Widget buildTestWidget() {
-      return const App();
+      return App(
+        sharedPreferences: mockSharedPreferences,
+      );
     }
 
     testWidgets(
@@ -41,9 +52,18 @@ void main() {
   });
 
   group('AppWithoutProviderScope |', () {
+    late MockSharedPreferences mockSharedPreferences;
+
+    setUp(() {
+      mockSharedPreferences = MockSharedPreferences();
+    });
+
     Widget buildTestWidget() {
-      return const ProviderScope(
-        child: AppWithoutProviderScope(),
+      return ProviderScope(
+        overrides: [
+          sharedPreferencesProvider.overrideWith((ref) => mockSharedPreferences)
+        ],
+        child: const AppWithoutProviderScope(),
       );
     }
 
@@ -230,3 +250,5 @@ void main() {
     );
   });
 }
+
+class MockSharedPreferences extends Mock implements SharedPreferences {}

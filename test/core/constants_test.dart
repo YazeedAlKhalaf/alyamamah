@@ -9,5 +9,19 @@ void main() {
         expect(Constants.padding, 16);
       },
     );
+
+    test(
+      'verify usernameKey value.',
+      () {
+        expect(Constants.usernameKey, 'username');
+      },
+    );
+
+    test(
+      'verify passwordKey value.',
+      () {
+        expect(Constants.passwordKey, 'password');
+      },
+    );
   });
 }

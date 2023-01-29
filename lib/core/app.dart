@@ -1,16 +1,26 @@
 import 'package:alyamamah/core/router/yu_router.dart';
+import 'package:alyamamah/core/services/shared_prefs/shared_prefs_service.dart';
 import 'package:alyamamah/core/themes/themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class App extends StatelessWidget {
-  const App({super.key});
+  final SharedPreferences sharedPreferences;
+
+  const App({
+    super.key,
+    required this.sharedPreferences,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return const ProviderScope(
-      child: AppWithoutProviderScope(),
+    return ProviderScope(
+      overrides: [
+        sharedPreferencesProvider.overrideWith((ref) => sharedPreferences),
+      ],
+      child: const AppWithoutProviderScope(),
     );
   }
 }

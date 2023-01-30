@@ -49,11 +49,11 @@ class StartupViewModel extends ChangeNotifier {
         );
 
         _log.fine(
-          'handleStartup | succeeded in logging in, going to home route.',
+          'handleStartup | succeeded in logging in, going to main route.',
         );
 
         await _yuRouter.pushAndPopUntil(
-          const HomeRoute(),
+          const MainRoute(),
           predicate: (_) => false,
         );
       } on AuthServiceException catch (e) {

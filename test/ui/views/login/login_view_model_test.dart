@@ -93,7 +93,7 @@ void main() {
   group('login |', () {
     test(
       'should login, save username and password, '
-      'and push and pop until home route.',
+      'and push and pop until main route.',
       () async {
         when(
           () => mockAuthService.login(
@@ -111,7 +111,7 @@ void main() {
         ).thenAnswer((_) => Future<void>.value());
         when(
           () => mockYURouter.pushAndPopUntil(
-            const HomeRoute(),
+            const MainRoute(),
             predicate: captureAny(named: 'predicate'),
           ),
         ).thenAnswer((_) => Future.value());
@@ -132,7 +132,7 @@ void main() {
         ).called(1);
         verify(
           () => mockYURouter.pushAndPopUntil(
-            const HomeRoute(),
+            const MainRoute(),
             predicate: captureAny(named: 'predicate'),
           ),
         ).called(1);
@@ -172,7 +172,7 @@ void main() {
         );
         verifyNever(
           () => mockYURouter.pushAndPopUntil(
-            const HomeRoute(),
+            const MainRoute(),
             predicate: captureAny(named: 'predicate'),
           ),
         );

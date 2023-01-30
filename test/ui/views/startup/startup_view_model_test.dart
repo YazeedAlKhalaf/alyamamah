@@ -46,7 +46,7 @@ void main() {
           ).thenAnswer((_) => Future.value(FakeActorDetails()));
           when(
             () => mockYURouter.pushAndPopUntil(
-              const HomeRoute(),
+              const MainRoute(),
               predicate: captureAny(named: 'predicate'),
             ),
           ).thenAnswer((_) => Future.value());
@@ -63,7 +63,7 @@ void main() {
           ).called(1);
           verify(
             () => mockYURouter.pushAndPopUntil(
-              const HomeRoute(),
+              const MainRoute(),
               predicate: captureAny(named: 'predicate'),
             ),
           ).called(1);

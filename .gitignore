@@ -52,3 +52,6 @@ test/coverage_helper_test.dart
 
 # test related
 reports/
+
+#fvm
+.fvm/flutter_sdk

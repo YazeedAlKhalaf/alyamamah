@@ -77,7 +77,7 @@ class LoginViewModel extends ChangeNotifier {
       );
 
       await _yuRouter.pushAndPopUntil(
-        const HomeRoute(),
+        const MainRoute(),
         predicate: (_) => false,
       );
     } on AuthServiceException catch (e) {

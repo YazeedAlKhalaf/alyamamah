@@ -10,6 +10,13 @@ void main() {
         expect(Themes.light, lightTheme);
       },
     );
+
+    test(
+      'verify dark theme.',
+      () {
+        expect(Themes.dark, darkTheme);
+      },
+    );
   });
 
   group('lightTheme |', () {
@@ -27,7 +34,10 @@ void main() {
         final theme = lightTheme;
         expect(
           theme.colorScheme,
-          ColorScheme.fromSeed(seedColor: const Color(0xffF68939)),
+          ColorScheme.fromSeed(
+            brightness: Brightness.light,
+            seedColor: const Color(0xffF68939),
+          ),
         );
       },
     );
@@ -37,6 +47,40 @@ void main() {
         'verify centerTitle.',
         () {
           final appBarTheme = lightTheme.appBarTheme;
+          expect(appBarTheme.centerTitle, true);
+        },
+      );
+    });
+  });
+
+  group('darkTheme |', () {
+    test(
+      'verify useMaterial3.',
+      () {
+        final theme = darkTheme;
+        expect(theme.useMaterial3, true);
+      },
+    );
+
+    test(
+      'verify colorScheme.',
+      () {
+        final theme = darkTheme;
+        expect(
+          theme.colorScheme,
+          ColorScheme.fromSeed(
+            brightness: Brightness.dark,
+            seedColor: const Color(0xffF68939),
+          ),
+        );
+      },
+    );
+
+    group('appBarTheme |', () {
+      test(
+        'verify centerTitle.',
+        () {
+          final appBarTheme = darkTheme.appBarTheme;
           expect(appBarTheme.centerTitle, true);
         },
       );

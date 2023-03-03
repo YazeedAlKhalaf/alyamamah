@@ -9,6 +9,8 @@ extension AuthServiceExceptionTypeX on AuthServiceExceptionType {
         return context.s.unknown_service_error;
       case AuthServiceExceptionType.invalidCredentials:
         return context.s.invalid_credentials;
+      case AuthServiceExceptionType.sessionExpired:
+        return context.s.session_expired;
     }
   }
 }

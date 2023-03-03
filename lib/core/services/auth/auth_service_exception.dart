@@ -1,6 +1,7 @@
 enum AuthServiceExceptionType {
   unknown,
   invalidCredentials,
+  sessionExpired,
 }
 
 class AuthServiceException implements Exception {

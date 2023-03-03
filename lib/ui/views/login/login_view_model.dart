@@ -1,3 +1,4 @@
+import 'package:alyamamah/core/providers/actor_details/actor_details_notifier.dart';
 import 'package:alyamamah/core/router/yu_router.dart';
 import 'package:alyamamah/core/services/auth/auth_service.dart';
 import 'package:alyamamah/core/services/auth/auth_service_exception.dart';
@@ -6,12 +7,15 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logging/logging.dart';
 
-final loginViewModelProvider = ChangeNotifierProvider.autoDispose(
-  (ref) => LoginViewModel(
-    authService: ref.read(authServiceProvider),
-    sharedPrefsService: ref.read(sharedPrefsServiceProvider),
-    yuRouter: ref.read(yuRouterProvider),
-  ),
+final loginViewModelProvider = ChangeNotifierProvider(
+  (ref) {
+    return LoginViewModel(
+      authService: ref.read(authServiceProvider),
+      sharedPrefsService: ref.read(sharedPrefsServiceProvider),
+      yuRouter: ref.read(yuRouterProvider),
+      actorDetailsNotifier: ref.watch(actorDetailsProvider.notifier),
+    );
+  },
 );
 
 class LoginViewModel extends ChangeNotifier {
@@ -20,14 +24,17 @@ class LoginViewModel extends ChangeNotifier {
   final AuthService _authService;
   final SharedPrefsService _sharedPrefsService;
   final YURouter _yuRouter;
+  final ActorDetailsNotifier _actorDetailsNotifier;
 
   LoginViewModel({
     required AuthService authService,
     required SharedPrefsService sharedPrefsService,
     required YURouter yuRouter,
+    required ActorDetailsNotifier actorDetailsNotifier,
   })  : _authService = authService,
         _sharedPrefsService = sharedPrefsService,
-        _yuRouter = yuRouter;
+        _yuRouter = yuRouter,
+        _actorDetailsNotifier = actorDetailsNotifier;
 
   AuthServiceExceptionType? _authServiceExceptionType;
   AuthServiceExceptionType? get authServiceExceptionType =>
@@ -66,10 +73,12 @@ class LoginViewModel extends ChangeNotifier {
     notifyListeners();
 
     try {
-      await _authService.login(
+      final actorDetails = await _authService.login(
         username: username,
         password: password,
       );
+
+      _actorDetailsNotifier.setActorDetails(actorDetails);
 
       await _sharedPrefsService.saveUsernameAndPassword(
         username: username,

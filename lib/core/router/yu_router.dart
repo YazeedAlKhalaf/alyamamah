@@ -3,6 +3,7 @@ import 'package:alyamamah/ui/views/login/login_view.dart';
 import 'package:alyamamah/ui/views/main/main_view.dart';
 import 'package:alyamamah/ui/views/profile/profile_view.dart';
 import 'package:alyamamah/ui/views/startup/startup_view.dart';
+import 'package:alyamamah/ui/views/student_info/student_info_view.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -20,6 +21,7 @@ final yuRouterProvider = Provider<YURouter>((ref) => YURouter());
     AdaptiveRoute(page: HomeView),
     AdaptiveRoute(page: MainView),
     AdaptiveRoute(page: ProfileView),
+    AdaptiveRoute(page: StudentInfoView),
   ],
 )
 class $YURouter {}

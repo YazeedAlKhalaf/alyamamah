@@ -1,4 +1,5 @@
 import 'package:alyamamah/core/models/actor_details.dart';
+import 'package:alyamamah/core/providers/actor_details/actor_details_notifier.dart';
 import 'package:alyamamah/core/router/yu_router.dart';
 import 'package:alyamamah/core/services/auth/auth_service.dart';
 import 'package:alyamamah/core/services/auth/auth_service_exception.dart';
@@ -13,6 +14,8 @@ void main() {
     late MockAuthService mockAuthService;
     late MockSharedPrefsService mockSharedPrefsService;
     late MockYURouter mockYURouter;
+    late MockActorDetailsNotifier mockActorDetailsNotifier;
+
     late StartupViewModel startupViewModel;
 
     setUp(() {
@@ -21,11 +24,13 @@ void main() {
       mockAuthService = MockAuthService();
       mockSharedPrefsService = MockSharedPrefsService();
       mockYURouter = MockYURouter();
+      mockActorDetailsNotifier = MockActorDetailsNotifier();
 
       startupViewModel = StartupViewModel(
         authService: mockAuthService,
         sharedPrefsService: mockSharedPrefsService,
         yuRouter: mockYURouter,
+        actorDetailsNotifier: mockActorDetailsNotifier,
       );
     });
 
@@ -149,3 +154,5 @@ class MockYURouter extends Mock implements YURouter {}
 class FakePageRouteInfo extends Fake implements PageRouteInfo {}
 
 class FakeActorDetails extends Fake implements ActorDetails {}
+
+class MockActorDetailsNotifier extends Mock implements ActorDetailsNotifier {}

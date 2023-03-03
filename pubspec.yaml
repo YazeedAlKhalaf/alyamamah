@@ -1,23 +1,26 @@
 name: alyamamah
 description: An app for alyamamah university students.
-publish_to: 'none'
+publish_to: "none"
 version: 0.0.1+1
 
 environment:
-  sdk: '>=2.19.0 <3.0.0'
+  sdk: ">=2.19.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  
+
   flutter_riverpod: 2.1.3
   auto_route: 5.0.4
   intl: any
   dio: 4.0.6
   logging: 1.1.1
   shared_preferences: 2.0.17
+  font_awesome_flutter: 10.3.0
+  dio_cookie_manager: 2.0.0
+  cookie_jar: 3.0.1
 
 dev_dependencies:
   flutter_test:

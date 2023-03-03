@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('mainViewModelProvider |', () {
     test(
-      'should verify the provider type.',
+      'verify the provider type.',
       () {
         expect(
           mainViewModelProvider,
@@ -29,43 +29,66 @@ void main() {
 
   group('MainViewModel |', () {
     late MainViewModel mainViewModel;
+    late int notifyListenersCount = 0;
 
     setUp(() {
       mainViewModel = MainViewModel();
+
+      notifyListenersCount = 0;
+      mainViewModel.addListener(() {
+        notifyListenersCount++;
+      });
     });
 
     group('onDestinationSelected |', () {
       test(
-        'should change selectedIndex when called.',
+        'should set selected index to 0.',
+        () {
+          expect(mainViewModel.selectedIndex, 0);
+
+          mainViewModel.onDestinationSelected(0);
+
+          expect(mainViewModel.selectedIndex, 0);
+          expect(notifyListenersCount, 1);
+        },
+      );
+
+      test(
+        'should set selected index to 1.',
         () {
           expect(mainViewModel.selectedIndex, 0);
 
           mainViewModel.onDestinationSelected(1);
 
           expect(mainViewModel.selectedIndex, 1);
+          expect(notifyListenersCount, 1);
         },
       );
 
       test(
-        'should get asserrtion error when value is less than 0.',
+        'should throw exception when index is less than 0.',
         () {
-          expect(mainViewModel.selectedIndex, 0);
-
           expect(
             () => mainViewModel.onDestinationSelected(-1),
-            throwsA(isA<AssertionError>()),
+            throwsA(isA<AssertionError>().having(
+              (e) => e.message,
+              'assertion error message',
+              'Invalid destination index',
+            )),
           );
         },
       );
 
       test(
-        'should get asserrtion error when value is more than 1.',
+        'should throw exception when index is more than 1.',
         () {
-          expect(mainViewModel.selectedIndex, 0);
-
           expect(
             () => mainViewModel.onDestinationSelected(2),
-            throwsA(isA<AssertionError>()),
+            throwsA(isA<AssertionError>().having(
+              (e) => e.message,
+              'assertion error message',
+              'Invalid destination index',
+            )),
           );
         },
       );

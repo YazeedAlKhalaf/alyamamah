@@ -7,12 +7,14 @@ class TestMaterialApp extends StatelessWidget {
   final List<Override> overrides;
   final ThemeData? theme;
   final Widget? home;
+  final List<NavigatorObserver> navigatorObservers;
 
   const TestMaterialApp({
     super.key,
     this.overrides = const [],
     this.theme,
     this.home,
+    this.navigatorObservers = const <NavigatorObserver>[],
   });
 
   @override
@@ -25,6 +27,7 @@ class TestMaterialApp extends StatelessWidget {
         supportedLocales: S.supportedLocales,
         theme: theme ?? Themes.light,
         home: home,
+        navigatorObservers: navigatorObservers,
       ),
     );
   }

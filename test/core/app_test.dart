@@ -1,5 +1,7 @@
 import 'package:alyamamah/core/app.dart';
+import 'package:alyamamah/core/services/locale/locale_service.dart';
 import 'package:alyamamah/core/services/shared_prefs/shared_prefs_service.dart';
+import 'package:alyamamah/core/services/theme/theme_service.dart';
 import 'package:alyamamah/core/themes/themes.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -53,15 +55,25 @@ void main() {
 
   group('AppWithoutProviderScope |', () {
     late MockSharedPreferences mockSharedPreferences;
+    late MockThemeService mockThemeService;
+    late MockLocaleService mockLocaleService;
 
     setUp(() {
       mockSharedPreferences = MockSharedPreferences();
+      mockThemeService = MockThemeService();
+      mockLocaleService = MockLocaleService();
+
+      when(() => mockLocaleService.locale).thenReturn(const Locale('en'));
+      when(() => mockThemeService.themeMode).thenReturn(ThemeMode.system);
     });
 
     Widget buildTestWidget() {
       return ProviderScope(
         overrides: [
-          sharedPreferencesProvider.overrideWith((ref) => mockSharedPreferences)
+          sharedPreferencesProvider
+              .overrideWith((ref) => mockSharedPreferences),
+          themeServiceProvider.overrideWith((ref) => mockThemeService),
+          localeServiceProvider.overrideWith((ref) => mockLocaleService),
         ],
         child: const AppWithoutProviderScope(),
       );
@@ -179,8 +191,52 @@ void main() {
     );
 
     testWidgets(
+      'verify locale '
+      'is from the locale service.',
+      (WidgetTester tester) async {
+        when(() => mockLocaleService.locale).thenReturn(const Locale('ar'));
+
+        await tester.pumpWidget(buildTestWidget());
+        await tester.pumpAndSettle();
+
+        final materialAppFinder = find.byType(MaterialApp);
+        expect(materialAppFinder, findsOneWidget);
+
+        final materialApp = tester.widget<MaterialApp>(
+          materialAppFinder,
+        );
+        expect(
+          materialApp.locale,
+          const Locale('ar'),
+        );
+      },
+    );
+
+    testWidgets(
+      'verify themeMode '
+      'is from the locale service.',
+      (WidgetTester tester) async {
+        when(() => mockThemeService.themeMode).thenReturn(ThemeMode.light);
+
+        await tester.pumpWidget(buildTestWidget());
+        await tester.pumpAndSettle();
+
+        final materialAppFinder = find.byType(MaterialApp);
+        expect(materialAppFinder, findsOneWidget);
+
+        final materialApp = tester.widget<MaterialApp>(
+          materialAppFinder,
+        );
+        expect(
+          materialApp.themeMode,
+          ThemeMode.light,
+        );
+      },
+    );
+
+    testWidgets(
       'verify theme '
-      'is from the S class.',
+      'is from the Themes class.',
       (WidgetTester tester) async {
         await tester.pumpWidget(buildTestWidget());
         await tester.pumpAndSettle();
@@ -192,6 +248,23 @@ void main() {
           materialAppFinder,
         );
         expect(materialApp.theme, Themes.light);
+      },
+    );
+
+    testWidgets(
+      'verify darkTheme '
+      'is from the Themes class.',
+      (WidgetTester tester) async {
+        await tester.pumpWidget(buildTestWidget());
+        await tester.pumpAndSettle();
+
+        final materialAppFinder = find.byType(MaterialApp);
+        expect(materialAppFinder, findsOneWidget);
+
+        final materialApp = tester.widget<MaterialApp>(
+          materialAppFinder,
+        );
+        expect(materialApp.darkTheme, Themes.dark);
       },
     );
 
@@ -252,3 +325,7 @@ void main() {
 }
 
 class MockSharedPreferences extends Mock implements SharedPreferences {}
+
+class MockThemeService extends Mock implements ThemeService {}
+
+class MockLocaleService extends Mock implements LocaleService {}

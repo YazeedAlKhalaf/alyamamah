@@ -1,3 +1,4 @@
+import 'package:alyamamah/core/providers/actor_details/actor_details_notifier.dart';
 import 'package:alyamamah/core/router/yu_router.dart';
 import 'package:alyamamah/core/services/auth/auth_service.dart';
 import 'package:alyamamah/core/services/auth/auth_service_exception.dart';
@@ -11,6 +12,7 @@ final startupViewModelProvider = ChangeNotifierProvider.autoDispose(
     authService: ref.read(authServiceProvider),
     sharedPrefsService: ref.read(sharedPrefsServiceProvider),
     yuRouter: ref.read(yuRouterProvider),
+    actorDetailsNotifier: ref.read(actorDetailsProvider.notifier),
   ),
 );
 
@@ -20,14 +22,17 @@ class StartupViewModel extends ChangeNotifier {
   final AuthService _authService;
   final SharedPrefsService _sharedPrefsService;
   final YURouter _yuRouter;
+  final ActorDetailsNotifier _actorDetailsNotifier;
 
   StartupViewModel({
     required AuthService authService,
     required SharedPrefsService sharedPrefsService,
     required YURouter yuRouter,
+    required ActorDetailsNotifier actorDetailsNotifier,
   })  : _authService = authService,
         _sharedPrefsService = sharedPrefsService,
-        _yuRouter = yuRouter;
+        _yuRouter = yuRouter,
+        _actorDetailsNotifier = actorDetailsNotifier;
 
   Future<void> handleStartup() async {
     // This is a hack, for some reason if the screen does not appear it breaks the app.
@@ -43,10 +48,12 @@ class StartupViewModel extends ChangeNotifier {
       );
 
       try {
-        await _authService.login(
+        final actorDetails = await _authService.login(
           username: username,
           password: password,
         );
+
+        _actorDetailsNotifier.setActorDetails(actorDetails);
 
         _log.fine(
           'handleStartup | succeeded in logging in, going to main route.',

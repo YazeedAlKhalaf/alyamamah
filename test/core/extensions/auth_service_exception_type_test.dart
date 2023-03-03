@@ -28,7 +28,7 @@ void main() {
       );
 
       testWidgets(
-        'should get unknown_service_error if type is invalidCredentials.',
+        'should get invalid_credentials if type is invalidCredentials.',
         (WidgetTester tester) async {
           await tester.pumpWidget(
             const TestMaterialApp(
@@ -42,6 +42,24 @@ void main() {
           final result = AuthServiceExceptionType.invalidCredentials
               .mapAuthServiceExceptionType(context);
           expect(result, context.s.invalid_credentials);
+        },
+      );
+
+      testWidgets(
+        'should get session_expired if type is sessionExpired.',
+        (WidgetTester tester) async {
+          await tester.pumpWidget(
+            const TestMaterialApp(
+              home: Scaffold(body: Text('test')),
+            ),
+          );
+          await tester.pumpAndSettle();
+
+          final context = tester.element(find.text('test'));
+
+          final result = AuthServiceExceptionType.sessionExpired
+              .mapAuthServiceExceptionType(context);
+          expect(result, context.s.session_expired);
         },
       );
     });

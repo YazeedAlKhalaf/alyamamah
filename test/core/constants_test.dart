@@ -11,6 +11,13 @@ void main() {
     );
 
     test(
+      'verify spacing value.',
+      () {
+        expect(Constants.spacing, Constants.padding / 2);
+      },
+    );
+
+    test(
       'verify usernameKey value.',
       () {
         expect(Constants.usernameKey, 'username');
@@ -21,6 +28,13 @@ void main() {
       'verify passwordKey value.',
       () {
         expect(Constants.passwordKey, 'password');
+      },
+    );
+
+    test(
+      'verify apiUrl value.',
+      () {
+        expect(Constants.apiUrl, 'https://edugate.yu.edu.sa/yu');
       },
     );
   });

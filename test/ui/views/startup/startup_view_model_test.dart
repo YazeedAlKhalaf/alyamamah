@@ -51,7 +51,7 @@ void main() {
           ).thenAnswer((_) => Future.value(FakeActorDetails()));
           when(
             () => mockYURouter.pushAndPopUntil(
-              const MainRoute(),
+              MainRoute(),
               predicate: captureAny(named: 'predicate'),
             ),
           ).thenAnswer((_) => Future.value());
@@ -68,7 +68,7 @@ void main() {
           ).called(1);
           verify(
             () => mockYURouter.pushAndPopUntil(
-              const MainRoute(),
+              MainRoute(),
               predicate: captureAny(named: 'predicate'),
             ),
           ).called(1);
@@ -124,7 +124,7 @@ void main() {
 
           when(
             () => mockYURouter.pushAndPopUntil(
-              const LoginRoute(),
+              const OnboardingRoute(),
               predicate: captureAny(named: 'predicate'),
             ),
           ).thenAnswer((_) => Future.value());
@@ -135,7 +135,7 @@ void main() {
           verify(() => mockSharedPrefsService.getPassword()).called(1);
           verify(
             () => mockYURouter.pushAndPopUntil(
-              const LoginRoute(),
+              const OnboardingRoute(),
               predicate: captureAny(named: 'predicate'),
             ),
           ).called(1);

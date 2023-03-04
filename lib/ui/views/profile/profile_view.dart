@@ -37,9 +37,15 @@ class ProfileView extends ConsumerWidget {
                       : actorDetails?.sessionInfo.actorNameEn ?? '',
                   style: Theme.of(context).textTheme.labelLarge,
                 ),
-                subtitle: Text(
-                  actorDetails?.sessionInfo.academicMail ?? '',
-                  style: Theme.of(context).textTheme.labelMedium,
+                subtitle: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      actorDetails?.sessionInfo.academicMail ?? '',
+                      style: Theme.of(context).textTheme.labelMedium,
+                      textDirection: TextDirection.ltr,
+                    ),
+                  ],
                 ),
                 trailing: const Icon(Icons.chevron_right_rounded),
                 onTap: () async {

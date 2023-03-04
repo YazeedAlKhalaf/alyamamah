@@ -35,6 +35,8 @@ void main() {
     testWidgets(
       'should verify the onTap of the list tile.',
       (WidgetTester tester) async {
+        when(() => mockLocaleService.setLocale(const Locale('ar')))
+            .thenAnswer((_) => Future.value());
         when(
           () => mockLocaleService.locale,
         ).thenReturn(const Locale('en'));

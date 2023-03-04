@@ -26,9 +26,11 @@ class LanguageBottomSheet extends ConsumerWidget {
           ),
           title: Text(locale.mapToString(context)),
           trailing: isSelected ? const Icon(Icons.check_rounded) : null,
-          onTap: () {
-            localeService.setLocale(locale);
-            Navigator.pop(context);
+          onTap: () async {
+            await localeService.setLocale(locale);
+            if (context.mounted) {
+              Navigator.pop(context);
+            }
           },
         );
       }).toList(),

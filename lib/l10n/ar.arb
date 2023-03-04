@@ -1,10 +1,10 @@
 {
   "@@locale": "ar",
   "login": "تسجيل دخول",
-  "username": "اسم المستخدم",
+  "username": "الرقم الجامعي",
   "password": "كلمة المرور",
   "unknown_service_error": "خطأ خدمة غير معروف",
-  "invalid_credentials": "اسم المستخدم أو كلمة المرور خاطئة",
+  "invalid_credentials": "الرقم الجامعي أو كلمة المرور خاطئة",
   "home": "الرئيسية",
   "profile": "الملف الشخصي",
   "appearance": "المظهر",
@@ -40,5 +40,6 @@
   "saturday": "السبت",
   "my_courses": "مقرراتي",
   "session_expired": "انتهت الجلسة",
-  "break_word": "فسحة"
+  "break_word": "فسحة",
+  "welcome_to_alyamamah": "حياك الله في اليمامة"
 }

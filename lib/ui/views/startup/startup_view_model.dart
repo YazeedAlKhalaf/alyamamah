@@ -60,7 +60,7 @@ class StartupViewModel extends ChangeNotifier {
         );
 
         await _yuRouter.pushAndPopUntil(
-          const MainRoute(),
+          MainRoute(),
           predicate: (_) => false,
         );
       } on AuthServiceException catch (e) {
@@ -76,11 +76,11 @@ class StartupViewModel extends ChangeNotifier {
       }
     } else {
       _log.severe(
-        'handleStartup | username and password are null, going to login route.',
+        'handleStartup | username and password are null, going to onboarding route.',
       );
 
       await _yuRouter.pushAndPopUntil(
-        const LoginRoute(),
+        const OnboardingRoute(),
         predicate: (_) => false,
       );
     }

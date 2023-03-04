@@ -1,7 +1,9 @@
 import 'package:alyamamah/core/services/locale/locale_service.dart';
+import 'package:alyamamah/core/services/shared_prefs/shared_prefs_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
 
 void main() {
   group('localeServiceProvider |', () {
@@ -14,10 +16,31 @@ void main() {
   });
 
   group('LocaleService |', () {
+    late MockSharedPrefsService mockSharedPrefsService;
+    late LocaleService localeService;
+    late ProviderContainer container;
+
+    setUp(() {
+      mockSharedPrefsService = MockSharedPrefsService();
+      when(() => mockSharedPrefsService.getLocale()).thenReturn(null);
+
+      localeService = LocaleService(
+        sharedPrefsService: mockSharedPrefsService,
+      );
+      container = ProviderContainer(
+        overrides: [
+          localeServiceProvider.overrideWith((ref) => localeService),
+        ],
+      );
+    });
+
     test(
-      'should get null locale by default.',
+      'should get null locale by default if getLocale returns null.',
       () {
-        final container = ProviderContainer();
+        when(() => mockSharedPrefsService.getLocale()).thenReturn(null);
+        localeService = LocaleService(
+          sharedPrefsService: mockSharedPrefsService,
+        );
         final service = container.read(localeServiceProvider);
 
         expect(service.locale, isNull);
@@ -25,9 +48,23 @@ void main() {
     );
 
     test(
+      'should get not null locale by default if getLocale returns not null.',
+      () {
+        when(() => mockSharedPrefsService.getLocale()).thenReturn('ar');
+        localeService = LocaleService(
+          sharedPrefsService: mockSharedPrefsService,
+        );
+        final service = container.read(localeServiceProvider);
+
+        expect(service.locale, const Locale('ar'));
+      },
+    );
+
+    test(
       'should get locale if set.',
       () {
-        final container = ProviderContainer();
+        when(() => mockSharedPrefsService.saveLocale('en'))
+            .thenAnswer((_) => Future.value());
         final service = container.read(localeServiceProvider);
 
         service.setLocale(const Locale('en'));
@@ -39,7 +76,11 @@ void main() {
     test(
       'should get null locale after setting it if it is reset to null.',
       () {
-        final container = ProviderContainer();
+        when(() => mockSharedPrefsService.saveLocale('en'))
+            .thenAnswer((_) => Future.value());
+        when(() => mockSharedPrefsService.deleteLocale())
+            .thenAnswer((_) => Future.value());
+
         final service = container.read(localeServiceProvider);
 
         service.setLocale(const Locale('en'));
@@ -53,3 +94,5 @@ void main() {
     );
   });
 }
+
+class MockSharedPrefsService extends Mock implements SharedPrefsService {}

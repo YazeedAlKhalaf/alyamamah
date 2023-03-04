@@ -38,3 +38,24 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   generate: true
+
+  assets:
+    - assets/images/
+  
+  fonts:
+    - family: Tajawal
+      fonts:
+        - asset: assets/fonts/tajawal/Tajawal-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/tajawal/Tajawal-Light.ttf
+          weight: 300
+        - asset: assets/fonts/tajawal/Tajawal-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/tajawal/Tajawal-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/tajawal/Tajawal-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/tajawal/Tajawal-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/tajawal/Tajawal-Black.ttf
+          weight: 900

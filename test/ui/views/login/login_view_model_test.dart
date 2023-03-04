@@ -138,7 +138,7 @@ void main() {
           ).thenAnswer((_) => Future<void>.value());
           when(
             () => mockYURouter.pushAndPopUntil(
-              const MainRoute(),
+              MainRoute(),
               predicate: captureAny(named: 'predicate'),
             ),
           ).thenAnswer((_) => Future.value());
@@ -162,7 +162,7 @@ void main() {
           ).called(1);
           verify(
             () => mockYURouter.pushAndPopUntil(
-              const MainRoute(),
+              MainRoute(),
               predicate: captureAny(named: 'predicate'),
             ),
           ).called(1);
@@ -202,7 +202,7 @@ void main() {
           );
           verifyNever(
             () => mockYURouter.pushAndPopUntil(
-              const MainRoute(),
+              MainRoute(),
               predicate: captureAny(named: 'predicate'),
             ),
           );

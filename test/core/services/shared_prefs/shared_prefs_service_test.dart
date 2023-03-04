@@ -6,6 +6,20 @@ import 'package:mocktail/mocktail.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
+  group('sharedPreferencesProvider |', () {
+    test(
+      'should return an instance of SharedPreferences.',
+      () {
+        final container = ProviderContainer();
+
+        expect(
+          () => container.read(sharedPreferencesProvider),
+          throwsA(isA<UnimplementedError>()),
+        );
+      },
+    );
+  });
+
   group('SharedPrefsService |', () {
     late MockSharedPreferences mockSharedPreferences;
     late SharedPrefsService sharedPrefsService;
@@ -146,20 +160,80 @@ void main() {
         },
       );
     });
-  });
 
-  group('sharedPreferencesProvider |', () {
-    test(
-      'should return an instance of SharedPreferences.',
-      () {
-        final container = ProviderContainer();
+    group('getLocale |', () {
+      test(
+        'should get null string if getString returns null.',
+        () {
+          when(
+            () => mockSharedPreferences.getString(Constants.localeKey),
+          ).thenReturn(null);
 
-        expect(
-          () => container.read(sharedPreferencesProvider),
-          throwsA(isA<UnimplementedError>()),
-        );
-      },
-    );
+          final result = sharedPrefsService.getLocale();
+
+          expect(result, null);
+          verify(
+            () => mockSharedPreferences.getString(Constants.localeKey),
+          ).called(1);
+        },
+      );
+
+      test(
+        'should get some string if getString returns some string.',
+        () {
+          when(
+            () => mockSharedPreferences.getString(Constants.localeKey),
+          ).thenReturn('some');
+
+          final result = sharedPrefsService.getLocale();
+
+          expect(result, 'some');
+          verify(
+            () => mockSharedPreferences.getString(Constants.localeKey),
+          ).called(1);
+        },
+      );
+    });
+
+    group('saveLocale |', () {
+      test(
+        'should call setString for locale.',
+        () async {
+          when(
+            () => mockSharedPreferences.setString(
+              Constants.localeKey,
+              'locale',
+            ),
+          ).thenAnswer((_) => Future<bool>.value(true));
+
+          await sharedPrefsService.saveLocale('locale');
+
+          verify(
+            () => mockSharedPreferences.setString(
+              Constants.localeKey,
+              'locale',
+            ),
+          ).called(1);
+        },
+      );
+    });
+
+    group('deleteLocale |', () {
+      test(
+        'should call remove for locale.',
+        () async {
+          when(
+            () => mockSharedPreferences.remove(Constants.localeKey),
+          ).thenAnswer((_) => Future<bool>.value(true));
+
+          await sharedPrefsService.deleteLocale();
+
+          verify(
+            () => mockSharedPreferences.remove(Constants.localeKey),
+          ).called(1);
+        },
+      );
+    });
   });
 }
 

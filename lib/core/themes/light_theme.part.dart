@@ -9,4 +9,5 @@ final lightTheme = ThemeData(
   appBarTheme: const AppBarTheme(
     centerTitle: true,
   ),
+  fontFamily: 'Tajawal',
 );

@@ -40,4 +40,16 @@ class SharedPrefsService {
     await _sharedPreferences.remove(Constants.usernameKey);
     await _sharedPreferences.remove(Constants.passwordKey);
   }
+
+  String? getLocale() {
+    return _sharedPreferences.getString(Constants.localeKey);
+  }
+
+  Future<void> saveLocale(String locale) async {
+    await _sharedPreferences.setString(Constants.localeKey, locale);
+  }
+
+  Future<void> deleteLocale() async {
+    await _sharedPreferences.remove(Constants.localeKey);
+  }
 }

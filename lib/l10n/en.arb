@@ -1,10 +1,10 @@
 {
   "@@locale": "en",
   "login": "Login",
-  "username": "Username",
+  "username": "University ID",
   "password": "Password",
   "unknown_service_error": "Unknown service error",
-  "invalid_credentials": "The username or password is wrong",
+  "invalid_credentials": "The university ID or password is wrong",
   "home": "Home",
   "profile": "Profile",
   "appearance": "Appearance",
@@ -20,7 +20,7 @@
   "logout": "Logout",
   "language": "Language",
   "english": "English",
-  "arabic": "Arabic",
+  "arabic": "العربية",
   "unknown": "Unknown",
   "student_information": "Student Information",
   "mobile": "Mobile",
@@ -40,5 +40,6 @@
   "saturday": "Saturday",
   "my_courses": "My Courses",
   "session_expired": "Session expired",
-  "break_word": "Break"
+  "break_word": "Break",
+  "welcome_to_alyamamah": "Welcome in Al Yamamah"
 }

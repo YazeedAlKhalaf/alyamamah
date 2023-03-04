@@ -66,6 +66,18 @@ void main() {
       );
 
       test(
+        'should set selected index to 2.',
+        () {
+          expect(mainViewModel.selectedIndex, 0);
+
+          mainViewModel.onDestinationSelected(2);
+
+          expect(mainViewModel.selectedIndex, 2);
+          expect(notifyListenersCount, 1);
+        },
+      );
+
+      test(
         'should throw exception when index is less than 0.',
         () {
           expect(
@@ -80,10 +92,10 @@ void main() {
       );
 
       test(
-        'should throw exception when index is more than 1.',
+        'should throw exception when index is more than 2.',
         () {
           expect(
-            () => mainViewModel.onDestinationSelected(2),
+            () => mainViewModel.onDestinationSelected(3),
             throwsA(isA<AssertionError>().having(
               (e) => e.message,
               'assertion error message',

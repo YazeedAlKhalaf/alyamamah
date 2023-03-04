@@ -11,6 +11,8 @@
 // ignore_for_file: type=lint
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:alyamamah/core/models/absence.dart' as _i11;
+import 'package:alyamamah/ui/views/absences/absence_details_view.dart' as _i8;
 import 'package:alyamamah/ui/views/home/home_view.dart' as _i3;
 import 'package:alyamamah/ui/views/login/login_view.dart' as _i2;
 import 'package:alyamamah/ui/views/main/main_view.dart' as _i4;
@@ -18,31 +20,31 @@ import 'package:alyamamah/ui/views/onboarding/onboarding_view.dart' as _i7;
 import 'package:alyamamah/ui/views/profile/profile_view.dart' as _i5;
 import 'package:alyamamah/ui/views/startup/startup_view.dart' as _i1;
 import 'package:alyamamah/ui/views/student_info/student_info_view.dart' as _i6;
-import 'package:auto_route/auto_route.dart' as _i8;
-import 'package:flutter/material.dart' as _i9;
+import 'package:auto_route/auto_route.dart' as _i9;
+import 'package:flutter/material.dart' as _i10;
 
-class YURouter extends _i8.RootStackRouter {
-  YURouter([_i9.GlobalKey<_i9.NavigatorState>? navigatorKey])
+class YURouter extends _i9.RootStackRouter {
+  YURouter([_i10.GlobalKey<_i10.NavigatorState>? navigatorKey])
       : super(navigatorKey);
 
   @override
-  final Map<String, _i8.PageFactory> pagesMap = {
+  final Map<String, _i9.PageFactory> pagesMap = {
     StartupRoute.name: (routeData) {
-      return _i8.AdaptivePage<dynamic>(
+      return _i9.AdaptivePage<dynamic>(
         routeData: routeData,
         child: const _i1.StartupView(),
         opaque: true,
       );
     },
     LoginRoute.name: (routeData) {
-      return _i8.AdaptivePage<dynamic>(
+      return _i9.AdaptivePage<dynamic>(
         routeData: routeData,
         child: const _i2.LoginView(),
         opaque: true,
       );
     },
     HomeRoute.name: (routeData) {
-      return _i8.AdaptivePage<dynamic>(
+      return _i9.AdaptivePage<dynamic>(
         routeData: routeData,
         child: const _i3.HomeView(),
         opaque: true,
@@ -51,7 +53,7 @@ class YURouter extends _i8.RootStackRouter {
     MainRoute.name: (routeData) {
       final args =
           routeData.argsAs<MainRouteArgs>(orElse: () => const MainRouteArgs());
-      return _i8.AdaptivePage<dynamic>(
+      return _i9.AdaptivePage<dynamic>(
         routeData: routeData,
         child: _i4.MainView(
           key: args.key,
@@ -61,64 +63,79 @@ class YURouter extends _i8.RootStackRouter {
       );
     },
     ProfileRoute.name: (routeData) {
-      return _i8.AdaptivePage<dynamic>(
+      return _i9.AdaptivePage<dynamic>(
         routeData: routeData,
         child: const _i5.ProfileView(),
         opaque: true,
       );
     },
     StudentInfoRoute.name: (routeData) {
-      return _i8.AdaptivePage<dynamic>(
+      return _i9.AdaptivePage<dynamic>(
         routeData: routeData,
         child: const _i6.StudentInfoView(),
         opaque: true,
       );
     },
     OnboardingRoute.name: (routeData) {
-      return _i8.AdaptivePage<dynamic>(
+      return _i9.AdaptivePage<dynamic>(
         routeData: routeData,
         child: const _i7.OnboardingView(),
+        opaque: true,
+      );
+    },
+    AbsenceDetailsRoute.name: (routeData) {
+      final args = routeData.argsAs<AbsenceDetailsRouteArgs>();
+      return _i9.AdaptivePage<dynamic>(
+        routeData: routeData,
+        child: _i8.AbsenceDetailsView(
+          key: args.key,
+          absence: args.absence,
+        ),
         opaque: true,
       );
     },
   };
 
   @override
-  List<_i8.RouteConfig> get routes => [
-        _i8.RouteConfig(
+  List<_i9.RouteConfig> get routes => [
+        _i9.RouteConfig(
           StartupRoute.name,
           path: '/',
         ),
-        _i8.RouteConfig(
+        _i9.RouteConfig(
           LoginRoute.name,
           path: '/login-view',
         ),
-        _i8.RouteConfig(
+        _i9.RouteConfig(
           HomeRoute.name,
           path: '/home-view',
         ),
-        _i8.RouteConfig(
+        _i9.RouteConfig(
           MainRoute.name,
           path: '/main-view',
         ),
-        _i8.RouteConfig(
+        _i9.RouteConfig(
           ProfileRoute.name,
           path: '/profile-view',
         ),
-        _i8.RouteConfig(
+        _i9.RouteConfig(
           StudentInfoRoute.name,
           path: '/student-info-view',
         ),
-        _i8.RouteConfig(
+        _i9.RouteConfig(
           OnboardingRoute.name,
           path: '/onboarding-view',
+        ),
+        _i9.RouteConfig(
+          AbsenceDetailsRoute.name,
+          path: '/absence-details-view',
         ),
       ];
 }
 
 /// generated route for
 /// [_i1.StartupView]
-class StartupRoute extends _i8.PageRouteInfo<void> {
+class StartupRoute extends _i9.PageRouteInfo<void> {
   const StartupRoute()
       : super(
           StartupRoute.name,
@@ -130,7 +147,7 @@ class StartupRoute extends _i8.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i2.LoginView]
-class LoginRoute extends _i8.PageRouteInfo<void> {
+class LoginRoute extends _i9.PageRouteInfo<void> {
   const LoginRoute()
       : super(
           LoginRoute.name,
@@ -142,7 +159,7 @@ class LoginRoute extends _i8.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i3.HomeView]
-class HomeRoute extends _i8.PageRouteInfo<void> {
+class HomeRoute extends _i9.PageRouteInfo<void> {
   const HomeRoute()
       : super(
           HomeRoute.name,
@@ -154,10 +171,10 @@ class HomeRoute extends _i8.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i4.MainView]
-class MainRoute extends _i8.PageRouteInfo<MainRouteArgs> {
+class MainRoute extends _i9.PageRouteInfo<MainRouteArgs> {
   MainRoute({
-    _i9.Key? key,
-    List<_i9.Widget>? pages,
+    _i10.Key? key,
+    List<_i10.Widget>? pages,
   }) : super(
           MainRoute.name,
           path: '/main-view',
@@ -176,9 +193,9 @@ class MainRouteArgs {
     this.pages,
   });
 
-  final _i9.Key? key;
+  final _i10.Key? key;
 
-  final List<_i9.Widget>? pages;
+  final List<_i10.Widget>? pages;
 
   @override
   String toString() {
@@ -188,7 +205,7 @@ class MainRouteArgs {
 
 /// generated route for
 /// [_i5.ProfileView]
-class ProfileRoute extends _i8.PageRouteInfo<void> {
+class ProfileRoute extends _i9.PageRouteInfo<void> {
   const ProfileRoute()
       : super(
           ProfileRoute.name,
@@ -200,7 +217,7 @@ class ProfileRoute extends _i8.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i6.StudentInfoView]
-class StudentInfoRoute extends _i8.PageRouteInfo<void> {
+class StudentInfoRoute extends _i9.PageRouteInfo<void> {
   const StudentInfoRoute()
       : super(
           StudentInfoRoute.name,
@@ -212,7 +229,7 @@ class StudentInfoRoute extends _i8.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i7.OnboardingView]
-class OnboardingRoute extends _i8.PageRouteInfo<void> {
+class OnboardingRoute extends _i9.PageRouteInfo<void> {
   const OnboardingRoute()
       : super(
           OnboardingRoute.name,
@@ -220,4 +237,38 @@ class OnboardingRoute extends _i8.PageRouteInfo<void> {
         );
 
   static const String name = 'OnboardingRoute';
+}
+
+/// generated route for
+/// [_i8.AbsenceDetailsView]
+class AbsenceDetailsRoute extends _i9.PageRouteInfo<AbsenceDetailsRouteArgs> {
+  AbsenceDetailsRoute({
+    _i10.Key? key,
+    required _i11.Absence absence,
+  }) : super(
+          AbsenceDetailsRoute.name,
+          path: '/absence-details-view',
+          args: AbsenceDetailsRouteArgs(
+            key: key,
+            absence: absence,
+          ),
+        );
+
+  static const String name = 'AbsenceDetailsRoute';
+}
+
+class AbsenceDetailsRouteArgs {
+  const AbsenceDetailsRouteArgs({
+    this.key,
+    required this.absence,
+  });
+
+  final _i10.Key? key;
+
+  final _i11.Absence absence;
+
+  @override
+  String toString() {
+    return 'AbsenceDetailsRouteArgs{key: $key, absence: $absence}';
+  }
 }

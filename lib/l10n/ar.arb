@@ -19,7 +19,7 @@
   "follow_us_on_twitter": "تابعنا على تويتر",
   "logout": "تسجيل خروج",
   "language": "اللغة",
-  "english": "الإنجليزية",
+  "english": "English",
   "arabic": "العربية",
   "unknown": "غير معروف",
   "student_information": "معلومات الطالب",
@@ -41,5 +41,11 @@
   "my_courses": "مقرراتي",
   "session_expired": "انتهت الجلسة",
   "break_word": "فسحة",
-  "welcome_to_alyamamah": "حياك الله في اليمامة"
+  "welcome_to_alyamamah": "حياك الله في اليمامة",
+  "absences": "الغيابات",
+  "absences_count": "عدد الغيابات: {count}",
+  "absence_details": "تفاصيل الغيابات",
+  "excused": "معذور",
+  "late": "متأخر",
+  "no_absences": "لا يوجد غيابات"
 }

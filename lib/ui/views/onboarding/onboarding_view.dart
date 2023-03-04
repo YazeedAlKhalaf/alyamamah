@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class OnboardingView extends ConsumerWidget {
+  static final Key loginButtonKey = UniqueKey();
+
   const OnboardingView({super.key});
 
   @override
@@ -40,6 +42,7 @@ class OnboardingView extends ConsumerWidget {
               ),
               const Spacer(),
               FilledButton.tonal(
+                key: loginButtonKey,
                 onPressed: () async {
                   await ref
                       .read(onboardingViewModelProvider)

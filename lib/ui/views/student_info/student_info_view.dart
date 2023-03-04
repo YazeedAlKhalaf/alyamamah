@@ -16,6 +16,7 @@ class StudentInfoView extends ConsumerWidget {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
           child: Column(
             children: [
               ListTile(
@@ -25,7 +26,6 @@ class StudentInfoView extends ConsumerWidget {
                 ),
                 title: Text(context.s.mobile),
                 subtitle: Text(actorDetails?.sessionInfo.mobile ?? ''),
-                onTap: () {},
               ),
               ListTile(
                 leading: Text(
@@ -34,7 +34,6 @@ class StudentInfoView extends ConsumerWidget {
                 ),
                 title: Text(context.s.email),
                 subtitle: Text(actorDetails?.sessionInfo.email ?? ''),
-                onTap: () {},
               ),
               ListTile(
                 leading: Text(
@@ -43,7 +42,6 @@ class StudentInfoView extends ConsumerWidget {
                 ),
                 title: Text(context.s.degree),
                 subtitle: Text(actorDetails?.sessionInfo.degreeCodeDesc ?? ''),
-                onTap: () {},
               ),
               ListTile(
                 leading: Text(
@@ -52,7 +50,6 @@ class StudentInfoView extends ConsumerWidget {
                 ),
                 title: Text(context.s.campus),
                 subtitle: Text(actorDetails?.sessionInfo.campusName ?? ''),
-                onTap: () {},
               ),
               ListTile(
                 leading: Text(
@@ -61,7 +58,6 @@ class StudentInfoView extends ConsumerWidget {
                 ),
                 title: Text(context.s.faculty),
                 subtitle: Text(actorDetails?.sessionInfo.facultyName ?? ''),
-                onTap: () {},
               ),
               ListTile(
                 leading: Text(
@@ -70,7 +66,6 @@ class StudentInfoView extends ConsumerWidget {
                 ),
                 title: Text(context.s.major),
                 subtitle: Text(actorDetails?.sessionInfo.majorName ?? ''),
-                onTap: () {},
               ),
               ListTile(
                 leading: Text(
@@ -79,7 +74,6 @@ class StudentInfoView extends ConsumerWidget {
                 ),
                 title: Text(context.s.study_type),
                 subtitle: Text(actorDetails?.sessionInfo.studyTypeDesc ?? ''),
-                onTap: () {},
               ),
               ListTile(
                 leading: Text(
@@ -88,7 +82,6 @@ class StudentInfoView extends ConsumerWidget {
                 ),
                 title: Text(context.s.status),
                 subtitle: Text(actorDetails?.sessionInfo.statusDesc ?? ''),
-                onTap: () {},
               ),
             ],
           ),

@@ -1,0 +1,183 @@
+final absencesSuccessResponse = [
+  {
+    'absenceDetails': [
+      {
+        'activity': 'نظري',
+        'date': '08/02/2023',
+        'dateH': '17/07/1444',
+        'day': 'الاربعاء',
+        'isExcused': false,
+        'late': false,
+        'section': '89',
+        'time': '13:00-14:20',
+        'weekNo': '4'
+      }
+    ],
+    'activity': 'نظري',
+    'campus': 'الرياض / ذكور',
+    'countAbsence': '1',
+    'countLate': '0',
+    'courseCode': 'احص 103',
+    'courseName': 'الاحتمالات والاحصاء',
+    'courseNo': '838',
+    'date': '',
+    'day': 'الاربعاء',
+    'index': '',
+    'isExcused': false,
+    'late': false,
+    'section': '',
+    'sectionSeq': '',
+    'time': '13:00-14:20',
+    'totalAbsencePercent': '2.7',
+    'warningLevel': '',
+    'warningPercent': '',
+    'weekNo': '4'
+  },
+  {
+    'absenceDetails': [
+      {
+        'activity': 'نظري',
+        'date': '17/01/2023',
+        'dateH': '24/06/1444',
+        'day': 'الثلاثاء',
+        'isExcused': false,
+        'late': false,
+        'section': '65',
+        'time': '12:30-13:20',
+        'weekNo': '1'
+      }
+    ],
+    'activity': 'نظري',
+    'campus': 'الرياض / ذكور',
+    'countAbsence': '1',
+    'countLate': '0',
+    'courseCode': 'ريض 104',
+    'courseName': 'حساب التفاضل و التكامل (1)',
+    'courseNo': '869',
+    'date': '',
+    'day': 'الثلاثاء',
+    'index': '',
+    'isExcused': false,
+    'late': false,
+    'section': '',
+    'sectionSeq': '',
+    'time': '12:30-13:20',
+    'totalAbsencePercent': '1.79',
+    'warningLevel': '',
+    'warningPercent': '',
+    'weekNo': '1'
+  },
+  {
+    'absenceDetails': [
+      {
+        'activity': 'نظري',
+        'date': '07/02/2023',
+        'dateH': '16/07/1444',
+        'day': 'الثلاثاء',
+        'isExcused': false,
+        'late': false,
+        'section': '254',
+        'time': '11:30-12:20',
+        'weekNo': '4'
+      }
+    ],
+    'activity': 'نظري',
+    'campus': 'الرياض / ذكور',
+    'countAbsence': '1',
+    'countLate': '0',
+    'courseCode': 'عرب 102',
+    'courseName': 'مهارات التواصل في اللغة العربية',
+    'courseNo': '36',
+    'date': '',
+    'day': 'الثلاثاء',
+    'index': '',
+    'isExcused': false,
+    'late': false,
+    'section': '',
+    'sectionSeq': '',
+    'time': '11:30-12:20',
+    'totalAbsencePercent': '2.63',
+    'warningLevel': '',
+    'warningPercent': '',
+    'weekNo': '4'
+  },
+  {
+    'absenceDetails': [
+      {
+        'activity': 'نظري',
+        'date': '07/02/2023',
+        'dateH': '16/07/1444',
+        'day': 'الثلاثاء',
+        'isExcused': false,
+        'late': false,
+        'section': '308',
+        'time': '09:30-10:20',
+        'weekNo': '4'
+      }
+    ],
+    'activity': 'نظري',
+    'campus': 'الرياض / ذكور',
+    'countAbsence': '1',
+    'countLate': '0',
+    'courseCode': 'فكر 101',
+    'courseName': 'التفكير النقدي',
+    'courseNo': '69',
+    'date': '',
+    'day': 'الثلاثاء',
+    'index': '',
+    'isExcused': false,
+    'late': false,
+    'section': '',
+    'sectionSeq': '',
+    'time': '09:30-10:20',
+    'totalAbsencePercent': '1.79',
+    'warningLevel': '',
+    'warningPercent': '',
+    'weekNo': '4'
+  },
+  {
+    'absenceDetails': [
+      {
+        'activity': 'نظري',
+        'date': '07/02/2023',
+        'dateH': '16/07/1444',
+        'day': 'الثلاثاء',
+        'isExcused': false,
+        'late': false,
+        'section': '105',
+        'time': '13:30-14:20',
+        'weekNo': '4'
+      },
+      {
+        'activity': 'معمل',
+        'date': '07/02/2023',
+        'dateH': '16/07/1444',
+        'day': 'الثلاثاء',
+        'isExcused': false,
+        'late': false,
+        'section': '106',
+        'time': '14:30-16:20',
+        'weekNo': '4'
+      }
+    ],
+    'activity': 'معمل',
+    'campus': 'الرياض / ذكور',
+    'countAbsence': '2',
+    'countLate': '0',
+    'courseCode': 'فيز 103',
+    'courseName': 'فيزياء (1)',
+    'courseNo': '875',
+    'date': '',
+    'day': 'الثلاثاء',
+    'index': '',
+    'isExcused': false,
+    'late': false,
+    'section': '',
+    'sectionSeq': '',
+    'time': '14:30-16:20',
+    'totalAbsencePercent': '3.19',
+    'warningLevel': '',
+    'warningPercent': '',
+    'weekNo': '4'
+  }
+];

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:alyamamah/core/constants.dart';
+import 'package:alyamamah/core/models/absence.dart';
 import 'package:alyamamah/core/models/actor_details.dart';
 import 'package:alyamamah/core/models/schedule.dart';
 import 'package:alyamamah/core/services/api/api_service_exception.dart';
@@ -114,5 +115,35 @@ class ApiService {
 
   Future<void> logout() async {
     await _cookieJar.deleteAll();
+  }
+
+  Future<List<Absence>> getAbsences() async {
+    try {
+      final response = await _dio.get(
+        '/resources/student/absences/absences',
+      );
+
+      if (response.statusCode != 200) {
+        _log.severe('getAbsences | non 200 status code.');
+        throw const ApiServiceException();
+      }
+
+      if (response.data is String &&
+          (response.data as String).contains('/yu/init')) {
+        _log.severe('getAbsences | session expired.');
+        throw const ApiServiceException(
+          ApiServiceExceptionType.sessionExpired,
+        );
+      }
+
+      return (response.data as List<dynamic>)
+          .map((x) => Absence.fromMap(x))
+          .toList();
+    } catch (e) {
+      if (e is ApiServiceException) rethrow;
+
+      _log.severe('getAbsences | unexpected exception: $e.');
+      throw const ApiServiceException();
+    }
   }
 }

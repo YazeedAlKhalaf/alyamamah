@@ -1,4 +1,5 @@
 import 'package:alyamamah/core/extensions/build_context.dart';
+import 'package:alyamamah/ui/views/absences/absences_view.dart';
 import 'package:alyamamah/ui/views/home/home_view.dart';
 import 'package:alyamamah/ui/views/main/main_view_model.dart';
 import 'package:alyamamah/ui/views/profile/profile_view.dart';
@@ -27,6 +28,7 @@ class MainView extends ConsumerWidget {
         children: pages ??
             const [
               HomeView(),
+              AbsencesView(),
               ProfileView(),
             ],
       ),
@@ -39,6 +41,10 @@ class MainView extends ConsumerWidget {
           NavigationDestination(
             icon: const Icon(Icons.home_rounded),
             label: context.s.home,
+          ),
+          NavigationDestination(
+            icon: const Icon(Icons.calendar_today_rounded),
+            label: context.s.absences,
           ),
           NavigationDestination(
             icon: const Icon(Icons.person_rounded),

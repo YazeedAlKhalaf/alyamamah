@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:alyamamah/core/models/absence.dart';
 import 'package:alyamamah/core/models/actor_details.dart';
 import 'package:alyamamah/core/models/schedule.dart';
 import 'package:alyamamah/core/services/api/api_service.dart';
@@ -11,6 +12,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../../test_utils/matchers/auth_header_options_matcher.dart';
+import 'fixtures/absences_response.dart';
 import 'fixtures/actor_details_response.dart';
 import 'fixtures/student_schedule_response.dart';
 
@@ -362,6 +364,105 @@ void main() {
           apiService.logout();
 
           verify(() => mockCookieJar.deleteAll()).called(1);
+        },
+      );
+    });
+
+    group('getAbsences |', () {
+      test(
+        'should get list of absences if response is successful.',
+        () async {
+          when(
+            () => mockDio.get(
+              '/resources/student/absences/absences',
+            ),
+          ).thenAnswer(
+            (_) => Future.value(Response(
+              requestOptions: RequestOptions(path: ''),
+              statusCode: 200,
+              data: absencesSuccessResponse,
+            )),
+          );
+
+          final response = await apiService.getAbsences();
+          expect(
+            response,
+            absencesSuccessResponse.map((x) => Absence.fromMap(x)).toList(),
+          );
+        },
+      );
+
+      test(
+        'should throw exception if response status code is not 200.',
+        () async {
+          when(
+            () => mockDio.get(
+              '/resources/student/absences/absences',
+            ),
+          ).thenAnswer(
+            (_) => Future.value(Response(
+              requestOptions: RequestOptions(path: ''),
+              statusCode: 404,
+              data: {},
+            )),
+          );
+
+          expect(
+            () async => await apiService.getAbsences(),
+            throwsA(isA<ApiServiceException>().having(
+              (e) => e.type,
+              'exception type',
+              ApiServiceExceptionType.unknown,
+            )),
+          );
+        },
+      );
+
+      test(
+        'should throw exception of session expired '
+        'if response data is a string and contains "/yu/init" '
+        'and status code is 200.',
+        () async {
+          when(
+            () => mockDio.get(
+              '/resources/student/absences/absences',
+            ),
+          ).thenAnswer(
+            (_) => Future.value(Response(
+              requestOptions: RequestOptions(path: ''),
+              statusCode: 200,
+              data: "gg '/yu/init' gg",
+            )),
+          );
+
+          expect(
+            () async => await apiService.getAbsences(),
+            throwsA(isA<ApiServiceException>().having(
+              (e) => e.type,
+              'exception type',
+              ApiServiceExceptionType.sessionExpired,
+            )),
+          );
+        },
+      );
+
+      test(
+        'should throw exception if get request throws.',
+        () async {
+          when(
+            () => mockDio.get(
+              '/resources/student/absences/absences',
+            ),
+          ).thenThrow(Exception());
+
+          expect(
+            () async => await apiService.getAbsences(),
+            throwsA(isA<ApiServiceException>().having(
+              (e) => e.type,
+              'exception type',
+              ApiServiceExceptionType.unknown,
+            )),
+          );
         },
       );
     });

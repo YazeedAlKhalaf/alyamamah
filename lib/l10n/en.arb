@@ -41,5 +41,11 @@
   "my_courses": "My Courses",
   "session_expired": "Session expired",
   "break_word": "Break",
-  "welcome_to_alyamamah": "Welcome in Al Yamamah"
+  "welcome_to_alyamamah": "Welcome in Al Yamamah",
+  "absences": "Absences",
+  "absences_count": "Absences count: {count}",
+  "absence_details": "Absences details",
+  "excused": "Excused",
+  "late": "Late",
+  "no_absences": "No absences"
 }

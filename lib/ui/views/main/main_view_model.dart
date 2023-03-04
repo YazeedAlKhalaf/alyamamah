@@ -10,7 +10,7 @@ class MainViewModel extends ChangeNotifier {
   int get selectedIndex => _selectedIndex;
 
   void onDestinationSelected(int value) {
-    assert(value >= 0 && value <= 1, 'Invalid destination index');
+    assert(value >= 0 && value <= 2, 'Invalid destination index');
 
     _selectedIndex = value;
     notifyListeners();

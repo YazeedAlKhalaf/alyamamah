@@ -3,27 +3,27 @@ import 'dart:convert';
 import 'package:alyamamah/core/constants.dart';
 import 'package:alyamamah/core/models/actor_details.dart';
 import 'package:alyamamah/core/models/schedule.dart';
-import 'package:alyamamah/core/services/auth/auth_service_exception.dart';
+import 'package:alyamamah/core/services/api/api_service_exception.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logging/logging.dart';
 
-final authServiceProvider = Provider(
-  (ref) => AuthService(
+final apiServiceProvider = Provider(
+  (ref) => ApiService(
     dio: Dio(),
     cookieJar: CookieJar(),
   ),
 );
 
-class AuthService {
-  final _log = Logger('AuthService');
+class ApiService {
+  final _log = Logger('ApiService');
 
   final Dio _dio;
   final CookieJar _cookieJar;
 
-  AuthService({
+  ApiService({
     required Dio dio,
     required CookieJar cookieJar,
   })  : _dio = dio,
@@ -61,22 +61,22 @@ class AuthService {
 
       if (response.statusCode != 200) {
         _log.severe('login | non 200 status code.');
-        throw const AuthServiceException();
+        throw const ApiServiceException();
       }
 
       if (response.data['commonInfo']['status'] == false) {
         _log.severe('login | invalid credentials.');
-        throw const AuthServiceException(
-          AuthServiceExceptionType.invalidCredentials,
+        throw const ApiServiceException(
+          ApiServiceExceptionType.invalidCredentials,
         );
       }
 
       return ActorDetails.fromMap(response.data);
     } catch (e) {
-      if (e is AuthServiceException) rethrow;
+      if (e is ApiServiceException) rethrow;
 
       _log.severe('login | unexpected exception: $e.');
-      throw const AuthServiceException();
+      throw const ApiServiceException();
     }
   }
 
@@ -90,14 +90,14 @@ class AuthService {
 
       if (response.statusCode != 200) {
         _log.severe('getStudentSchedule | non 200 status code.');
-        throw const AuthServiceException();
+        throw const ApiServiceException();
       }
 
       if (response.data is String &&
           (response.data as String).contains('/yu/init')) {
         _log.severe('getStudentSchedule | session expired.');
-        throw const AuthServiceException(
-          AuthServiceExceptionType.sessionExpired,
+        throw const ApiServiceException(
+          ApiServiceExceptionType.sessionExpired,
         );
       }
 
@@ -105,10 +105,10 @@ class AuthService {
           .map((x) => Schedule.fromMap(x))
           .toList();
     } catch (e) {
-      if (e is AuthServiceException) rethrow;
+      if (e is ApiServiceException) rethrow;
 
       _log.severe('getStudentSchedule | unexpected exception: $e.');
-      throw const AuthServiceException();
+      throw const ApiServiceException();
     }
   }
 

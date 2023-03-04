@@ -1,8 +1,8 @@
 import 'package:alyamamah/core/models/actor_details.dart';
 import 'package:alyamamah/core/providers/actor_details/actor_details_notifier.dart';
 import 'package:alyamamah/core/router/yu_router.dart';
-import 'package:alyamamah/core/services/auth/auth_service.dart';
-import 'package:alyamamah/core/services/auth/auth_service_exception.dart';
+import 'package:alyamamah/core/services/api/api_service.dart';
+import 'package:alyamamah/core/services/api/api_service_exception.dart';
 import 'package:alyamamah/core/services/shared_prefs/shared_prefs_service.dart';
 import 'package:alyamamah/ui/views/startup/startup_view_model.dart';
 import 'package:auto_route/auto_route.dart';
@@ -11,7 +11,7 @@ import 'package:mocktail/mocktail.dart';
 
 void main() {
   group('StartupViewModel |', () {
-    late MockAuthService mockAuthService;
+    late MockApiService mockApiService;
     late MockSharedPrefsService mockSharedPrefsService;
     late MockYURouter mockYURouter;
     late MockActorDetailsNotifier mockActorDetailsNotifier;
@@ -21,13 +21,13 @@ void main() {
     setUp(() {
       registerFallbackValue(FakePageRouteInfo());
 
-      mockAuthService = MockAuthService();
+      mockApiService = MockApiService();
       mockSharedPrefsService = MockSharedPrefsService();
       mockYURouter = MockYURouter();
       mockActorDetailsNotifier = MockActorDetailsNotifier();
 
       startupViewModel = StartupViewModel(
-        authService: mockAuthService,
+        apiService: mockApiService,
         sharedPrefsService: mockSharedPrefsService,
         yuRouter: mockYURouter,
         actorDetailsNotifier: mockActorDetailsNotifier,
@@ -44,7 +44,7 @@ void main() {
           when(() => mockSharedPrefsService.getPassword())
               .thenReturn('password');
           when(
-            () => mockAuthService.login(
+            () => mockApiService.login(
               username: 'username',
               password: 'password',
             ),
@@ -61,7 +61,7 @@ void main() {
           verify(() => mockSharedPrefsService.getUsername()).called(1);
           verify(() => mockSharedPrefsService.getPassword()).called(1);
           verify(
-            () => mockAuthService.login(
+            () => mockApiService.login(
               username: 'username',
               password: 'password',
             ),
@@ -77,18 +77,18 @@ void main() {
 
       test(
         'verify methods that are called '
-        'when handleStartup fails with AuthServiceException exception.',
+        'when handleStartup fails with ApiServiceException exception.',
         () async {
           when(() => mockSharedPrefsService.getUsername())
               .thenReturn('username');
           when(() => mockSharedPrefsService.getPassword())
               .thenReturn('password');
           when(
-            () => mockAuthService.login(
+            () => mockApiService.login(
               username: 'username',
               password: 'password',
             ),
-          ).thenThrow(const AuthServiceException());
+          ).thenThrow(const ApiServiceException());
           when(
             () => mockYURouter.pushAndPopUntil(
               const LoginRoute(),
@@ -101,7 +101,7 @@ void main() {
           verify(() => mockSharedPrefsService.getUsername()).called(1);
           verify(() => mockSharedPrefsService.getPassword()).called(1);
           verify(
-            () => mockAuthService.login(
+            () => mockApiService.login(
               username: 'username',
               password: 'password',
             ),
@@ -145,7 +145,7 @@ void main() {
   });
 }
 
-class MockAuthService extends Mock implements AuthService {}
+class MockApiService extends Mock implements ApiService {}
 
 class MockSharedPrefsService extends Mock implements SharedPrefsService {}
 

@@ -1,5 +1,5 @@
 import 'package:alyamamah/core/extensions/build_context.dart';
-import 'package:alyamamah/core/services/auth/auth_service_exception.dart';
+import 'package:alyamamah/core/services/api/api_service_exception.dart';
 import 'package:alyamamah/ui/views/login/login_view.dart';
 import 'package:alyamamah/ui/views/login/login_view_model.dart';
 import 'package:alyamamah/ui/widgets/button_loading.dart';
@@ -36,7 +36,7 @@ void main() {
           when(() => mockLoginViewModel.password).thenReturn('');
           when(() => mockLoginViewModel.showPassword).thenReturn(false);
           when(() => mockLoginViewModel.isBusy).thenReturn(false);
-          when(() => mockLoginViewModel.authServiceExceptionType)
+          when(() => mockLoginViewModel.apiServiceExceptionType)
               .thenReturn(null);
 
           await tester.pumpWidget(buildTestWidget());
@@ -65,7 +65,7 @@ void main() {
           when(() => mockLoginViewModel.password).thenReturn('');
           when(() => mockLoginViewModel.showPassword).thenReturn(true);
           when(() => mockLoginViewModel.isBusy).thenReturn(false);
-          when(() => mockLoginViewModel.authServiceExceptionType)
+          when(() => mockLoginViewModel.apiServiceExceptionType)
               .thenReturn(null);
 
           await tester.pumpWidget(buildTestWidget());
@@ -94,7 +94,7 @@ void main() {
           when(() => mockLoginViewModel.password).thenReturn('');
           when(() => mockLoginViewModel.showPassword).thenReturn(false);
           when(() => mockLoginViewModel.isBusy).thenReturn(false);
-          when(() => mockLoginViewModel.authServiceExceptionType)
+          when(() => mockLoginViewModel.apiServiceExceptionType)
               .thenReturn(null);
 
           when(() => mockLoginViewModel.toggleShowPassword()).thenReturn(null);
@@ -126,7 +126,7 @@ void main() {
           when(() => mockLoginViewModel.password).thenReturn('');
           when(() => mockLoginViewModel.showPassword).thenReturn(false);
           when(() => mockLoginViewModel.isBusy).thenReturn(false);
-          when(() => mockLoginViewModel.authServiceExceptionType)
+          when(() => mockLoginViewModel.apiServiceExceptionType)
               .thenReturn(null);
 
           await tester.pumpWidget(buildTestWidget());
@@ -157,7 +157,7 @@ void main() {
           when(() => mockLoginViewModel.password).thenReturn('');
           when(() => mockLoginViewModel.showPassword).thenReturn(false);
           when(() => mockLoginViewModel.isBusy).thenReturn(true);
-          when(() => mockLoginViewModel.authServiceExceptionType)
+          when(() => mockLoginViewModel.apiServiceExceptionType)
               .thenReturn(null);
 
           await tester.pumpWidget(buildTestWidget());
@@ -183,7 +183,7 @@ void main() {
           when(() => mockLoginViewModel.password).thenReturn('');
           when(() => mockLoginViewModel.showPassword).thenReturn(false);
           when(() => mockLoginViewModel.isBusy).thenReturn(true);
-          when(() => mockLoginViewModel.authServiceExceptionType)
+          when(() => mockLoginViewModel.apiServiceExceptionType)
               .thenReturn(null);
 
           when(() => mockLoginViewModel.login()).thenAnswer(
@@ -213,13 +213,13 @@ void main() {
       testGoldens(
         'renders correctly '
         'when username is empty, password is empty, showPassword is false '
-        'isBusy is false, and authServiceExceptionType is null.',
+        'isBusy is false, and apiServiceExceptionType is null.',
         (WidgetTester tester) async {
           when(() => mockLoginViewModel.username).thenReturn('');
           when(() => mockLoginViewModel.password).thenReturn('');
           when(() => mockLoginViewModel.showPassword).thenReturn(false);
           when(() => mockLoginViewModel.isBusy).thenReturn(false);
-          when(() => mockLoginViewModel.authServiceExceptionType)
+          when(() => mockLoginViewModel.apiServiceExceptionType)
               .thenReturn(null);
 
           await tester.pumpWidget(buildTestWidget());
@@ -236,13 +236,13 @@ void main() {
         'renders correctly '
         'when username is not empty, password is not empty, '
         'showPassword is false, isBusy is false, '
-        'and authServiceExceptionType is null.',
+        'and apiServiceExceptionType is null.',
         (WidgetTester tester) async {
           when(() => mockLoginViewModel.username).thenReturn('202211111');
           when(() => mockLoginViewModel.password).thenReturn('202211111');
           when(() => mockLoginViewModel.showPassword).thenReturn(false);
           when(() => mockLoginViewModel.isBusy).thenReturn(false);
-          when(() => mockLoginViewModel.authServiceExceptionType)
+          when(() => mockLoginViewModel.apiServiceExceptionType)
               .thenReturn(null);
 
           await tester.pumpWidget(buildTestWidget());
@@ -259,13 +259,13 @@ void main() {
         'renders correctly '
         'when username is not empty, password is not empty, '
         'showPassword is true, isBusy is false, '
-        'and authServiceExceptionType is null.',
+        'and apiServiceExceptionType is null.',
         (WidgetTester tester) async {
           when(() => mockLoginViewModel.username).thenReturn('202211111');
           when(() => mockLoginViewModel.password).thenReturn('202211111');
           when(() => mockLoginViewModel.showPassword).thenReturn(true);
           when(() => mockLoginViewModel.isBusy).thenReturn(false);
-          when(() => mockLoginViewModel.authServiceExceptionType)
+          when(() => mockLoginViewModel.apiServiceExceptionType)
               .thenReturn(null);
 
           await tester.pumpWidget(buildTestWidget());
@@ -282,13 +282,13 @@ void main() {
         'renders correctly '
         'when username is not empty, password is not empty, '
         'showPassword is false, isBusy is true, '
-        'and authServiceExceptionType is null.',
+        'and apiServiceExceptionType is null.',
         (WidgetTester tester) async {
           when(() => mockLoginViewModel.username).thenReturn('202211111');
           when(() => mockLoginViewModel.password).thenReturn('202211111');
           when(() => mockLoginViewModel.showPassword).thenReturn(false);
           when(() => mockLoginViewModel.isBusy).thenReturn(true);
-          when(() => mockLoginViewModel.authServiceExceptionType)
+          when(() => mockLoginViewModel.apiServiceExceptionType)
               .thenReturn(null);
 
           await tester.pumpWidget(buildTestWidget());
@@ -308,20 +308,20 @@ void main() {
         'renders correctly '
         'when username is not empty, password is not empty, '
         'showPassword is false, isBusy is false, '
-        'and authServiceExceptionType is unknown.',
+        'and apiServiceExceptionType is unknown.',
         (WidgetTester tester) async {
           when(() => mockLoginViewModel.username).thenReturn('202211111');
           when(() => mockLoginViewModel.password).thenReturn('202211111');
           when(() => mockLoginViewModel.showPassword).thenReturn(false);
           when(() => mockLoginViewModel.isBusy).thenReturn(false);
-          when(() => mockLoginViewModel.authServiceExceptionType)
-              .thenReturn(AuthServiceExceptionType.unknown);
+          when(() => mockLoginViewModel.apiServiceExceptionType)
+              .thenReturn(ApiServiceExceptionType.unknown);
 
           await tester.pumpWidget(buildTestWidget());
 
           await multiScreenGolden(
             tester,
-            'login_screen_username_password_auth_service_exception_type_is_unknown',
+            'login_screen_username_password_api_service_exception_type_is_unknown',
             devices: testDevices,
           );
         },
@@ -331,20 +331,20 @@ void main() {
         'renders correctly '
         'when username is not empty, password is not empty, '
         'showPassword is false, isBusy is false, '
-        'and authServiceExceptionType is invalidCredentials.',
+        'and apiServiceExceptionType is invalidCredentials.',
         (WidgetTester tester) async {
           when(() => mockLoginViewModel.username).thenReturn('202211111');
           when(() => mockLoginViewModel.password).thenReturn('202211111');
           when(() => mockLoginViewModel.showPassword).thenReturn(false);
           when(() => mockLoginViewModel.isBusy).thenReturn(false);
-          when(() => mockLoginViewModel.authServiceExceptionType)
-              .thenReturn(AuthServiceExceptionType.invalidCredentials);
+          when(() => mockLoginViewModel.apiServiceExceptionType)
+              .thenReturn(ApiServiceExceptionType.invalidCredentials);
 
           await tester.pumpWidget(buildTestWidget());
 
           await multiScreenGolden(
             tester,
-            'login_screen_username_password_auth_service_exception_type_is_invalidCredentials',
+            'login_screen_username_password_api_service_exception_type_is_invalidCredentials',
             devices: testDevices,
           );
         },

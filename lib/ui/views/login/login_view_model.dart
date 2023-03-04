@@ -1,7 +1,7 @@
 import 'package:alyamamah/core/providers/actor_details/actor_details_notifier.dart';
 import 'package:alyamamah/core/router/yu_router.dart';
-import 'package:alyamamah/core/services/auth/auth_service.dart';
-import 'package:alyamamah/core/services/auth/auth_service_exception.dart';
+import 'package:alyamamah/core/services/api/api_service.dart';
+import 'package:alyamamah/core/services/api/api_service_exception.dart';
 import 'package:alyamamah/core/services/shared_prefs/shared_prefs_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,7 +10,7 @@ import 'package:logging/logging.dart';
 final loginViewModelProvider = ChangeNotifierProvider(
   (ref) {
     return LoginViewModel(
-      authService: ref.read(authServiceProvider),
+      apiService: ref.read(apiServiceProvider),
       sharedPrefsService: ref.read(sharedPrefsServiceProvider),
       yuRouter: ref.read(yuRouterProvider),
       actorDetailsNotifier: ref.watch(actorDetailsProvider.notifier),
@@ -21,24 +21,24 @@ final loginViewModelProvider = ChangeNotifierProvider(
 class LoginViewModel extends ChangeNotifier {
   final _log = Logger('LoginViewModel');
 
-  final AuthService _authService;
+  final ApiService _apiService;
   final SharedPrefsService _sharedPrefsService;
   final YURouter _yuRouter;
   final ActorDetailsNotifier _actorDetailsNotifier;
 
   LoginViewModel({
-    required AuthService authService,
+    required ApiService apiService,
     required SharedPrefsService sharedPrefsService,
     required YURouter yuRouter,
     required ActorDetailsNotifier actorDetailsNotifier,
-  })  : _authService = authService,
+  })  : _apiService = apiService,
         _sharedPrefsService = sharedPrefsService,
         _yuRouter = yuRouter,
         _actorDetailsNotifier = actorDetailsNotifier;
 
-  AuthServiceExceptionType? _authServiceExceptionType;
-  AuthServiceExceptionType? get authServiceExceptionType =>
-      _authServiceExceptionType;
+  ApiServiceExceptionType? _apiServiceExceptionType;
+  ApiServiceExceptionType? get apiServiceExceptionType =>
+      _apiServiceExceptionType;
 
   String _username = '';
   String get username => _username;
@@ -68,12 +68,12 @@ class LoginViewModel extends ChangeNotifier {
   bool get isBusy => _isBusy;
 
   Future<void> login() async {
-    _authServiceExceptionType = null;
+    _apiServiceExceptionType = null;
     _isBusy = true;
     notifyListeners();
 
     try {
-      final actorDetails = await _authService.login(
+      final actorDetails = await _apiService.login(
         username: username,
         password: password,
       );
@@ -89,10 +89,10 @@ class LoginViewModel extends ChangeNotifier {
         MainRoute(),
         predicate: (_) => false,
       );
-    } on AuthServiceException catch (e) {
-      _log.severe('login | AuthServiceException with type: ${e.type}.');
+    } on ApiServiceException catch (e) {
+      _log.severe('login | ApiServiceException with type: ${e.type}.');
 
-      _authServiceExceptionType = e.type;
+      _apiServiceExceptionType = e.type;
       notifyListeners();
     }
 

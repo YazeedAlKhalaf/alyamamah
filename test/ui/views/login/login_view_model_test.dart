@@ -1,8 +1,8 @@
 import 'package:alyamamah/core/models/actor_details.dart';
 import 'package:alyamamah/core/providers/actor_details/actor_details_notifier.dart';
 import 'package:alyamamah/core/router/yu_router.dart';
-import 'package:alyamamah/core/services/auth/auth_service.dart';
-import 'package:alyamamah/core/services/auth/auth_service_exception.dart';
+import 'package:alyamamah/core/services/api/api_service.dart';
+import 'package:alyamamah/core/services/api/api_service_exception.dart';
 import 'package:alyamamah/core/services/shared_prefs/shared_prefs_service.dart';
 import 'package:alyamamah/ui/views/login/login_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,7 +23,7 @@ void main() {
   });
 
   group('LoginViewModel |', () {
-    late MockAuthService mockAuthService;
+    late MockApiService mockApiService;
     late MockSharedPrefsService mockSharedPrefsService;
     late MockYURouter mockYURouter;
     late MockActorDetailsNotifier mockActorDetailsNotifier;
@@ -32,13 +32,13 @@ void main() {
     late int notifyListenersCount = 0;
 
     setUp(() {
-      mockAuthService = MockAuthService();
+      mockApiService = MockApiService();
       mockSharedPrefsService = MockSharedPrefsService();
       mockYURouter = MockYURouter();
       mockActorDetailsNotifier = MockActorDetailsNotifier();
 
       loginViewModel = LoginViewModel(
-        authService: mockAuthService,
+        apiService: mockApiService,
         sharedPrefsService: mockSharedPrefsService,
         yuRouter: mockYURouter,
         actorDetailsNotifier: mockActorDetailsNotifier,
@@ -51,7 +51,7 @@ void main() {
     });
 
     tearDown(() {
-      verifyNoMoreInteractions(mockAuthService);
+      verifyNoMoreInteractions(mockApiService);
       verifyNoMoreInteractions(mockSharedPrefsService);
       verifyNoMoreInteractions(mockYURouter);
       verifyNoMoreInteractions(mockActorDetailsNotifier);
@@ -123,7 +123,7 @@ void main() {
         () async {
           final fakeActorDetails = FakeActorDetails();
           when(
-            () => mockAuthService.login(
+            () => mockApiService.login(
               username: '',
               password: '',
             ),
@@ -146,7 +146,7 @@ void main() {
           await loginViewModel.login();
 
           verify(
-            () => mockAuthService.login(
+            () => mockApiService.login(
               username: '',
               password: '',
             ),
@@ -172,24 +172,24 @@ void main() {
       );
 
       test(
-        'should check authServiceExceptionType is invalidCredentials '
+        'should check apiServiceExceptionType is invalidCredentials '
         'when login throws an exception.',
         () async {
           when(
-            () => mockAuthService.login(
+            () => mockApiService.login(
               username: '',
               password: '',
             ),
           ).thenThrow(
-            const AuthServiceException(
-              AuthServiceExceptionType.invalidCredentials,
+            const ApiServiceException(
+              ApiServiceExceptionType.invalidCredentials,
             ),
           );
 
           await loginViewModel.login();
 
           verify(
-            () => mockAuthService.login(
+            () => mockApiService.login(
               username: '',
               password: '',
             ),
@@ -208,8 +208,8 @@ void main() {
           );
 
           expect(
-            loginViewModel.authServiceExceptionType,
-            AuthServiceExceptionType.invalidCredentials,
+            loginViewModel.apiServiceExceptionType,
+            ApiServiceExceptionType.invalidCredentials,
           );
           expect(notifyListenersCount, 3);
         },
@@ -218,7 +218,7 @@ void main() {
   });
 }
 
-class MockAuthService extends Mock implements AuthService {}
+class MockApiService extends Mock implements ApiService {}
 
 class MockSharedPrefsService extends Mock implements SharedPrefsService {}
 

@@ -1,14 +1,14 @@
-import 'package:alyamamah/core/extensions/auth_service_exception_type.dart';
+import 'package:alyamamah/core/extensions/api_service_exception_type.dart';
 import 'package:alyamamah/core/extensions/build_context.dart';
-import 'package:alyamamah/core/services/auth/auth_service_exception.dart';
+import 'package:alyamamah/core/services/api/api_service_exception.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../test_utils/test_material_app.dart';
 
 void main() {
-  group('AuthServiceExceptionTypeX |', () {
-    group('mapAuthServiceExceptionType |', () {
+  group('ApiServiceExceptionTypeX |', () {
+    group('mapApiServiceExceptionType |', () {
       testWidgets(
         'should get unknown_service_error if type is unknown.',
         (WidgetTester tester) async {
@@ -21,8 +21,8 @@ void main() {
 
           final context = tester.element(find.text('test'));
 
-          final result = AuthServiceExceptionType.unknown
-              .mapAuthServiceExceptionType(context);
+          final result = ApiServiceExceptionType.unknown
+              .mapApiServiceExceptionType(context);
           expect(result, context.s.unknown_service_error);
         },
       );
@@ -39,8 +39,8 @@ void main() {
 
           final context = tester.element(find.text('test'));
 
-          final result = AuthServiceExceptionType.invalidCredentials
-              .mapAuthServiceExceptionType(context);
+          final result = ApiServiceExceptionType.invalidCredentials
+              .mapApiServiceExceptionType(context);
           expect(result, context.s.invalid_credentials);
         },
       );
@@ -57,8 +57,8 @@ void main() {
 
           final context = tester.element(find.text('test'));
 
-          final result = AuthServiceExceptionType.sessionExpired
-              .mapAuthServiceExceptionType(context);
+          final result = ApiServiceExceptionType.sessionExpired
+              .mapApiServiceExceptionType(context);
           expect(result, context.s.session_expired);
         },
       );

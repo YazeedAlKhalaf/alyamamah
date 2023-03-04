@@ -1,8 +1,8 @@
 import 'package:alyamamah/core/models/day.dart';
 import 'package:alyamamah/core/models/schedule.dart';
 import 'package:alyamamah/core/models/time_table.dart';
-import 'package:alyamamah/core/services/auth/auth_service.dart';
-import 'package:alyamamah/core/services/auth/auth_service_exception.dart';
+import 'package:alyamamah/core/services/api/api_service.dart';
+import 'package:alyamamah/core/services/api/api_service_exception.dart';
 import 'package:alyamamah/ui/views/home/home_view_model.dart';
 import 'package:alyamamah/ui/views/home/models/schedule_entry.dart';
 import 'package:flutter/material.dart';
@@ -24,15 +24,15 @@ void main() {
   });
 
   group('HomeViewModel |', () {
-    late MockAuthService mockAuthService;
+    late MockApiService mockApiService;
     late PageController pageController;
     late HomeViewModel homeViewModel;
 
     setUp(() {
-      mockAuthService = MockAuthService();
+      mockApiService = MockApiService();
       pageController = PageController();
       homeViewModel = HomeViewModel(
-        authService: mockAuthService,
+        apiService: mockApiService,
         pageController: pageController,
       );
     });
@@ -111,7 +111,7 @@ void main() {
         'if the call is successful.',
         () async {
           when(
-            () => mockAuthService.getStudentSchedule(schedule: '20222'),
+            () => mockApiService.getStudentSchedule(schedule: '20222'),
           ).thenAnswer((_) async => [schedule1, schedule2]);
 
           await homeViewModel.getStudentSchedule();
@@ -307,11 +307,11 @@ void main() {
 
       test(
         'should have isBusy and scheduleDays should have empty  '
-        'if the call throws a AuthServiceException.',
+        'if the call throws a ApiServiceException.',
         () async {
           when(
-            () => mockAuthService.getStudentSchedule(schedule: '20222'),
-          ).thenThrow(const AuthServiceException());
+            () => mockApiService.getStudentSchedule(schedule: '20222'),
+          ).thenThrow(const ApiServiceException());
 
           await homeViewModel.getStudentSchedule();
 
@@ -327,4 +327,4 @@ void main() {
   });
 }
 
-class MockAuthService extends Mock implements AuthService {}
+class MockApiService extends Mock implements ApiService {}

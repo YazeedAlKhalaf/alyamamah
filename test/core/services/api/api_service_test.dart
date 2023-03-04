@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:alyamamah/core/models/actor_details.dart';
 import 'package:alyamamah/core/models/schedule.dart';
-import 'package:alyamamah/core/services/auth/auth_service.dart';
-import 'package:alyamamah/core/services/auth/auth_service_exception.dart';
+import 'package:alyamamah/core/services/api/api_service.dart';
+import 'package:alyamamah/core/services/api/api_service_exception.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,20 +15,20 @@ import 'fixtures/actor_details_response.dart';
 import 'fixtures/student_schedule_response.dart';
 
 void main() {
-  group('authServiceProvider |', () {
+  group('apiServiceProvider |', () {
     test(
-      'verify authServiceProvider is Provider<AuthService>.',
+      'verify apiServiceProvider is Provider<ApiService>.',
       () {
-        expect(authServiceProvider, isA<Provider<AuthService>>());
+        expect(apiServiceProvider, isA<Provider<ApiService>>());
       },
     );
   });
 
-  group('AuthService |', () {
+  group('ApiService |', () {
     late FakeInterceptors fakeInterceptors;
     late MockDio mockDio;
     late MockCookieJar mockCookieJar;
-    late AuthService authService;
+    late ApiService apiService;
 
     setUp(() {
       fakeInterceptors = FakeInterceptors();
@@ -37,7 +37,7 @@ void main() {
 
       mockCookieJar = MockCookieJar();
 
-      authService = AuthService(
+      apiService = ApiService(
         dio: mockDio,
         cookieJar: mockCookieJar,
       );
@@ -72,7 +72,7 @@ void main() {
             )),
           );
 
-          final result = await authService.login(
+          final result = await apiService.login(
             username: username,
             password: password,
           );
@@ -93,7 +93,7 @@ void main() {
       );
 
       test(
-        'should throw an AuthServiceException with type unknown '
+        'should throw an ApiServiceException with type unknown '
         'if the response status code is 400.',
         () async {
           const username = 'username';
@@ -121,14 +121,14 @@ void main() {
           );
 
           expect(
-            () => authService.login(
+            () => apiService.login(
               username: username,
               password: password,
             ),
-            throwsA(isA<AuthServiceException>().having(
+            throwsA(isA<ApiServiceException>().having(
               (e) => e.type,
               'type',
-              AuthServiceExceptionType.unknown,
+              ApiServiceExceptionType.unknown,
             )),
           );
 
@@ -147,7 +147,7 @@ void main() {
       );
 
       test(
-        'should throw an AuthServiceException with type invalidCredentials '
+        'should throw an ApiServiceException with type invalidCredentials '
         'if the response status code is 200.',
         () async {
           const username = 'username';
@@ -175,14 +175,14 @@ void main() {
           );
 
           expect(
-            () => authService.login(
+            () => apiService.login(
               username: username,
               password: password,
             ),
-            throwsA(isA<AuthServiceException>().having(
+            throwsA(isA<ApiServiceException>().having(
               (e) => e.type,
               'type',
-              AuthServiceExceptionType.invalidCredentials,
+              ApiServiceExceptionType.invalidCredentials,
             )),
           );
 
@@ -201,7 +201,7 @@ void main() {
       );
 
       test(
-        'should throw an AuthServiceException with type unknown '
+        'should throw an ApiServiceException with type unknown '
         'if get request throws any exception.',
         () async {
           const username = 'username';
@@ -223,14 +223,14 @@ void main() {
           ).thenThrow(Exception());
 
           expect(
-            () => authService.login(
+            () => apiService.login(
               username: username,
               password: password,
             ),
-            throwsA(isA<AuthServiceException>().having(
+            throwsA(isA<ApiServiceException>().having(
               (e) => e.type,
               'type',
-              AuthServiceExceptionType.unknown,
+              ApiServiceExceptionType.unknown,
             )),
           );
 
@@ -265,7 +265,7 @@ void main() {
             )),
           );
 
-          final response = await authService.getStudentSchedule(
+          final response = await apiService.getStudentSchedule(
             schedule: '20222',
           );
           expect(
@@ -293,11 +293,11 @@ void main() {
           );
 
           expect(
-            () async => await authService.getStudentSchedule(schedule: '20222'),
-            throwsA(isA<AuthServiceException>().having(
+            () async => await apiService.getStudentSchedule(schedule: '20222'),
+            throwsA(isA<ApiServiceException>().having(
               (e) => e.type,
               'exception type',
-              AuthServiceExceptionType.unknown,
+              ApiServiceExceptionType.unknown,
             )),
           );
         },
@@ -321,11 +321,11 @@ void main() {
           );
 
           expect(
-            () async => await authService.getStudentSchedule(schedule: '20222'),
-            throwsA(isA<AuthServiceException>().having(
+            () async => await apiService.getStudentSchedule(schedule: '20222'),
+            throwsA(isA<ApiServiceException>().having(
               (e) => e.type,
               'exception type',
-              AuthServiceExceptionType.sessionExpired,
+              ApiServiceExceptionType.sessionExpired,
             )),
           );
         },
@@ -341,11 +341,11 @@ void main() {
           ).thenThrow(Exception());
 
           expect(
-            () async => await authService.getStudentSchedule(schedule: '20222'),
-            throwsA(isA<AuthServiceException>().having(
+            () async => await apiService.getStudentSchedule(schedule: '20222'),
+            throwsA(isA<ApiServiceException>().having(
               (e) => e.type,
               'exception type',
-              AuthServiceExceptionType.unknown,
+              ApiServiceExceptionType.unknown,
             )),
           );
         },
@@ -359,7 +359,7 @@ void main() {
           when(() => mockCookieJar.deleteAll())
               .thenAnswer((_) => Future.value());
 
-          authService.logout();
+          apiService.logout();
 
           verify(() => mockCookieJar.deleteAll()).called(1);
         },

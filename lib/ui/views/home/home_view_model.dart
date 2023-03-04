@@ -3,8 +3,8 @@ import 'package:alyamamah/core/extensions/time_of_day.dart';
 import 'package:alyamamah/core/models/day.dart';
 import 'package:alyamamah/core/models/schedule.dart';
 import 'package:alyamamah/core/models/time_table.dart';
-import 'package:alyamamah/core/services/auth/auth_service.dart';
-import 'package:alyamamah/core/services/auth/auth_service_exception.dart';
+import 'package:alyamamah/core/services/api/api_service.dart';
+import 'package:alyamamah/core/services/api/api_service_exception.dart';
 import 'package:alyamamah/ui/views/home/models/schedule_entry.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,7 +12,7 @@ import 'package:logging/logging.dart';
 
 final homeViewModelProvider = ChangeNotifierProvider(
   (ref) => HomeViewModel(
-    authService: ref.read(authServiceProvider),
+    apiService: ref.read(apiServiceProvider),
     pageController: PageController(),
   ),
 );
@@ -20,13 +20,13 @@ final homeViewModelProvider = ChangeNotifierProvider(
 class HomeViewModel extends ChangeNotifier {
   final _log = Logger('HomeViewModel');
 
-  final AuthService _authService;
+  final ApiService _apiService;
   final PageController _pageController;
 
   HomeViewModel({
-    required AuthService authService,
+    required ApiService apiService,
     required PageController pageController,
-  })  : _authService = authService,
+  })  : _apiService = apiService,
         _pageController = pageController;
 
   bool _isBusy = false;
@@ -53,7 +53,7 @@ class HomeViewModel extends ChangeNotifier {
     scheduleDays[Day.thu] = [];
 
     try {
-      final scheduleList = await _authService.getStudentSchedule(
+      final scheduleList = await _apiService.getStudentSchedule(
         // TODO: make this dynamic.
         schedule: '20222',
       );
@@ -78,7 +78,7 @@ class HomeViewModel extends ChangeNotifier {
         scheduleDays[day] = scheduleEntryList
           ..sort((a, b) => a.endTime.compareTo(b.startTime));
       });
-    } on AuthServiceException catch (e) {
+    } on ApiServiceException catch (e) {
       _log.severe('getStudentSchedule() | exception: $e');
     }
 

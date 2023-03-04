@@ -1,6 +1,6 @@
 import 'package:alyamamah/core/providers/actor_details/actor_details_notifier.dart';
 import 'package:alyamamah/core/router/yu_router.dart';
-import 'package:alyamamah/core/services/auth/auth_service.dart';
+import 'package:alyamamah/core/services/api/api_service.dart';
 import 'package:alyamamah/core/services/shared_prefs/shared_prefs_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,7 +11,7 @@ final profileViewModelProvider = ChangeNotifierProvider(
     yuRouter: ref.read(yuRouterProvider),
     sharedPrefsService: ref.read(sharedPrefsServiceProvider),
     actorDetailsNotifier: ref.read(actorDetailsProvider.notifier),
-    authService: ref.read(authServiceProvider),
+    apiService: ref.read(apiServiceProvider),
   ),
 );
 
@@ -21,17 +21,17 @@ class ProfileViewModel extends ChangeNotifier {
   final YURouter _yuRouter;
   final SharedPrefsService _sharedPrefsService;
   final ActorDetailsNotifier _actorDetailsNotifier;
-  final AuthService _authService;
+  final ApiService _apiService;
 
   ProfileViewModel({
     required YURouter yuRouter,
     required SharedPrefsService sharedPrefsService,
     required ActorDetailsNotifier actorDetailsNotifier,
-    required AuthService authService,
+    required ApiService apiService,
   })  : _yuRouter = yuRouter,
         _sharedPrefsService = sharedPrefsService,
         _actorDetailsNotifier = actorDetailsNotifier,
-        _authService = authService;
+        _apiService = apiService;
 
   bool _isBusy = false;
   bool get isBusy => _isBusy;
@@ -46,7 +46,7 @@ class ProfileViewModel extends ChangeNotifier {
     notifyListeners();
 
     await _sharedPrefsService.deleteUsernameAndPassword();
-    await _authService.logout();
+    await _apiService.logout();
     _actorDetailsNotifier.setActorDetails(null);
 
     await _yuRouter.pushAndPopUntil(

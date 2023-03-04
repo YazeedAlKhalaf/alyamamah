@@ -1,5 +1,5 @@
 import 'package:alyamamah/core/constants.dart';
-import 'package:alyamamah/core/extensions/auth_service_exception_type.dart';
+import 'package:alyamamah/core/extensions/api_service_exception_type.dart';
 import 'package:alyamamah/core/extensions/build_context.dart';
 import 'package:alyamamah/ui/views/login/login_view_model.dart';
 import 'package:alyamamah/ui/widgets/button_loading.dart';
@@ -71,10 +71,10 @@ class LoginView extends ConsumerWidget {
                       : Text(context.s.login),
                 ),
                 const SizedBox(height: Constants.padding),
-                if (loginViewModel.authServiceExceptionType != null)
+                if (loginViewModel.apiServiceExceptionType != null)
                   Text(
-                    loginViewModel.authServiceExceptionType!
-                        .mapAuthServiceExceptionType(context),
+                    loginViewModel.apiServiceExceptionType!
+                        .mapApiServiceExceptionType(context),
                     style: Theme.of(context).textTheme.labelMedium?.copyWith(
                           color: Theme.of(context).colorScheme.error,
                         ),

@@ -1,7 +1,7 @@
 import 'package:alyamamah/core/providers/actor_details/actor_details_notifier.dart';
 import 'package:alyamamah/core/router/yu_router.dart';
-import 'package:alyamamah/core/services/auth/auth_service.dart';
-import 'package:alyamamah/core/services/auth/auth_service_exception.dart';
+import 'package:alyamamah/core/services/api/api_service.dart';
+import 'package:alyamamah/core/services/api/api_service_exception.dart';
 import 'package:alyamamah/core/services/shared_prefs/shared_prefs_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,7 +9,7 @@ import 'package:logging/logging.dart';
 
 final startupViewModelProvider = ChangeNotifierProvider.autoDispose(
   (ref) => StartupViewModel(
-    authService: ref.read(authServiceProvider),
+    apiService: ref.read(apiServiceProvider),
     sharedPrefsService: ref.read(sharedPrefsServiceProvider),
     yuRouter: ref.read(yuRouterProvider),
     actorDetailsNotifier: ref.read(actorDetailsProvider.notifier),
@@ -19,17 +19,17 @@ final startupViewModelProvider = ChangeNotifierProvider.autoDispose(
 class StartupViewModel extends ChangeNotifier {
   final _log = Logger('StartupViewModel');
 
-  final AuthService _authService;
+  final ApiService _apiService;
   final SharedPrefsService _sharedPrefsService;
   final YURouter _yuRouter;
   final ActorDetailsNotifier _actorDetailsNotifier;
 
   StartupViewModel({
-    required AuthService authService,
+    required ApiService apiService,
     required SharedPrefsService sharedPrefsService,
     required YURouter yuRouter,
     required ActorDetailsNotifier actorDetailsNotifier,
-  })  : _authService = authService,
+  })  : _apiService = apiService,
         _sharedPrefsService = sharedPrefsService,
         _yuRouter = yuRouter,
         _actorDetailsNotifier = actorDetailsNotifier;
@@ -48,7 +48,7 @@ class StartupViewModel extends ChangeNotifier {
       );
 
       try {
-        final actorDetails = await _authService.login(
+        final actorDetails = await _apiService.login(
           username: username,
           password: password,
         );
@@ -63,9 +63,9 @@ class StartupViewModel extends ChangeNotifier {
           MainRoute(),
           predicate: (_) => false,
         );
-      } on AuthServiceException catch (e) {
+      } on ApiServiceException catch (e) {
         _log.severe(
-          'handleStartup | caught AuthServiceException logging in automatically: ${e.type}.',
+          'handleStartup | caught ApiServiceException logging in automatically: ${e.type}.',
         );
 
         // TODO(yazeedalkhalaf): show a snack bar with the error mapped message.

@@ -5,6 +5,10 @@ import 'package:alyamamah/core/models/actor_details.dart';
 import 'package:alyamamah/core/models/schedule.dart';
 import 'package:alyamamah/core/services/api/api_service.dart';
 import 'package:alyamamah/core/services/api/api_service_exception.dart';
+import 'package:alyamamah/core/services/api/interceptors/demo_mode_interceptor.dart';
+import 'package:alyamamah/core/services/api/interceptors/fixtures/absences_response.dart';
+import 'package:alyamamah/core/services/api/interceptors/fixtures/actor_details_response.dart';
+import 'package:alyamamah/core/services/api/interceptors/fixtures/student_schedule_response.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,9 +16,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../../test_utils/matchers/auth_header_options_matcher.dart';
-import 'fixtures/absences_response.dart';
-import 'fixtures/actor_details_response.dart';
-import 'fixtures/student_schedule_response.dart';
 
 void main() {
   group('apiServiceProvider |', () {
@@ -30,6 +31,7 @@ void main() {
     late FakeInterceptors fakeInterceptors;
     late MockDio mockDio;
     late MockCookieJar mockCookieJar;
+    late MockDemoModeInteceptor mockDemoModeInteceptor;
     late ApiService apiService;
 
     setUp(() {
@@ -38,10 +40,12 @@ void main() {
       when(() => mockDio.interceptors).thenReturn(fakeInterceptors);
 
       mockCookieJar = MockCookieJar();
+      mockDemoModeInteceptor = MockDemoModeInteceptor();
 
       apiService = ApiService(
         dio: mockDio,
         cookieJar: mockCookieJar,
+        demoModeInterceptor: mockDemoModeInteceptor,
       );
     });
 
@@ -477,3 +481,5 @@ class FakeInterceptors extends Fake implements Interceptors {
 class MockDio extends Mock implements Dio {}
 
 class MockCookieJar extends Mock implements CookieJar {}
+
+class MockDemoModeInteceptor extends Mock implements DemoModeInterceptor {}

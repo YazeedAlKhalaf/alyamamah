@@ -5,6 +5,7 @@ import 'package:alyamamah/core/models/absence.dart';
 import 'package:alyamamah/core/models/actor_details.dart';
 import 'package:alyamamah/core/models/schedule.dart';
 import 'package:alyamamah/core/services/api/api_service_exception.dart';
+import 'package:alyamamah/core/services/api/interceptors/demo_mode_interceptor.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
@@ -15,6 +16,7 @@ final apiServiceProvider = Provider(
   (ref) => ApiService(
     dio: Dio(),
     cookieJar: CookieJar(),
+    demoModeInterceptor: DemoModeInterceptor(),
   ),
 );
 
@@ -23,16 +25,24 @@ class ApiService {
 
   final Dio _dio;
   final CookieJar _cookieJar;
+  final DemoModeInterceptor _demoModeInterceptor;
 
   ApiService({
     required Dio dio,
     required CookieJar cookieJar,
+    required DemoModeInterceptor demoModeInterceptor,
   })  : _dio = dio,
-        _cookieJar = cookieJar {
+        _cookieJar = cookieJar,
+        _demoModeInterceptor = demoModeInterceptor {
     _dio.options = BaseOptions(
       baseUrl: Constants.apiUrl,
       responseType: ResponseType.json,
     );
+
+    /// This interceptor has an activation path and activation credentials,
+    /// once triggered it will start faking all responses. This is useful for
+    /// testing purposes.
+    _dio.interceptors.add(_demoModeInterceptor);
 
     /// This line makes cookies easier to deal with.
     /// Basically once you login, the server will send you a cookie
@@ -115,6 +125,7 @@ class ApiService {
 
   Future<void> logout() async {
     await _cookieJar.deleteAll();
+    _demoModeInterceptor.disableDemoMode();
   }
 
   Future<List<Absence>> getAbsences() async {

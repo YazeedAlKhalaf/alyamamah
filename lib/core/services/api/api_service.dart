@@ -9,6 +9,7 @@ import 'package:alyamamah/core/services/api/interceptors/demo_mode_interceptor.d
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logging/logging.dart';
 
@@ -49,7 +50,11 @@ class ApiService {
     /// that you can use to authenticate yourself in the future and this
     /// line makes it so that the cookie is automatically saved and sent
     /// with every request.
-    _dio.interceptors.add(CookieManager(_cookieJar));
+    ///
+    /// DON'T USE WITH WEB!
+    if (!kIsWeb) {
+      _dio.interceptors.add(CookieManager(_cookieJar));
+    }
   }
 
   Future<ActorDetails> login({

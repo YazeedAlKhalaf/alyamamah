@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:alyamamah/core/services/api/interceptors/fixtures/absences_response.dart';
-import 'package:alyamamah/core/services/api/interceptors/fixtures/actor_details_response.dart';
-import 'package:alyamamah/core/services/api/interceptors/fixtures/student_schedule_response.dart';
+import 'package:alyamamah/core/services/api/fixtures/absences_response.dart';
+import 'package:alyamamah/core/services/api/fixtures/actor_details_response.dart';
+import 'package:alyamamah/core/services/api/fixtures/student_schedule_response.dart';
 import 'package:dio/dio.dart';
 
 class DemoModeInterceptor extends Interceptor {

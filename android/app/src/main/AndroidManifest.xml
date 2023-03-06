@@ -1,6 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="dev.alkhalaf.alyamamah">
-   <application
+    
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application
         android:label="Al Yamamah"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">

@@ -49,6 +49,12 @@ void main() {
               password: 'password',
             ),
           ).thenAnswer((_) => Future.value(FakeActorDetails()));
+          when(() => mockSharedPrefsService.getLocale()).thenReturn('en');
+          when(
+            () => mockApiService.changeLanguage(
+              changeLanguageLocale: ChangeLanguageLocale.english,
+            ),
+          ).thenAnswer((_) => Future.value(true));
           when(
             () => mockYURouter.pushAndPopUntil(
               MainRoute(),
@@ -64,6 +70,12 @@ void main() {
             () => mockApiService.login(
               username: 'username',
               password: 'password',
+            ),
+          ).called(2);
+          verify(() => mockSharedPrefsService.getLocale()).called(1);
+          verify(
+            () => mockApiService.changeLanguage(
+              changeLanguageLocale: ChangeLanguageLocale.english,
             ),
           ).called(1);
           verify(

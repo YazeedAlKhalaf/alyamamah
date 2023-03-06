@@ -9,6 +9,7 @@ import 'package:alyamamah/core/services/api/fixtures/absences_response.dart';
 import 'package:alyamamah/core/services/api/fixtures/actor_details_response.dart';
 import 'package:alyamamah/core/services/api/fixtures/student_schedule_response.dart';
 import 'package:alyamamah/core/services/api/interceptors/demo_mode_interceptor.dart';
+import 'package:alyamamah/core/services/api/interceptors/language_interceptor.dart';
 import 'package:alyamamah/core/services/api/interceptors/session_expired_interceptor.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
@@ -34,6 +35,7 @@ void main() {
     late MockCookieJar mockCookieJar;
     late MockDemoModeInteceptor mockDemoModeInteceptor;
     late MockSessionExpiredInterceptor mockSessionExpiredInterceptor;
+    late MockLanguageInterceptor mockLanguageInterceptor;
     late ApiService apiService;
 
     setUp(() {
@@ -44,12 +46,14 @@ void main() {
       mockCookieJar = MockCookieJar();
       mockDemoModeInteceptor = MockDemoModeInteceptor();
       mockSessionExpiredInterceptor = MockSessionExpiredInterceptor();
+      mockLanguageInterceptor = MockLanguageInterceptor();
 
       apiService = ApiService(
         dio: mockDio,
         cookieJar: mockCookieJar,
         demoModeInterceptor: mockDemoModeInteceptor,
         sessionExpiredInterceptor: mockSessionExpiredInterceptor,
+        languageInterceptor: mockLanguageInterceptor,
       );
     });
 
@@ -434,3 +438,5 @@ class MockDemoModeInteceptor extends Mock implements DemoModeInterceptor {}
 
 class MockSessionExpiredInterceptor extends Mock
     implements SessionExpiredInterceptor {}
+
+class MockLanguageInterceptor extends Mock implements LanguageInterceptor {}

@@ -6,6 +6,7 @@ import 'package:alyamamah/core/models/actor_details.dart';
 import 'package:alyamamah/core/models/schedule.dart';
 import 'package:alyamamah/core/services/api/api_service_exception.dart';
 import 'package:alyamamah/core/services/api/interceptors/demo_mode_interceptor.dart';
+import 'package:alyamamah/core/services/api/interceptors/language_interceptor.dart';
 import 'package:alyamamah/core/services/api/interceptors/session_expired_interceptor.dart';
 import 'package:alyamamah/core/services/shared_prefs/shared_prefs_service.dart';
 import 'package:cookie_jar/cookie_jar.dart';
@@ -23,8 +24,19 @@ final apiServiceProvider = Provider(
     sessionExpiredInterceptor: SessionExpiredInterceptor(
       sharedPrefsService: ref.read(sharedPrefsServiceProvider),
     ),
+    languageInterceptor: LanguageInterceptor(
+      sharedPrefsService: ref.read(sharedPrefsServiceProvider),
+    ),
   ),
 );
+
+enum ChangeLanguageLocale {
+  arabic(1),
+  english(2);
+
+  final int localeNumber;
+  const ChangeLanguageLocale(this.localeNumber);
+}
 
 class ApiService {
   final _log = Logger('ApiService');
@@ -33,16 +45,19 @@ class ApiService {
   final CookieJar _cookieJar;
   final DemoModeInterceptor _demoModeInterceptor;
   final SessionExpiredInterceptor _sessionExpiredInterceptor;
+  final LanguageInterceptor _languageInterceptor;
 
   ApiService({
     required Dio dio,
     required CookieJar cookieJar,
     required DemoModeInterceptor demoModeInterceptor,
     required SessionExpiredInterceptor sessionExpiredInterceptor,
+    required LanguageInterceptor languageInterceptor,
   })  : _dio = dio,
         _cookieJar = cookieJar,
         _demoModeInterceptor = demoModeInterceptor,
-        _sessionExpiredInterceptor = sessionExpiredInterceptor {
+        _sessionExpiredInterceptor = sessionExpiredInterceptor,
+        _languageInterceptor = languageInterceptor {
     _dio.options = BaseOptions(
       baseUrl: Constants.apiUrl,
       responseType: ResponseType.json,
@@ -70,6 +85,8 @@ class ApiService {
     if (!kIsWeb) {
       _dio.interceptors.add(CookieManager(_cookieJar));
     }
+
+    _dio.interceptors.add(_languageInterceptor);
   }
 
   Future<ActorDetails> login({
@@ -158,6 +175,34 @@ class ApiService {
       if (e is ApiServiceException) rethrow;
 
       _log.severe('getAbsences | unexpected exception: $e.');
+      throw const ApiServiceException();
+    }
+  }
+
+  /// returns if the user is logged in or not.
+  Future<bool> changeLanguage({
+    required ChangeLanguageLocale changeLanguageLocale,
+  }) async {
+    try {
+      final response = await _dio.get(
+        '/resources/common/commonServies/changeLanguage/${changeLanguageLocale.localeNumber}',
+        options: Options(
+          headers: {
+            'langId': '${changeLanguageLocale.localeNumber - 1}',
+          },
+        ),
+      );
+
+      if (response.statusCode != 200) {
+        _log.severe('changeLanguage | non 200 status code.');
+        throw const ApiServiceException();
+      }
+
+      return response.data is Map<String, dynamic>;
+    } catch (e) {
+      if (e is ApiServiceException) rethrow;
+
+      _log.severe('changeLanguage | unexpected exception: $e.');
       throw const ApiServiceException();
     }
   }

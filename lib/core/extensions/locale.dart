@@ -1,4 +1,5 @@
 import 'package:alyamamah/core/extensions/build_context.dart';
+import 'package:alyamamah/core/services/api/api_service.dart';
 import 'package:flutter/material.dart';
 
 extension LocaleX on Locale {
@@ -21,6 +22,16 @@ extension LocaleX on Locale {
         return '🇬🇧';
       default:
         return context.s.unknown;
+    }
+  }
+
+  ChangeLanguageLocale mapToChangeLanguageLocale() {
+    switch (languageCode) {
+      case 'ar':
+        return ChangeLanguageLocale.arabic;
+      case 'en':
+      default:
+        return ChangeLanguageLocale.english;
     }
   }
 }

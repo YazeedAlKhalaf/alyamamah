@@ -1,9 +1,10 @@
+import 'package:alyamamah/core/extensions/locale.dart';
 import 'package:alyamamah/core/providers/actor_details/actor_details_notifier.dart';
 import 'package:alyamamah/core/router/yu_router.dart';
 import 'package:alyamamah/core/services/api/api_service.dart';
 import 'package:alyamamah/core/services/api/api_service_exception.dart';
 import 'package:alyamamah/core/services/shared_prefs/shared_prefs_service.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logging/logging.dart';
 
@@ -73,6 +74,22 @@ class LoginViewModel extends ChangeNotifier {
     notifyListeners();
 
     try {
+      await _apiService.login(
+        username: username,
+        password: password,
+      );
+
+      final locale = _sharedPrefsService.getLocale();
+      final changeLanguageLocale = Locale(
+        locale ?? 'en',
+      ).mapToChangeLanguageLocale();
+      _log.info(
+        'changing the language on the server to ${changeLanguageLocale.name}',
+      );
+      await _apiService.changeLanguage(
+        changeLanguageLocale: changeLanguageLocale,
+      );
+
       final actorDetails = await _apiService.login(
         username: username,
         password: password,

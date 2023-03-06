@@ -130,6 +130,13 @@ void main() {
           ).thenAnswer(
             (_) => Future<ActorDetails>.value(fakeActorDetails),
           );
+          when(() => mockSharedPrefsService.getLocale())
+              .thenAnswer((_) => 'en');
+          when(
+            () => mockApiService.changeLanguage(
+              changeLanguageLocale: ChangeLanguageLocale.english,
+            ),
+          ).thenAnswer((_) => Future.value(false));
           when(
             () => mockSharedPrefsService.saveUsernameAndPassword(
               username: '',
@@ -149,6 +156,12 @@ void main() {
             () => mockApiService.login(
               username: '',
               password: '',
+            ),
+          ).called(2);
+          verify(() => mockSharedPrefsService.getLocale()).called(1);
+          verify(
+            () => mockApiService.changeLanguage(
+              changeLanguageLocale: ChangeLanguageLocale.english,
             ),
           ).called(1);
           verify(

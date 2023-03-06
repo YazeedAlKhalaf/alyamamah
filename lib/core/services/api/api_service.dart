@@ -6,6 +6,8 @@ import 'package:alyamamah/core/models/actor_details.dart';
 import 'package:alyamamah/core/models/schedule.dart';
 import 'package:alyamamah/core/services/api/api_service_exception.dart';
 import 'package:alyamamah/core/services/api/interceptors/demo_mode_interceptor.dart';
+import 'package:alyamamah/core/services/api/interceptors/session_expired_interceptor.dart';
+import 'package:alyamamah/core/services/shared_prefs/shared_prefs_service.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
@@ -18,6 +20,9 @@ final apiServiceProvider = Provider(
     dio: Dio(),
     cookieJar: CookieJar(),
     demoModeInterceptor: DemoModeInterceptor(),
+    sessionExpiredInterceptor: SessionExpiredInterceptor(
+      sharedPrefsService: ref.read(sharedPrefsServiceProvider),
+    ),
   ),
 );
 
@@ -27,14 +32,17 @@ class ApiService {
   final Dio _dio;
   final CookieJar _cookieJar;
   final DemoModeInterceptor _demoModeInterceptor;
+  final SessionExpiredInterceptor _sessionExpiredInterceptor;
 
   ApiService({
     required Dio dio,
     required CookieJar cookieJar,
     required DemoModeInterceptor demoModeInterceptor,
+    required SessionExpiredInterceptor sessionExpiredInterceptor,
   })  : _dio = dio,
         _cookieJar = cookieJar,
-        _demoModeInterceptor = demoModeInterceptor {
+        _demoModeInterceptor = demoModeInterceptor,
+        _sessionExpiredInterceptor = sessionExpiredInterceptor {
     _dio.options = BaseOptions(
       baseUrl: Constants.apiUrl,
       responseType: ResponseType.json,
@@ -44,6 +52,13 @@ class ApiService {
     /// once triggered it will start faking all responses. This is useful for
     /// testing purposes.
     _dio.interceptors.add(_demoModeInterceptor);
+
+    /// This interceptor is used to handle session expired errors automatically.
+    /// It renews the session and retries the request.
+    /// This should be before CookieManager because it needs to intercept the
+    /// response before the cookie is saved, otherwise it will save the old
+    /// cookie and the next request will fail.
+    _dio.interceptors.add(_sessionExpiredInterceptor);
 
     /// This line makes cookies easier to deal with.
     /// Basically once you login, the server will send you a cookie
@@ -109,14 +124,6 @@ class ApiService {
         throw const ApiServiceException();
       }
 
-      if (response.data is String &&
-          (response.data as String).contains('/yu/init')) {
-        _log.severe('getStudentSchedule | session expired.');
-        throw const ApiServiceException(
-          ApiServiceExceptionType.sessionExpired,
-        );
-      }
-
       return (response.data as List<dynamic>)
           .map((x) => Schedule.fromMap(x))
           .toList();
@@ -142,14 +149,6 @@ class ApiService {
       if (response.statusCode != 200) {
         _log.severe('getAbsences | non 200 status code.');
         throw const ApiServiceException();
-      }
-
-      if (response.data is String &&
-          (response.data as String).contains('/yu/init')) {
-        _log.severe('getAbsences | session expired.');
-        throw const ApiServiceException(
-          ApiServiceExceptionType.sessionExpired,
-        );
       }
 
       return (response.data as List<dynamic>)

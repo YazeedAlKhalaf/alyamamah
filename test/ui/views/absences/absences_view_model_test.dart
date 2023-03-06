@@ -22,7 +22,11 @@ void main() {
     test(
       'verify the provider works.',
       () {
-        final container = ProviderContainer();
+        final container = ProviderContainer(
+          overrides: [
+            apiServiceProvider.overrideWith((ref) => MockApiService()),
+          ],
+        );
         final absencesViewModel = container.read(absencesViewModelProvider);
 
         expect(absencesViewModel, isA<AbsencesViewModel>());

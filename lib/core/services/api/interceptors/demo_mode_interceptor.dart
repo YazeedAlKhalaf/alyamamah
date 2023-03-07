@@ -55,6 +55,15 @@ class DemoModeInterceptor extends Interceptor {
       );
     }
 
+    if (options.path
+        .contains('/resources/common/commonServies/changeLanguage/')) {
+      return Response<Map<String, dynamic>>(
+        requestOptions: options,
+        statusCode: 200,
+        data: <String, dynamic>{},
+      );
+    }
+
     switch (options.path) {
       case '/resources/common/commonServies/actorDetails/-1/1/2':
         return Response(

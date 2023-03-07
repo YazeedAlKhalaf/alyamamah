@@ -1,4 +1,5 @@
 import 'package:alyamamah/core/constants.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -51,5 +52,17 @@ class SharedPrefsService {
 
   Future<void> deleteLocale() async {
     await _sharedPreferences.remove(Constants.localeKey);
+  }
+
+  String? getThemeMode() {
+    return _sharedPreferences.getString(Constants.themeModeKey);
+  }
+
+  Future<void> saveThemeMode(ThemeMode themeMode) async {
+    await _sharedPreferences.setString(Constants.themeModeKey, themeMode.name);
+  }
+
+  Future<void> deleteThemeMode() async {
+    await _sharedPreferences.remove(Constants.themeModeKey);
   }
 }

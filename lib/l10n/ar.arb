@@ -47,5 +47,7 @@
   "absence_details": "تفاصيل الغيابات",
   "excused": "معذور",
   "late": "متأخر",
-  "no_absences": "لا يوجد غيابات"
+  "no_absences": "لا يوجد غيابات",
+  "university_id_is_required": "الرقم الجامعي مطلوب",
+  "password_is_required": "كلمة المرور مطلوبة"
 }

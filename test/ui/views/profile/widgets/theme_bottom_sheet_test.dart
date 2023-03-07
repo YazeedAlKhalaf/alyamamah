@@ -38,6 +38,8 @@ void main() {
         when(
           () => mockThemeService.themeMode,
         ).thenReturn(ThemeMode.light);
+        when(() => mockThemeService.setThemeMode(ThemeMode.dark))
+            .thenAnswer((invocation) => Future.value());
 
         await tester.pumpWidget(buildTestWidget());
         await tester.pumpAndSettle();

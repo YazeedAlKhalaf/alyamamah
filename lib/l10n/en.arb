@@ -47,5 +47,7 @@
   "absence_details": "Absences details",
   "excused": "Excused",
   "late": "Late",
-  "no_absences": "No absences"
+  "no_absences": "No absences",
+  "university_id_is_required": "University ID is required",
+  "password_is_required": "Password is required"
 }

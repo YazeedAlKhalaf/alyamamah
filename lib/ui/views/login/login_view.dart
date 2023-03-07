@@ -7,14 +7,21 @@ import 'package:alyamamah/ui/widgets/switch_language_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class LoginView extends ConsumerWidget {
+class LoginView extends ConsumerStatefulWidget {
   static final Key showPasswordButtonKey = UniqueKey();
   static final Key loginButtonKey = UniqueKey();
 
   const LoginView({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<LoginView> createState() => _LoginViewState();
+}
+
+class _LoginViewState extends ConsumerState<LoginView> {
+  final GlobalKey<FormState> loginForm = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
     final loginViewModel = ref.watch(loginViewModelProvider);
 
     return Scaffold(
@@ -36,7 +43,7 @@ class LoginView extends ConsumerWidget {
                   height: 250,
                 ),
                 Form(
-                  key: loginViewModel.loginForm,
+                  key: loginForm,
                   autovalidateMode: loginViewModel.autoValidateMode,
                   child: Column(
                     children: [
@@ -49,7 +56,7 @@ class LoginView extends ConsumerWidget {
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'University ID is required';
+                            return context.s.university_id_is_required;
                           }
 
                           return null;
@@ -62,7 +69,7 @@ class LoginView extends ConsumerWidget {
                         decoration: InputDecoration(
                           labelText: context.s.password,
                           suffixIcon: IconButton(
-                            key: showPasswordButtonKey,
+                            key: LoginView.showPasswordButtonKey,
                             onPressed: () {
                               ref
                                   .read(loginViewModelProvider)
@@ -76,7 +83,7 @@ class LoginView extends ConsumerWidget {
                         obscureText: !loginViewModel.showPassword,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Password is required';
+                            return context.s.password_is_required;
                           }
 
                           return null;
@@ -87,9 +94,15 @@ class LoginView extends ConsumerWidget {
                 ),
                 const SizedBox(height: Constants.padding),
                 FilledButton.tonal(
-                  key: loginButtonKey,
+                  key: LoginView.loginButtonKey,
                   onPressed: () async {
-                    await ref.read(loginViewModelProvider).login();
+                    if (loginForm.currentState?.validate() == false) {
+                      ref.read(loginViewModelProvider).setAutoValidateMode(
+                            AutovalidateMode.onUserInteraction,
+                          );
+                    } else {
+                      await ref.read(loginViewModelProvider).login();
+                    }
                   },
                   child: loginViewModel.isBusy
                       ? const ButtonLoading()

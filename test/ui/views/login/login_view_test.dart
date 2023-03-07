@@ -17,6 +17,10 @@ void main() {
 
     setUp(() {
       mockLoginViewModel = MockLoginViewModel();
+
+      when(() => mockLoginViewModel.autoValidateMode).thenReturn(
+        AutovalidateMode.disabled,
+      );
     });
 
     Widget buildTestWidget() {
@@ -177,7 +181,39 @@ void main() {
       );
 
       testWidgets(
-        'should verify onPressed calls login().',
+        'should verify onPressed calls login() if login form is filled.',
+        (WidgetTester tester) async {
+          when(() => mockLoginViewModel.username).thenReturn('12412512');
+          when(() => mockLoginViewModel.password).thenReturn('135125125');
+          when(() => mockLoginViewModel.showPassword).thenReturn(false);
+          when(() => mockLoginViewModel.isBusy).thenReturn(true);
+          when(() => mockLoginViewModel.apiServiceExceptionType)
+              .thenReturn(null);
+
+          when(() => mockLoginViewModel.login()).thenAnswer(
+            (_) => Future<void>.value(),
+          );
+
+          await tester.pumpWidget(buildTestWidget());
+          await tester.pump();
+
+          final loginButtonFinder = find.byKey(
+            LoginView.loginButtonKey,
+          );
+          expect(loginButtonFinder, findsOneWidget);
+
+          expect(tester.widget(loginButtonFinder), isA<FilledButton>());
+          final loginButton = tester.widget<FilledButton>(
+            loginButtonFinder,
+          );
+
+          loginButton.onPressed?.call();
+          verify(() => mockLoginViewModel.login()).called(1);
+        },
+      );
+
+      testWidgets(
+        'should verify onPressed calls login() if login form is not filled.',
         (WidgetTester tester) async {
           when(() => mockLoginViewModel.username).thenReturn('');
           when(() => mockLoginViewModel.password).thenReturn('');
@@ -204,7 +240,11 @@ void main() {
           );
 
           loginButton.onPressed?.call();
-          verify(() => mockLoginViewModel.login()).called(1);
+          verify(
+            () => mockLoginViewModel.setAutoValidateMode(
+              AutovalidateMode.onUserInteraction,
+            ),
+          ).called(1);
         },
       );
     });

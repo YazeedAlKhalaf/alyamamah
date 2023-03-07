@@ -35,30 +35,55 @@ class LoginView extends ConsumerWidget {
                   'assets/images/3d-flame-work-place-with-laptop-on-the-table-and-presentation-board-on-the-wall.png',
                   height: 250,
                 ),
-                // TODO(yazeedalkhalaf): add validation for username and password fields.
-                TextFormField(
-                  initialValue: loginViewModel.username,
-                  onChanged: ref.read(loginViewModelProvider).onUsernameChanged,
-                  decoration: InputDecoration(
-                    labelText: context.s.username,
+                Form(
+                  key: loginViewModel.loginForm,
+                  autovalidateMode: loginViewModel.autoValidateMode,
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        initialValue: loginViewModel.username,
+                        onChanged:
+                            ref.read(loginViewModelProvider).onUsernameChanged,
+                        decoration: InputDecoration(
+                          labelText: context.s.username,
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'University ID is required';
+                          }
+
+                          return null;
+                        },
+                      ),
+                      TextFormField(
+                        initialValue: loginViewModel.password,
+                        onChanged:
+                            ref.read(loginViewModelProvider).onPasswordChanged,
+                        decoration: InputDecoration(
+                          labelText: context.s.password,
+                          suffixIcon: IconButton(
+                            key: showPasswordButtonKey,
+                            onPressed: () {
+                              ref
+                                  .read(loginViewModelProvider)
+                                  .toggleShowPassword();
+                            },
+                            icon: loginViewModel.showPassword
+                                ? const Icon(Icons.visibility_rounded)
+                                : const Icon(Icons.visibility_off_rounded),
+                          ),
+                        ),
+                        obscureText: !loginViewModel.showPassword,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Password is required';
+                          }
+
+                          return null;
+                        },
+                      ),
+                    ],
                   ),
-                ),
-                TextFormField(
-                  initialValue: loginViewModel.password,
-                  onChanged: ref.read(loginViewModelProvider).onPasswordChanged,
-                  decoration: InputDecoration(
-                    labelText: context.s.password,
-                    suffixIcon: IconButton(
-                      key: showPasswordButtonKey,
-                      onPressed: () {
-                        ref.read(loginViewModelProvider).toggleShowPassword();
-                      },
-                      icon: loginViewModel.showPassword
-                          ? const Icon(Icons.visibility_rounded)
-                          : const Icon(Icons.visibility_off_rounded),
-                    ),
-                  ),
-                  obscureText: !loginViewModel.showPassword,
                 ),
                 const SizedBox(height: Constants.padding),
                 FilledButton.tonal(

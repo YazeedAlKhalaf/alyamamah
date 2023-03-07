@@ -37,6 +37,11 @@ class LoginViewModel extends ChangeNotifier {
         _yuRouter = yuRouter,
         _actorDetailsNotifier = actorDetailsNotifier;
 
+  final GlobalKey<FormState> loginForm = GlobalKey<FormState>();
+
+  AutovalidateMode _autoValidateMode = AutovalidateMode.disabled;
+  AutovalidateMode get autoValidateMode => _autoValidateMode;
+
   ApiServiceExceptionType? _apiServiceExceptionType;
   ApiServiceExceptionType? get apiServiceExceptionType =>
       _apiServiceExceptionType;
@@ -69,6 +74,11 @@ class LoginViewModel extends ChangeNotifier {
   bool get isBusy => _isBusy;
 
   Future<void> login() async {
+    if (loginForm.currentState?.validate() == false) {
+      _autoValidateMode = AutovalidateMode.always;
+      return;
+    }
+
     _apiServiceExceptionType = null;
     _isBusy = true;
     notifyListeners();

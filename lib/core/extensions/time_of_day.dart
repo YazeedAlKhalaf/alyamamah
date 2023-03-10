@@ -14,4 +14,10 @@ extension TimeOfDayX on TimeOfDay {
 
     return thisDate.compareTo(otherDate);
   }
+
+  Duration difference(TimeOfDay other) {
+    int hourDifference = other.hour - hour;
+    int minuteDifference = other.minute - minute;
+    return Duration(hours: hourDifference, minutes: minuteDifference);
+  }
 }

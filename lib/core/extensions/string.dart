@@ -11,9 +11,10 @@ extension StringX on String {
     int hour = int.parse(timeParts[0].trim());
     int minute = int.parse(timeParts[1].trim());
 
-    final isPM = trimmed.contains('pm') ||
-        trimmed.contains('PM') ||
-        trimmed.contains('م');
+    final isPM = (trimmed.contains('pm') ||
+            trimmed.contains('PM') ||
+            trimmed.contains('م')) &&
+        hour != 12;
 
     if (isPM) {
       hour += 12;

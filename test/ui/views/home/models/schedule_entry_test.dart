@@ -15,6 +15,7 @@ void main() {
           room: 'room',
           activityDesc: 'activityDesc',
           courseName: 'courseName',
+          courseCode: 'courseCode',
         );
 
         expect(scheduleEntry, isA<ScheduleEntry>());
@@ -23,6 +24,7 @@ void main() {
         expect(scheduleEntry.room, 'room');
         expect(scheduleEntry.activityDesc, 'activityDesc');
         expect(scheduleEntry.courseName, 'courseName');
+        expect(scheduleEntry.courseCode, 'courseCode');
       },
     );
 
@@ -35,6 +37,7 @@ void main() {
           room: 'room',
           activityDesc: 'activityDesc',
           courseName: 'courseName',
+          courseCode: 'courseCode',
         );
 
         final startTime = TimeOfDay.now();
@@ -45,6 +48,7 @@ void main() {
           room: 'room2',
           activityDesc: 'activityDesc2',
           courseName: 'courseName2',
+          courseCode: 'courseCode2',
         );
 
         expect(newScheduleEntry.startTime, startTime);
@@ -52,6 +56,7 @@ void main() {
         expect(newScheduleEntry.room, 'room2');
         expect(newScheduleEntry.activityDesc, 'activityDesc2');
         expect(newScheduleEntry.courseName, 'courseName2');
+        expect(newScheduleEntry.courseCode, 'courseCode2');
       },
     );
 
@@ -67,6 +72,7 @@ void main() {
           room: 'room',
           activityDesc: 'activityDesc',
           courseName: 'courseName',
+          courseCode: 'courseCode',
         );
 
         final newScheduleEntry = scheduleEntry.copyWith();
@@ -76,6 +82,7 @@ void main() {
         expect(newScheduleEntry.room, 'room');
         expect(newScheduleEntry.activityDesc, 'activityDesc');
         expect(newScheduleEntry.courseName, 'courseName');
+        expect(newScheduleEntry.courseCode, 'courseCode');
       },
     );
 
@@ -91,6 +98,7 @@ void main() {
           room: 'room',
           activityDesc: 'activityDesc',
           courseName: 'courseName',
+          courseCode: 'courseCode',
         );
 
         final scheduleEntry2 = ScheduleEntry(
@@ -99,6 +107,7 @@ void main() {
           room: 'room',
           activityDesc: 'activityDesc',
           courseName: 'courseName',
+          courseCode: 'courseCode',
         );
 
         expect(scheduleEntry, scheduleEntry2);
@@ -117,6 +126,7 @@ void main() {
           room: 'room',
           activityDesc: 'activityDesc',
           courseName: 'courseName',
+          courseCode: 'courseCode',
         );
 
         final scheduleEntry2 = ScheduleEntry(
@@ -125,6 +135,7 @@ void main() {
           room: 'room',
           activityDesc: 'activityDesc',
           courseName: 'courseName',
+          courseCode: 'courseCode',
         );
 
         expect(scheduleEntry.hashCode, scheduleEntry2.hashCode);

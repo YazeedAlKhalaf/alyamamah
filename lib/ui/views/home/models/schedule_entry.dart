@@ -6,6 +6,7 @@ class ScheduleEntry {
   final String room;
   final String activityDesc;
   final String courseName;
+  final String courseCode;
 
   ScheduleEntry({
     required this.startTime,
@@ -13,6 +14,7 @@ class ScheduleEntry {
     required this.room,
     required this.activityDesc,
     required this.courseName,
+    required this.courseCode,
   });
 
   ScheduleEntry copyWith({
@@ -21,6 +23,7 @@ class ScheduleEntry {
     String? room,
     String? activityDesc,
     String? courseName,
+    String? courseCode,
   }) {
     return ScheduleEntry(
       startTime: startTime ?? this.startTime,
@@ -28,6 +31,7 @@ class ScheduleEntry {
       room: room ?? this.room,
       activityDesc: activityDesc ?? this.activityDesc,
       courseName: courseName ?? this.courseName,
+      courseCode: courseCode ?? this.courseCode,
     );
   }
 
@@ -39,7 +43,8 @@ class ScheduleEntry {
         other.endTime == endTime &&
         other.room == room &&
         other.activityDesc == activityDesc &&
-        other.courseName == courseName;
+        other.courseName == courseName &&
+        other.courseCode == courseCode;
   }
 
   @override
@@ -48,6 +53,7 @@ class ScheduleEntry {
         endTime.hashCode ^
         room.hashCode ^
         activityDesc.hashCode ^
-        courseName.hashCode;
+        courseName.hashCode ^
+        courseCode.hashCode;
   }
 }

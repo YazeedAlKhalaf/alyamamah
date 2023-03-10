@@ -68,6 +68,7 @@ class HomeViewModel extends ChangeNotifier {
               room: timeTable.room,
               activityDesc: schedule.activityDesc,
               courseName: schedule.courseName,
+              courseCode: schedule.courseCode,
             ));
           }
         }

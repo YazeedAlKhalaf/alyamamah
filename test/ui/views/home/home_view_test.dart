@@ -22,6 +22,7 @@ void main() {
       when(
         () => mockHomeViewModel.getStudentSchedule(),
       ).thenAnswer((_) => Future.value());
+      when(() => mockHomeViewModel.scheduleDays).thenReturn({});
     });
 
     Widget buildTestWidget() {
@@ -99,6 +100,7 @@ void main() {
                 room: 'room',
                 activityDesc: 'activityDesc',
                 courseName: 'courseName',
+                courseCode: 'courseCode',
               ),
               ScheduleEntry(
                 startTime: const TimeOfDay(hour: 10, minute: 20),
@@ -106,6 +108,7 @@ void main() {
                 room: 'room',
                 activityDesc: 'activityDesc',
                 courseName: 'courseName',
+                courseCode: 'courseCode',
               ),
             ],
           });

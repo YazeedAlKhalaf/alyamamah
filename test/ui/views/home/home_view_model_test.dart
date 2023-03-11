@@ -1,8 +1,10 @@
 import 'package:alyamamah/core/models/day.dart';
+import 'package:alyamamah/core/models/ios_widget_course.dart';
 import 'package:alyamamah/core/models/schedule.dart';
 import 'package:alyamamah/core/models/time_table.dart';
 import 'package:alyamamah/core/services/api/api_service.dart';
 import 'package:alyamamah/core/services/api/api_service_exception.dart';
+import 'package:alyamamah/core/services/widget_kit/widget_kit_service.dart';
 import 'package:alyamamah/ui/views/home/home_view_model.dart';
 import 'package:alyamamah/ui/views/home/models/schedule_entry.dart';
 import 'package:flutter/material.dart';
@@ -27,13 +29,16 @@ void main() {
     late MockApiService mockApiService;
     late PageController pageController;
     late HomeViewModel homeViewModel;
+    late MockWidgetKitService mockWidgetKitService;
 
     setUp(() {
       mockApiService = MockApiService();
       pageController = PageController();
+      mockWidgetKitService = MockWidgetKitService();
       homeViewModel = HomeViewModel(
         apiService: mockApiService,
         pageController: pageController,
+        widgetKitService: mockWidgetKitService,
       );
     });
 
@@ -113,6 +118,11 @@ void main() {
           when(
             () => mockApiService.getStudentSchedule(schedule: '20222'),
           ).thenAnswer((_) async => [schedule1, schedule2]);
+          when(
+            () => mockWidgetKitService.updateCoursesWidgetData(
+              any(that: isA<Map<Day, List<IosWidgetCourse>>>()),
+            ),
+          ).thenAnswer((_) => Future.value());
 
           await homeViewModel.getStudentSchedule();
 
@@ -302,6 +312,15 @@ void main() {
           );
 
           expect(homeViewModel.isBusy, false);
+
+          verify(
+            () => mockApiService.getStudentSchedule(schedule: '20222'),
+          ).called(1);
+          verify(
+            () => mockWidgetKitService.updateCoursesWidgetData(
+              any(that: isA<Map<Day, List<IosWidgetCourse>>>()),
+            ),
+          ).called(1);
         },
       );
 
@@ -328,3 +347,5 @@ void main() {
 }
 
 class MockApiService extends Mock implements ApiService {}
+
+class MockWidgetKitService extends Mock implements WidgetKitService {}

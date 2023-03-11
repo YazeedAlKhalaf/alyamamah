@@ -2,6 +2,7 @@ import 'package:alyamamah/core/providers/actor_details/actor_details_notifier.da
 import 'package:alyamamah/core/router/yu_router.dart';
 import 'package:alyamamah/core/services/api/api_service.dart';
 import 'package:alyamamah/core/services/shared_prefs/shared_prefs_service.dart';
+import 'package:alyamamah/core/services/widget_kit/widget_kit_service.dart';
 import 'package:alyamamah/ui/views/profile/profile_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -44,6 +45,7 @@ void main() {
     late MockSharedPrefsService mockSharedPrefsService;
     late MockActorDetailsNotifier mockActorDetailsNotifier;
     late MockApiService mockApiService;
+    late MockWidgetKitService mockWidgetKitService;
     late ProfileViewModel profileViewModel;
 
     setUp(() {
@@ -51,11 +53,13 @@ void main() {
       mockSharedPrefsService = MockSharedPrefsService();
       mockActorDetailsNotifier = MockActorDetailsNotifier();
       mockApiService = MockApiService();
+      mockWidgetKitService = MockWidgetKitService();
       profileViewModel = ProfileViewModel(
         yuRouter: mockYURouter,
         sharedPrefsService: mockSharedPrefsService,
         actorDetailsNotifier: mockActorDetailsNotifier,
         apiService: mockApiService,
+        widgetKitService: mockWidgetKitService,
       );
     });
 
@@ -80,6 +84,9 @@ void main() {
           when(() => mockApiService.logout()).thenAnswer((_) => Future.value());
           when(() => mockSharedPrefsService.deleteUsernameAndPassword())
               .thenAnswer((_) => Future.value());
+          when(() => mockWidgetKitService.deleteCoursesWidgetData()).thenAnswer(
+            (_) => Future.value(),
+          );
           when(
             () => mockYURouter.pushAndPopUntil(
               const LoginRoute(),
@@ -93,6 +100,8 @@ void main() {
 
           verify(() => mockApiService.logout()).called(1);
           verify(() => mockSharedPrefsService.deleteUsernameAndPassword())
+              .called(1);
+          verify(() => mockWidgetKitService.deleteCoursesWidgetData())
               .called(1);
           verify(
             () => mockYURouter.pushAndPopUntil(
@@ -113,3 +122,5 @@ class MockSharedPrefsService extends Mock implements SharedPrefsService {}
 class MockActorDetailsNotifier extends Mock implements ActorDetailsNotifier {}
 
 class MockApiService extends Mock implements ApiService {}
+
+class MockWidgetKitService extends Mock implements WidgetKitService {}

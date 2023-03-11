@@ -1,12 +1,14 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:alyamamah/core/extensions/time_of_day.dart';
 import 'package:alyamamah/core/models/day.dart';
+import 'package:alyamamah/core/models/ios_widget_course.dart';
 import 'package:alyamamah/core/models/schedule.dart';
 import 'package:alyamamah/core/models/time_table.dart';
 import 'package:alyamamah/core/services/api/api_service.dart';
 import 'package:alyamamah/core/services/api/api_service_exception.dart';
+import 'package:alyamamah/core/services/widget_kit/widget_kit_service.dart';
 import 'package:alyamamah/ui/views/home/models/schedule_entry.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logging/logging.dart';
 
@@ -14,6 +16,7 @@ final homeViewModelProvider = ChangeNotifierProvider(
   (ref) => HomeViewModel(
     apiService: ref.read(apiServiceProvider),
     pageController: PageController(),
+    widgetKitService: ref.read(widgetKitSerivceProvider),
   ),
 );
 
@@ -22,12 +25,15 @@ class HomeViewModel extends ChangeNotifier {
 
   final ApiService _apiService;
   final PageController _pageController;
+  final WidgetKitService _widgetKitService;
 
   HomeViewModel({
     required ApiService apiService,
     required PageController pageController,
+    required WidgetKitService widgetKitService,
   })  : _apiService = apiService,
-        _pageController = pageController;
+        _pageController = pageController,
+        _widgetKitService = widgetKitService;
 
   bool _isBusy = false;
   bool get isBusy => _isBusy;
@@ -79,7 +85,35 @@ class HomeViewModel extends ChangeNotifier {
         scheduleDays[day] = scheduleEntryList
           ..sort((a, b) => a.endTime.compareTo(b.startTime));
       });
+
+      final iosWidgetCoursesDays = <Day, List<IosWidgetCourse>>{
+        Day.sun: [],
+        Day.mon: [],
+        Day.tue: [],
+        Day.wed: [],
+        Day.thu: [],
+      };
+
+      // Convert data to ios widget data.
+      scheduleDays.forEach((day, scheduleEntryList) {
+        for (ScheduleEntry scheduleEntry in scheduleEntryList) {
+          iosWidgetCoursesDays[day]!.add(IosWidgetCourse(
+            startTime: scheduleEntry.startTime,
+            endTime: scheduleEntry.endTime,
+            roomName: scheduleEntry.room,
+            courseCode: scheduleEntry.courseCode,
+          ));
+        }
+      });
+
+      await _widgetKitService.updateCoursesWidgetData(
+        iosWidgetCoursesDays,
+      );
     } on ApiServiceException catch (e) {
+      _log.severe('getStudentSchedule() | exception: $e');
+    } on PlatformException catch (e) {
+      _log.severe('getStudentSchedule() | exception: $e');
+    } on Exception catch (e) {
       _log.severe('getStudentSchedule() | exception: $e');
     }
 

@@ -21,6 +21,7 @@ dependencies:
   logging: 1.1.1
   shared_preferences: 2.0.18
   font_awesome_flutter: 10.4.0
+  flutter_widgetkit: 1.0.3
 
 dev_dependencies:
   flutter_test:

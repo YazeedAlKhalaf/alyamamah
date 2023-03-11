@@ -12,7 +12,7 @@ flutter_icons:
     theme_color: "#f68939"
   windows:
     generate: true
-    image_path: "assets/logo/logo-foreground.png"
+    image_path: "assets/logo/logo-macos.png"
   macos:
     generate: true
     image_path: "assets/logo/logo-macos.png"

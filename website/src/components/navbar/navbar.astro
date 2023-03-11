@@ -1,0 +1,58 @@
+---
+import Container from "@components/container.astro";
+import Link from "@components/ui/link.astro";
+import { Astronav, MenuItems, MenuIcon } from "astro-navbar";
+
+const menuitems = [
+  {
+    title: "Features",
+    path: "#features",
+  },
+  {
+    title: "Contact",
+    path: "/contact",
+  },
+  {
+    title: "Privacy Policy",
+    path: "/privacy-policy",
+  },
+];
+---
+
+<Container>
+  <header class="flex flex-col lg:flex-row justify-between items-center my-5">
+    <Astronav>
+      <div class="flex w-full lg:w-auto items-center justify-between">
+        <a href="/" class="flex flex-row gap-2 text-lg items-center">
+          <img class="w-10" src="/alyamamah-logo.png" alt="al yamamah logo" />
+          <div>
+            <span class="font-bold text-slate-800">Al</span>
+            <span class="text-slate-500"> Yamamah</span>
+          </div>
+        </a>
+        <div class="block lg:hidden">
+          <MenuIcon class="w-4 h-4 text-gray-800" />
+        </div>
+      </div>
+      <MenuItems class="hidden w-full lg:w-auto mt-2 lg:flex lg:mt-0">
+        <ul class="flex flex-col lg:flex-row lg:gap-3">
+          {
+            menuitems.map((item, _) => (
+              <li>
+                <a
+                  href={item.path}
+                  class="flex lg:px-3 py-2 text-gray-600 hover:text-gray-900"
+                >
+                  {item.title}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </MenuItems>
+    </Astronav>
+    <div>
+      <div class="hidden lg:flex items-center gap-4"></div>
+    </div>
+  </header>
+</Container>

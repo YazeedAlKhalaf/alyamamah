@@ -1,0 +1,22 @@
+---
+import Container from "@components/container.astro";
+import Layout from "./Layout.astro";
+
+const { frontmatter } = Astro.props;
+---
+
+<Layout title={frontmatter.title}>
+  <Container>
+    <div class="mx-auto max-w-[735px] mt-14">
+      <h1
+        class="text-4xl lg:text-5xl font-bold lg:tracking-tight mt-1 lg:leading-tight"
+      >
+        {frontmatter.title}
+      </h1>
+    </div>
+
+    <div class="mx-auto prose prose-lg mt-6">
+      <slot />
+    </div>
+  </Container>
+</Layout>

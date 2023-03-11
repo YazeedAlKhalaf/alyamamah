@@ -22,6 +22,7 @@ dependencies:
   shared_preferences: 2.0.18
   font_awesome_flutter: 10.4.0
   flutter_widgetkit: 1.0.3
+  url_launcher: 6.1.10
 
 dev_dependencies:
   flutter_test:

@@ -3,6 +3,7 @@ class Constants {
   static const double spacing = padding / 2;
   static const String apiUrl = 'https://edugate.yu.edu.sa/yu';
   static const String sharedAppGroup = 'group.dev.alkhalaf.alyamamah.shared';
+  static const String twitterLink = 'https://twitter.com/YazeedAlKhalaf';
 
   static const String usernameKey = 'username';
   static const String passwordKey = 'password';

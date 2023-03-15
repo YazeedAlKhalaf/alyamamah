@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:alyamamah/core/constants.dart';
 import 'package:alyamamah/core/models/day.dart';
@@ -14,6 +15,8 @@ class WidgetKitService {
   Future<void> updateCoursesWidgetData(
     Map<Day, List<IosWidgetCourse>> iosWidgetCoursesDays,
   ) async {
+    if (!Platform.isIOS) return;
+
     Map<String, dynamic> jsonMap = {};
     for (Day day in iosWidgetCoursesDays.keys) {
       final coursesJson = iosWidgetCoursesDays[day]!.map((course) {
@@ -31,6 +34,8 @@ class WidgetKitService {
   }
 
   Future<void> deleteCoursesWidgetData() async {
+    if (!Platform.isIOS) return;
+
     await WidgetKit.removeItem(
       Constants.coursesWidgetDataKey,
       Constants.sharedAppGroup,

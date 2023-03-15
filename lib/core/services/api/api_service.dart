@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:alyamamah/core/constants.dart';
 import 'package:alyamamah/core/models/absence.dart';
@@ -11,23 +12,37 @@ import 'package:alyamamah/core/services/api/interceptors/session_expired_interce
 import 'package:alyamamah/core/services/shared_prefs/shared_prefs_service.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logging/logging.dart';
 
 final apiServiceProvider = Provider(
-  (ref) => ApiService(
-    dio: Dio(),
-    cookieJar: CookieJar(),
-    demoModeInterceptor: DemoModeInterceptor(),
-    sessionExpiredInterceptor: SessionExpiredInterceptor(
-      sharedPrefsService: ref.read(sharedPrefsServiceProvider),
-    ),
-    languageInterceptor: LanguageInterceptor(
-      sharedPrefsService: ref.read(sharedPrefsServiceProvider),
-    ),
-  ),
+  (ref) {
+    final dio = Dio();
+
+    if (Platform.isAndroid) {
+      (dio.httpClientAdapter as IOHttpClientAdapter).onHttpClientCreate =
+          (HttpClient client) {
+        client.badCertificateCallback =
+            (X509Certificate cert, String host, int port) => true;
+        return null;
+      };
+    }
+
+    return ApiService(
+      dio: dio,
+      cookieJar: CookieJar(),
+      demoModeInterceptor: DemoModeInterceptor(),
+      sessionExpiredInterceptor: SessionExpiredInterceptor(
+        sharedPrefsService: ref.read(sharedPrefsServiceProvider),
+      ),
+      languageInterceptor: LanguageInterceptor(
+        sharedPrefsService: ref.read(sharedPrefsServiceProvider),
+      ),
+    );
+  },
 );
 
 enum ChangeLanguageLocale {

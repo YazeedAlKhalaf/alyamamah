@@ -15,4 +15,12 @@ class MainViewModel extends ChangeNotifier {
     _selectedIndex = value;
     notifyListeners();
   }
+
+  bool _isExtended = true;
+  bool get isExtended => _isExtended;
+
+  void toggleExtended() {
+    _isExtended = !isExtended;
+    notifyListeners();
+  }
 }

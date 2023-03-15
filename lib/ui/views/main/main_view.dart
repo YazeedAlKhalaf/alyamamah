@@ -21,37 +21,92 @@ class MainView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final mainViewModel = ref.watch(mainViewModelProvider);
 
+    final isTablet = MediaQuery.of(context).size.shortestSide >= 600;
+
     return Scaffold(
       key: parentWidget,
-      body: IndexedStack(
-        index: mainViewModel.selectedIndex,
-        children: pages ??
-            const [
-              HomeView(),
-              AbsencesView(),
-              ProfileView(),
-            ],
-      ),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: mainViewModel.selectedIndex,
-        onDestinationSelected:
-            ref.read(mainViewModelProvider).onDestinationSelected,
-        labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
-        destinations: [
-          NavigationDestination(
-            icon: const Icon(Icons.home_rounded),
-            label: context.s.home,
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.calendar_today_rounded),
-            label: context.s.absences,
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.person_rounded),
-            label: context.s.profile,
+      body: Row(
+        children: [
+          if (isTablet)
+            NavigationRail(
+              selectedIndex: mainViewModel.selectedIndex,
+              onDestinationSelected:
+                  ref.read(mainViewModelProvider).onDestinationSelected,
+              extended: mainViewModel.isExtended,
+              minExtendedWidth: 180,
+              destinations: [
+                NavigationRailDestination(
+                  icon: const Icon(Icons.home_rounded),
+                  label: Text(context.s.home),
+                ),
+                NavigationRailDestination(
+                  icon: const Icon(Icons.calendar_today_rounded),
+                  label: Text(context.s.absences),
+                ),
+                NavigationRailDestination(
+                  icon: const Icon(Icons.person_rounded),
+                  label: Text(context.s.profile),
+                ),
+              ],
+              trailing: Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    if (mainViewModel.isExtended)
+                      FilledButton(
+                        onPressed: () {
+                          ref.read(mainViewModelProvider).toggleExtended();
+                        },
+                        child: Text(context.s.collapse),
+                      )
+                    else
+                      IconButton(
+                        onPressed: () {
+                          ref.read(mainViewModelProvider).toggleExtended();
+                        },
+                        icon: const Icon(Icons.arrow_circle_right_outlined),
+                      ),
+                  ],
+                ),
+              ),
+            ),
+          if (isTablet) const VerticalDivider(),
+          Expanded(
+            child: IndexedStack(
+              index: mainViewModel.selectedIndex,
+              children: pages ??
+                  const [
+                    HomeView(),
+                    AbsencesView(),
+                    ProfileView(),
+                  ],
+            ),
           ),
         ],
       ),
+      bottomNavigationBar: isTablet
+          ? null
+          : NavigationBar(
+              selectedIndex: mainViewModel.selectedIndex,
+              onDestinationSelected:
+                  ref.read(mainViewModelProvider).onDestinationSelected,
+              labelBehavior:
+                  NavigationDestinationLabelBehavior.onlyShowSelected,
+              destinations: [
+                NavigationDestination(
+                  icon: const Icon(Icons.home_rounded),
+                  label: context.s.home,
+                ),
+                NavigationDestination(
+                  icon: const Icon(Icons.calendar_today_rounded),
+                  label: context.s.absences,
+                ),
+                NavigationDestination(
+                  icon: const Icon(Icons.person_rounded),
+                  label: context.s.profile,
+                ),
+              ],
+            ),
     );
   }
 }

@@ -65,4 +65,16 @@ class SharedPrefsService {
   Future<void> deleteThemeMode() async {
     await _sharedPreferences.remove(Constants.themeModeKey);
   }
+
+  Future<void> saveRamadanMode(bool value) async {
+    await _sharedPreferences.setBool(Constants.ramadanModeKey, value);
+  }
+
+  bool? getRamadanMode() {
+    return _sharedPreferences.getBool(Constants.ramadanModeKey);
+  }
+
+  Future<void> deleteRamadanMode() async {
+    await _sharedPreferences.remove(Constants.ramadanModeKey);
+  }
 }

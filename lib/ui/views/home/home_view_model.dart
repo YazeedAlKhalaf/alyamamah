@@ -5,6 +5,7 @@ import 'package:alyamamah/core/models/schedule.dart';
 import 'package:alyamamah/core/models/time_table.dart';
 import 'package:alyamamah/core/services/api/api_service.dart';
 import 'package:alyamamah/core/services/api/api_service_exception.dart';
+import 'package:alyamamah/core/services/shared_prefs/shared_prefs_service.dart';
 import 'package:alyamamah/core/services/widget_kit/widget_kit_service.dart';
 import 'package:alyamamah/ui/views/home/models/schedule_entry.dart';
 import 'package:alyamamah/ui/views/home/models/time_mapping.dart';
@@ -19,6 +20,7 @@ final homeViewModelProvider = ChangeNotifierProvider(
     apiService: ref.read(apiServiceProvider),
     pageController: PageController(),
     widgetKitService: ref.read(widgetKitSerivceProvider),
+    sharedPrefsService: ref.read(sharedPrefsServiceProvider),
   ),
 );
 
@@ -28,17 +30,22 @@ class HomeViewModel extends ChangeNotifier {
   final ApiService _apiService;
   final PageController _pageController;
   final WidgetKitService _widgetKitService;
+  final SharedPrefsService _sharedPrefsService;
 
   HomeViewModel({
     required ApiService apiService,
     required PageController pageController,
     required WidgetKitService widgetKitService,
+    required SharedPrefsService sharedPrefsService,
   })  : _apiService = apiService,
         _pageController = pageController,
-        _widgetKitService = widgetKitService {
+        _widgetKitService = widgetKitService,
+        _sharedPrefsService = sharedPrefsService {
     HijriCalendar now = HijriCalendar.now();
 
-    _isRamadan = now.isAfter(now.hYear, 4, 1) && now.isBefore(now.hYear, 5, 1);
+    _isRamadan =
+        (now.isAfter(now.hYear, 4, 1) && now.isBefore(now.hYear, 5, 1)) ||
+            (_sharedPrefsService.getRamadanMode() ?? false);
   }
 
   bool _isBusy = false;
@@ -185,6 +192,8 @@ class HomeViewModel extends ChangeNotifier {
   Future<void> toggleRamadanMode() async {
     _isRamadan = !isRamadan;
     notifyListeners();
+
+    await _sharedPrefsService.saveRamadanMode(isRamadan);
 
     final iosWidgetCoursesDays = <Day, List<IosWidgetCourse>>{
       Day.sun: [],

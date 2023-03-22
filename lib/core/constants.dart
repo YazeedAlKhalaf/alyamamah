@@ -10,4 +10,5 @@ class Constants {
   static const String localeKey = 'locale';
   static const String themeModeKey = 'themeMode';
   static const String coursesWidgetDataKey = 'coursesWidgetData';
+  static const String ramadanModeKey = 'ramadanMode';
 }

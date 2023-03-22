@@ -51,5 +51,6 @@
   "university_id_is_required": "الرقم الجامعي مطلوب",
   "password_is_required": "كلمة المرور مطلوبة",
   "collapse": "أغلق",
-  "late_count": "عدد التأخيرات: {count}"
+  "late_count": "عدد التأخيرات: {count}",
+  "no_absences_description": "كفو عليك، خليك كذا ولا تغيب على أي كلاس!"
 }

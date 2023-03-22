@@ -3,6 +3,7 @@ import 'package:alyamamah/core/extensions/build_context.dart';
 import 'package:alyamamah/ui/views/absences/absences_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class AbsencesView extends ConsumerStatefulWidget {
   static final Key refreshIndicatorKey = UniqueKey();
@@ -36,8 +37,34 @@ class _AbsencesViewState extends ConsumerState<AbsencesView> {
             const Center(child: CircularProgressIndicator())
           else if (!absencesViewModel.isBusy &&
               absencesViewModel.absences.isEmpty)
-            Center(
-              child: Text(context.s.no_absences),
+            Expanded(
+              child: RefreshIndicator(
+                onRefresh: () async {
+                  await ref.read(absencesViewModelProvider).getAbsences();
+                },
+                child: ListView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  children: [
+                    const SizedBox(height: Constants.spacing * 4),
+                    SvgPicture.asset(
+                      'assets/vectors/undraw_awesome_rlvy.svg',
+                      width: 200,
+                    ),
+                    const SizedBox(height: Constants.spacing * 4),
+                    Text(
+                      context.s.no_absences,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.headlineMedium,
+                    ),
+                    const SizedBox(height: Constants.spacing * 4),
+                    Text(
+                      context.s.no_absences_description,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ],
+                ),
+              ),
             )
           else
             Expanded(

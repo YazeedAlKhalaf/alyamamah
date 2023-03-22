@@ -102,7 +102,7 @@ final timeMappings = [
     newStartTime: const TimeOfDay(hour: 9, minute: 45),
     newEndTime: const TimeOfDay(hour: 10, minute: 35),
     days: {Day.sun, Day.tue, Day.thu},
-    newDays: {Day.sun},
+    newDays: {Day.sun, Day.tue, Day.thu},
   ),
   TimeMapping(
     originalStartTime: const TimeOfDay(hour: 7, minute: 30),
@@ -118,7 +118,7 @@ final timeMappings = [
     newStartTime: const TimeOfDay(hour: 10, minute: 00),
     newEndTime: const TimeOfDay(hour: 11, minute: 10),
     days: {Day.sun, Day.tue, Day.thu},
-    newDays: {Day.sun},
+    newDays: {Day.sun, Day.tue, Day.thu},
   ),
   TimeMapping(
     originalStartTime: const TimeOfDay(hour: 8, minute: 30),
@@ -151,7 +151,7 @@ final timeMappings = [
     newStartTime: const TimeOfDay(hour: 10, minute: 40),
     newEndTime: const TimeOfDay(hour: 11, minute: 50),
     days: {Day.sun, Day.tue, Day.thu},
-    newDays: {Day.sun, Day.tue},
+    newDays: {Day.sun, Day.tue, Day.thu},
   ),
   TimeMapping(
     originalStartTime: const TimeOfDay(hour: 9, minute: 30),
@@ -167,7 +167,7 @@ final timeMappings = [
     newStartTime: const TimeOfDay(hour: 10, minute: 40),
     newEndTime: const TimeOfDay(hour: 12, minute: 20),
     days: {Day.sun, Day.tue, Day.thu},
-    newDays: {Day.sun, Day.tue},
+    newDays: {Day.sun, Day.tue, Day.thu},
   ),
   // 2
   TimeMapping(

@@ -79,8 +79,13 @@ class _AbsencesViewState extends ConsumerState<AbsencesView> {
                         ],
                       ),
                       title: Text(absence.courseName),
-                      subtitle: Text(
-                        context.s.absences_count(absence.countAbsence),
+                      isThreeLine: true,
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(context.s.absences_count(absence.countAbsence)),
+                          Text(context.s.late_count(absence.countLate)),
+                        ],
                       ),
                       trailing: const Icon(Icons.chevron_right_rounded),
                       onTap: () async {

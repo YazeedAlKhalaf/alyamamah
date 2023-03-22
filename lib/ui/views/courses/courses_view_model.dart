@@ -3,6 +3,7 @@ import 'package:alyamamah/core/models/day.dart';
 import 'package:alyamamah/core/models/ios_widget_course.dart';
 import 'package:alyamamah/core/models/schedule.dart';
 import 'package:alyamamah/core/models/time_table.dart';
+import 'package:alyamamah/core/router/yu_router.dart';
 import 'package:alyamamah/core/services/api/api_service.dart';
 import 'package:alyamamah/core/services/api/api_service_exception.dart';
 import 'package:alyamamah/core/services/shared_prefs/shared_prefs_service.dart';
@@ -21,6 +22,7 @@ final coursesViewModelProvider = ChangeNotifierProvider(
     pageController: PageController(),
     widgetKitService: ref.read(widgetKitSerivceProvider),
     sharedPrefsService: ref.read(sharedPrefsServiceProvider),
+    yuRouter: ref.read(yuRouterProvider),
   ),
 );
 
@@ -31,16 +33,19 @@ class CoursesViewModel extends ChangeNotifier {
   final PageController _pageController;
   final WidgetKitService _widgetKitService;
   final SharedPrefsService _sharedPrefsService;
+  final YURouter _yuRouter;
 
   CoursesViewModel({
     required ApiService apiService,
     required PageController pageController,
     required WidgetKitService widgetKitService,
     required SharedPrefsService sharedPrefsService,
+    required YURouter yuRouter,
   })  : _apiService = apiService,
         _pageController = pageController,
         _widgetKitService = widgetKitService,
-        _sharedPrefsService = sharedPrefsService {
+        _sharedPrefsService = sharedPrefsService,
+        _yuRouter = yuRouter {
     HijriCalendar now = HijriCalendar.now();
 
     _isRamadan =
@@ -85,6 +90,12 @@ class CoursesViewModel extends ChangeNotifier {
     scheduleDaysRegular[Day.wed] = [];
     scheduleDaysRegular[Day.thu] = [];
 
+    scheduleDaysRamadan[Day.sun] = [];
+    scheduleDaysRamadan[Day.mon] = [];
+    scheduleDaysRamadan[Day.tue] = [];
+    scheduleDaysRamadan[Day.wed] = [];
+    scheduleDaysRamadan[Day.thu] = [];
+
     try {
       final scheduleList = await _apiService.getStudentSchedule(
         // TODO: make this dynamic.
@@ -102,6 +113,10 @@ class CoursesViewModel extends ChangeNotifier {
               activityDesc: schedule.activityDesc,
               courseName: schedule.courseName,
               courseCode: schedule.courseCode,
+              instructor: schedule.instructor,
+              creditHours: schedule.crdHrs,
+              campusName: schedule.campusName,
+              courseDeleted: schedule.courseDeleted,
             ));
 
             Set<Day> days = timeTable.days;
@@ -124,6 +139,10 @@ class CoursesViewModel extends ChangeNotifier {
                   activityDesc: schedule.activityDesc,
                   courseName: schedule.courseName,
                   courseCode: schedule.courseCode,
+                  instructor: schedule.instructor,
+                  creditHours: schedule.crdHrs,
+                  campusName: schedule.campusName,
+                  courseDeleted: schedule.courseDeleted,
                 ));
               }
             }
@@ -230,6 +249,12 @@ class CoursesViewModel extends ChangeNotifier {
 
     await _widgetKitService.updateCoursesWidgetData(
       iosWidgetCoursesDays,
+    );
+  }
+
+  Future<void> navigateToCourseDetails(ScheduleEntry scheduleEntry) async {
+    await _yuRouter.push(
+      CourseDetailsRoute(scheduleEntry: scheduleEntry),
     );
   }
 }

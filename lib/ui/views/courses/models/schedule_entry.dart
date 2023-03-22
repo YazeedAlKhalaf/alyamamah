@@ -7,6 +7,10 @@ class ScheduleEntry {
   final String activityDesc;
   final String courseName;
   final String courseCode;
+  final String instructor;
+  final String creditHours;
+  final String campusName;
+  final bool courseDeleted;
 
   ScheduleEntry({
     required this.startTime,
@@ -15,6 +19,10 @@ class ScheduleEntry {
     required this.activityDesc,
     required this.courseName,
     required this.courseCode,
+    required this.instructor,
+    required this.creditHours,
+    required this.campusName,
+    required this.courseDeleted,
   });
 
   ScheduleEntry copyWith({
@@ -24,6 +32,10 @@ class ScheduleEntry {
     String? activityDesc,
     String? courseName,
     String? courseCode,
+    String? instructor,
+    String? creditHours,
+    String? campusName,
+    bool? courseDeleted,
   }) {
     return ScheduleEntry(
       startTime: startTime ?? this.startTime,
@@ -32,6 +44,10 @@ class ScheduleEntry {
       activityDesc: activityDesc ?? this.activityDesc,
       courseName: courseName ?? this.courseName,
       courseCode: courseCode ?? this.courseCode,
+      instructor: instructor ?? this.instructor,
+      creditHours: creditHours ?? this.creditHours,
+      campusName: campusName ?? this.campusName,
+      courseDeleted: courseDeleted ?? this.courseDeleted,
     );
   }
 
@@ -44,7 +60,11 @@ class ScheduleEntry {
         other.room == room &&
         other.activityDesc == activityDesc &&
         other.courseName == courseName &&
-        other.courseCode == courseCode;
+        other.courseCode == courseCode &&
+        other.instructor == instructor &&
+        other.creditHours == creditHours &&
+        other.campusName == campusName &&
+        other.courseDeleted == courseDeleted;
   }
 
   @override
@@ -54,6 +74,10 @@ class ScheduleEntry {
         room.hashCode ^
         activityDesc.hashCode ^
         courseName.hashCode ^
-        courseCode.hashCode;
+        courseCode.hashCode ^
+        instructor.hashCode ^
+        creditHours.hashCode ^
+        campusName.hashCode ^
+        courseDeleted.hashCode;
   }
 }

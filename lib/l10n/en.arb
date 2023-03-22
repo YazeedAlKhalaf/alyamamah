@@ -52,5 +52,14 @@
   "password_is_required": "Password is required",
   "collapse": "Collapse",
   "late_count": "Late count: {count}",
-  "no_absences_description": "Keep up the good work and try to never miss a class!"
+  "no_absences_description": "Keep up the good work and try to never miss a class!",
+  "course_code": "Course Code",
+  "room": "Room",
+  "activity_description": "Activity Description",
+  "instructor": "Instructor",
+  "credit_hours": "Credit Hours",
+  "campus_name": "Campus Name",
+  "course_deleted_q": "Course Deleted?",
+  "yes": "Yes",
+  "no": "No"
 }

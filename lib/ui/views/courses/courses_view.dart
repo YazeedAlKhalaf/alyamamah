@@ -55,6 +55,11 @@ class _CoursesViewState extends ConsumerState<CoursesView> {
             hour: e2.startTime.hour,
             minutes: e2.startTime.minute,
           ),
+          onTap: () async {
+            await ref
+                .read(coursesViewModelProvider)
+                .navigateToCourseDetails(e2);
+          },
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,

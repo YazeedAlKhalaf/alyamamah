@@ -76,6 +76,9 @@ class StartupViewModel extends ChangeNotifier {
           'handleStartup | succeeded in logging in, going to main route.',
         );
 
+        // this is a hack for the weird navigator dirty assertion.
+        await Future.delayed(const Duration(milliseconds: 50));
+
         await _yuRouter.pushAndPopUntil(
           MainRoute(),
           predicate: (_) => false,

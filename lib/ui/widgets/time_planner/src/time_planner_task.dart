@@ -1,3 +1,4 @@
+import 'package:alyamamah/core/extensions/build_context.dart';
 import 'package:flutter/material.dart';
 
 import './config/global_config.dart' as config;
@@ -42,13 +43,24 @@ class TimePlannerTask extends StatelessWidget {
       top: ((config.cellHeight! * (dateTime.hour - config.startHour)) +
               ((dateTime.minutes * config.cellHeight!) / 60))
           .toDouble(),
-      left: config.cellWidth! * dateTime.day.toDouble(),
+      left: context.s.localeName == 'ar'
+          ? null
+          : config.cellWidth! * dateTime.day.toDouble(),
+      right: context.s.localeName == 'ar'
+          ? config.cellWidth! * dateTime.day.toDouble()
+          : null,
       child: SizedBox(
         width: (config.cellWidth!.toDouble() * (daysDuration ?? 1)) -
             config.horizontalTaskPadding!,
         child: Padding(
-          padding:
-              EdgeInsets.only(left: config.horizontalTaskPadding!.toDouble()),
+          padding: EdgeInsets.only(
+            left: context.s.localeName == 'ar'
+                ? 0
+                : config.horizontalTaskPadding!.toDouble(),
+            right: context.s.localeName == 'ar'
+                ? config.horizontalTaskPadding!.toDouble()
+                : 0,
+          ),
           child: Material(
             elevation: 3,
             borderRadius: config.borderRadius,

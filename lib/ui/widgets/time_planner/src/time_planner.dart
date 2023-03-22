@@ -91,8 +91,8 @@ class _TimePlannerState extends State<TimePlanner> {
 
   @override
   void initState() {
-    _initData();
     super.initState();
+    _initData();
     Future.delayed(Duration.zero).then((_) {
       if (widget.currentTimeAnimation) {
         int hour = DateTime.now().hour;
@@ -117,6 +117,13 @@ class _TimePlannerState extends State<TimePlanner> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+
+    _initData();
+  }
+
+  @override
+  void didUpdateWidget(covariant TimePlanner oldWidget) {
+    super.didUpdateWidget(oldWidget);
 
     _initData();
   }

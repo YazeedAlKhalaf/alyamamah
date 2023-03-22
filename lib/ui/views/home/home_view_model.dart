@@ -7,9 +7,11 @@ import 'package:alyamamah/core/services/api/api_service.dart';
 import 'package:alyamamah/core/services/api/api_service_exception.dart';
 import 'package:alyamamah/core/services/widget_kit/widget_kit_service.dart';
 import 'package:alyamamah/ui/views/home/models/schedule_entry.dart';
+import 'package:alyamamah/ui/views/home/models/time_mapping.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hijri/hijri_calendar.dart';
 import 'package:logging/logging.dart';
 
 final homeViewModelProvider = ChangeNotifierProvider(
@@ -33,14 +35,32 @@ class HomeViewModel extends ChangeNotifier {
     required WidgetKitService widgetKitService,
   })  : _apiService = apiService,
         _pageController = pageController,
-        _widgetKitService = widgetKitService;
+        _widgetKitService = widgetKitService {
+    HijriCalendar now = HijriCalendar.now();
+
+    _isRamadan = now.isAfter(now.hYear, 4, 1) && now.isBefore(now.hYear, 5, 1);
+  }
 
   bool _isBusy = false;
   bool get isBusy => _isBusy;
 
+  bool _isRamadan = false;
+  bool get isRamadan => _isRamadan;
+
   PageController get pageController => _pageController;
 
-  Map<Day, List<ScheduleEntry>> scheduleDays = {
+  Map<Day, List<ScheduleEntry>> get scheduleDays =>
+      isRamadan ? scheduleDaysRamadan : scheduleDaysRegular;
+
+  Map<Day, List<ScheduleEntry>> scheduleDaysRegular = {
+    Day.sun: [],
+    Day.mon: [],
+    Day.tue: [],
+    Day.wed: [],
+    Day.thu: [],
+  };
+
+  Map<Day, List<ScheduleEntry>> scheduleDaysRamadan = {
     Day.sun: [],
     Day.mon: [],
     Day.tue: [],
@@ -52,11 +72,11 @@ class HomeViewModel extends ChangeNotifier {
     _isBusy = true;
     notifyListeners();
 
-    scheduleDays[Day.sun] = [];
-    scheduleDays[Day.mon] = [];
-    scheduleDays[Day.tue] = [];
-    scheduleDays[Day.wed] = [];
-    scheduleDays[Day.thu] = [];
+    scheduleDaysRegular[Day.sun] = [];
+    scheduleDaysRegular[Day.mon] = [];
+    scheduleDaysRegular[Day.tue] = [];
+    scheduleDaysRegular[Day.wed] = [];
+    scheduleDaysRegular[Day.thu] = [];
 
     try {
       final scheduleList = await _apiService.getStudentSchedule(
@@ -68,7 +88,7 @@ class HomeViewModel extends ChangeNotifier {
       for (Schedule schedule in scheduleList) {
         for (TimeTable timeTable in schedule.timeTable) {
           for (Day day in timeTable.days) {
-            scheduleDays[day]!.add(ScheduleEntry(
+            scheduleDaysRegular[day]!.add(ScheduleEntry(
               startTime: timeTable.startTime,
               endTime: timeTable.endTime,
               room: timeTable.room,
@@ -76,13 +96,41 @@ class HomeViewModel extends ChangeNotifier {
               courseName: schedule.courseName,
               courseCode: schedule.courseCode,
             ));
+
+            Set<Day> days = timeTable.days;
+            final response = convertToRamdanTime(
+              days,
+              timeTable.startTime,
+              timeTable.endTime,
+            );
+            final startTime = response.startTime;
+            final endTime = response.endTime;
+            if (response.days.isNotEmpty) {
+              days = response.days;
+            }
+            for (final e in days) {
+              if (e == day) {
+                scheduleDaysRamadan[day]!.add(ScheduleEntry(
+                  startTime: startTime,
+                  endTime: endTime,
+                  room: timeTable.room,
+                  activityDesc: schedule.activityDesc,
+                  courseName: schedule.courseName,
+                  courseCode: schedule.courseCode,
+                ));
+              }
+            }
           }
         }
       }
 
       // Sort data.
-      scheduleDays.forEach((day, scheduleEntryList) {
-        scheduleDays[day] = scheduleEntryList
+      scheduleDaysRegular.forEach((day, scheduleEntryList) {
+        scheduleDaysRegular[day] = scheduleEntryList
+          ..sort((a, b) => a.endTime.compareTo(b.startTime));
+      });
+      scheduleDaysRamadan.forEach((day, scheduleEntryList) {
+        scheduleDaysRamadan[day] = scheduleEntryList
           ..sort((a, b) => a.endTime.compareTo(b.startTime));
       });
 
@@ -95,16 +143,29 @@ class HomeViewModel extends ChangeNotifier {
       };
 
       // Convert data to ios widget data.
-      scheduleDays.forEach((day, scheduleEntryList) {
-        for (ScheduleEntry scheduleEntry in scheduleEntryList) {
-          iosWidgetCoursesDays[day]!.add(IosWidgetCourse(
-            startTime: scheduleEntry.startTime,
-            endTime: scheduleEntry.endTime,
-            roomName: scheduleEntry.room,
-            courseCode: scheduleEntry.courseCode,
-          ));
-        }
-      });
+      if (isRamadan) {
+        scheduleDaysRamadan.forEach((day, scheduleEntryList) {
+          for (ScheduleEntry scheduleEntry in scheduleEntryList) {
+            iosWidgetCoursesDays[day]!.add(IosWidgetCourse(
+              startTime: scheduleEntry.startTime,
+              endTime: scheduleEntry.endTime,
+              roomName: scheduleEntry.room,
+              courseCode: scheduleEntry.courseCode,
+            ));
+          }
+        });
+      } else {
+        scheduleDaysRegular.forEach((day, scheduleEntryList) {
+          for (ScheduleEntry scheduleEntry in scheduleEntryList) {
+            iosWidgetCoursesDays[day]!.add(IosWidgetCourse(
+              startTime: scheduleEntry.startTime,
+              endTime: scheduleEntry.endTime,
+              roomName: scheduleEntry.room,
+              courseCode: scheduleEntry.courseCode,
+            ));
+          }
+        });
+      }
 
       await _widgetKitService.updateCoursesWidgetData(
         iosWidgetCoursesDays,
@@ -119,5 +180,47 @@ class HomeViewModel extends ChangeNotifier {
 
     _isBusy = false;
     notifyListeners();
+  }
+
+  Future<void> toggleRamadanMode() async {
+    _isRamadan = !isRamadan;
+    notifyListeners();
+
+    final iosWidgetCoursesDays = <Day, List<IosWidgetCourse>>{
+      Day.sun: [],
+      Day.mon: [],
+      Day.tue: [],
+      Day.wed: [],
+      Day.thu: [],
+    };
+
+    // Convert data to ios widget data.
+    if (isRamadan) {
+      scheduleDaysRamadan.forEach((day, scheduleEntryList) {
+        for (ScheduleEntry scheduleEntry in scheduleEntryList) {
+          iosWidgetCoursesDays[day]!.add(IosWidgetCourse(
+            startTime: scheduleEntry.startTime,
+            endTime: scheduleEntry.endTime,
+            roomName: scheduleEntry.room,
+            courseCode: scheduleEntry.courseCode,
+          ));
+        }
+      });
+    } else {
+      scheduleDaysRegular.forEach((day, scheduleEntryList) {
+        for (ScheduleEntry scheduleEntry in scheduleEntryList) {
+          iosWidgetCoursesDays[day]!.add(IosWidgetCourse(
+            startTime: scheduleEntry.startTime,
+            endTime: scheduleEntry.endTime,
+            roomName: scheduleEntry.room,
+            courseCode: scheduleEntry.courseCode,
+          ));
+        }
+      });
+    }
+
+    await _widgetKitService.updateCoursesWidgetData(
+      iosWidgetCoursesDays,
+    );
   }
 }

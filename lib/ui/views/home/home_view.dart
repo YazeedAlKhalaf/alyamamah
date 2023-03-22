@@ -50,16 +50,34 @@ class _HomeViewState extends ConsumerState<HomeView> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
+              const Spacer(),
+              Text(
+                e2.startTime.format(context),
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.labelSmall,
+              ),
+              const Spacer(flex: 8),
               Text(
                 e2.courseCode,
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.labelSmall,
+                style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    ),
               ),
               Text(
                 e2.room,
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.labelLarge,
+                style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    ),
               ),
+              const Spacer(flex: 8),
+              Text(
+                e2.endTime.format(context),
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.labelSmall,
+              ),
+              const Spacer(),
             ],
           ),
         ));
@@ -70,6 +88,17 @@ class _HomeViewState extends ConsumerState<HomeView> {
       appBar: AppBar(
         title: Text(context.s.my_courses),
         surfaceTintColor: Theme.of(context).colorScheme.surface,
+        actions: [
+          IconButton(
+            icon: Text(
+              homeViewModel.isRamadan ? '🥘' : '📿',
+              style: Theme.of(context).textTheme.headlineLarge,
+            ),
+            onPressed: () async {
+              await ref.read(homeViewModelProvider).toggleRamadanMode();
+            },
+          ),
+        ],
       ),
       body: SafeArea(
         child: Padding(
@@ -87,7 +116,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                   },
                   style: TimePlannerStyle(
                     horizontalTaskPadding: Constants.spacing,
-                    cellHeight: 60,
+                    cellHeight: homeViewModel.isRamadan ? 120 : 80,
                     dividerColor: Theme.of(context).colorScheme.error,
                   ),
                   headers: [

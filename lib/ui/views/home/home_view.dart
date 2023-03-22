@@ -1,6 +1,8 @@
 import 'package:alyamamah/core/constants.dart';
 import 'package:alyamamah/core/extensions/build_context.dart';
+import 'package:alyamamah/core/extensions/int.dart';
 import 'package:alyamamah/core/extensions/time_of_day.dart';
+import 'package:alyamamah/core/models/day.dart';
 import 'package:alyamamah/ui/views/home/home_view_model.dart';
 import 'package:alyamamah/ui/widgets/time_planner/time_planner.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +22,13 @@ class _HomeViewState extends ConsumerState<HomeView> {
     Future(() async {
       await ref.read(homeViewModelProvider).getStudentSchedule();
     });
+  }
+
+  TextStyle todayDayStyle(bool isToday) {
+    return TextStyle(
+      color: isToday ? null : Theme.of(context).colorScheme.outlineVariant,
+      fontWeight: isToday ? FontWeight.bold : null,
+    );
   }
 
   @override
@@ -84,6 +93,8 @@ class _HomeViewState extends ConsumerState<HomeView> {
       }
     }
 
+    final today = DateTime.now().weekday.mapToDay();
+
     return Scaffold(
       appBar: AppBar(
         title: Text(context.s.my_courses),
@@ -122,18 +133,27 @@ class _HomeViewState extends ConsumerState<HomeView> {
                   headers: [
                     TimePlannerTitle(
                       title: context.s.sunday,
+                      titleStyle: todayDayStyle(
+                        today == Day.sun ||
+                            today == Day.fri ||
+                            today == Day.sat,
+                      ),
                     ),
                     TimePlannerTitle(
                       title: context.s.monday,
+                      titleStyle: todayDayStyle(today == Day.mon),
                     ),
                     TimePlannerTitle(
                       title: context.s.tuesday,
+                      titleStyle: todayDayStyle(today == Day.tue),
                     ),
                     TimePlannerTitle(
                       title: context.s.wednesday,
+                      titleStyle: todayDayStyle(today == Day.wed),
                     ),
                     TimePlannerTitle(
                       title: context.s.thursday,
+                      titleStyle: todayDayStyle(today == Day.thu),
                     ),
                   ],
                   tasks: timePlannerTasks,

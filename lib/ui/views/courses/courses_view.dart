@@ -3,24 +3,24 @@ import 'package:alyamamah/core/extensions/build_context.dart';
 import 'package:alyamamah/core/extensions/int.dart';
 import 'package:alyamamah/core/extensions/time_of_day.dart';
 import 'package:alyamamah/core/models/day.dart';
-import 'package:alyamamah/ui/views/home/home_view_model.dart';
+import 'package:alyamamah/ui/views/courses/courses_view_model.dart';
 import 'package:alyamamah/ui/widgets/time_planner/time_planner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomeView extends ConsumerStatefulWidget {
-  const HomeView({super.key});
+class CoursesView extends ConsumerStatefulWidget {
+  const CoursesView({super.key});
 
   @override
-  ConsumerState<HomeView> createState() => _HomeViewState();
+  ConsumerState<CoursesView> createState() => _CoursesViewState();
 }
 
-class _HomeViewState extends ConsumerState<HomeView> {
+class _CoursesViewState extends ConsumerState<CoursesView> {
   @override
   void initState() {
     super.initState();
     Future(() async {
-      await ref.read(homeViewModelProvider).getStudentSchedule();
+      await ref.read(coursesViewModelProvider).getStudentSchedule();
     });
   }
 
@@ -33,12 +33,12 @@ class _HomeViewState extends ConsumerState<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    final homeViewModel = ref.watch(homeViewModelProvider);
+    final coursesViewModel = ref.watch(coursesViewModelProvider);
 
     final timePlannerTasks = <TimePlannerTask>[];
     int? lowestStartHour;
     int? highestEndHour;
-    for (final e in homeViewModel.scheduleDays.entries) {
+    for (final e in coursesViewModel.scheduleDays.entries) {
       for (final e2 in e.value) {
         if (e2.startTime.hour < (lowestStartHour ?? 1000)) {
           lowestStartHour = e2.startTime.hour;
@@ -102,11 +102,11 @@ class _HomeViewState extends ConsumerState<HomeView> {
         actions: [
           IconButton(
             icon: Text(
-              homeViewModel.isRamadan ? '🥘' : '📿',
+              coursesViewModel.isRamadan ? '🥘' : '📿',
               style: Theme.of(context).textTheme.headlineLarge,
             ),
             onPressed: () async {
-              await ref.read(homeViewModelProvider).toggleRamadanMode();
+              await ref.read(coursesViewModelProvider).toggleRamadanMode();
             },
           ),
         ],
@@ -114,20 +114,22 @@ class _HomeViewState extends ConsumerState<HomeView> {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(
-            horizontal: homeViewModel.isBusy ? Constants.padding : 0,
+            horizontal: coursesViewModel.isBusy ? Constants.padding : 0,
           ),
-          child: homeViewModel.isBusy
+          child: coursesViewModel.isBusy
               ? const Center(child: CircularProgressIndicator())
               : TimePlanner(
                   startHour: lowestStartHour ?? 6,
                   endHour: (highestEndHour ?? 18) + 1,
                   currentTimeAnimation: false,
                   onRefresh: () async {
-                    await ref.read(homeViewModelProvider).getStudentSchedule();
+                    await ref
+                        .read(coursesViewModelProvider)
+                        .getStudentSchedule();
                   },
                   style: TimePlannerStyle(
                     horizontalTaskPadding: Constants.spacing,
-                    cellHeight: homeViewModel.isRamadan ? 120 : 80,
+                    cellHeight: coursesViewModel.isRamadan ? 120 : 80,
                     dividerColor: Theme.of(context).colorScheme.error,
                   ),
                   headers: [

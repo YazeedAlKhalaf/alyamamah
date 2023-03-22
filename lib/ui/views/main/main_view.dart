@@ -1,6 +1,6 @@
 import 'package:alyamamah/core/extensions/build_context.dart';
 import 'package:alyamamah/ui/views/absences/absences_view.dart';
-import 'package:alyamamah/ui/views/home/home_view.dart';
+import 'package:alyamamah/ui/views/courses/courses_view.dart';
 import 'package:alyamamah/ui/views/main/main_view_model.dart';
 import 'package:alyamamah/ui/views/profile/profile_view.dart';
 import 'package:flutter/material.dart';
@@ -76,7 +76,7 @@ class MainView extends ConsumerWidget {
               index: mainViewModel.selectedIndex,
               children: pages ??
                   const [
-                    HomeView(),
+                    CoursesView(),
                     AbsencesView(),
                     ProfileView(),
                   ],
@@ -95,7 +95,7 @@ class MainView extends ConsumerWidget {
               destinations: [
                 NavigationDestination(
                   icon: const Icon(Icons.home_rounded),
-                  label: context.s.home,
+                  label: context.s.my_courses,
                 ),
                 NavigationDestination(
                   icon: const Icon(Icons.calendar_today_rounded),

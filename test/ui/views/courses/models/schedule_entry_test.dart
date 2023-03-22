@@ -1,4 +1,4 @@
-import 'package:alyamamah/ui/views/home/models/schedule_entry.dart';
+import 'package:alyamamah/ui/views/courses/models/schedule_entry.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

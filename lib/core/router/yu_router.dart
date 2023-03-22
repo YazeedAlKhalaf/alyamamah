@@ -1,5 +1,5 @@
 import 'package:alyamamah/ui/views/absences/absence_details_view.dart';
-import 'package:alyamamah/ui/views/home/home_view.dart';
+import 'package:alyamamah/ui/views/courses/courses_view.dart';
 import 'package:alyamamah/ui/views/login/login_view.dart';
 import 'package:alyamamah/ui/views/main/main_view.dart';
 import 'package:alyamamah/ui/views/onboarding/onboarding_view.dart';
@@ -20,7 +20,7 @@ final yuRouterProvider = Provider<YURouter>((ref) => YURouter());
   routes: [
     AdaptiveRoute(page: StartupView, initial: true),
     AdaptiveRoute(page: LoginView),
-    AdaptiveRoute(page: HomeView),
+    AdaptiveRoute(page: CoursesView),
     AdaptiveRoute(page: MainView),
     AdaptiveRoute(page: ProfileView),
     AdaptiveRoute(page: StudentInfoView),

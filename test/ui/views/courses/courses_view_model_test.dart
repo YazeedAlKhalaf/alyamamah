@@ -6,39 +6,39 @@ import 'package:alyamamah/core/services/api/api_service.dart';
 import 'package:alyamamah/core/services/api/api_service_exception.dart';
 import 'package:alyamamah/core/services/shared_prefs/shared_prefs_service.dart';
 import 'package:alyamamah/core/services/widget_kit/widget_kit_service.dart';
-import 'package:alyamamah/ui/views/home/home_view_model.dart';
-import 'package:alyamamah/ui/views/home/models/schedule_entry.dart';
+import 'package:alyamamah/ui/views/courses/courses_view_model.dart';
+import 'package:alyamamah/ui/views/courses/models/schedule_entry.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 void main() {
-  group('homeViewModelProvider |', () {
+  group('coursesViewModelProvider |', () {
     test(
       'verify provider type.',
       () {
         expect(
-          homeViewModelProvider,
-          isA<ChangeNotifierProvider<HomeViewModel>>(),
+          coursesViewModelProvider,
+          isA<ChangeNotifierProvider<CoursesViewModel>>(),
         );
       },
     );
   });
 
-  group('HomeViewModel |', () {
+  group('CoursesViewModel |', () {
     late MockApiService mockApiService;
     late PageController pageController;
     late MockWidgetKitService mockWidgetKitService;
     late MockSharedPrefsService mockSharedPrefsService;
-    late HomeViewModel homeViewModel;
+    late CoursesViewModel coursesViewModel;
 
     setUp(() {
       mockApiService = MockApiService();
       pageController = PageController();
       mockWidgetKitService = MockWidgetKitService();
       mockSharedPrefsService = MockSharedPrefsService();
-      homeViewModel = HomeViewModel(
+      coursesViewModel = CoursesViewModel(
         apiService: mockApiService,
         pageController: pageController,
         widgetKitService: mockWidgetKitService,
@@ -128,13 +128,13 @@ void main() {
             ),
           ).thenAnswer((_) => Future.value());
 
-          await homeViewModel.getStudentSchedule();
+          await coursesViewModel.getStudentSchedule();
 
-          expect(homeViewModel.scheduleDays[Day.sun], isNotEmpty);
-          expect(homeViewModel.scheduleDays[Day.sun]?.length, 2);
+          expect(coursesViewModel.scheduleDays[Day.sun], isNotEmpty);
+          expect(coursesViewModel.scheduleDays[Day.sun]?.length, 2);
 
           expect(
-            homeViewModel.scheduleDays[Day.sun]?[0],
+            coursesViewModel.scheduleDays[Day.sun]?[0],
             isA<ScheduleEntry>().having(
               (p0) => p0.startTime,
               'startTime',
@@ -142,7 +142,7 @@ void main() {
             ),
           );
           expect(
-            homeViewModel.scheduleDays[Day.sun]?[0],
+            coursesViewModel.scheduleDays[Day.sun]?[0],
             isA<ScheduleEntry>().having(
               (p0) => p0.endTime,
               'endTime',
@@ -151,7 +151,7 @@ void main() {
           );
 
           expect(
-            homeViewModel.scheduleDays[Day.sun]?[1],
+            coursesViewModel.scheduleDays[Day.sun]?[1],
             isA<ScheduleEntry>().having(
               (p0) => p0.startTime,
               'startTime',
@@ -159,7 +159,7 @@ void main() {
             ),
           );
           expect(
-            homeViewModel.scheduleDays[Day.sun]?[1],
+            coursesViewModel.scheduleDays[Day.sun]?[1],
             isA<ScheduleEntry>().having(
               (p0) => p0.endTime,
               'endTime',
@@ -167,11 +167,11 @@ void main() {
             ),
           );
 
-          expect(homeViewModel.scheduleDays[Day.mon], isNotEmpty);
-          expect(homeViewModel.scheduleDays[Day.mon]?.length, 2);
+          expect(coursesViewModel.scheduleDays[Day.mon], isNotEmpty);
+          expect(coursesViewModel.scheduleDays[Day.mon]?.length, 2);
 
           expect(
-            homeViewModel.scheduleDays[Day.mon]?[0],
+            coursesViewModel.scheduleDays[Day.mon]?[0],
             isA<ScheduleEntry>().having(
               (p0) => p0.startTime,
               'startTime',
@@ -179,7 +179,7 @@ void main() {
             ),
           );
           expect(
-            homeViewModel.scheduleDays[Day.mon]?[0],
+            coursesViewModel.scheduleDays[Day.mon]?[0],
             isA<ScheduleEntry>().having(
               (p0) => p0.endTime,
               'endTime',
@@ -188,7 +188,7 @@ void main() {
           );
 
           expect(
-            homeViewModel.scheduleDays[Day.mon]?[1],
+            coursesViewModel.scheduleDays[Day.mon]?[1],
             isA<ScheduleEntry>().having(
               (p0) => p0.startTime,
               'startTime',
@@ -196,7 +196,7 @@ void main() {
             ),
           );
           expect(
-            homeViewModel.scheduleDays[Day.mon]?[1],
+            coursesViewModel.scheduleDays[Day.mon]?[1],
             isA<ScheduleEntry>().having(
               (p0) => p0.endTime,
               'endTime',
@@ -204,11 +204,11 @@ void main() {
             ),
           );
 
-          expect(homeViewModel.scheduleDays[Day.tue], isNotEmpty);
-          expect(homeViewModel.scheduleDays[Day.tue]?.length, 2);
+          expect(coursesViewModel.scheduleDays[Day.tue], isNotEmpty);
+          expect(coursesViewModel.scheduleDays[Day.tue]?.length, 2);
 
           expect(
-            homeViewModel.scheduleDays[Day.tue]?[0],
+            coursesViewModel.scheduleDays[Day.tue]?[0],
             isA<ScheduleEntry>().having(
               (p0) => p0.startTime,
               'startTime',
@@ -216,7 +216,7 @@ void main() {
             ),
           );
           expect(
-            homeViewModel.scheduleDays[Day.tue]?[0],
+            coursesViewModel.scheduleDays[Day.tue]?[0],
             isA<ScheduleEntry>().having(
               (p0) => p0.endTime,
               'endTime',
@@ -225,7 +225,7 @@ void main() {
           );
 
           expect(
-            homeViewModel.scheduleDays[Day.tue]?[1],
+            coursesViewModel.scheduleDays[Day.tue]?[1],
             isA<ScheduleEntry>().having(
               (p0) => p0.startTime,
               'startTime',
@@ -233,7 +233,7 @@ void main() {
             ),
           );
           expect(
-            homeViewModel.scheduleDays[Day.tue]?[1],
+            coursesViewModel.scheduleDays[Day.tue]?[1],
             isA<ScheduleEntry>().having(
               (p0) => p0.endTime,
               'endTime',
@@ -241,11 +241,11 @@ void main() {
             ),
           );
 
-          expect(homeViewModel.scheduleDays[Day.wed], isNotEmpty);
-          expect(homeViewModel.scheduleDays[Day.wed]?.length, 2);
+          expect(coursesViewModel.scheduleDays[Day.wed], isNotEmpty);
+          expect(coursesViewModel.scheduleDays[Day.wed]?.length, 2);
 
           expect(
-            homeViewModel.scheduleDays[Day.wed]?[0],
+            coursesViewModel.scheduleDays[Day.wed]?[0],
             isA<ScheduleEntry>().having(
               (p0) => p0.startTime,
               'startTime',
@@ -253,7 +253,7 @@ void main() {
             ),
           );
           expect(
-            homeViewModel.scheduleDays[Day.wed]?[0],
+            coursesViewModel.scheduleDays[Day.wed]?[0],
             isA<ScheduleEntry>().having(
               (p0) => p0.endTime,
               'endTime',
@@ -262,7 +262,7 @@ void main() {
           );
 
           expect(
-            homeViewModel.scheduleDays[Day.wed]?[1],
+            coursesViewModel.scheduleDays[Day.wed]?[1],
             isA<ScheduleEntry>().having(
               (p0) => p0.startTime,
               'startTime',
@@ -270,7 +270,7 @@ void main() {
             ),
           );
           expect(
-            homeViewModel.scheduleDays[Day.wed]?[1],
+            coursesViewModel.scheduleDays[Day.wed]?[1],
             isA<ScheduleEntry>().having(
               (p0) => p0.endTime,
               'endTime',
@@ -278,11 +278,11 @@ void main() {
             ),
           );
 
-          expect(homeViewModel.scheduleDays[Day.thu], isNotEmpty);
-          expect(homeViewModel.scheduleDays[Day.thu]?.length, 2);
+          expect(coursesViewModel.scheduleDays[Day.thu], isNotEmpty);
+          expect(coursesViewModel.scheduleDays[Day.thu]?.length, 2);
 
           expect(
-            homeViewModel.scheduleDays[Day.thu]?[0],
+            coursesViewModel.scheduleDays[Day.thu]?[0],
             isA<ScheduleEntry>().having(
               (p0) => p0.startTime,
               'startTime',
@@ -290,7 +290,7 @@ void main() {
             ),
           );
           expect(
-            homeViewModel.scheduleDays[Day.thu]?[0],
+            coursesViewModel.scheduleDays[Day.thu]?[0],
             isA<ScheduleEntry>().having(
               (p0) => p0.endTime,
               'endTime',
@@ -299,7 +299,7 @@ void main() {
           );
 
           expect(
-            homeViewModel.scheduleDays[Day.thu]?[1],
+            coursesViewModel.scheduleDays[Day.thu]?[1],
             isA<ScheduleEntry>().having(
               (p0) => p0.startTime,
               'startTime',
@@ -307,7 +307,7 @@ void main() {
             ),
           );
           expect(
-            homeViewModel.scheduleDays[Day.thu]?[1],
+            coursesViewModel.scheduleDays[Day.thu]?[1],
             isA<ScheduleEntry>().having(
               (p0) => p0.endTime,
               'endTime',
@@ -315,7 +315,7 @@ void main() {
             ),
           );
 
-          expect(homeViewModel.isBusy, false);
+          expect(coursesViewModel.isBusy, false);
 
           verify(
             () => mockApiService.getStudentSchedule(schedule: '20222'),
@@ -336,14 +336,14 @@ void main() {
             () => mockApiService.getStudentSchedule(schedule: '20222'),
           ).thenThrow(const ApiServiceException());
 
-          await homeViewModel.getStudentSchedule();
+          await coursesViewModel.getStudentSchedule();
 
-          expect(homeViewModel.isBusy, false);
-          expect(homeViewModel.scheduleDays[Day.sun], isEmpty);
-          expect(homeViewModel.scheduleDays[Day.mon], isEmpty);
-          expect(homeViewModel.scheduleDays[Day.tue], isEmpty);
-          expect(homeViewModel.scheduleDays[Day.wed], isEmpty);
-          expect(homeViewModel.scheduleDays[Day.thu], isEmpty);
+          expect(coursesViewModel.isBusy, false);
+          expect(coursesViewModel.scheduleDays[Day.sun], isEmpty);
+          expect(coursesViewModel.scheduleDays[Day.mon], isEmpty);
+          expect(coursesViewModel.scheduleDays[Day.tue], isEmpty);
+          expect(coursesViewModel.scheduleDays[Day.wed], isEmpty);
+          expect(coursesViewModel.scheduleDays[Day.thu], isEmpty);
         },
       );
     });

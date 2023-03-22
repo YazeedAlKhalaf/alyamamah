@@ -7,16 +7,16 @@ import 'package:alyamamah/core/services/api/api_service.dart';
 import 'package:alyamamah/core/services/api/api_service_exception.dart';
 import 'package:alyamamah/core/services/shared_prefs/shared_prefs_service.dart';
 import 'package:alyamamah/core/services/widget_kit/widget_kit_service.dart';
-import 'package:alyamamah/ui/views/home/models/schedule_entry.dart';
-import 'package:alyamamah/ui/views/home/models/time_mapping.dart';
+import 'package:alyamamah/ui/views/courses/models/schedule_entry.dart';
+import 'package:alyamamah/ui/views/courses/models/time_mapping.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:logging/logging.dart';
 
-final homeViewModelProvider = ChangeNotifierProvider(
-  (ref) => HomeViewModel(
+final coursesViewModelProvider = ChangeNotifierProvider(
+  (ref) => CoursesViewModel(
     apiService: ref.read(apiServiceProvider),
     pageController: PageController(),
     widgetKitService: ref.read(widgetKitSerivceProvider),
@@ -24,15 +24,15 @@ final homeViewModelProvider = ChangeNotifierProvider(
   ),
 );
 
-class HomeViewModel extends ChangeNotifier {
-  final _log = Logger('HomeViewModel');
+class CoursesViewModel extends ChangeNotifier {
+  final _log = Logger('CoursesViewModel');
 
   final ApiService _apiService;
   final PageController _pageController;
   final WidgetKitService _widgetKitService;
   final SharedPrefsService _sharedPrefsService;
 
-  HomeViewModel({
+  CoursesViewModel({
     required ApiService apiService,
     required PageController pageController,
     required WidgetKitService widgetKitService,

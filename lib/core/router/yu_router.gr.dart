@@ -13,7 +13,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:alyamamah/core/models/absence.dart' as _i11;
 import 'package:alyamamah/ui/views/absences/absence_details_view.dart' as _i8;
-import 'package:alyamamah/ui/views/home/home_view.dart' as _i3;
+import 'package:alyamamah/ui/views/courses/courses_view.dart' as _i3;
 import 'package:alyamamah/ui/views/login/login_view.dart' as _i2;
 import 'package:alyamamah/ui/views/main/main_view.dart' as _i4;
 import 'package:alyamamah/ui/views/onboarding/onboarding_view.dart' as _i7;
@@ -43,10 +43,10 @@ class YURouter extends _i9.RootStackRouter {
         opaque: true,
       );
     },
-    HomeRoute.name: (routeData) {
+    CoursesRoute.name: (routeData) {
       return _i9.AdaptivePage<dynamic>(
         routeData: routeData,
-        child: const _i3.HomeView(),
+        child: const _i3.CoursesView(),
         opaque: true,
       );
     },
@@ -107,8 +107,8 @@ class YURouter extends _i9.RootStackRouter {
           path: '/login-view',
         ),
         _i9.RouteConfig(
-          HomeRoute.name,
-          path: '/home-view',
+          CoursesRoute.name,
+          path: '/courses-view',
         ),
         _i9.RouteConfig(
           MainRoute.name,
@@ -158,15 +158,15 @@ class LoginRoute extends _i9.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i3.HomeView]
-class HomeRoute extends _i9.PageRouteInfo<void> {
-  const HomeRoute()
+/// [_i3.CoursesView]
+class CoursesRoute extends _i9.PageRouteInfo<void> {
+  const CoursesRoute()
       : super(
-          HomeRoute.name,
-          path: '/home-view',
+          CoursesRoute.name,
+          path: '/courses-view',
         );
 
-  static const String name = 'HomeRoute';
+  static const String name = 'CoursesRoute';
 }
 
 /// generated route for

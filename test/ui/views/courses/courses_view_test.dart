@@ -1,8 +1,8 @@
 import 'package:alyamamah/core/extensions/build_context.dart';
 import 'package:alyamamah/core/models/day.dart';
-import 'package:alyamamah/ui/views/home/home_view.dart';
-import 'package:alyamamah/ui/views/home/home_view_model.dart';
-import 'package:alyamamah/ui/views/home/models/schedule_entry.dart';
+import 'package:alyamamah/ui/views/courses/courses_view.dart';
+import 'package:alyamamah/ui/views/courses/courses_view_model.dart';
+import 'package:alyamamah/ui/views/courses/models/schedule_entry.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:golden_toolkit/golden_toolkit.dart';
@@ -12,37 +12,37 @@ import '../../../test_utils/test_devices.dart';
 import '../../../test_utils/test_material_app.dart';
 
 void main() {
-  group('HomeView |', () {
+  group('CoursesView |', () {
     late PageController pageController;
-    late MockHomeViewModel mockHomeViewModel;
+    late MockCoursesViewModel mockCoursesViewModel;
 
     setUp(() {
       pageController = PageController();
-      mockHomeViewModel = MockHomeViewModel();
+      mockCoursesViewModel = MockCoursesViewModel();
       when(
-        () => mockHomeViewModel.getStudentSchedule(),
+        () => mockCoursesViewModel.getStudentSchedule(),
       ).thenAnswer((_) => Future.value());
-      when(() => mockHomeViewModel.scheduleDays).thenReturn({});
+      when(() => mockCoursesViewModel.scheduleDays).thenReturn({});
     });
 
     Widget buildTestWidget() {
       return TestMaterialApp(
         overrides: [
-          homeViewModelProvider.overrideWith((ref) => mockHomeViewModel),
+          coursesViewModelProvider.overrideWith((ref) => mockCoursesViewModel),
         ],
-        home: const HomeView(),
+        home: const CoursesView(),
       );
     }
 
     testWidgets(
       'verify app bar title text.',
       (WidgetTester tester) async {
-        when(() => mockHomeViewModel.isBusy).thenReturn(false);
+        when(() => mockCoursesViewModel.isBusy).thenReturn(false);
         when(
-          () => mockHomeViewModel.pageController,
+          () => mockCoursesViewModel.pageController,
         ).thenReturn(pageController);
         when(
-          () => mockHomeViewModel.scheduleDays,
+          () => mockCoursesViewModel.scheduleDays,
         ).thenReturn({});
 
         await tester.pumpWidget(buildTestWidget());
@@ -65,12 +65,12 @@ void main() {
       testGoldens(
         'renders correctly when isBusy is false and scheduleDays is empty.',
         (WidgetTester tester) async {
-          when(() => mockHomeViewModel.isBusy).thenReturn(false);
+          when(() => mockCoursesViewModel.isBusy).thenReturn(false);
           when(
-            () => mockHomeViewModel.pageController,
+            () => mockCoursesViewModel.pageController,
           ).thenReturn(pageController);
           when(
-            () => mockHomeViewModel.scheduleDays,
+            () => mockCoursesViewModel.scheduleDays,
           ).thenReturn({});
           await tester.pumpWidget(buildTestWidget());
 
@@ -86,12 +86,12 @@ void main() {
         'renders correctly when isBusy is false '
         'and scheduleDays is not empty on sunday.',
         (WidgetTester tester) async {
-          when(() => mockHomeViewModel.isBusy).thenReturn(false);
+          when(() => mockCoursesViewModel.isBusy).thenReturn(false);
           when(
-            () => mockHomeViewModel.pageController,
+            () => mockCoursesViewModel.pageController,
           ).thenReturn(pageController);
           when(
-            () => mockHomeViewModel.scheduleDays,
+            () => mockCoursesViewModel.scheduleDays,
           ).thenReturn({
             Day.sun: [
               ScheduleEntry(
@@ -125,9 +125,9 @@ void main() {
       testGoldens(
         'renders correctly when isBusy is true.',
         (WidgetTester tester) async {
-          when(() => mockHomeViewModel.isBusy).thenReturn(true);
+          when(() => mockCoursesViewModel.isBusy).thenReturn(true);
           when(
-            () => mockHomeViewModel.pageController,
+            () => mockCoursesViewModel.pageController,
           ).thenReturn(pageController);
           await tester.pumpWidget(buildTestWidget());
 
@@ -145,4 +145,4 @@ void main() {
   });
 }
 
-class MockHomeViewModel extends Mock implements HomeViewModel {}
+class MockCoursesViewModel extends Mock implements CoursesViewModel {}

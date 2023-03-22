@@ -2,6 +2,7 @@ import 'package:alyamamah/core/models/day.dart';
 import 'package:alyamamah/core/models/ios_widget_course.dart';
 import 'package:alyamamah/core/models/schedule.dart';
 import 'package:alyamamah/core/models/time_table.dart';
+import 'package:alyamamah/core/router/yu_router.dart';
 import 'package:alyamamah/core/services/api/api_service.dart';
 import 'package:alyamamah/core/services/api/api_service_exception.dart';
 import 'package:alyamamah/core/services/shared_prefs/shared_prefs_service.dart';
@@ -31,6 +32,7 @@ void main() {
     late PageController pageController;
     late MockWidgetKitService mockWidgetKitService;
     late MockSharedPrefsService mockSharedPrefsService;
+    late MockYURouter mockYuRouter;
     late CoursesViewModel coursesViewModel;
 
     setUp(() {
@@ -38,11 +40,13 @@ void main() {
       pageController = PageController();
       mockWidgetKitService = MockWidgetKitService();
       mockSharedPrefsService = MockSharedPrefsService();
+      mockYuRouter = MockYURouter();
       coursesViewModel = CoursesViewModel(
         apiService: mockApiService,
         pageController: pageController,
         widgetKitService: mockWidgetKitService,
         sharedPrefsService: mockSharedPrefsService,
+        yuRouter: mockYuRouter,
       );
     });
 
@@ -355,3 +359,5 @@ class MockApiService extends Mock implements ApiService {}
 class MockWidgetKitService extends Mock implements WidgetKitService {}
 
 class MockSharedPrefsService extends Mock implements SharedPrefsService {}
+
+class MockYURouter extends Mock implements YURouter {}

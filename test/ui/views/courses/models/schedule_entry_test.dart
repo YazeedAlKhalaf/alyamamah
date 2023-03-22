@@ -16,6 +16,10 @@ void main() {
           activityDesc: 'activityDesc',
           courseName: 'courseName',
           courseCode: 'courseCode',
+          instructor: 'instructor',
+          creditHours: 'creditHours',
+          campusName: 'campusName',
+          courseDeleted: false,
         );
 
         expect(scheduleEntry, isA<ScheduleEntry>());
@@ -25,6 +29,10 @@ void main() {
         expect(scheduleEntry.activityDesc, 'activityDesc');
         expect(scheduleEntry.courseName, 'courseName');
         expect(scheduleEntry.courseCode, 'courseCode');
+        expect(scheduleEntry.instructor, 'instructor');
+        expect(scheduleEntry.creditHours, 'creditHours');
+        expect(scheduleEntry.campusName, 'campusName');
+        expect(scheduleEntry.courseDeleted, false);
       },
     );
 
@@ -38,6 +46,10 @@ void main() {
           activityDesc: 'activityDesc',
           courseName: 'courseName',
           courseCode: 'courseCode',
+          instructor: 'instructor',
+          creditHours: 'creditHours',
+          campusName: 'campusName',
+          courseDeleted: false,
         );
 
         final startTime = TimeOfDay.now();
@@ -49,6 +61,10 @@ void main() {
           activityDesc: 'activityDesc2',
           courseName: 'courseName2',
           courseCode: 'courseCode2',
+          instructor: 'instructor2',
+          creditHours: 'creditHours2',
+          campusName: 'campusName2',
+          courseDeleted: true,
         );
 
         expect(newScheduleEntry.startTime, startTime);
@@ -57,6 +73,10 @@ void main() {
         expect(newScheduleEntry.activityDesc, 'activityDesc2');
         expect(newScheduleEntry.courseName, 'courseName2');
         expect(newScheduleEntry.courseCode, 'courseCode2');
+        expect(newScheduleEntry.instructor, 'instructor2');
+        expect(newScheduleEntry.creditHours, 'creditHours2');
+        expect(newScheduleEntry.campusName, 'campusName2');
+        expect(newScheduleEntry.courseDeleted, true);
       },
     );
 
@@ -73,6 +93,10 @@ void main() {
           activityDesc: 'activityDesc',
           courseName: 'courseName',
           courseCode: 'courseCode',
+          instructor: 'instructor',
+          creditHours: 'creditHours',
+          campusName: 'campusName',
+          courseDeleted: false,
         );
 
         final newScheduleEntry = scheduleEntry.copyWith();
@@ -83,6 +107,10 @@ void main() {
         expect(newScheduleEntry.activityDesc, 'activityDesc');
         expect(newScheduleEntry.courseName, 'courseName');
         expect(newScheduleEntry.courseCode, 'courseCode');
+        expect(newScheduleEntry.instructor, 'instructor');
+        expect(newScheduleEntry.creditHours, 'creditHours');
+        expect(newScheduleEntry.campusName, 'campusName');
+        expect(newScheduleEntry.courseDeleted, false);
       },
     );
 
@@ -99,6 +127,10 @@ void main() {
           activityDesc: 'activityDesc',
           courseName: 'courseName',
           courseCode: 'courseCode',
+          instructor: 'instructor',
+          creditHours: 'creditHours',
+          campusName: 'campusName',
+          courseDeleted: false,
         );
 
         final scheduleEntry2 = ScheduleEntry(
@@ -108,6 +140,10 @@ void main() {
           activityDesc: 'activityDesc',
           courseName: 'courseName',
           courseCode: 'courseCode',
+          instructor: 'instructor',
+          creditHours: 'creditHours',
+          campusName: 'campusName',
+          courseDeleted: false,
         );
 
         expect(scheduleEntry, scheduleEntry2);
@@ -127,6 +163,10 @@ void main() {
           activityDesc: 'activityDesc',
           courseName: 'courseName',
           courseCode: 'courseCode',
+          instructor: 'instructor',
+          creditHours: 'creditHours',
+          campusName: 'campusName',
+          courseDeleted: false,
         );
 
         final scheduleEntry2 = ScheduleEntry(
@@ -136,6 +176,10 @@ void main() {
           activityDesc: 'activityDesc',
           courseName: 'courseName',
           courseCode: 'courseCode',
+          instructor: 'instructor',
+          creditHours: 'creditHours',
+          campusName: 'campusName',
+          courseDeleted: false,
         );
 
         expect(scheduleEntry.hashCode, scheduleEntry2.hashCode);

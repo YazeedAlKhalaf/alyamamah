@@ -38,6 +38,7 @@ void main() {
       'verify app bar title text.',
       (WidgetTester tester) async {
         when(() => mockCoursesViewModel.isBusy).thenReturn(false);
+        when(() => mockCoursesViewModel.isRamadan).thenReturn(false);
         when(
           () => mockCoursesViewModel.pageController,
         ).thenReturn(pageController);
@@ -66,6 +67,7 @@ void main() {
         'renders correctly when isBusy is false and scheduleDays is empty.',
         (WidgetTester tester) async {
           when(() => mockCoursesViewModel.isBusy).thenReturn(false);
+          when(() => mockCoursesViewModel.isRamadan).thenReturn(false);
           when(
             () => mockCoursesViewModel.pageController,
           ).thenReturn(pageController);
@@ -87,6 +89,7 @@ void main() {
         'and scheduleDays is not empty on sunday.',
         (WidgetTester tester) async {
           when(() => mockCoursesViewModel.isBusy).thenReturn(false);
+          when(() => mockCoursesViewModel.isRamadan).thenReturn(true);
           when(
             () => mockCoursesViewModel.pageController,
           ).thenReturn(pageController);
@@ -101,6 +104,10 @@ void main() {
                 activityDesc: 'activityDesc',
                 courseName: 'courseName',
                 courseCode: 'courseCode',
+                instructor: 'instructor',
+                creditHours: 'creditHours',
+                campusName: 'campusName',
+                courseDeleted: false,
               ),
               ScheduleEntry(
                 startTime: const TimeOfDay(hour: 10, minute: 20),
@@ -109,6 +116,10 @@ void main() {
                 activityDesc: 'activityDesc',
                 courseName: 'courseName',
                 courseCode: 'courseCode',
+                instructor: 'instructor',
+                creditHours: 'creditHours',
+                campusName: 'campusName',
+                courseDeleted: false,
               ),
             ],
           });
@@ -126,6 +137,7 @@ void main() {
         'renders correctly when isBusy is true.',
         (WidgetTester tester) async {
           when(() => mockCoursesViewModel.isBusy).thenReturn(true);
+          when(() => mockCoursesViewModel.isRamadan).thenReturn(false);
           when(
             () => mockCoursesViewModel.pageController,
           ).thenReturn(pageController);

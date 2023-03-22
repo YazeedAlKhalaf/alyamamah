@@ -4,6 +4,7 @@ import 'package:alyamamah/core/models/schedule.dart';
 import 'package:alyamamah/core/models/time_table.dart';
 import 'package:alyamamah/core/services/api/api_service.dart';
 import 'package:alyamamah/core/services/api/api_service_exception.dart';
+import 'package:alyamamah/core/services/shared_prefs/shared_prefs_service.dart';
 import 'package:alyamamah/core/services/widget_kit/widget_kit_service.dart';
 import 'package:alyamamah/ui/views/home/home_view_model.dart';
 import 'package:alyamamah/ui/views/home/models/schedule_entry.dart';
@@ -28,17 +29,20 @@ void main() {
   group('HomeViewModel |', () {
     late MockApiService mockApiService;
     late PageController pageController;
-    late HomeViewModel homeViewModel;
     late MockWidgetKitService mockWidgetKitService;
+    late MockSharedPrefsService mockSharedPrefsService;
+    late HomeViewModel homeViewModel;
 
     setUp(() {
       mockApiService = MockApiService();
       pageController = PageController();
       mockWidgetKitService = MockWidgetKitService();
+      mockSharedPrefsService = MockSharedPrefsService();
       homeViewModel = HomeViewModel(
         apiService: mockApiService,
         pageController: pageController,
         widgetKitService: mockWidgetKitService,
+        sharedPrefsService: mockSharedPrefsService,
       );
     });
 
@@ -349,3 +353,5 @@ void main() {
 class MockApiService extends Mock implements ApiService {}
 
 class MockWidgetKitService extends Mock implements WidgetKitService {}
+
+class MockSharedPrefsService extends Mock implements SharedPrefsService {}

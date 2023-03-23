@@ -117,6 +117,7 @@ class CoursesViewModel extends ChangeNotifier {
               creditHours: schedule.crdHrs,
               campusName: schedule.campusName,
               courseDeleted: schedule.courseDeleted,
+              section: schedule.section,
             ));
 
             Set<Day> days = timeTable.days;
@@ -143,6 +144,7 @@ class CoursesViewModel extends ChangeNotifier {
                   creditHours: schedule.crdHrs,
                   campusName: schedule.campusName,
                   courseDeleted: schedule.courseDeleted,
+                  section: schedule.section,
                 ));
               }
             }

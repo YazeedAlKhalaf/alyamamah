@@ -37,6 +37,14 @@ class CourseDetailsView extends StatelessWidget {
             ),
             ListTile(
               leading: Text(
+                '🚪',
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
+              title: Text(context.s.section),
+              subtitle: Text(scheduleEntry.section),
+            ),
+            ListTile(
+              leading: Text(
                 '📝',
                 style: Theme.of(context).textTheme.headlineMedium,
               ),

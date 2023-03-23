@@ -20,6 +20,7 @@ void main() {
           creditHours: 'creditHours',
           campusName: 'campusName',
           courseDeleted: false,
+          section: 'section',
         );
 
         expect(scheduleEntry, isA<ScheduleEntry>());
@@ -33,6 +34,7 @@ void main() {
         expect(scheduleEntry.creditHours, 'creditHours');
         expect(scheduleEntry.campusName, 'campusName');
         expect(scheduleEntry.courseDeleted, false);
+        expect(scheduleEntry.section, 'section');
       },
     );
 
@@ -50,6 +52,7 @@ void main() {
           creditHours: 'creditHours',
           campusName: 'campusName',
           courseDeleted: false,
+          section: 'section',
         );
 
         final startTime = TimeOfDay.now();
@@ -65,6 +68,7 @@ void main() {
           creditHours: 'creditHours2',
           campusName: 'campusName2',
           courseDeleted: true,
+          section: 'section2',
         );
 
         expect(newScheduleEntry.startTime, startTime);
@@ -77,6 +81,7 @@ void main() {
         expect(newScheduleEntry.creditHours, 'creditHours2');
         expect(newScheduleEntry.campusName, 'campusName2');
         expect(newScheduleEntry.courseDeleted, true);
+        expect(newScheduleEntry.section, 'section2');
       },
     );
 
@@ -97,6 +102,7 @@ void main() {
           creditHours: 'creditHours',
           campusName: 'campusName',
           courseDeleted: false,
+          section: 'section',
         );
 
         final newScheduleEntry = scheduleEntry.copyWith();
@@ -111,6 +117,7 @@ void main() {
         expect(newScheduleEntry.creditHours, 'creditHours');
         expect(newScheduleEntry.campusName, 'campusName');
         expect(newScheduleEntry.courseDeleted, false);
+        expect(newScheduleEntry.section, 'section');
       },
     );
 
@@ -131,6 +138,7 @@ void main() {
           creditHours: 'creditHours',
           campusName: 'campusName',
           courseDeleted: false,
+          section: 'section',
         );
 
         final scheduleEntry2 = ScheduleEntry(
@@ -144,6 +152,7 @@ void main() {
           creditHours: 'creditHours',
           campusName: 'campusName',
           courseDeleted: false,
+          section: 'section',
         );
 
         expect(scheduleEntry, scheduleEntry2);
@@ -167,6 +176,7 @@ void main() {
           creditHours: 'creditHours',
           campusName: 'campusName',
           courseDeleted: false,
+          section: 'section',
         );
 
         final scheduleEntry2 = ScheduleEntry(
@@ -180,6 +190,7 @@ void main() {
           creditHours: 'creditHours',
           campusName: 'campusName',
           courseDeleted: false,
+          section: 'section',
         );
 
         expect(scheduleEntry.hashCode, scheduleEntry2.hashCode);

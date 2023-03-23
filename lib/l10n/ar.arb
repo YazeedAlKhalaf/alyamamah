@@ -61,5 +61,6 @@
   "campus_name": "اسم المقر",
   "course_deleted_q": "المقرر محذوف؟",
   "yes": "نعم",
-  "no": "لا"
+  "no": "لا",
+  "section": "شعبة"
 }

@@ -61,5 +61,6 @@
   "campus_name": "Campus Name",
   "course_deleted_q": "Course Deleted?",
   "yes": "Yes",
-  "no": "No"
+  "no": "No",
+  "section": "Section"
 }

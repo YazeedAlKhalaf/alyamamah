@@ -108,6 +108,7 @@ void main() {
                 creditHours: 'creditHours',
                 campusName: 'campusName',
                 courseDeleted: false,
+                section: 'section',
               ),
               ScheduleEntry(
                 startTime: const TimeOfDay(hour: 10, minute: 20),
@@ -120,6 +121,7 @@ void main() {
                 creditHours: 'creditHours',
                 campusName: 'campusName',
                 courseDeleted: false,
+                section: 'section',
               ),
             ],
           });

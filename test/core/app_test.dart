@@ -91,7 +91,7 @@ void main() {
     );
 
     testWidgets(
-      'verify routerDelegate '
+      'verify routerConfig '
       'is an AutoRouterDelegate instance.',
       (WidgetTester tester) async {
         await tester.pumpWidget(buildTestWidget());
@@ -104,48 +104,8 @@ void main() {
           materialAppFinder,
         );
         expect(
-          materialApp.routerDelegate,
-          isA<AutoRouterDelegate>(),
-        );
-      },
-    );
-
-    testWidgets(
-      'verify routeInformationParser '
-      'is a DefaultRouteParser instance.',
-      (WidgetTester tester) async {
-        await tester.pumpWidget(buildTestWidget());
-        await tester.pumpAndSettle();
-
-        final materialAppFinder = find.byType(MaterialApp);
-        expect(materialAppFinder, findsOneWidget);
-
-        final materialApp = tester.widget<MaterialApp>(
-          materialAppFinder,
-        );
-        expect(
-          materialApp.routeInformationParser,
-          isA<DefaultRouteParser>(),
-        );
-      },
-    );
-
-    testWidgets(
-      'verify routeInformationProvider '
-      'is a AutoRouteInformationProvider instance.',
-      (WidgetTester tester) async {
-        await tester.pumpWidget(buildTestWidget());
-        await tester.pumpAndSettle();
-
-        final materialAppFinder = find.byType(MaterialApp);
-        expect(materialAppFinder, findsOneWidget);
-
-        final materialApp = tester.widget<MaterialApp>(
-          materialAppFinder,
-        );
-        expect(
-          materialApp.routeInformationProvider,
-          isA<AutoRouteInformationProvider>(),
+          materialApp.routerConfig,
+          isA<RouterConfig<UrlState>>(),
         );
       },
     );

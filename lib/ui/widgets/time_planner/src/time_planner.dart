@@ -30,6 +30,8 @@ class TimePlanner extends StatefulWidget {
 
   final Future<void> Function() onRefresh;
 
+  final bool isRamadan;
+
   /// Time planner widget
   const TimePlanner({
     Key? key,
@@ -40,6 +42,7 @@ class TimePlanner extends StatefulWidget {
     this.style,
     this.currentTimeAnimation = true,
     required this.onRefresh,
+    this.isRamadan = false,
   }) : super(key: key);
   @override
   State<TimePlanner> createState() => _TimePlannerState();
@@ -144,21 +147,36 @@ class _TimePlannerState extends State<TimePlanner> {
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            SingleChildScrollView(
-              controller: dayHorizontalController,
-              scrollDirection: Axis.horizontal,
-              physics: const NeverScrollableScrollPhysics(),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.end,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  const SizedBox(
-                    width: 60,
+            Stack(
+              children: [
+                if (widget.isRamadan)
+                  Opacity(
+                    opacity: 0.03,
+                    child: Image.asset(
+                      'assets/images/islamic-ornament.png',
+                      fit: BoxFit.fitWidth,
+                      height: 70,
+                      width: double.infinity,
+                    ),
                   ),
-                  for (int i = 0; i < config.totalDays; i++) widget.headers[i],
-                ],
-              ),
+                SingleChildScrollView(
+                  controller: dayHorizontalController,
+                  scrollDirection: Axis.horizontal,
+                  physics: const NeverScrollableScrollPhysics(),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      const SizedBox(
+                        width: 60,
+                      ),
+                      for (int i = 0; i < config.totalDays; i++)
+                        widget.headers[i],
+                    ],
+                  ),
+                ),
+              ],
             ),
             Container(
               height: 1,

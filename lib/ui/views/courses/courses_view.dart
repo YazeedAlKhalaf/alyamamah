@@ -107,14 +107,25 @@ class _CoursesViewState extends ConsumerState<CoursesView> {
         actions: [
           IconButton(
             icon: Text(
-              coursesViewModel.isRamadan ? '🥘' : '📿',
-              style: Theme.of(context).textTheme.headlineLarge,
+              coursesViewModel.isRamadan
+                  ? '🥘 ${context.s.regular}'
+                  : '📿 ${context.s.ramadan}',
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
             onPressed: () async {
               await ref.read(coursesViewModelProvider).toggleRamadanMode();
             },
           ),
         ],
+        flexibleSpace: coursesViewModel.isRamadan
+            ? Opacity(
+                opacity: 0.03,
+                child: Image.asset(
+                  'assets/images/islamic-ornament.png',
+                  fit: BoxFit.cover,
+                ),
+              )
+            : null,
       ),
       body: SafeArea(
         child: Padding(
@@ -124,6 +135,7 @@ class _CoursesViewState extends ConsumerState<CoursesView> {
           child: coursesViewModel.isBusy
               ? const Center(child: CircularProgressIndicator())
               : TimePlanner(
+                  isRamadan: coursesViewModel.isRamadan,
                   startHour: lowestStartHour ?? 6,
                   endHour: (highestEndHour ?? 18) + 1,
                   currentTimeAnimation: false,

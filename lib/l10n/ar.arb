@@ -62,5 +62,7 @@
   "course_deleted_q": "المقرر محذوف؟",
   "yes": "نعم",
   "no": "لا",
-  "section": "شعبة"
+  "section": "شعبة",
+  "regular": "عادي",
+  "ramadan": "رمضان"
 }

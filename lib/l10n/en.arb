@@ -62,5 +62,7 @@
   "course_deleted_q": "Course Deleted?",
   "yes": "Yes",
   "no": "No",
-  "section": "Section"
+  "section": "Section",
+  "regular": "Regular",
+  "ramadan": "Ramadan"
 }

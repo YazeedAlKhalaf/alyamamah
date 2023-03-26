@@ -1,4 +1,5 @@
 import 'package:alyamamah/core/extensions/build_context.dart';
+import 'package:alyamamah/ui/views/courses/course_details_tile.dart';
 import 'package:alyamamah/ui/views/courses/models/schedule_entry.dart';
 import 'package:flutter/material.dart';
 
@@ -19,71 +20,46 @@ class CourseDetailsView extends StatelessWidget {
       body: SafeArea(
         child: ListView(
           children: [
-            ListTile(
-              leading: Text(
-                '🆔',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-              title: Text(context.s.course_code),
-              subtitle: Text(scheduleEntry.courseCode),
+            CourseDetailsTile(
+              emoji: '🆔',
+              title: context.s.course_code,
+              subtitle: scheduleEntry.courseCode,
             ),
-            ListTile(
-              leading: Text(
-                '🚪',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-              title: Text(context.s.room),
-              subtitle: Text(scheduleEntry.room),
+            CourseDetailsTile(
+              emoji: '🚪',
+              title: context.s.room,
+              subtitle: scheduleEntry.room,
             ),
-            ListTile(
-              leading: Text(
-                '🚪',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-              title: Text(context.s.section),
-              subtitle: Text(scheduleEntry.section),
+            CourseDetailsTile(
+              emoji: '🔢',
+              title: context.s.section,
+              subtitle: scheduleEntry.section,
             ),
-            ListTile(
-              leading: Text(
-                '📝',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-              title: Text(context.s.activity_description),
-              subtitle: Text(scheduleEntry.activityDesc),
+            CourseDetailsTile(
+              emoji: '📝',
+              title: context.s.activity_description,
+              subtitle: scheduleEntry.activityDesc,
             ),
-            ListTile(
-              leading: Text(
-                '👨‍🏫',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-              title: Text(context.s.instructor),
-              subtitle: Text(scheduleEntry.instructor),
+            CourseDetailsTile(
+              emoji: '👨‍🏫',
+              title: context.s.instructor,
+              subtitle: scheduleEntry.instructor,
             ),
-            ListTile(
-              leading: Text(
-                '⏰',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-              title: Text(context.s.credit_hours),
-              subtitle: Text(scheduleEntry.creditHours),
+            CourseDetailsTile(
+              emoji: '⏰',
+              title: context.s.credit_hours,
+              subtitle: scheduleEntry.creditHours,
             ),
-            ListTile(
-              leading: Text(
-                '🏫',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-              title: Text(context.s.campus_name),
-              subtitle: Text(scheduleEntry.campusName),
+            CourseDetailsTile(
+              emoji: '🏫',
+              title: context.s.campus_name,
+              subtitle: scheduleEntry.campusName,
             ),
-            ListTile(
-              leading: Text(
-                '🗑️',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-              title: Text(context.s.course_deleted_q),
-              subtitle: Text(
-                scheduleEntry.courseDeleted ? context.s.yes : context.s.no,
-              ),
+            CourseDetailsTile(
+              emoji: '🗑️',
+              title: context.s.course_deleted_q,
+              subtitle:
+                  scheduleEntry.courseDeleted ? context.s.yes : context.s.no,
             ),
           ],
         ),

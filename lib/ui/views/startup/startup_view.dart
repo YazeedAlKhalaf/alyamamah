@@ -1,7 +1,9 @@
 import 'package:alyamamah/ui/views/startup/startup_view_model.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+@RoutePage()
 class StartupView extends ConsumerStatefulWidget {
   const StartupView({super.key});
 

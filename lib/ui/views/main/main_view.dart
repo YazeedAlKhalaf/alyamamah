@@ -3,9 +3,11 @@ import 'package:alyamamah/ui/views/absences/absences_view.dart';
 import 'package:alyamamah/ui/views/courses/courses_view.dart';
 import 'package:alyamamah/ui/views/main/main_view_model.dart';
 import 'package:alyamamah/ui/views/profile/profile_view.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+@RoutePage()
 class MainView extends ConsumerWidget {
   static final Key parentWidget = UniqueKey();
 

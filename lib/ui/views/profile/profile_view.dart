@@ -8,10 +8,12 @@ import 'package:alyamamah/ui/views/profile/profile_view_model.dart';
 import 'package:alyamamah/ui/views/profile/widgets/language_bottom_sheet.dart';
 import 'package:alyamamah/ui/views/profile/widgets/theme_bottom_sheet.dart';
 import 'package:alyamamah/ui/widgets/button_loading.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
 
+@RoutePage()
 class ProfileView extends ConsumerWidget {
   const ProfileView({super.key});
 

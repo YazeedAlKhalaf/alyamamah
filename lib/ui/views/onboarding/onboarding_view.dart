@@ -2,9 +2,11 @@ import 'package:alyamamah/core/constants.dart';
 import 'package:alyamamah/core/extensions/build_context.dart';
 import 'package:alyamamah/ui/views/onboarding/onboarding_view_model.dart';
 import 'package:alyamamah/ui/widgets/switch_language_button.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+@RoutePage()
 class OnboardingView extends ConsumerWidget {
   static final Key loginButtonKey = UniqueKey();
 

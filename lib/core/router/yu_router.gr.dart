@@ -1,277 +1,129 @@
-// **************************************************************************
-// AutoRouteGenerator
-// **************************************************************************
-
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
-// AutoRouteGenerator
+// AutoRouterGenerator
 // **************************************************************************
-//
+
 // ignore_for_file: type=lint
+// coverage:ignore-file
 
-// ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:alyamamah/core/models/absence.dart' as _i12;
-import 'package:alyamamah/ui/views/absences/absence_details_view.dart' as _i8;
-import 'package:alyamamah/ui/views/courses/course_details_view.dart' as _i9;
-import 'package:alyamamah/ui/views/courses/courses_view.dart' as _i3;
-import 'package:alyamamah/ui/views/courses/models/schedule_entry.dart' as _i13;
-import 'package:alyamamah/ui/views/login/login_view.dart' as _i2;
-import 'package:alyamamah/ui/views/main/main_view.dart' as _i4;
-import 'package:alyamamah/ui/views/onboarding/onboarding_view.dart' as _i7;
-import 'package:alyamamah/ui/views/profile/profile_view.dart' as _i5;
-import 'package:alyamamah/ui/views/startup/startup_view.dart' as _i1;
-import 'package:alyamamah/ui/views/student_info/student_info_view.dart' as _i6;
-import 'package:auto_route/auto_route.dart' as _i10;
-import 'package:flutter/material.dart' as _i11;
+part of 'yu_router.dart';
 
-class YURouter extends _i10.RootStackRouter {
-  YURouter([_i11.GlobalKey<_i11.NavigatorState>? navigatorKey])
-      : super(navigatorKey);
+abstract class _$YURouter extends RootStackRouter {
+  _$YURouter([GlobalKey<NavigatorState>? navigatorKey]) : super(navigatorKey);
 
   @override
-  final Map<String, _i10.PageFactory> pagesMap = {
-    StartupRoute.name: (routeData) {
-      return _i10.AdaptivePage<dynamic>(
+  final Map<String, PageFactory> pagesMap = {
+    AbsencesRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i1.StartupView(),
-        opaque: true,
+        child: const AbsencesView(),
       );
     },
-    LoginRoute.name: (routeData) {
-      return _i10.AdaptivePage<dynamic>(
+    AbsenceDetailsRoute.name: (routeData) {
+      final args = routeData.argsAs<AbsenceDetailsRouteArgs>();
+      return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i2.LoginView(),
-        opaque: true,
+        child: AbsenceDetailsView(
+          key: args.key,
+          absence: args.absence,
+        ),
+      );
+    },
+    StudentInfoRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const StudentInfoView(),
+      );
+    },
+    CourseDetailsRoute.name: (routeData) {
+      final args = routeData.argsAs<CourseDetailsRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: CourseDetailsView(
+          key: args.key,
+          scheduleEntry: args.scheduleEntry,
+        ),
       );
     },
     CoursesRoute.name: (routeData) {
-      return _i10.AdaptivePage<dynamic>(
+      return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i3.CoursesView(),
-        opaque: true,
+        child: const CoursesView(),
+      );
+    },
+    ProfileRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ProfileView(),
+      );
+    },
+    StartupRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const StartupView(),
       );
     },
     MainRoute.name: (routeData) {
       final args =
           routeData.argsAs<MainRouteArgs>(orElse: () => const MainRouteArgs());
-      return _i10.AdaptivePage<dynamic>(
+      return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i4.MainView(
+        child: MainView(
           key: args.key,
           pages: args.pages,
         ),
-        opaque: true,
       );
     },
-    ProfileRoute.name: (routeData) {
-      return _i10.AdaptivePage<dynamic>(
+    LoginRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i5.ProfileView(),
-        opaque: true,
-      );
-    },
-    StudentInfoRoute.name: (routeData) {
-      return _i10.AdaptivePage<dynamic>(
-        routeData: routeData,
-        child: const _i6.StudentInfoView(),
-        opaque: true,
+        child: const LoginView(),
       );
     },
     OnboardingRoute.name: (routeData) {
-      return _i10.AdaptivePage<dynamic>(
+      return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i7.OnboardingView(),
-        opaque: true,
-      );
-    },
-    AbsenceDetailsRoute.name: (routeData) {
-      final args = routeData.argsAs<AbsenceDetailsRouteArgs>();
-      return _i10.AdaptivePage<dynamic>(
-        routeData: routeData,
-        child: _i8.AbsenceDetailsView(
-          key: args.key,
-          absence: args.absence,
-        ),
-        opaque: true,
-      );
-    },
-    CourseDetailsRoute.name: (routeData) {
-      final args = routeData.argsAs<CourseDetailsRouteArgs>();
-      return _i10.AdaptivePage<dynamic>(
-        routeData: routeData,
-        child: _i9.CourseDetailsView(
-          key: args.key,
-          scheduleEntry: args.scheduleEntry,
-        ),
-        opaque: true,
+        child: const OnboardingView(),
       );
     },
   };
-
-  @override
-  List<_i10.RouteConfig> get routes => [
-        _i10.RouteConfig(
-          StartupRoute.name,
-          path: '/',
-        ),
-        _i10.RouteConfig(
-          LoginRoute.name,
-          path: '/login-view',
-        ),
-        _i10.RouteConfig(
-          CoursesRoute.name,
-          path: '/courses-view',
-        ),
-        _i10.RouteConfig(
-          MainRoute.name,
-          path: '/main-view',
-        ),
-        _i10.RouteConfig(
-          ProfileRoute.name,
-          path: '/profile-view',
-        ),
-        _i10.RouteConfig(
-          StudentInfoRoute.name,
-          path: '/student-info-view',
-        ),
-        _i10.RouteConfig(
-          OnboardingRoute.name,
-          path: '/onboarding-view',
-        ),
-        _i10.RouteConfig(
-          AbsenceDetailsRoute.name,
-          path: '/absence-details-view',
-        ),
-        _i10.RouteConfig(
-          CourseDetailsRoute.name,
-          path: '/course-details-view',
-        ),
-      ];
 }
 
 /// generated route for
-/// [_i1.StartupView]
-class StartupRoute extends _i10.PageRouteInfo<void> {
-  const StartupRoute()
+/// [AbsencesView]
+class AbsencesRoute extends PageRouteInfo<void> {
+  const AbsencesRoute({List<PageRouteInfo>? children})
       : super(
-          StartupRoute.name,
-          path: '/',
+          AbsencesRoute.name,
+          initialChildren: children,
         );
 
-  static const String name = 'StartupRoute';
+  static const String name = 'AbsencesRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i2.LoginView]
-class LoginRoute extends _i10.PageRouteInfo<void> {
-  const LoginRoute()
-      : super(
-          LoginRoute.name,
-          path: '/login-view',
-        );
-
-  static const String name = 'LoginRoute';
-}
-
-/// generated route for
-/// [_i3.CoursesView]
-class CoursesRoute extends _i10.PageRouteInfo<void> {
-  const CoursesRoute()
-      : super(
-          CoursesRoute.name,
-          path: '/courses-view',
-        );
-
-  static const String name = 'CoursesRoute';
-}
-
-/// generated route for
-/// [_i4.MainView]
-class MainRoute extends _i10.PageRouteInfo<MainRouteArgs> {
-  MainRoute({
-    _i11.Key? key,
-    List<_i11.Widget>? pages,
-  }) : super(
-          MainRoute.name,
-          path: '/main-view',
-          args: MainRouteArgs(
-            key: key,
-            pages: pages,
-          ),
-        );
-
-  static const String name = 'MainRoute';
-}
-
-class MainRouteArgs {
-  const MainRouteArgs({
-    this.key,
-    this.pages,
-  });
-
-  final _i11.Key? key;
-
-  final List<_i11.Widget>? pages;
-
-  @override
-  String toString() {
-    return 'MainRouteArgs{key: $key, pages: $pages}';
-  }
-}
-
-/// generated route for
-/// [_i5.ProfileView]
-class ProfileRoute extends _i10.PageRouteInfo<void> {
-  const ProfileRoute()
-      : super(
-          ProfileRoute.name,
-          path: '/profile-view',
-        );
-
-  static const String name = 'ProfileRoute';
-}
-
-/// generated route for
-/// [_i6.StudentInfoView]
-class StudentInfoRoute extends _i10.PageRouteInfo<void> {
-  const StudentInfoRoute()
-      : super(
-          StudentInfoRoute.name,
-          path: '/student-info-view',
-        );
-
-  static const String name = 'StudentInfoRoute';
-}
-
-/// generated route for
-/// [_i7.OnboardingView]
-class OnboardingRoute extends _i10.PageRouteInfo<void> {
-  const OnboardingRoute()
-      : super(
-          OnboardingRoute.name,
-          path: '/onboarding-view',
-        );
-
-  static const String name = 'OnboardingRoute';
-}
-
-/// generated route for
-/// [_i8.AbsenceDetailsView]
-class AbsenceDetailsRoute extends _i10.PageRouteInfo<AbsenceDetailsRouteArgs> {
+/// [AbsenceDetailsView]
+class AbsenceDetailsRoute extends PageRouteInfo<AbsenceDetailsRouteArgs> {
   AbsenceDetailsRoute({
-    _i11.Key? key,
-    required _i12.Absence absence,
+    Key? key,
+    required Absence absence,
+    List<PageRouteInfo>? children,
   }) : super(
           AbsenceDetailsRoute.name,
-          path: '/absence-details-view',
           args: AbsenceDetailsRouteArgs(
             key: key,
             absence: absence,
           ),
+          initialChildren: children,
         );
 
   static const String name = 'AbsenceDetailsRoute';
+
+  static const PageInfo<AbsenceDetailsRouteArgs> page =
+      PageInfo<AbsenceDetailsRouteArgs>(name);
 }
 
 class AbsenceDetailsRouteArgs {
@@ -280,9 +132,9 @@ class AbsenceDetailsRouteArgs {
     required this.absence,
   });
 
-  final _i11.Key? key;
+  final Key? key;
 
-  final _i12.Absence absence;
+  final Absence absence;
 
   @override
   String toString() {
@@ -291,21 +143,39 @@ class AbsenceDetailsRouteArgs {
 }
 
 /// generated route for
-/// [_i9.CourseDetailsView]
-class CourseDetailsRoute extends _i10.PageRouteInfo<CourseDetailsRouteArgs> {
+/// [StudentInfoView]
+class StudentInfoRoute extends PageRouteInfo<void> {
+  const StudentInfoRoute({List<PageRouteInfo>? children})
+      : super(
+          StudentInfoRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'StudentInfoRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [CourseDetailsView]
+class CourseDetailsRoute extends PageRouteInfo<CourseDetailsRouteArgs> {
   CourseDetailsRoute({
-    _i11.Key? key,
-    required _i13.ScheduleEntry scheduleEntry,
+    Key? key,
+    required ScheduleEntry scheduleEntry,
+    List<PageRouteInfo>? children,
   }) : super(
           CourseDetailsRoute.name,
-          path: '/course-details-view',
           args: CourseDetailsRouteArgs(
             key: key,
             scheduleEntry: scheduleEntry,
           ),
+          initialChildren: children,
         );
 
   static const String name = 'CourseDetailsRoute';
+
+  static const PageInfo<CourseDetailsRouteArgs> page =
+      PageInfo<CourseDetailsRouteArgs>(name);
 }
 
 class CourseDetailsRouteArgs {
@@ -314,12 +184,119 @@ class CourseDetailsRouteArgs {
     required this.scheduleEntry,
   });
 
-  final _i11.Key? key;
+  final Key? key;
 
-  final _i13.ScheduleEntry scheduleEntry;
+  final ScheduleEntry scheduleEntry;
 
   @override
   String toString() {
     return 'CourseDetailsRouteArgs{key: $key, scheduleEntry: $scheduleEntry}';
   }
+}
+
+/// generated route for
+/// [CoursesView]
+class CoursesRoute extends PageRouteInfo<void> {
+  const CoursesRoute({List<PageRouteInfo>? children})
+      : super(
+          CoursesRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'CoursesRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ProfileView]
+class ProfileRoute extends PageRouteInfo<void> {
+  const ProfileRoute({List<PageRouteInfo>? children})
+      : super(
+          ProfileRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ProfileRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [StartupView]
+class StartupRoute extends PageRouteInfo<void> {
+  const StartupRoute({List<PageRouteInfo>? children})
+      : super(
+          StartupRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'StartupRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [MainView]
+class MainRoute extends PageRouteInfo<MainRouteArgs> {
+  MainRoute({
+    Key? key,
+    List<Widget>? pages,
+    List<PageRouteInfo>? children,
+  }) : super(
+          MainRoute.name,
+          args: MainRouteArgs(
+            key: key,
+            pages: pages,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'MainRoute';
+
+  static const PageInfo<MainRouteArgs> page = PageInfo<MainRouteArgs>(name);
+}
+
+class MainRouteArgs {
+  const MainRouteArgs({
+    this.key,
+    this.pages,
+  });
+
+  final Key? key;
+
+  final List<Widget>? pages;
+
+  @override
+  String toString() {
+    return 'MainRouteArgs{key: $key, pages: $pages}';
+  }
+}
+
+/// generated route for
+/// [LoginView]
+class LoginRoute extends PageRouteInfo<void> {
+  const LoginRoute({List<PageRouteInfo>? children})
+      : super(
+          LoginRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'LoginRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [OnboardingView]
+class OnboardingRoute extends PageRouteInfo<void> {
+  const OnboardingRoute({List<PageRouteInfo>? children})
+      : super(
+          OnboardingRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'OnboardingRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }

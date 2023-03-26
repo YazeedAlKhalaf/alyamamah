@@ -1,8 +1,10 @@
 import 'package:alyamamah/core/extensions/build_context.dart';
 import 'package:alyamamah/core/providers/actor_details/actor_details_notifier.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+@RoutePage()
 class StudentInfoView extends ConsumerWidget {
   const StudentInfoView({super.key});
 

@@ -5,18 +5,18 @@ packages:
     dependency: transitive
     description:
       name: _fe_analyzer_shared
-      sha256: "0c80aeab9bc807ab10022cd3b2f4cf2ecdf231949dc1ddd9442406a003f19201"
+      sha256: a36ec4843dc30ea6bf652bf25e3448db6c5e8bcf4aa55f063a5d1dad216d8214
       url: "https://pub.dev"
     source: hosted
-    version: "52.0.0"
+    version: "58.0.0"
   analyzer:
     dependency: transitive
     description:
       name: analyzer
-      sha256: cd8ee83568a77f3ae6b913a36093a1c9b1264e7cb7f834d9ddd2311dade9c1f4
+      sha256: cc4242565347e98424ce9945c819c192ec0838cb9d1f6aa4a97cc96becbc5b27
       url: "https://pub.dev"
     source: hosted
-    version: "5.4.0"
+    version: "5.10.0"
   archive:
     dependency: transitive
     description:
@@ -45,18 +45,18 @@ packages:
     dependency: "direct main"
     description:
       name: auto_route
-      sha256: "12047baeca0e01df93165ef33275b32119d72699ab9a49dc64c20e78f586f96d"
+      sha256: "89a5fcc4ea1bb13a13e3c0cf965a6600c2879c6c0719b57075bb5e9039559998"
       url: "https://pub.dev"
     source: hosted
-    version: "5.0.4"
+    version: "6.0.3"
   auto_route_generator:
     dependency: "direct dev"
     description:
       name: auto_route_generator
-      sha256: de5bfbc02ae4eebb339dd90d325749ae7536e903f6513ef72b88954072d72b0e
+      sha256: "0c97f3c413924216a5f290811e78742ef45924d28ffa7fa3ac41af5e3a9e4fa2"
       url: "https://pub.dev"
     source: hosted
-    version: "5.0.3"
+    version: "6.0.1"
   boolean_selector:
     dependency: transitive
     description:
@@ -213,26 +213,26 @@ packages:
     dependency: transitive
     description:
       name: dart_style
-      sha256: "7a03456c3490394c8e7665890333e91ae8a49be43542b616e414449ac358acd4"
+      sha256: "6d691edde054969f0e0f26abb1b30834b5138b963793e56f69d3a9a4435e6352"
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.4"
+    version: "2.3.0"
   dio:
     dependency: "direct main"
     description:
       name: dio
-      sha256: "3709d74615bba5e443eb141f6a7f4bcc4788f8fae6f743edadfb79c2a8e6287e"
+      sha256: "3e5c4a94d112540d0c9a6b7f3969832e1604eb8cde0f88d0808382f9f632100b"
       url: "https://pub.dev"
     source: hosted
-    version: "5.0.1"
+    version: "5.0.3"
   dio_cookie_manager:
     dependency: "direct main"
     description:
       name: dio_cookie_manager
-      sha256: b9552ab77e361acd56e00671a3fd424abe8447aa0a14b68bec55833351d139b4
+      sha256: "326f2940d2dc48428350615b53cbda6904934e0900fbf791d36be0c72e05e39f"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.1"
+    version: "2.1.3"
   fake_async:
     dependency: transitive
     description:
@@ -295,10 +295,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_riverpod
-      sha256: "40c0d7d03ccd24fa32ea08dcfc4df9bb92c4c26c9a91938945da3be10ed8ca83"
+      sha256: b3c3a8a9714b7f88dd2a41e1efbc47f76d620b06ab427c62ae7bc82298cd7dbb
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.0"
+    version: "2.3.2"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -609,18 +609,18 @@ packages:
     dependency: transitive
     description:
       name: riverpod
-      sha256: c5aea6c3fed340707f013a023a37ab388bf45611a8a4f7e76b5e9007eb76cd25
+      sha256: b0fbf7927333c5c318f7e2c22c8b4fd2542ba294de0373e80ecdb34e0dcd8dc4
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.0"
+    version: "2.3.2"
   shared_preferences:
     dependency: "direct main"
     description:
       name: shared_preferences
-      sha256: ee6257848f822b8481691f20c3e6d2bfee2e9eccb2a3d249907fcfb198c55b41
+      sha256: "78528fd87d0d08ffd3e69551173c026e8eacc7b7079c82eb6a77413957b7e394"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.18"
+    version: "2.0.20"
   shared_preferences_android:
     dependency: transitive
     description:
@@ -710,10 +710,10 @@ packages:
     dependency: transitive
     description:
       name: source_gen
-      sha256: "2d79738b6bbf38a43920e2b8d189e9a3ce6cc201f4b8fc76be5e4fe377b1c38d"
+      sha256: c2bea18c95cfa0276a366270afaa2850b09b4a76db95d546f3d003dcc7011298
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.6"
+    version: "1.2.7"
   source_map_stack_trace:
     dependency: transitive
     description:

@@ -4,9 +4,11 @@ import 'package:alyamamah/core/extensions/build_context.dart';
 import 'package:alyamamah/ui/views/login/login_view_model.dart';
 import 'package:alyamamah/ui/widgets/button_loading.dart';
 import 'package:alyamamah/ui/widgets/switch_language_button.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+@RoutePage()
 class LoginView extends ConsumerStatefulWidget {
   static final Key showPasswordButtonKey = UniqueKey();
   static final Key loginButtonKey = UniqueKey();

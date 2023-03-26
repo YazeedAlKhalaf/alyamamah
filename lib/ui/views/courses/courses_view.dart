@@ -5,9 +5,11 @@ import 'package:alyamamah/core/extensions/time_of_day.dart';
 import 'package:alyamamah/core/models/day.dart';
 import 'package:alyamamah/ui/views/courses/courses_view_model.dart';
 import 'package:alyamamah/ui/widgets/time_planner/time_planner.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+@RoutePage()
 class CoursesView extends ConsumerStatefulWidget {
   const CoursesView({super.key});
 

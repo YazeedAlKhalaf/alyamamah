@@ -1,8 +1,10 @@
 import 'package:alyamamah/core/extensions/build_context.dart';
 import 'package:alyamamah/ui/views/courses/course_details_tile.dart';
 import 'package:alyamamah/ui/views/courses/models/schedule_entry.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
+@RoutePage()
 class CourseDetailsView extends StatelessWidget {
   final ScheduleEntry scheduleEntry;
 

@@ -1,7 +1,9 @@
 import 'package:alyamamah/core/extensions/build_context.dart';
 import 'package:alyamamah/core/models/absence.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
+@RoutePage()
 class AbsenceDetailsView extends StatelessWidget {
   final Absence absence;
 

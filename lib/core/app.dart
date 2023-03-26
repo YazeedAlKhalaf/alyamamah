@@ -37,9 +37,7 @@ class AppWithoutProviderScope extends ConsumerWidget {
     final localeService = ref.watch(localeServiceProvider);
 
     return MaterialApp.router(
-      routerDelegate: yuRouter.delegate(),
-      routeInformationParser: yuRouter.defaultRouteParser(),
-      routeInformationProvider: yuRouter.routeInfoProvider(),
+      routerConfig: yuRouter.config(),
       localizationsDelegates: S.localizationsDelegates,
       supportedLocales: S.supportedLocales,
       locale: localeService.locale,

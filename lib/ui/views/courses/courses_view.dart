@@ -121,7 +121,7 @@ class _CoursesViewState extends ConsumerState<CoursesView> {
         ],
         flexibleSpace: coursesViewModel.isRamadan
             ? Opacity(
-                opacity: 0.03,
+                opacity: 0.01,
                 child: Image.asset(
                   'assets/images/islamic-ornament.png',
                   fit: BoxFit.cover,

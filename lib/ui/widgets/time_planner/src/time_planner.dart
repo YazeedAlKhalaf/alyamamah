@@ -151,7 +151,7 @@ class _TimePlannerState extends State<TimePlanner> {
               children: [
                 if (widget.isRamadan)
                   Opacity(
-                    opacity: 0.03,
+                    opacity: 0.01,
                     child: Image.asset(
                       'assets/images/islamic-ornament.png',
                       fit: BoxFit.fitWidth,

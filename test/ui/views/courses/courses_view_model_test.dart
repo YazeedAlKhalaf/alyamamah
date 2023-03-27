@@ -2,6 +2,7 @@ import 'package:alyamamah/core/models/day.dart';
 import 'package:alyamamah/core/models/ios_widget_course.dart';
 import 'package:alyamamah/core/models/schedule.dart';
 import 'package:alyamamah/core/models/time_table.dart';
+import 'package:alyamamah/core/providers/actor_details/actor_details_notifier.dart';
 import 'package:alyamamah/core/router/yu_router.dart';
 import 'package:alyamamah/core/services/api/api_service.dart';
 import 'package:alyamamah/core/services/api/api_service_exception.dart';
@@ -33,6 +34,7 @@ void main() {
     late MockWidgetKitService mockWidgetKitService;
     late MockSharedPrefsService mockSharedPrefsService;
     late MockYURouter mockYuRouter;
+    late MockRef mockRef;
     late CoursesViewModel coursesViewModel;
 
     setUp(() {
@@ -41,12 +43,16 @@ void main() {
       mockWidgetKitService = MockWidgetKitService();
       mockSharedPrefsService = MockSharedPrefsService();
       mockYuRouter = MockYURouter();
+      mockRef = MockRef();
+      when(() => mockRef.read(actorDetailsProvider)).thenReturn(null);
+
       coursesViewModel = CoursesViewModel(
         apiService: mockApiService,
         pageController: pageController,
         widgetKitService: mockWidgetKitService,
         sharedPrefsService: mockSharedPrefsService,
         yuRouter: mockYuRouter,
+        ref: mockRef,
       );
     });
 
@@ -124,7 +130,7 @@ void main() {
         'if the call is successful.',
         () async {
           when(
-            () => mockApiService.getStudentSchedule(schedule: '20222'),
+            () => mockApiService.getStudentSchedule(schedule: ''),
           ).thenAnswer((_) async => [schedule1, schedule2]);
           when(
             () => mockWidgetKitService.updateCoursesWidgetData(
@@ -322,7 +328,7 @@ void main() {
           expect(coursesViewModel.isBusy, false);
 
           verify(
-            () => mockApiService.getStudentSchedule(schedule: '20222'),
+            () => mockApiService.getStudentSchedule(schedule: ''),
           ).called(1);
           verify(
             () => mockWidgetKitService.updateCoursesWidgetData(
@@ -338,7 +344,7 @@ void main() {
         'if the call throws a ApiServiceException.',
         () async {
           when(
-            () => mockApiService.getStudentSchedule(schedule: '20222'),
+            () => mockApiService.getStudentSchedule(schedule: ''),
           ).thenThrow(const ApiServiceException());
 
           await coursesViewModel.getStudentSchedule();
@@ -362,3 +368,5 @@ class MockWidgetKitService extends Mock implements WidgetKitService {}
 class MockSharedPrefsService extends Mock implements SharedPrefsService {}
 
 class MockYURouter extends Mock implements YURouter {}
+
+class MockRef extends Mock implements Ref {}

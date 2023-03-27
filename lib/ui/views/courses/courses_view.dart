@@ -3,6 +3,7 @@ import 'package:alyamamah/core/extensions/build_context.dart';
 import 'package:alyamamah/core/extensions/int.dart';
 import 'package:alyamamah/core/extensions/time_of_day.dart';
 import 'package:alyamamah/core/models/day.dart';
+import 'package:alyamamah/ui/views/courses/change_semester_bottom_sheet.dart';
 import 'package:alyamamah/ui/views/courses/courses_view_model.dart';
 import 'package:alyamamah/ui/widgets/time_planner/time_planner.dart';
 import 'package:auto_route/auto_route.dart';
@@ -106,6 +107,20 @@ class _CoursesViewState extends ConsumerState<CoursesView> {
       appBar: AppBar(
         title: Text(context.s.my_courses),
         surfaceTintColor: Theme.of(context).colorScheme.surface,
+        leading: IconButton(
+          icon: Text(
+            '📚',
+            style: Theme.of(context).textTheme.headlineMedium,
+          ),
+          onPressed: () async {
+            await showModalBottomSheet(
+              context: context,
+              builder: (BuildContext context) {
+                return const ChangeSemesterBottomSheet();
+              },
+            );
+          },
+        ),
         actions: [
           IconButton(
             icon: Text(

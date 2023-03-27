@@ -5,11 +5,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class YUBottomSheet extends ConsumerStatefulWidget {
   final String? title;
+  final String? description;
   final List<Widget> children;
 
   const YUBottomSheet({
     super.key,
     this.title,
+    this.description,
     required this.children,
   });
 
@@ -46,12 +48,29 @@ class _YUBottomSheetState extends ConsumerState<YUBottomSheet>
               const SizedBox(height: Constants.spacing),
               const DragHandle(),
               const SizedBox(height: Constants.padding),
-              if (widget.title != null)
+              if (widget.title != null) ...[
                 Text(
                   widget.title!,
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
-              const SizedBox(height: Constants.padding),
+                const SizedBox(height: Constants.spacing),
+              ],
+              if (widget.description != null) ...[
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: Constants.padding,
+                    right: Constants.padding,
+                    bottom: Constants.spacing,
+                  ),
+                  child: Text(
+                    widget.description!,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: Theme.of(context).colorScheme.outline,
+                        ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
               ...widget.children,
             ],
           ),

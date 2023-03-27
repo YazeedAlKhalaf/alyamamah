@@ -3,6 +3,7 @@ import 'package:alyamamah/core/models/day.dart';
 import 'package:alyamamah/core/models/ios_widget_course.dart';
 import 'package:alyamamah/core/models/schedule.dart';
 import 'package:alyamamah/core/models/time_table.dart';
+import 'package:alyamamah/core/providers/actor_details/actor_details_notifier.dart';
 import 'package:alyamamah/core/router/yu_router.dart';
 import 'package:alyamamah/core/services/api/api_service.dart';
 import 'package:alyamamah/core/services/api/api_service_exception.dart';
@@ -23,6 +24,7 @@ final coursesViewModelProvider = ChangeNotifierProvider(
     widgetKitService: ref.read(widgetKitSerivceProvider),
     sharedPrefsService: ref.read(sharedPrefsServiceProvider),
     yuRouter: ref.read(yuRouterProvider),
+    ref: ref,
   ),
 );
 
@@ -34,6 +36,7 @@ class CoursesViewModel extends ChangeNotifier {
   final WidgetKitService _widgetKitService;
   final SharedPrefsService _sharedPrefsService;
   final YURouter _yuRouter;
+  final Ref _ref;
 
   CoursesViewModel({
     required ApiService apiService,
@@ -41,16 +44,20 @@ class CoursesViewModel extends ChangeNotifier {
     required WidgetKitService widgetKitService,
     required SharedPrefsService sharedPrefsService,
     required YURouter yuRouter,
+    required Ref ref,
   })  : _apiService = apiService,
         _pageController = pageController,
         _widgetKitService = widgetKitService,
         _sharedPrefsService = sharedPrefsService,
-        _yuRouter = yuRouter {
+        _yuRouter = yuRouter,
+        _ref = ref {
     HijriCalendar now = HijriCalendar.now();
 
     _isRamadan =
         (now.isAfter(now.hYear, 4, 1) && now.isBefore(now.hYear, 5, 1)) ||
             (_sharedPrefsService.getRamadanMode() ?? false);
+    _selectedSemester =
+        _ref.read(actorDetailsProvider)?.semester.currentSemester ?? '';
   }
 
   bool _isBusy = false;
@@ -58,6 +65,9 @@ class CoursesViewModel extends ChangeNotifier {
 
   bool _isRamadan = false;
   bool get isRamadan => _isRamadan;
+
+  late String _selectedSemester;
+  String get selectedSemester => _selectedSemester;
 
   PageController get pageController => _pageController;
 
@@ -98,8 +108,7 @@ class CoursesViewModel extends ChangeNotifier {
 
     try {
       final scheduleList = await _apiService.getStudentSchedule(
-        // TODO: make this dynamic.
-        schedule: '20222',
+        schedule: _selectedSemester,
       );
 
       // Arrange data.
@@ -259,5 +268,14 @@ class CoursesViewModel extends ChangeNotifier {
     await _yuRouter.push(
       CourseDetailsRoute(scheduleEntry: scheduleEntry),
     );
+  }
+
+  Future<void> changeSemester(String newSemesterValue) async {
+    if (_selectedSemester.isEmpty) return;
+
+    _selectedSemester = newSemesterValue;
+    notifyListeners();
+
+    await getStudentSchedule();
   }
 }

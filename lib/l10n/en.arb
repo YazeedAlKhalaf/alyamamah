@@ -64,5 +64,9 @@
   "no": "No",
   "section": "Section",
   "regular": "Regular",
-  "ramadan": "Ramadan"
+  "ramadan": "Ramadan",
+  "choose_semester": "Choose Semester",
+  "choose_semester_description": "This shows the current and the previous semester only. Sadly because of an API limitation I can't show all the semesters.",
+  "current": "current",
+  "previous": "previous"
 }

@@ -48,7 +48,7 @@ class AbsenceDetailsView extends StatelessWidget {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Checkbox(value: details.isExcused, onChanged: (_) {}),
+                      Checkbox(value: details.late, onChanged: (_) {}),
                       Text(context.s.late),
                     ],
                   ),

@@ -4,6 +4,9 @@ class Constants {
   static const String apiUrl = 'https://edugate.yu.edu.sa/yu';
   static const String sharedAppGroup = 'group.dev.alkhalaf.alyamamah.shared';
   static const String twitterLink = 'https://twitter.com/YazeedAlKhalaf';
+  static const String semesterProgressLink =
+      'https://alyamamah-semester-progress.netlify.app';
+  static const String tuwaiqClassroomsLink = 'https://tc.gdscyu.com';
 
   static const String usernameKey = 'username';
   static const String passwordKey = 'password';

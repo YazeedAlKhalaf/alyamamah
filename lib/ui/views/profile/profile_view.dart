@@ -146,6 +146,40 @@ class ProfileView extends ConsumerWidget {
                   }
                 },
               ),
+              ListTile(
+                leading: Text(
+                  '％',
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
+                title: Text(context.s.semester_progress_tool),
+                onTap: () async {
+                  final canLaunch = await url_launcher.canLaunchUrl(
+                    Uri.parse(Constants.semesterProgressLink),
+                  );
+                  if (canLaunch) {
+                    await url_launcher.launchUrl(
+                      Uri.parse(Constants.semesterProgressLink),
+                    );
+                  }
+                },
+              ),
+              ListTile(
+                leading: Text(
+                  '🗓️',
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
+                title: Text(context.s.tuwaiq_classrooms_tool),
+                onTap: () async {
+                  final canLaunch = await url_launcher.canLaunchUrl(
+                    Uri.parse(Constants.tuwaiqClassroomsLink),
+                  );
+                  if (canLaunch) {
+                    await url_launcher.launchUrl(
+                      Uri.parse(Constants.tuwaiqClassroomsLink),
+                    );
+                  }
+                },
+              ),
               const SizedBox(height: Constants.padding),
               Padding(
                 padding: const EdgeInsets.symmetric(

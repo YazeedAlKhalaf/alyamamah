@@ -76,5 +76,7 @@
   "enter_your_email": "رجاء أدخل بريدك الإلكتروني",
   "enter_valid_email": "رجاء أدخل بريد إلكتروني صحيح",
   "enter_your_mobile": "رجاء أدخل جوالك",
-  "enter_valid_mobile": "رجاء أدخل جوال صحيح"
+  "enter_valid_mobile": "رجاء أدخل جوال صحيح",
+  "semester_progress_tool": "أداة تقدم الفصل الدراسي",
+  "tuwaiq_classrooms_tool": "أداة القاعات التعليمية في طويق"
 }

@@ -221,4 +221,68 @@ class ApiService {
       throw const ApiServiceException();
     }
   }
+
+  Future<void> updateStudentInfo({
+    required String email,
+    required String mobile,
+  }) async {
+    try {
+      final response = await _dio.post(
+        '/resources/student/contacts/updateStudentInfo',
+        data: {
+          'email': email,
+          'mobile': mobile,
+        },
+      );
+
+      if (response.statusCode != 200) {
+        _log.severe('updateMobile | non 200 status code.');
+        throw const ApiServiceException();
+      }
+
+      if (response.data.toString() != 'true') {
+        _log.severe('updateMobile | failed to update student info.');
+        throw const ApiServiceException(
+          ApiServiceExceptionType.unknown,
+        );
+      }
+    } catch (e) {
+      if (e is ApiServiceException) rethrow;
+
+      _log.severe('updateMobile | unexpected exception: $e.');
+      throw const ApiServiceException();
+    }
+  }
+
+  /// Somehow their API doesn't return the new data unless you call this thingy
+  /// with the language you want, seems a session issue.
+  /// Usually called with the same language as the app's current language.
+  Future<ActorDetails> getActorDetails({
+    required ChangeLanguageLocale changeLanguageLocale,
+  }) async {
+    try {
+      final response = await _dio.get(
+        '/resources/common/commonServies/changeLanguage/${changeLanguageLocale.localeNumber}',
+        options: Options(
+          headers: {
+            'langId': '${changeLanguageLocale.localeNumber - 1}',
+          },
+        ),
+      );
+
+      if (response.statusCode != 200) {
+        _log.severe('changeLanguage | non 200 status code.');
+        throw const ApiServiceException();
+      }
+
+      final data = response.data;
+
+      return ActorDetails.fromMap(data);
+    } catch (e) {
+      if (e is ApiServiceException) rethrow;
+
+      _log.severe('changeLanguage | unexpected exception: $e.');
+      throw const ApiServiceException();
+    }
+  }
 }

@@ -48,12 +48,12 @@ class CommonInfo {
 
   factory CommonInfo.fromMap(Map<String, dynamic> map) {
     return CommonInfo(
-      actorImage: map['actorImage'] as String,
-      actorType: map['actorType'] as String,
-      latestVersion: map['latestVersion'] as String,
-      msg: map['msg'] as String,
+      actorImage: map['actorImage'] ?? '',
+      actorType: map['actorType'] ?? '',
+      latestVersion: map['latestVersion'] ?? '',
+      msg: map['msg'] ?? '',
       status: map['status'] as bool,
-      userId: map['userId'] as String,
+      userId: map['userId'] ?? '',
     );
   }
 

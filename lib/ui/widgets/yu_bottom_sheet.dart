@@ -32,50 +32,55 @@ class _YUBottomSheetState extends ConsumerState<YUBottomSheet>
 
   @override
   Widget build(BuildContext context) {
-    return BottomSheet(
-      onClosing: () {},
-      enableDrag: true,
-      animationController: animationController,
-      builder: (BuildContext context) {
-        return SafeArea(
-          top: false,
-          right: false,
-          left: false,
-          bottom: true,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const SizedBox(height: Constants.spacing),
-              const DragHandle(),
-              const SizedBox(height: Constants.padding),
-              if (widget.title != null) ...[
-                Text(
-                  widget.title!,
-                  style: Theme.of(context).textTheme.headlineSmall,
-                ),
+    return Padding(
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+      ),
+      child: BottomSheet(
+        onClosing: () {},
+        enableDrag: true,
+        animationController: animationController,
+        builder: (BuildContext context) {
+          return SafeArea(
+            top: false,
+            right: false,
+            left: false,
+            bottom: true,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
                 const SizedBox(height: Constants.spacing),
-              ],
-              if (widget.description != null) ...[
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: Constants.padding,
-                    right: Constants.padding,
-                    bottom: Constants.spacing,
+                const DragHandle(),
+                const SizedBox(height: Constants.padding),
+                if (widget.title != null) ...[
+                  Text(
+                    widget.title!,
+                    style: Theme.of(context).textTheme.headlineSmall,
                   ),
-                  child: Text(
-                    widget.description!,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Theme.of(context).colorScheme.outline,
-                        ),
-                    textAlign: TextAlign.center,
+                  const SizedBox(height: Constants.spacing),
+                ],
+                if (widget.description != null) ...[
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: Constants.padding,
+                      right: Constants.padding,
+                      bottom: Constants.spacing,
+                    ),
+                    child: Text(
+                      widget.description!,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: Theme.of(context).colorScheme.outline,
+                          ),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
+                ],
+                ...widget.children,
               ],
-              ...widget.children,
-            ],
-          ),
-        );
-      },
+            ),
+          );
+        },
+      ),
     );
   }
 }

@@ -68,5 +68,13 @@
   "choose_semester": "اختر الفصل الدراسي",
   "choose_semester_description": "هذا يظهر الفصل الدراسي الحالي والسابق فقط. للأسف بسبب قيود واجهة برمجة التطبيقات (API)، لا يمكنني عرض جميع الفصول الدراسية",
   "current": "الحالي",
-  "previous": "السابق"
+  "previous": "السابق",
+  "edit": "تعديل",
+  "update_mobile": "تحديث الجوال",
+  "update": "تحديث",
+  "update_email": "تحديث البريد الإلكتروني",
+  "enter_your_email": "رجاء أدخل بريدك الإلكتروني",
+  "enter_valid_email": "رجاء أدخل بريد إلكتروني صحيح",
+  "enter_your_mobile": "رجاء أدخل جوالك",
+  "enter_valid_mobile": "رجاء أدخل جوال صحيح"
 }

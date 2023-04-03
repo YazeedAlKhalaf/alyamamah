@@ -68,5 +68,13 @@
   "choose_semester": "Choose Semester",
   "choose_semester_description": "This shows the current and the previous semester only. Sadly because of an API limitation I can't show all the semesters.",
   "current": "current",
-  "previous": "previous"
+  "previous": "previous",
+  "edit": "Edit",
+  "update_mobile": "Update Mobile",
+  "update": "Update",
+  "update_email": "Update Email",
+  "enter_your_email": "Please enter your email",
+  "enter_valid_email": "Please enter a valid email",
+  "enter_your_mobile": "Please enter your mobile",
+  "enter_valid_mobile": "Please enter a valid mobile"
 }

@@ -29,6 +29,13 @@ Now for the fun part:
 3. `flutter pub get`
 4. `flutter run`, make sure a simulator, an emulator, or a real device is connected.
 
+This app calls the university API. If you don't have an account at Al Yamamah University, use the demo account:
+
+- Username: `200011150`
+- Password: `Aa1234aa@`
+
+If you are ineterested in how this works, see the demo interceptor [here](https://github.com/YazeedAlKhalaf/alyamamah/blob/main/lib/core/services/api/interceptors/demo_mode_interceptor.dart).
+
 ## How to generate icons?
 
 Run the following command:

@@ -17,6 +17,18 @@ Features:
 - Arabic and English language support
 - Dark and Light mode support
 
+## How to run the app?
+
+This is a Flutter app. You must have Flutter installed and working on your machine. Do that if you didn't yet by following their official documentation:
+https://docs.flutter.dev/get-started/install
+
+Now for the fun part:
+
+1. `git clone git@github.com:YazeedAlKhalaf/alyamamah.git`
+2. `cd alyamamah`
+3. `flutter pub get`
+4. `flutter run`, make sure a simulator, an emulator, or a real device is connected.
+
 ## How to generate icons?
 
 Run the following command:

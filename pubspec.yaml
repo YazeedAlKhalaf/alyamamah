@@ -25,6 +25,7 @@ dependencies:
   url_launcher: 6.1.10
   hijri: 3.0.0
   flutter_svg: 2.0.4
+  collection: 1.17.0
 
 dev_dependencies:
   flutter_test:

@@ -1,9 +1,11 @@
 import 'package:alyamamah/core/app.dart';
+import 'package:alyamamah/core/providers/firebase_analytics/firebase_analytics_provider.dart';
 import 'package:alyamamah/core/services/locale/locale_service.dart';
 import 'package:alyamamah/core/services/shared_prefs/shared_prefs_service.dart';
 import 'package:alyamamah/core/services/theme/theme_service.dart';
 import 'package:alyamamah/core/themes/themes.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,20 +16,33 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() {
   group('App |', () {
     late MockSharedPreferences mockSharedPreferences;
+    late MockFirebaseAnalytics mockFirebaseAnalytics;
 
     setUp(() {
       mockSharedPreferences = MockSharedPreferences();
+      mockFirebaseAnalytics = MockFirebaseAnalytics();
     });
 
     Widget buildTestWidget() {
       return App(
         sharedPreferences: mockSharedPreferences,
+        overrides: [
+          firebaseAnalyticsProvider.overrideWith(
+            (ref) => mockFirebaseAnalytics,
+          ),
+        ],
       );
     }
 
     testWidgets(
       'should find one ProviderScope.',
       (WidgetTester tester) async {
+        when(
+          () => mockFirebaseAnalytics.setCurrentScreen(
+            screenName: any(named: 'screenName'),
+          ),
+        ).thenAnswer((invocation) => Future.value());
+
         await tester.pumpWidget(buildTestWidget());
         await tester.pumpAndSettle();
 
@@ -39,6 +54,12 @@ void main() {
     testWidgets(
       'AppWithoutProviderScope should be the child of ProviderScope.',
       (WidgetTester tester) async {
+        when(
+          () => mockFirebaseAnalytics.setCurrentScreen(
+            screenName: any(named: 'screenName'),
+          ),
+        ).thenAnswer((invocation) => Future.value());
+
         await tester.pumpWidget(buildTestWidget());
         await tester.pumpAndSettle();
 
@@ -57,11 +78,13 @@ void main() {
     late MockSharedPreferences mockSharedPreferences;
     late MockThemeService mockThemeService;
     late MockLocaleService mockLocaleService;
+    late MockFirebaseAnalytics mockFirebaseAnalytics;
 
     setUp(() {
       mockSharedPreferences = MockSharedPreferences();
       mockThemeService = MockThemeService();
       mockLocaleService = MockLocaleService();
+      mockFirebaseAnalytics = MockFirebaseAnalytics();
 
       when(() => mockLocaleService.locale).thenReturn(const Locale('en'));
       when(() => mockThemeService.themeMode).thenReturn(ThemeMode.system);
@@ -74,6 +97,9 @@ void main() {
               .overrideWith((ref) => mockSharedPreferences),
           themeServiceProvider.overrideWith((ref) => mockThemeService),
           localeServiceProvider.overrideWith((ref) => mockLocaleService),
+          firebaseAnalyticsProvider.overrideWith(
+            (ref) => mockFirebaseAnalytics,
+          ),
         ],
         child: const AppWithoutProviderScope(),
       );
@@ -82,6 +108,12 @@ void main() {
     testWidgets(
       'should find one MaterialApp.',
       (WidgetTester tester) async {
+        when(
+          () => mockFirebaseAnalytics.setCurrentScreen(
+            screenName: any(named: 'screenName'),
+          ),
+        ).thenAnswer((invocation) => Future.value());
+
         await tester.pumpWidget(buildTestWidget());
         await tester.pumpAndSettle();
 
@@ -94,6 +126,12 @@ void main() {
       'verify routerConfig '
       'is an AutoRouterDelegate instance.',
       (WidgetTester tester) async {
+        when(
+          () => mockFirebaseAnalytics.setCurrentScreen(
+            screenName: any(named: 'screenName'),
+          ),
+        ).thenAnswer((invocation) => Future.value());
+
         await tester.pumpWidget(buildTestWidget());
         await tester.pumpAndSettle();
 
@@ -114,6 +152,12 @@ void main() {
       'verify localizationsDelegates '
       'is from the S class.',
       (WidgetTester tester) async {
+        when(
+          () => mockFirebaseAnalytics.setCurrentScreen(
+            screenName: any(named: 'screenName'),
+          ),
+        ).thenAnswer((invocation) => Future.value());
+
         await tester.pumpWidget(buildTestWidget());
         await tester.pumpAndSettle();
 
@@ -134,6 +178,12 @@ void main() {
       'verify supportedLocales '
       'is from the S class.',
       (WidgetTester tester) async {
+        when(
+          () => mockFirebaseAnalytics.setCurrentScreen(
+            screenName: any(named: 'screenName'),
+          ),
+        ).thenAnswer((invocation) => Future.value());
+
         await tester.pumpWidget(buildTestWidget());
         await tester.pumpAndSettle();
 
@@ -154,6 +204,12 @@ void main() {
       'verify locale '
       'is from the locale service.',
       (WidgetTester tester) async {
+        when(
+          () => mockFirebaseAnalytics.setCurrentScreen(
+            screenName: any(named: 'screenName'),
+          ),
+        ).thenAnswer((invocation) => Future.value());
+
         when(() => mockLocaleService.locale).thenReturn(const Locale('ar'));
 
         await tester.pumpWidget(buildTestWidget());
@@ -176,6 +232,12 @@ void main() {
       'verify themeMode '
       'is from the locale service.',
       (WidgetTester tester) async {
+        when(
+          () => mockFirebaseAnalytics.setCurrentScreen(
+            screenName: any(named: 'screenName'),
+          ),
+        ).thenAnswer((invocation) => Future.value());
+
         when(() => mockThemeService.themeMode).thenReturn(ThemeMode.light);
 
         await tester.pumpWidget(buildTestWidget());
@@ -198,6 +260,12 @@ void main() {
       'verify theme '
       'is from the Themes class.',
       (WidgetTester tester) async {
+        when(
+          () => mockFirebaseAnalytics.setCurrentScreen(
+            screenName: any(named: 'screenName'),
+          ),
+        ).thenAnswer((invocation) => Future.value());
+
         await tester.pumpWidget(buildTestWidget());
         await tester.pumpAndSettle();
 
@@ -215,6 +283,12 @@ void main() {
       'verify darkTheme '
       'is from the Themes class.',
       (WidgetTester tester) async {
+        when(
+          () => mockFirebaseAnalytics.setCurrentScreen(
+            screenName: any(named: 'screenName'),
+          ),
+        ).thenAnswer((invocation) => Future.value());
+
         await tester.pumpWidget(buildTestWidget());
         await tester.pumpAndSettle();
 
@@ -231,6 +305,12 @@ void main() {
     testWidgets(
       'verify builder if child is not null.',
       (WidgetTester tester) async {
+        when(
+          () => mockFirebaseAnalytics.setCurrentScreen(
+            screenName: any(named: 'screenName'),
+          ),
+        ).thenAnswer((invocation) => Future.value());
+
         await tester.pumpWidget(buildTestWidget());
         await tester.pumpAndSettle();
 
@@ -258,6 +338,12 @@ void main() {
     testWidgets(
       'verify builder if child is null.',
       (WidgetTester tester) async {
+        when(
+          () => mockFirebaseAnalytics.setCurrentScreen(
+            screenName: any(named: 'screenName'),
+          ),
+        ).thenAnswer((invocation) => Future.value());
+
         await tester.pumpWidget(buildTestWidget());
         await tester.pumpAndSettle();
 
@@ -289,3 +375,5 @@ class MockSharedPreferences extends Mock implements SharedPreferences {}
 class MockThemeService extends Mock implements ThemeService {}
 
 class MockLocaleService extends Mock implements LocaleService {}
+
+class MockFirebaseAnalytics extends Mock implements FirebaseAnalytics {}

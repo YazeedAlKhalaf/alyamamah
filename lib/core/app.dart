@@ -1,3 +1,4 @@
+import 'package:alyamamah/core/providers/firebase_analytics/firebase_analytics_provider.dart';
 import 'package:alyamamah/core/router/yu_router.dart';
 import 'package:alyamamah/core/services/locale/locale_service.dart';
 import 'package:alyamamah/core/services/shared_prefs/shared_prefs_service.dart';
@@ -11,10 +12,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class App extends StatelessWidget {
   final SharedPreferences sharedPreferences;
+  @visibleForTesting
+  final List<Override> overrides;
 
   const App({
     super.key,
     required this.sharedPreferences,
+    this.overrides = const [],
   });
 
   @override
@@ -22,6 +26,7 @@ class App extends StatelessWidget {
     return ProviderScope(
       overrides: [
         sharedPreferencesProvider.overrideWith((ref) => sharedPreferences),
+        ...overrides,
       ],
       child: const AppWithoutProviderScope(),
     );
@@ -41,7 +46,7 @@ class AppWithoutProviderScope extends ConsumerWidget {
       routerConfig: yuRouter.config(
         navigatorObservers: () => [
           FirebaseAnalyticsObserver(
-            analytics: FirebaseAnalytics.instance,
+            analytics: ref.read(firebaseAnalyticsProvider),
           ),
         ],
       ),

@@ -131,6 +131,9 @@ void main() {
             tester,
             'home_view.isBusy_false_schedule_days_not_empty_on_sunday',
             devices: testDevices,
+            customPump: (WidgetTester tester) async {
+              await tester.pump(const Duration(milliseconds: 150));
+            },
           );
         },
       );

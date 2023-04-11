@@ -5,3 +5,7 @@
 # Xcode-related
 **/dgph
 **/xcuserdata/
+
+# secret files
+Runner/GoogleService-Info.plist
+firebase_app_id_file.json

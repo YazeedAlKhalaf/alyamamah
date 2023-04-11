@@ -55,3 +55,6 @@ reports/
 
 #fvm
 .fvm/flutter_sdk
+
+# secret files
+lib/firebase_options.dart

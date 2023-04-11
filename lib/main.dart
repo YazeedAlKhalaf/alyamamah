@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:alyamamah/core/app.dart';
+import 'package:alyamamah/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,6 +23,10 @@ Future<void> main() async {
       stackTrace: logRecord.stackTrace,
     );
   });
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   final sharedPreferences = await SharedPreferences.getInstance();
 

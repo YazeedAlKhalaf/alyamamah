@@ -17,6 +17,22 @@ Features:
 - Arabic and English language support
 - Dark and Light mode support
 
+Currently the app supports the following platforms:
+
+- iOS
+- Android
+- macOS
+
+Those platforms have some issues but are planned to be supported in the future:
+
+- Web:
+  - CORS issue.
+  - After adding Firebase it stopped even launching, error screen from the beginning.
+- Windows:
+  - No Firebase support yet for plugins I use.
+- Linux:
+  - No Firebase support yet for plugins I use.
+
 ## How to run the app?
 
 This is a Flutter app. You must have Flutter installed and working on your machine. Do that if you didn't yet by following their official documentation:
@@ -26,8 +42,16 @@ Now for the fun part:
 
 1. `git clone git@github.com:YazeedAlKhalaf/alyamamah.git`
 2. `cd alyamamah`
-3. `flutter pub get`
-4. `flutter run`, make sure a simulator, an emulator, or a real device is connected.
+3. Create a Firebase project, and set it up. This will be needed because the app uses Firebase for analytics. Use the `flutterfire` cli and you should be good to go! You can run it with my project but you won't be able to use some features since you don't have some of my secrets that are required for connecting to some Firebase APIs. Currently you need to add four files or use the later method. The files are:
+   1. `android/app/google-services.json`
+   2. `ios/Runner/GoogleService-Info.plist`
+   3. `macos/Runner/GoogleService-Info.plist`
+   4. `lib/firebase_options.dart` by copying `lib/firebase_options.dart.example` and filling it with data from the files above.
+   5. If you use the `flutterfire` cli, it will generate two files in iOS and macOS folders. Not sure why but I kept an example json file in those places in case you need it to run the app:
+      1. `ios/firebase_app_id_file.json`
+      2. `macos/firebase_app_id_file.json`
+4. `flutter pub get`
+5. `flutter run`, make sure a simulator, an emulator, or a real device is connected.
 
 This app calls the university API. If you don't have an account at Al Yamamah University, use the demo account:
 

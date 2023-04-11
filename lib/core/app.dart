@@ -3,6 +3,7 @@ import 'package:alyamamah/core/services/locale/locale_service.dart';
 import 'package:alyamamah/core/services/shared_prefs/shared_prefs_service.dart';
 import 'package:alyamamah/core/services/theme/theme_service.dart';
 import 'package:alyamamah/core/themes/themes.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -37,7 +38,13 @@ class AppWithoutProviderScope extends ConsumerWidget {
     final localeService = ref.watch(localeServiceProvider);
 
     return MaterialApp.router(
-      routerConfig: yuRouter.config(),
+      routerConfig: yuRouter.config(
+        navigatorObservers: () => [
+          FirebaseAnalyticsObserver(
+            analytics: FirebaseAnalytics.instance,
+          ),
+        ],
+      ),
       localizationsDelegates: S.localizationsDelegates,
       supportedLocales: S.supportedLocales,
       locale: localeService.locale,

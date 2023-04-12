@@ -1,4 +1,3 @@
-import 'package:alyamamah/core/constants.dart';
 import 'package:alyamamah/core/extensions/build_context.dart';
 import 'package:alyamamah/ui/views/courses/change_semester_bottom_sheet.dart';
 import 'package:alyamamah/ui/views/courses/courses_schedule.dart';
@@ -35,6 +34,15 @@ class _CoursesViewState extends ConsumerState<CoursesView> {
   Widget build(BuildContext context) {
     final coursesViewModel = ref.watch(coursesViewModelProvider);
 
+    int lowestStartHour = 10000000000000;
+    for (final e in coursesViewModel.scheduleDays.entries) {
+      for (final e2 in e.value) {
+        if (e2.startTime.hour < lowestStartHour) {
+          lowestStartHour = e2.startTime.hour;
+        }
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(context.s.my_courses),
@@ -66,32 +74,23 @@ class _CoursesViewState extends ConsumerState<CoursesView> {
             },
           ),
         ],
-        flexibleSpace: coursesViewModel.isRamadan
-            ? Opacity(
-                opacity: 0.01,
-                child: Image.asset(
-                  'assets/images/islamic-ornament.png',
-                  fit: BoxFit.cover,
-                ),
-              )
-            : null,
       ),
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: coursesViewModel.isBusy ? Constants.padding : 0,
-          ),
-          child: coursesViewModel.isBusy
-              ? const Center(child: CircularProgressIndicator())
-              : CoursesSchedule(
-                  scheduleDays: coursesViewModel.scheduleDays,
-                  onCourseTap: (onCourseTap) async {
-                    await ref
-                        .read(coursesViewModelProvider)
-                        .navigateToCourseDetails(onCourseTap);
-                  },
-                ),
-        ),
+        child: coursesViewModel.isBusy
+            ? const Center(child: CircularProgressIndicator())
+            : CoursesSchedule(
+                scheduleDays: coursesViewModel.scheduleDays,
+                startHour: lowestStartHour,
+                cellHeight: coursesViewModel.isRamadan ? 90 : 60,
+                onCourseTap: (onCourseTap) async {
+                  await ref
+                      .read(coursesViewModelProvider)
+                      .navigateToCourseDetails(onCourseTap);
+                },
+                onRefresh: () async {
+                  await ref.read(coursesViewModelProvider).getStudentSchedule();
+                },
+              ),
       ),
     );
   }

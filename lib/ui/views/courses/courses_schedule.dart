@@ -1,24 +1,27 @@
 import 'package:alyamamah/core/constants.dart';
 import 'package:alyamamah/core/extensions/day.dart';
 import 'package:alyamamah/core/extensions/int.dart';
-import 'package:alyamamah/core/extensions/time_of_day.dart';
 import 'package:alyamamah/core/models/day.dart';
-import 'package:alyamamah/ui/views/courses/course_widget.dart';
+import 'package:alyamamah/ui/views/courses/courses_column.dart';
 import 'package:alyamamah/ui/views/courses/models/schedule_entry.dart';
+import 'package:alyamamah/ui/views/courses/schedule_grid.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
-const startHour = 8;
-const cellHeight = 60;
-
 class CoursesSchedule extends StatelessWidget {
   final Map<Day, List<ScheduleEntry>> scheduleDays;
+  final int startHour;
+  final double cellHeight;
   final void Function(ScheduleEntry) onCourseTap;
+  final Future<void> Function() onRefresh;
 
   const CoursesSchedule({
     super.key,
     required this.scheduleDays,
+    this.startHour = 8,
+    this.cellHeight = 60,
     required this.onCourseTap,
+    required this.onRefresh,
   });
 
   @override
@@ -30,57 +33,68 @@ class CoursesSchedule extends StatelessWidget {
       );
     }
 
-    return Row(
-      children: scheduleDays.values.mapIndexed(
-        (int i, List<ScheduleEntry> scheduleEntries) {
-          final today = DateTime.now().weekday.mapToDay();
-          final currentDay = scheduleDays.keys.elementAt(i);
-          final isWeekend = today == Day.sat || today == Day.fri;
+    return Column(
+      children: [
+        Row(
+          children: scheduleDays.keys.map((currentDay) {
+            final today = DateTime.now().weekday.mapToDay();
+            final isWeekend = today == Day.sat || today == Day.fri;
 
-          return Expanded(
-            child: Column(
-              children: <Widget>[
-                Text(
+            return Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: Constants.spacing),
+                child: Text(
                   currentDay.mapToString(context),
                   style: todayDayStyle(
                     currentDay == today || (isWeekend && currentDay == Day.sun),
                   ),
+                  textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: Constants.spacing),
-                Expanded(
-                  child: Stack(
-                    children: scheduleEntries.map(
-                      (ScheduleEntry scheduleEntry) {
-                        return Positioned(
-                          left: 0,
-                          right: 0,
-                          top: (((scheduleEntry.startTime.hour - startHour) *
-                                      60) +
-                                  scheduleEntry.startTime.minute.toDouble()) *
-                              cellHeight /
-                              60,
-                          child: CourseWidget(
-                            height: (scheduleEntry.startTime
-                                        .difference(scheduleEntry.endTime)
-                                        .inMinutes
-                                        .toDouble() *
-                                    cellHeight) /
-                                60,
-                            scheduleEntry: scheduleEntry,
-                            onTap: () {
-                              onCourseTap(scheduleEntry);
+              ),
+            );
+          }).toList(),
+        ),
+        Expanded(
+          child: Stack(
+            clipBehavior: Clip.none,
+            fit: StackFit.passthrough,
+            children: [
+              ScheduleGrid(
+                cellHeight: cellHeight,
+                horizontalSegments: 5,
+              ),
+              LayoutBuilder(
+                builder: (BuildContext context, BoxConstraints constraints) {
+                  return RefreshIndicator(
+                    onRefresh: onRefresh,
+                    child: SingleChildScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          minHeight: constraints.maxHeight,
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: scheduleDays.values.mapIndexed(
+                            (int i, List<ScheduleEntry> scheduleEntries) {
+                              return CoursesColumn(
+                                startHour: startHour,
+                                cellHeight: cellHeight,
+                                scheduleEntries: scheduleEntries,
+                                onCourseTap: onCourseTap,
+                              );
                             },
-                          ),
-                        );
-                      },
-                    ).toList(),
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
-      ).toList(),
+                          ).toList(),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

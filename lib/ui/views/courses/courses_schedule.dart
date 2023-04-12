@@ -3,12 +3,13 @@ import 'package:alyamamah/core/extensions/day.dart';
 import 'package:alyamamah/core/extensions/int.dart';
 import 'package:alyamamah/core/models/day.dart';
 import 'package:alyamamah/ui/views/courses/courses_column.dart';
+import 'package:alyamamah/ui/views/courses/current_hour_line.dart';
 import 'package:alyamamah/ui/views/courses/models/schedule_entry.dart';
 import 'package:alyamamah/ui/views/courses/schedule_grid.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
-class CoursesSchedule extends StatelessWidget {
+class CoursesSchedule extends StatefulWidget {
   final Map<Day, List<ScheduleEntry>> scheduleDays;
   final int startHour;
   final double cellHeight;
@@ -25,6 +26,27 @@ class CoursesSchedule extends StatelessWidget {
   });
 
   @override
+  State<CoursesSchedule> createState() => _CoursesScheduleState();
+}
+
+class _CoursesScheduleState extends State<CoursesSchedule> {
+  late ScrollController scrollController;
+  double scrollOffset = 0;
+
+  @override
+  void initState() {
+    super.initState();
+
+    scrollController = ScrollController();
+
+    scrollController.addListener(() {
+      setState(() {
+        scrollOffset = scrollController.position.pixels;
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     TextStyle todayDayStyle(bool isToday) {
       return TextStyle(
@@ -36,7 +58,7 @@ class CoursesSchedule extends StatelessWidget {
     return Column(
       children: [
         Row(
-          children: scheduleDays.keys.map((currentDay) {
+          children: widget.scheduleDays.keys.map((currentDay) {
             final today = DateTime.now().weekday.mapToDay();
             final isWeekend = today == Day.sat || today == Day.fri;
 
@@ -60,14 +82,15 @@ class CoursesSchedule extends StatelessWidget {
             fit: StackFit.passthrough,
             children: [
               ScheduleGrid(
-                cellHeight: cellHeight,
+                cellHeight: widget.cellHeight,
                 horizontalSegments: 5,
               ),
               LayoutBuilder(
                 builder: (BuildContext context, BoxConstraints constraints) {
                   return RefreshIndicator(
-                    onRefresh: onRefresh,
+                    onRefresh: widget.onRefresh,
                     child: SingleChildScrollView(
+                      controller: scrollController,
                       physics: const AlwaysScrollableScrollPhysics(),
                       child: ConstrainedBox(
                         constraints: BoxConstraints(
@@ -75,13 +98,13 @@ class CoursesSchedule extends StatelessWidget {
                         ),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: scheduleDays.values.mapIndexed(
+                          children: widget.scheduleDays.values.mapIndexed(
                             (int i, List<ScheduleEntry> scheduleEntries) {
                               return CoursesColumn(
-                                startHour: startHour,
-                                cellHeight: cellHeight,
+                                startHour: widget.startHour,
+                                cellHeight: widget.cellHeight,
                                 scheduleEntries: scheduleEntries,
-                                onCourseTap: onCourseTap,
+                                onCourseTap: widget.onCourseTap,
                               );
                             },
                           ).toList(),
@@ -90,6 +113,11 @@ class CoursesSchedule extends StatelessWidget {
                     ),
                   );
                 },
+              ),
+              CurrentHourLine(
+                offset: scrollOffset,
+                startHour: widget.startHour,
+                cellHeight: widget.cellHeight,
               ),
             ],
           ),

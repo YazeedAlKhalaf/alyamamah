@@ -46,8 +46,8 @@ class CoursesColumn extends StatelessWidget {
               children: scheduleEntries.map(
                 (ScheduleEntry scheduleEntry) {
                   return Positioned(
-                    left: 0,
-                    right: 0,
+                    left: 2,
+                    right: 2,
                     top: (((scheduleEntry.startTime.hour - startHour) * 60) +
                             scheduleEntry.startTime.minute.toDouble()) *
                         cellHeight /

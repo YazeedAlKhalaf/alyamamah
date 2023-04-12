@@ -37,12 +37,11 @@ class CourseWidget extends StatelessWidget {
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              const Spacer(),
               Text(
                 scheduleEntry.startTime.format(context),
-                textAlign: TextAlign.start,
+                textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.labelSmall?.copyWith(
                       fontSize: 10,
                     ),
@@ -52,18 +51,17 @@ class CourseWidget extends StatelessWidget {
                 '${scheduleEntry.courseCode}\n${scheduleEntry.room}',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: height <= 70 ? 7 : 10,
+                  fontSize: height <= 70 ? 8 : 10,
                 ),
               ),
               const Spacer(flex: 8),
               Text(
                 scheduleEntry.endTime.format(context),
-                textAlign: TextAlign.end,
+                textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.labelSmall?.copyWith(
                       fontSize: 10,
                     ),
               ),
-              const Spacer(),
             ],
           ),
         ),

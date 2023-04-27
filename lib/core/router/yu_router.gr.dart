@@ -10,7 +10,8 @@
 part of 'yu_router.dart';
 
 abstract class _$YURouter extends RootStackRouter {
-  _$YURouter([GlobalKey<NavigatorState>? navigatorKey]) : super(navigatorKey);
+  // ignore: unused_element
+  _$YURouter({super.navigatorKey});
 
   @override
   final Map<String, PageFactory> pagesMap = {

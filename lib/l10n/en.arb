@@ -78,5 +78,7 @@
   "enter_your_mobile": "Please enter your mobile",
   "enter_valid_mobile": "Please enter a valid mobile",
   "semester_progress_tool": "Semester progress tool",
-  "tuwaiq_classrooms_tool": "Tuwaiq classrooms tool"
+  "tuwaiq_classrooms_tool": "Tuwaiq classrooms tool",
+  "pm": "PM",
+  "am": "AM"
 }

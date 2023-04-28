@@ -78,5 +78,7 @@
   "enter_your_mobile": "رجاء أدخل جوالك",
   "enter_valid_mobile": "رجاء أدخل جوال صحيح",
   "semester_progress_tool": "أداة تقدم الفصل الدراسي",
-  "tuwaiq_classrooms_tool": "أداة القاعات التعليمية في طويق"
+  "tuwaiq_classrooms_tool": "أداة القاعات التعليمية في طويق",
+  "pm": "ص",
+  "am": "م"
 }

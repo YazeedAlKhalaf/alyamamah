@@ -25,7 +25,7 @@ class CourseWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.primaryContainer,
         borderRadius: BorderRadius.circular(
-          Constants.padding,
+          Constants.spacing,
         ),
         border: Border.all(
           color: Theme.of(context).colorScheme.onPrimaryContainer,
@@ -37,7 +37,7 @@ class CourseWidget extends StatelessWidget {
         child: InkWell(
           onTap: onTap,
           borderRadius: BorderRadius.circular(
-            Constants.padding,
+            Constants.spacing,
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

@@ -19,7 +19,8 @@ class CurrentHourLine extends StatelessWidget {
   Widget build(BuildContext context) {
     final now = DateTime.now();
     final nowDay = now.weekday.mapToDay();
-    final showOnRight = nowDay == Day.sat || nowDay == Day.sun;
+    final showOnRight =
+        nowDay == Day.sat || nowDay == Day.fri || nowDay == Day.sun;
 
     final result = [
       const SizedBox(width: Constants.spacing),

@@ -6,12 +6,14 @@ class ScheduleGrid extends StatelessWidget {
   final double cellHeight;
   final int horizontalSegments;
   final int startHour;
+  final double scrollOffset;
 
   const ScheduleGrid({
     Key? key,
     required this.cellHeight,
     required this.horizontalSegments,
     required this.startHour,
+    required this.scrollOffset,
   }) : super(key: key);
 
   @override
@@ -32,6 +34,7 @@ class ScheduleGrid extends StatelessWidget {
             context,
             startHour: startHour,
             cellHeight: cellHeight,
+            scrollOffset: scrollOffset,
           ),
         ),
       ],
@@ -43,11 +46,13 @@ class HourLabelPainter extends CustomPainter {
   final BuildContext context;
   final int startHour;
   final double cellHeight;
+  final double scrollOffset;
 
   HourLabelPainter(
     this.context, {
     required this.startHour,
     required this.cellHeight,
+    required this.scrollOffset,
   });
 
   @override
@@ -59,7 +64,8 @@ class HourLabelPainter extends CustomPainter {
       final isPm = hour > 12;
       final tempHour = isPm ? hour - 12 : hour;
       final textSpan = TextSpan(
-        text: '$tempHour:00 ${isPm ? context.s.pm : context.s.am}',
+        text:
+            '$tempHour${isPm ? context.s.pm.toLowerCase() : context.s.am.toLowerCase()}',
         style: Theme.of(context).textTheme.labelSmall?.copyWith(
               color: Theme.of(context).colorScheme.outline,
             ),
@@ -70,15 +76,15 @@ class HourLabelPainter extends CustomPainter {
       );
       textPainter.layout();
 
-      final xOffset = isRtl
-          ? size.width + Constants.spacing
-          : -textPainter.width - Constants.spacing;
-
+      const padding = Constants.spacing / 2;
+      final xOffset =
+          isRtl ? size.width + padding : -textPainter.width - padding;
+      final centeringAmount = textPainter.height / 3;
       textPainter.paint(
         canvas,
         Offset(
           xOffset,
-          y - (textPainter.height / 3),
+          y - centeringAmount - scrollOffset,
         ),
       );
       hour++;
@@ -88,7 +94,8 @@ class HourLabelPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant HourLabelPainter oldDelegate) {
     return oldDelegate.cellHeight != cellHeight ||
-        oldDelegate.startHour != startHour;
+        oldDelegate.startHour != startHour ||
+        oldDelegate.scrollOffset != scrollOffset;
   }
 }
 

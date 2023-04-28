@@ -1,10 +1,12 @@
 import 'dart:developer';
 
 import 'package:alyamamah/core/app.dart';
+import 'package:alyamamah/core/constants.dart';
 import 'package:alyamamah/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:stack_trace/stack_trace.dart' as stack_trace;
 
@@ -40,7 +42,12 @@ Future<void> main() async {
 
   final sharedPreferences = await SharedPreferences.getInstance();
 
-  runApp(App(
-    sharedPreferences: sharedPreferences,
-  ));
+  await Sentry.init(
+    (options) {
+      options.dsn = Constants.sentryDsn;
+    },
+    appRunner: () => runApp(App(
+      sharedPreferences: sharedPreferences,
+    )),
+  );
 }

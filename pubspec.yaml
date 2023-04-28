@@ -28,6 +28,8 @@ dependencies:
   collection: any
   firebase_core: 2.10.0
   firebase_analytics: 10.2.1
+  sentry_flutter: 7.5.0
+  
 
 dev_dependencies:
   flutter_test:

@@ -14,4 +14,7 @@ class Constants {
   static const String themeModeKey = 'themeMode';
   static const String coursesWidgetDataKey = 'coursesWidgetData';
   static const String ramadanModeKey = 'ramadanMode';
+
+  static const String sentryDsn =
+      'https://78cdadfd10c6445b9cd6d3cd44c0a66b@o4505085364862976.ingest.sentry.io/4505085366894592';
 }

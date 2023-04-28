@@ -25,7 +25,7 @@ void main() {
 
           final context = tester.element(find.byType(Scaffold));
 
-          expect(Day.sun.mapToString(context), context.s.sunday);
+          expect(Day.sun.mapToString(context), context.s.sun);
         },
       );
 
@@ -37,7 +37,7 @@ void main() {
 
           final context = tester.element(find.byType(Scaffold));
 
-          expect(Day.mon.mapToString(context), context.s.monday);
+          expect(Day.mon.mapToString(context), context.s.mon);
         },
       );
 
@@ -49,7 +49,7 @@ void main() {
 
           final context = tester.element(find.byType(Scaffold));
 
-          expect(Day.tue.mapToString(context), context.s.tuesday);
+          expect(Day.tue.mapToString(context), context.s.tue);
         },
       );
 
@@ -61,7 +61,7 @@ void main() {
 
           final context = tester.element(find.byType(Scaffold));
 
-          expect(Day.wed.mapToString(context), context.s.wednesday);
+          expect(Day.wed.mapToString(context), context.s.wed);
         },
       );
 
@@ -73,7 +73,7 @@ void main() {
 
           final context = tester.element(find.byType(Scaffold));
 
-          expect(Day.thu.mapToString(context), context.s.thursday);
+          expect(Day.thu.mapToString(context), context.s.thu);
         },
       );
 
@@ -85,7 +85,7 @@ void main() {
 
           final context = tester.element(find.byType(Scaffold));
 
-          expect(Day.fri.mapToString(context), context.s.friday);
+          expect(Day.fri.mapToString(context), context.s.fri);
         },
       );
 
@@ -97,7 +97,7 @@ void main() {
 
           final context = tester.element(find.byType(Scaffold));
 
-          expect(Day.sat.mapToString(context), context.s.saturday);
+          expect(Day.sat.mapToString(context), context.s.sun);
         },
       );
     });

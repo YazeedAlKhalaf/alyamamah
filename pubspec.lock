@@ -701,11 +701,27 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.5.0"
+  sentry_dio:
+    dependency: "direct main"
+    description:
+      name: sentry_dio
+      sha256: "6970c2da42d3a83b2a8a524a7dde1b209c4c086d533b1a9b6fda7977989d9d5e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.5.0"
   sentry_flutter:
     dependency: "direct main"
     description:
       name: sentry_flutter
       sha256: a772ad8abafdcf4ac04568bf3469cc541761412fd664a7aa99d9578fd0933a09
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.5.0"
+  sentry_logging:
+    dependency: "direct main"
+    description:
+      name: sentry_logging
+      sha256: "5a13bd3838ceb2a358e98f25573068683f61cadafd16aafde7eeba543f2e8cd3"
       url: "https://pub.dev"
     source: hosted
     version: "7.5.0"

@@ -7,6 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:sentry_logging/sentry_logging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:stack_trace/stack_trace.dart' as stack_trace;
 
@@ -43,8 +44,11 @@ Future<void> main() async {
   final sharedPreferences = await SharedPreferences.getInstance();
 
   await Sentry.init(
-    (options) {
+    (SentryOptions options) {
       options.dsn = Constants.sentryDsn;
+      options.addIntegration(LoggingIntegration());
+      options.enableTracing = true;
+      options.sampleRate = 1;
     },
     appRunner: () => runApp(App(
       sharedPreferences: sharedPreferences,

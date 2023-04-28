@@ -17,6 +17,7 @@ import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logging/logging.dart';
+import 'package:sentry_dio/sentry_dio.dart';
 
 final apiServiceProvider = Provider(
   (ref) {
@@ -109,6 +110,9 @@ class ApiService {
     }
 
     _dio.interceptors.add(_languageInterceptor);
+
+    /// This must be the last step always.
+    _dio.addSentry();
   }
 
   Future<ActorDetails> login({

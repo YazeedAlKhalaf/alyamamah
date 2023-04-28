@@ -29,6 +29,8 @@ dependencies:
   firebase_core: 2.10.0
   firebase_analytics: 10.2.1
   sentry_flutter: 7.5.0
+  sentry_logging: 7.5.0
+  sentry_dio: 7.5.0
   
 
 dev_dependencies:

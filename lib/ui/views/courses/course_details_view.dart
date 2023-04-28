@@ -78,11 +78,6 @@ class _CourseDetailsViewState extends ConsumerState<CourseDetailsView> {
               ),
               onTap: isLinkSet
                   ? () async {
-                      YUSnackBar.show(
-                        context,
-                        message: context.s.failed_to_open_link,
-                      );
-                      return;
                       if (courseDetailsViewModel.link != null) {
                         try {
                           await url_launcher.launchUrl(

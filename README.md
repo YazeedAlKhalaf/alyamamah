@@ -72,4 +72,4 @@ flutter pub run flutter_launcher_icons
 
 ## Sponsors
 
-<img src="./readme_images/sentry-logo.png" width="150px" alt="sentry logo as a sponsor" />
+<a href="https://sentry.io"><img src="https://raw.githubusercontent.com/YazeedAlKhalaf/alyamamah/main/readme_images/sentry-logo.png" width="150px" alt="sentry logo as a sponsor" /></a>

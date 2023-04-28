@@ -197,10 +197,10 @@ packages:
     dependency: "direct main"
     description:
       name: cookie_jar
-      sha256: "253920541bf248e4eda6eac5df6aa00c19c183e1fe333629925d8df666a27815"
+      sha256: d1cc6516a190ba667941f722b6365d202caff3dacb38de24268b8d6ff1ec8a1d
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.1"
+    version: "3.0.1"
   coverage:
     dependency: transitive
     description:
@@ -237,10 +237,10 @@ packages:
     dependency: "direct main"
     description:
       name: dio_cookie_manager
-      sha256: ff1755fd56d02485146d95a589fb4ace1f0ae0c0f3ca702a817de2dc1fbb835e
+      sha256: "326f2940d2dc48428350615b53cbda6904934e0900fbf791d36be0c72e05e39f"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.0"
+    version: "2.1.3"
   fake_async:
     dependency: transitive
     description:

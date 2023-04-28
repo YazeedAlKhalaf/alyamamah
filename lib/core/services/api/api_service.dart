@@ -22,7 +22,7 @@ final apiServiceProvider = Provider(
   (ref) {
     final dio = Dio();
 
-    if (Platform.isAndroid) {
+    if (!kIsWeb && Platform.isAndroid) {
       (dio.httpClientAdapter as IOHttpClientAdapter).onHttpClientCreate =
           (HttpClient client) {
         client.badCertificateCallback =

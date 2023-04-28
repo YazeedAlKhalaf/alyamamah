@@ -6,11 +6,11 @@ PODS:
     - FirebaseAnalytics (~> 10.7.0)
   - Firebase/CoreOnly (10.7.0):
     - FirebaseCore (= 10.7.0)
-  - firebase_analytics (10.2.0):
+  - firebase_analytics (10.2.1):
     - Firebase/Analytics (= 10.7.0)
     - firebase_core
     - FlutterMacOS
-  - firebase_core (2.9.0):
+  - firebase_core (2.10.0):
     - Firebase/CoreOnly (~> 10.7.0)
     - FlutterMacOS
   - FirebaseAnalytics (10.7.0):
@@ -127,8 +127,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Firebase: 0219acf760880eeec8ce479895bd7767466d9f81
-  firebase_analytics: 373ad95603c8b86a6ec017f936a79274ece08be9
-  firebase_core: b2f73bfbb070109d2149e257a786e3093f99a9da
+  firebase_analytics: 1bcc9c17d3441da3f74c4b937b25a65bd155858f
+  firebase_core: 104c957652eab7d9d9c779102f509714a56ad382
   FirebaseAnalytics: f8133442ee6f8512e28ff19e62ce15398bfaeace
   FirebaseCore: e317665b9d744727a97e623edbbed009320afdd7
   FirebaseCoreInternal: 8845798510aae74703467480f71ac613788d0696
@@ -138,9 +138,9 @@ SPEC CHECKSUMS:
   GoogleUtilities: 9aa0ad5a7bc171f8bae016300bfcfa3fb8425749
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
-  shared_preferences_foundation: 297b3ebca31b34ec92be11acd7fb0ba932c822ca
+  shared_preferences_foundation: 986fc17f3d3251412d18b0265f9c64113a8c2472
   url_launcher_macos: 5335912b679c073563f29d89d33d10d459f95451
 
 PODFILE CHECKSUM: 353c8bcc5d5b0994e508d035b5431cfe18c1dea7
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.1

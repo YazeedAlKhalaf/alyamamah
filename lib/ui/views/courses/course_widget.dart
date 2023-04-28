@@ -27,6 +27,10 @@ class CourseWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(
           Constants.padding,
         ),
+        border: Border.all(
+          color: Theme.of(context).colorScheme.onPrimaryContainer,
+          width: 1,
+        ),
       ),
       child: Material(
         color: Colors.transparent,
@@ -43,7 +47,7 @@ class CourseWidget extends StatelessWidget {
                 scheduleEntry.startTime.format(context),
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                      fontSize: 10,
+                      fontSize: 9,
                     ),
               ),
               const Spacer(flex: 8),
@@ -59,7 +63,7 @@ class CourseWidget extends StatelessWidget {
                 scheduleEntry.endTime.format(context),
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                      fontSize: 10,
+                      fontSize: 9,
                     ),
               ),
             ],

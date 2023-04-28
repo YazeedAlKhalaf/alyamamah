@@ -26,12 +26,10 @@ Currently the app supports the following platforms:
 - iOS
 - Android
 - macOS
+- Web
 
 Those platforms have some issues but are planned to be supported in the future:
 
-- Web:
-  - CORS issue.
-  - After adding Firebase it stopped even launching, error screen from the beginning.
 - Windows:
   - No Firebase support yet for plugins I use.
 - Linux:
@@ -71,3 +69,7 @@ Run the following command:
 ```
 flutter pub run flutter_launcher_icons
 ```
+
+## Sponsors
+
+<img src="./readme_images/sentry-logo.png" width="150px" alt="sentry logo as a sponsor" />

@@ -77,4 +77,23 @@ class SharedPrefsService {
   Future<void> deleteRamadanMode() async {
     await _sharedPreferences.remove(Constants.ramadanModeKey);
   }
+
+  Future<void> saveLink(String userId, String section, String link) async {
+    await _sharedPreferences.setString(
+      '$userId-$section-${Constants.linkKey}',
+      link,
+    );
+  }
+
+  String? getLink(String userId, String section) {
+    return _sharedPreferences.getString(
+      '$userId-$section-${Constants.linkKey}',
+    );
+  }
+
+  Future<void> deleteLink(String userId, String section) async {
+    await _sharedPreferences.remove(
+      '$userId-$section-${Constants.linkKey}',
+    );
+  }
 }

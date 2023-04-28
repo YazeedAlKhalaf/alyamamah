@@ -22,4 +22,17 @@ extension StringX on String {
 
     return TimeOfDay(hour: hour, minute: minute);
   }
+
+  bool isValidUrl() {
+    final RegExp regex = RegExp(
+      r'^(https?:\/\/)?' // Optional protocol (http or https)
+      r'(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}' // Domain with subdomains (e.g., www.example.com)
+      r'(?:\/[^\s]*)?' // Optional path (e.g., /some/path)
+      r'(?:\?[^\s]*)?' // Optional query string (e.g., ?query=value)
+      r'(?:#\S*)?' // Optional fragment (e.g., #section)
+      r'$',
+      caseSensitive: false, // Make the pattern case-insensitive
+    );
+    return regex.hasMatch(this);
+  }
 }

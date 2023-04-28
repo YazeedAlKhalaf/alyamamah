@@ -87,5 +87,17 @@
   "semester_progress_tool": "Semester progress tool",
   "tuwaiq_classrooms_tool": "Tuwaiq classrooms tool",
   "pm": "PM",
-  "am": "AM"
+  "am": "AM",
+  "manage_link": "Manage Link",
+  "manage_link_description": "This link provides convenient access to the e.g. Zoom meeting for your class",
+  "delete": "Delete",
+  "link": "Link",
+  "link_cannot_be_empty": "Link cannot be empty",
+  "enter_a_valid_link": "Please enter a valid link",
+  "set": "Set",
+  "click_here_to_open_the_link": "Click here to open the link",
+  "click_set_to_define_the_link": "Click 'Set' to define the link",
+  "delete_link": "Delete Link",
+  "you_sure_delete_link": "Are you sure you want to delete this link?",
+  "failed_to_open_link": "Failed to open link 😢"
 }

@@ -6,19 +6,19 @@ extension DayX on Day {
   String mapToString(BuildContext context) {
     switch (this) {
       case Day.sun:
-        return context.s.sunday;
+        return context.s.sun;
       case Day.mon:
-        return context.s.monday;
+        return context.s.mon;
       case Day.tue:
-        return context.s.tuesday;
+        return context.s.tue;
       case Day.wed:
-        return context.s.wednesday;
+        return context.s.wed;
       case Day.thu:
-        return context.s.thursday;
+        return context.s.thu;
       case Day.fri:
-        return context.s.friday;
+        return context.s.fri;
       case Day.sat:
-        return context.s.saturday;
+        return context.s.sat;
     }
   }
 }

@@ -97,7 +97,7 @@ void main() {
 
           final context = tester.element(find.byType(Scaffold));
 
-          expect(Day.sat.mapToString(context), context.s.sun);
+          expect(Day.sat.mapToString(context), context.s.sat);
         },
       );
     });

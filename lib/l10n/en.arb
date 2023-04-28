@@ -99,5 +99,6 @@
   "click_set_to_define_the_link": "Click 'Set' to define the link",
   "delete_link": "Delete Link",
   "you_sure_delete_link": "Are you sure you want to delete this link?",
-  "failed_to_open_link": "Failed to open link 😢"
+  "failed_to_open_link": "Failed to open link 😢",
+  "gpa": "GPA"
 }

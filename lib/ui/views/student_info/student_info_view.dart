@@ -77,6 +77,16 @@ class StudentInfoView extends ConsumerWidget {
                       ),
                       ListTile(
                         leading: Text(
+                          '🔢',
+                          style: Theme.of(context).textTheme.headlineMedium,
+                        ),
+                        title: Text(context.s.gpa),
+                        subtitle: Text(
+                          '${actorDetails?.sessionInfo.studentGPA ?? ''}/4.00',
+                        ),
+                      ),
+                      ListTile(
+                        leading: Text(
                           '🎓',
                           style: Theme.of(context).textTheme.headlineMedium,
                         ),

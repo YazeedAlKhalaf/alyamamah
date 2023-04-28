@@ -74,8 +74,15 @@ class ApiService {
         _sessionExpiredInterceptor = sessionExpiredInterceptor,
         _languageInterceptor = languageInterceptor {
     _dio.options = BaseOptions(
-      baseUrl: Constants.apiUrl,
+      baseUrl: kIsWeb
+          ? 'https://proxy.cors.sh/${Constants.apiUrl}'
+          : Constants.apiUrl,
       responseType: ResponseType.json,
+      headers: kIsWeb
+          ? {
+              'x-cors-api-key': 'temp_d89d9390b3c2b8bc2757f3a06529d842',
+            }
+          : null,
     );
 
     /// This interceptor has an activation path and activation credentials,

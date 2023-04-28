@@ -86,4 +86,9 @@ class ScheduleEntry {
         courseDeleted.hashCode ^
         section.hashCode;
   }
+
+  @override
+  String toString() {
+    return 'ScheduleEntry(startTime: $startTime, endTime: $endTime, room: $room, activityDesc: $activityDesc, courseName: $courseName, courseCode: $courseCode, instructor: $instructor, creditHours: $creditHours, campusName: $campusName, courseDeleted: $courseDeleted, section: $section)';
+  }
 }

@@ -1,10 +1,14 @@
 import 'package:alyamamah/core/constants.dart';
 import 'package:alyamamah/core/extensions/build_context.dart';
+import 'package:alyamamah/core/extensions/misc_extensions.dart';
 import 'package:alyamamah/ui/views/absences/absences_view_model.dart';
+import 'package:alyamamah/ui/views/courses/courses_view_model.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+const dnPercentage = 20.0;
 
 @RoutePage()
 class AbsencesView extends ConsumerStatefulWidget {
@@ -28,6 +32,7 @@ class _AbsencesViewState extends ConsumerState<AbsencesView> {
   @override
   Widget build(BuildContext context) {
     final absencesViewModel = ref.watch(absencesViewModelProvider);
+    final coursesViewModel = ref.watch(coursesViewModelProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -86,6 +91,26 @@ class _AbsencesViewState extends ConsumerState<AbsencesView> {
                         ) ??
                         0;
 
+                    final classes = coursesViewModel.scheduleDays.toFlatList();
+                    final scheduleEntries = classes.where((scheduleEntry) {
+                      return scheduleEntry.courseCode == absence.courseCode;
+                    }).toList();
+                    final creditHours = int.parse(
+                      scheduleEntries.first.creditHours,
+                    );
+                    // make this calculate the absences correctly.
+                    // each course credit hours multipled
+                    // by the number of its occurence per week muliplied
+                    // by the number of weeks in the current semester.
+                    final totalHours =
+                        creditHours * scheduleEntries.length * 19;
+                    final dnHoursThreshold = totalHours * (dnPercentage / 100);
+                    final numberOfAbsences = absence.details.length;
+                    final dnAbsencesCount =
+                        (dnHoursThreshold / creditHours).floor();
+                    final remainingAbsencesCount =
+                        dnAbsencesCount - numberOfAbsences;
+
                     return ListTile(
                       leading: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -93,7 +118,7 @@ class _AbsencesViewState extends ConsumerState<AbsencesView> {
                           SizedBox.square(
                             dimension: 25,
                             child: CircularProgressIndicator(
-                              value: percentage / 20,
+                              value: percentage / dnPercentage,
                               backgroundColor: Theme.of(context)
                                   .colorScheme
                                   .primary
@@ -112,7 +137,9 @@ class _AbsencesViewState extends ConsumerState<AbsencesView> {
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(context.s.absences_count(absence.countAbsence)),
+                          Text(
+                            '${context.s.absences_count(numberOfAbsences)}/$remainingAbsencesCount',
+                          ),
                           Text(context.s.late_count(absence.countLate)),
                         ],
                       ),

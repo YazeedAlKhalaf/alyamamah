@@ -43,15 +43,35 @@ Future<void> main() async {
 
   final sharedPreferences = await SharedPreferences.getInstance();
 
-  await Sentry.init(
-    (SentryOptions options) {
+  await SentryFlutter.init(
+    (SentryFlutterOptions options) {
       options.dsn = Constants.sentryDsn;
       options.addIntegration(LoggingIntegration());
       options.enableTracing = true;
       options.sampleRate = 1;
+      options.attachScreenshot = true;
+      options.attachViewHierarchy = true;
+      options.autoAppStart = true;
+      options.enableAppHangTracking = true;
+      options.enableUserInteractionBreadcrumbs = true;
+      options.enableUserInteractionTracing = true;
+      options.enableBreadcrumbTrackingForCurrentPlatform();
+
+      // uncomment this to enable debug mode, in debug mode only.
+      // assert(() {
+      //   options.debug = true;
+
+      //   return true;
+      // }());
     },
-    appRunner: () => runApp(App(
-      sharedPreferences: sharedPreferences,
-    )),
+    appRunner: () => runApp(
+      SentryUserInteractionWidget(
+        child: SentryScreenshotWidget(
+          child: App(
+            sharedPreferences: sharedPreferences,
+          ),
+        ),
+      ),
+    ),
   );
 }

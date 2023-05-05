@@ -3,10 +3,6 @@
 
 ![feature-graphic](./readme_images/feature-graphic.png)
 
-> If you are one of the **Google Solution Challenge committee**, please look at the repository at this commit. Since this is an open-source project, it got developed based on people's feedback.
->
-> The commit is here: https://github.com/YazeedAlKhalaf/alyamamah/tree/133e2a9dfafd9103a111d93bcf12da32d5dc2f10
-
 # Al Yamamah
 
 Al Yamamah make students lives easier.

@@ -1,4 +1,4 @@
-name: Deploy to Production
+name: Deploy backend to production
 
 on:
   push:
@@ -10,6 +10,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3.5.2
+      
+      - name: Change directory to backend
+        run: cd backend
       
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.5.2

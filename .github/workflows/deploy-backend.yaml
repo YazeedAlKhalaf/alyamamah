@@ -34,6 +34,6 @@ jobs:
             cd /home/deploy/stuff/alyamamah
             git pull
             cd backend
-            npm install
+            npm ci
             pm2 restart all
 

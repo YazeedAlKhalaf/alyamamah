@@ -1,13 +1,16 @@
-import { Application } from "./deps.ts";
-import { chatRouter } from "./routes/chat.ts";
+import App from "./core/app";
+import express from "express";
+import dotenv from "dotenv";
 
-const app = new Application();
+import AuthController from "./controllers/auth_controller";
+import ChatController from "./controllers/chat_controller";
 
-app.use(chatRouter.routes());
-app.use((ctx) => {
-  ctx.response.body = "Hello world!";
+dotenv.config();
+
+const app = new App({
+  port: 3000,
+  middlewares: [express.json(), express.urlencoded({ extended: true })],
+  controllers: [new AuthController(), new ChatController()],
 });
 
-const port = parseInt(Deno.env.get("PORT") || "8000", 10);
-console.log(`🚀 Server listening on port: ${port}`);
-await app.listen({ port: port });
+app.listen();

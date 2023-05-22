@@ -7,6 +7,5 @@
   // Remove from file watching
   "files.watcherExclude": {
     "**/.fvm": true
-  },
-  "deno.enablePaths": ["./backend"]
+  }
 }

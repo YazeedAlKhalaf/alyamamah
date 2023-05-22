@@ -11,18 +11,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3.5.2
       
-      - name: Change directory to backend
-        run: cd backend
-      
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.5.2
         with:
           node-version: '18.16.0'
       
       - name: Install dependencies
+        working-directory: ./backend
         run: npm ci
       
       - name: Build
+        working-directory: ./backend
         run: npm run build
 
       - name: Deploy to production

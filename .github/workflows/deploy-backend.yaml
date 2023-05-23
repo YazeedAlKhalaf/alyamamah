@@ -35,5 +35,6 @@ jobs:
             git pull
             cd backend
             npm ci
+            npm run build
             pm2 restart all
 

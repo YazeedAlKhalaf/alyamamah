@@ -31,10 +31,10 @@ jobs:
           username: ${{ secrets.DEPLOY_USERNAME }}
           key: ${{ secrets.DEPLOY_KEY }}
           script: |
-            cd /home/deploy/stuff/alyamamah
+            source ~/.bash_nvm
+            cd ~/stuff/alyamamah
             git pull
             cd backend
             npm ci
             npm run build
             pm2 restart all
-

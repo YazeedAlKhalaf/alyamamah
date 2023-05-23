@@ -31,7 +31,6 @@ jobs:
           username: ${{ secrets.DEPLOY_USERNAME }}
           key: ${{ secrets.DEPLOY_KEY }}
           script: |
-            source ~/.bash_nvm
             cd ~/stuff/alyamamah
             git pull
             cd backend

@@ -27,7 +27,6 @@ class AuthController extends Controller {
   }
 
   private async login(req: Request, res: Response) {
-    // get username and password from body.
     const validationResult = expressValidator.validationResult(req);
     if (!validationResult.isEmpty()) {
       return res.status(400).end();
@@ -40,7 +39,6 @@ class AuthController extends Controller {
     );
 
     if (shouldGiveUserJwt) {
-      // make the jwt and return it.
       const jwt = Utils.generateJwtToken(username);
       res.status(200).json({ accessToken: jwt, message: null });
     } else {

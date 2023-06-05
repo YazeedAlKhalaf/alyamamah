@@ -76,6 +76,19 @@ abstract class _$YURouter extends RootStackRouter {
         ),
       );
     },
+    PaywallRoute.name: (routeData) {
+      final args = routeData.argsAs<PaywallRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: PaywallView(
+          key: args.key,
+          title: args.title,
+          description: args.description,
+          packages: args.packages,
+          customerInfo: args.customerInfo,
+        ),
+      );
+    },
     LoginRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -86,6 +99,12 @@ abstract class _$YURouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const OnboardingView(),
+      );
+    },
+    YuGptRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const YuGptView(),
       );
     },
   };
@@ -275,6 +294,59 @@ class MainRouteArgs {
 }
 
 /// generated route for
+/// [PaywallView]
+class PaywallRoute extends PageRouteInfo<PaywallRouteArgs> {
+  PaywallRoute({
+    Key? key,
+    required String title,
+    required String description,
+    required List<Package> packages,
+    required CustomerInfo customerInfo,
+    List<PageRouteInfo>? children,
+  }) : super(
+          PaywallRoute.name,
+          args: PaywallRouteArgs(
+            key: key,
+            title: title,
+            description: description,
+            packages: packages,
+            customerInfo: customerInfo,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'PaywallRoute';
+
+  static const PageInfo<PaywallRouteArgs> page =
+      PageInfo<PaywallRouteArgs>(name);
+}
+
+class PaywallRouteArgs {
+  const PaywallRouteArgs({
+    this.key,
+    required this.title,
+    required this.description,
+    required this.packages,
+    required this.customerInfo,
+  });
+
+  final Key? key;
+
+  final String title;
+
+  final String description;
+
+  final List<Package> packages;
+
+  final CustomerInfo customerInfo;
+
+  @override
+  String toString() {
+    return 'PaywallRouteArgs{key: $key, title: $title, description: $description, packages: $packages, customerInfo: $customerInfo}';
+  }
+}
+
+/// generated route for
 /// [LoginView]
 class LoginRoute extends PageRouteInfo<void> {
   const LoginRoute({List<PageRouteInfo>? children})
@@ -298,6 +370,20 @@ class OnboardingRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'OnboardingRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [YuGptView]
+class YuGptRoute extends PageRouteInfo<void> {
+  const YuGptRoute({List<PageRouteInfo>? children})
+      : super(
+          YuGptRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'YuGptRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

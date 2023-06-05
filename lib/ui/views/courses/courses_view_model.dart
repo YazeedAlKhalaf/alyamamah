@@ -172,6 +172,9 @@ class CoursesViewModel extends ChangeNotifier {
           ..sort((a, b) => a.endTime.compareTo(b.startTime));
       });
 
+      // Cache data.
+      await _sharedPrefsService.saveScheduleDays(scheduleDaysRegular);
+
       final iosWidgetCoursesDays = <Day, List<IosWidgetCourse>>{
         Day.sun: [],
         Day.mon: [],
@@ -210,6 +213,14 @@ class CoursesViewModel extends ChangeNotifier {
       );
     } on ApiServiceException catch (e) {
       _log.severe('getStudentSchedule() | exception: $e');
+
+      final scheduleDays = _sharedPrefsService.getScheduleDays();
+      _log.info(
+        'getStudentSchedule() | using cached data. does cached data exist? ${scheduleDays != null}',
+      );
+      if (scheduleDays != null) {
+        scheduleDaysRegular = scheduleDays;
+      }
     } on PlatformException catch (e) {
       _log.severe('getStudentSchedule() | exception: $e');
     } on Exception catch (e) {

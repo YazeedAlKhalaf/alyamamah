@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:alyamamah/core/extensions/time_of_day.dart';
 import 'package:flutter/material.dart';
 
 class ScheduleEntry {
@@ -91,4 +94,41 @@ class ScheduleEntry {
   String toString() {
     return 'ScheduleEntry(startTime: $startTime, endTime: $endTime, room: $room, activityDesc: $activityDesc, courseName: $courseName, courseCode: $courseCode, instructor: $instructor, creditHours: $creditHours, campusName: $campusName, courseDeleted: $courseDeleted, section: $section)';
   }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'startTime': startTime.toJson(),
+      'endTime': endTime.toJson(),
+      'room': room,
+      'activityDesc': activityDesc,
+      'courseName': courseName,
+      'courseCode': courseCode,
+      'instructor': instructor,
+      'creditHours': creditHours,
+      'campusName': campusName,
+      'courseDeleted': courseDeleted,
+      'section': section,
+    };
+  }
+
+  factory ScheduleEntry.fromMap(Map<String, dynamic> map) {
+    return ScheduleEntry(
+      startTime: timeOfDayFromJson(map['startTime'] as String),
+      endTime: timeOfDayFromJson(map['endTime'] as String),
+      room: map['room'] as String,
+      activityDesc: map['activityDesc'] as String,
+      courseName: map['courseName'] as String,
+      courseCode: map['courseCode'] as String,
+      instructor: map['instructor'] as String,
+      creditHours: map['creditHours'] as String,
+      campusName: map['campusName'] as String,
+      courseDeleted: map['courseDeleted'] as bool,
+      section: map['section'] as String,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory ScheduleEntry.fromJson(String source) =>
+      ScheduleEntry.fromMap(json.decode(source) as Map<String, dynamic>);
 }

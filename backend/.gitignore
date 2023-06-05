@@ -170,3 +170,5 @@ dist
 
 # ignore the certificates
 *.pem
+
+data/

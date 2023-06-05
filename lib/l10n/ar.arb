@@ -100,5 +100,31 @@
   "delete_link": "حذف الرابط",
   "you_sure_delete_link": "هل أنت متأكد من أنك تريد حذف هذا الرابط؟",
   "failed_to_open_link": "فشل في فتح الرابط 😢",
-  "gpa": "المعدل"
+  "gpa": "المعدل",
+  "alyamamah_gpt_title": "AlYamamahGPT",
+  "alyamamah_gpt_description": "يفتح عدد غير محدود من الرسائل إلى AlYamamahGPT",
+  "current_packages": "الباقات الحالية",
+  "lifetime": "مدى الحياة",
+  "annual": "سنوي",
+  "six_month": "6 أشهر",
+  "three_month": "3 أشهر",
+  "two_month": "2 أشهر",
+  "monthly": "شهري",
+  "weekly": "أسبوعي",
+  "alyamamah_gpt": "AlYamamahGPT",
+  "you_need_to_subscribe_first": "يجب عليك الإشتراك أولاً 😁",
+  "active_with_emoji": "✅ نشطة",
+  "ask_alyamamah_gpt": "اسأل AlYamamahGPT",
+  "new_word": "جديد",
+  "type_your_message_here": "اكتب رسالتك هنا",
+  "human": "بشري",
+  "ai": "ذكاء اصطناعي",
+  "invalid_request": "طلب غير صالح",
+  "payment_required": "مطلوب الدفع",
+  "purchase_has_been_cancelled": "ألغي الشراء",
+  "purchase_invalid": "عملية الشراء غير صالحة",
+  "purchase_not_allowed": "عملية الشراء غير مسموح بها",
+  "purchase_pending": "عملية الشراء معلقة",
+  "we_couldnt_find_any_offerings_for_you": "لم نتمكن من العثور على أي عروض لك 😢",
+  "restore": "استرجاع"
 }

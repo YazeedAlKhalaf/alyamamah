@@ -1,0 +1,1 @@
+enum GptMessageSender { human, ai }

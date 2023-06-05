@@ -1,6 +1,7 @@
 import 'package:alyamamah/core/constants.dart';
 import 'package:alyamamah/core/extensions/api_service_exception_type.dart';
 import 'package:alyamamah/core/extensions/build_context.dart';
+import 'package:alyamamah/core/extensions/yu_api_service_exception_type.dart';
 import 'package:alyamamah/ui/views/login/login_view_model.dart';
 import 'package:alyamamah/ui/widgets/button_loading.dart';
 import 'package:alyamamah/ui/widgets/switch_language_button.dart';
@@ -111,10 +112,14 @@ class _LoginViewState extends ConsumerState<LoginView> {
                       : Text(context.s.login),
                 ),
                 const SizedBox(height: Constants.padding),
-                if (loginViewModel.apiServiceExceptionType != null)
+                if (loginViewModel.apiServiceExceptionType != null ||
+                    loginViewModel.yuApiServiceExceptionType != null)
                   Text(
-                    loginViewModel.apiServiceExceptionType!
-                        .mapApiServiceExceptionType(context),
+                    loginViewModel.apiServiceExceptionType
+                            ?.mapToString(context) ??
+                        loginViewModel.yuApiServiceExceptionType
+                            ?.mapToString(context) ??
+                        '',
                     style: Theme.of(context).textTheme.labelMedium?.copyWith(
                           color: Theme.of(context).colorScheme.error,
                         ),

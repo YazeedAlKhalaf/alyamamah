@@ -1,4 +1,10 @@
+import 'dart:convert';
+
 import 'package:alyamamah/core/constants.dart';
+import 'package:alyamamah/core/extensions/map_day_schedule_entries.dart';
+import 'package:alyamamah/core/models/absence.dart';
+import 'package:alyamamah/core/models/day.dart';
+import 'package:alyamamah/ui/views/courses/models/schedule_entry.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -40,6 +46,18 @@ class SharedPrefsService {
   Future<void> deleteUsernameAndPassword() async {
     await _sharedPreferences.remove(Constants.usernameKey);
     await _sharedPreferences.remove(Constants.passwordKey);
+  }
+
+  String? getAccessToken() {
+    return _sharedPreferences.getString(Constants.accessTokenKey);
+  }
+
+  Future<void> saveAccessToken({required String accessToken}) async {
+    await _sharedPreferences.setString(Constants.accessTokenKey, accessToken);
+  }
+
+  Future<void> deleteAccessToken() async {
+    await _sharedPreferences.remove(Constants.accessTokenKey);
   }
 
   String? getLocale() {
@@ -95,5 +113,59 @@ class SharedPrefsService {
     await _sharedPreferences.remove(
       '$userId-$section-${Constants.linkKey}',
     );
+  }
+
+  Future<void> saveScheduleDays(
+    Map<Day, List<ScheduleEntry>> scheduleDays,
+  ) async {
+    await _sharedPreferences.setString(
+      Constants.scheduleDaysKey,
+      scheduleDays.toJson(),
+    );
+  }
+
+  Map<Day, List<ScheduleEntry>>? getScheduleDays() {
+    final scheduleDaysJson = _sharedPreferences.getString(
+      Constants.scheduleDaysKey,
+    );
+
+    if (scheduleDaysJson == null) {
+      return null;
+    }
+
+    return mapDayScheduleEntriesFromJson(scheduleDaysJson);
+  }
+
+  Future<void> deleteScheduleDays() async {
+    await _sharedPreferences.remove(Constants.scheduleDaysKey);
+  }
+
+  Future<void> saveAbsences(List<Absence> absences) async {
+    await _sharedPreferences.setString(
+      Constants.absencesKey,
+      jsonEncode(absences.map((entry) => entry.toMap()).toList()),
+    );
+  }
+
+  List<Absence>? getAbsences() {
+    final absencesJson = _sharedPreferences.getString(Constants.absencesKey);
+
+    if (absencesJson == null) {
+      return null;
+    }
+
+    return (jsonDecode(absencesJson) as List).map(
+      (absence) {
+        return Absence.fromJson(jsonEncode(absence));
+      },
+    ).toList();
+  }
+
+  Future<void> deleteAbsences() async {
+    await _sharedPreferences.remove(Constants.absencesKey);
+  }
+
+  Future<void> deleteEverything() async {
+    await _sharedPreferences.clear();
   }
 }

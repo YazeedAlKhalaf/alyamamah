@@ -7,12 +7,15 @@ import 'package:alyamamah/ui/views/courses/models/schedule_entry.dart';
 import 'package:alyamamah/ui/views/login/login_view.dart';
 import 'package:alyamamah/ui/views/main/main_view.dart';
 import 'package:alyamamah/ui/views/onboarding/onboarding_view.dart';
+import 'package:alyamamah/ui/views/paywall/paywall_view.dart';
 import 'package:alyamamah/ui/views/profile/profile_view.dart';
 import 'package:alyamamah/ui/views/startup/startup_view.dart';
 import 'package:alyamamah/ui/views/student_info/student_info_view.dart';
+import 'package:alyamamah/ui/views/yu_gpt/yu_gpt_view.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 
 part 'yu_router.gr.dart';
 
@@ -33,5 +36,11 @@ class YURouter extends _$YURouter {
     AutoRoute(page: OnboardingRoute.page),
     AutoRoute(page: AbsenceDetailsRoute.page),
     AutoRoute(page: CourseDetailsRoute.page),
+    CustomRoute(
+      page: PaywallRoute.page,
+      transitionsBuilder: TransitionsBuilders.slideBottom,
+      fullscreenDialog: true,
+    ),
+    AutoRoute(page: YuGptRoute.page),
   ];
 }

@@ -4,6 +4,7 @@ import EdugateApiService from "../services/edugate_api_service";
 import Validators from "../core/validators";
 import * as expressValidator from "express-validator";
 import Utils from "../core/utils";
+import User from "../models/user";
 
 class AuthController extends Controller {
   public path: string = "/auth";
@@ -33,12 +34,26 @@ class AuthController extends Controller {
     }
 
     const { username, password } = req.body;
+
     const shouldGiveUserJwt = await this.edugateApiService.checkUserCredentials(
       username,
       password
     );
 
     if (shouldGiveUserJwt) {
+      const users = await User.findAll({
+        where: {
+          username: username,
+        },
+      });
+
+      let user: User = users[0] || null;
+      if (user == null) {
+        user = await User.create({
+          username: username,
+        });
+      }
+
       const jwt = Utils.generateJwtToken(username);
       res.status(200).json({ accessToken: jwt, message: null });
     } else {

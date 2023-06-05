@@ -20,7 +20,7 @@ class SessionExpiredInterceptor extends Interceptor {
     if (response.data is String &&
         (response.data as String).contains('/yu/init')) {
       _log.severe(
-        'getStudentSchedule | session expired, renewing automatically.',
+        'session expired, renewing automatically.',
       );
 
       final username = _sharedPrefsService.getUsername();

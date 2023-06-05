@@ -56,5 +56,7 @@
 	<false/>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+	<key>AdaptyPublicSdkKey</key>
+    <string>public_live_qz2nN8h5.KW3ap1vZ8P2KKQ9uejPa</string>
 </dict>
 </plist>

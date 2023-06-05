@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 extension StringX on String {
@@ -34,5 +36,24 @@ extension StringX on String {
       caseSensitive: false, // Make the pattern case-insensitive
     );
     return regex.hasMatch(this);
+  }
+
+  bool isJwtExpired() {
+    final parts = split('.');
+    if (parts.length != 3) {
+      return true;
+    }
+
+    final payload = parts[1];
+    final normalized = base64Url.normalize(payload);
+    final resp = utf8.decode(base64Url.decode(normalized));
+    final payloadMap = json.decode(resp);
+    final exp = payloadMap['exp'];
+    if (exp == null) {
+      return true;
+    }
+
+    final now = DateTime.now().millisecondsSinceEpoch / 1000;
+    return now > exp;
   }
 }

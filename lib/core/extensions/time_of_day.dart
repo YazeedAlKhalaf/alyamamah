@@ -20,4 +20,16 @@ extension TimeOfDayX on TimeOfDay {
     int minuteDifference = other.minute - minute;
     return Duration(hours: hourDifference, minutes: minuteDifference);
   }
+
+  String toJson() {
+    return '$hour:$minute';
+  }
+}
+
+TimeOfDay timeOfDayFromJson(String jsonString) {
+  List<String> hourAndMinute = jsonString.split(':');
+  return TimeOfDay(
+    hour: int.parse(hourAndMinute[0]),
+    minute: int.parse(hourAndMinute[1]),
+  );
 }

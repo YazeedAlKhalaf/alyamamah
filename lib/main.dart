@@ -4,6 +4,7 @@ import 'package:alyamamah/core/app.dart';
 import 'package:alyamamah/core/constants.dart';
 import 'package:alyamamah/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -43,35 +44,41 @@ Future<void> main() async {
 
   final sharedPreferences = await SharedPreferences.getInstance();
 
-  await SentryFlutter.init(
-    (SentryFlutterOptions options) {
-      options.dsn = Constants.sentryDsn;
-      options.addIntegration(LoggingIntegration());
-      options.enableTracing = true;
-      options.sampleRate = 1;
-      options.attachScreenshot = true;
-      options.attachViewHierarchy = true;
-      options.autoAppStart = true;
-      options.enableAppHangTracking = true;
-      options.enableUserInteractionBreadcrumbs = true;
-      options.enableUserInteractionTracing = true;
-      options.enableBreadcrumbTrackingForCurrentPlatform();
+  if (kDebugMode) {
+    runApp(App(
+      sharedPreferences: sharedPreferences,
+    ));
+  } else {
+    await SentryFlutter.init(
+      (SentryFlutterOptions options) {
+        options.dsn = Constants.sentryDsn;
+        options.addIntegration(LoggingIntegration());
+        options.enableTracing = true;
+        options.sampleRate = 1;
+        options.attachScreenshot = true;
+        options.attachViewHierarchy = true;
+        options.autoAppStart = true;
+        options.enableAppHangTracking = true;
+        options.enableUserInteractionBreadcrumbs = true;
+        options.enableUserInteractionTracing = true;
+        options.enableBreadcrumbTrackingForCurrentPlatform();
 
-      // uncomment this to enable debug mode, in debug mode only.
-      // assert(() {
-      //   options.debug = true;
+        // uncomment this to enable debug mode, in debug mode only.
+        // assert(() {
+        //   options.debug = true;
 
-      //   return true;
-      // }());
-    },
-    appRunner: () => runApp(
-      SentryUserInteractionWidget(
-        child: SentryScreenshotWidget(
-          child: App(
-            sharedPreferences: sharedPreferences,
+        //   return true;
+        // }());
+      },
+      appRunner: () => runApp(
+        SentryUserInteractionWidget(
+          child: SentryScreenshotWidget(
+            child: App(
+              sharedPreferences: sharedPreferences,
+            ),
           ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }

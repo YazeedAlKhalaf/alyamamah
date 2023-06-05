@@ -3,7 +3,7 @@ import 'package:alyamamah/core/services/api/api_service_exception.dart';
 import 'package:flutter/material.dart';
 
 extension ApiServiceExceptionTypeX on ApiServiceExceptionType {
-  String mapApiServiceExceptionType(BuildContext context) {
+  String mapToString(BuildContext context) {
     switch (this) {
       case ApiServiceExceptionType.unknown:
         return context.s.unknown_service_error;

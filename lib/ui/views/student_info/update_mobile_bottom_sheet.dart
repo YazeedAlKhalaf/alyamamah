@@ -67,7 +67,7 @@ class _UpdateMobileBottomSheetState
       }
     } on ApiServiceException catch (e) {
       setState(() {
-        error = e.type.mapApiServiceExceptionType(context);
+        error = e.type.mapToString(context);
       });
     }
 

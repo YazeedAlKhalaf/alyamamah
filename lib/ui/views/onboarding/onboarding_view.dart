@@ -21,9 +21,9 @@ class OnboardingView extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.end,
-                children: const [
+                children: [
                   SwitchLanguageButton(),
                 ],
               ),

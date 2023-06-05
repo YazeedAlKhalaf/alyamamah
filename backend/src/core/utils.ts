@@ -15,7 +15,7 @@ class Utils {
       issuer: "https://yu.alkhalaf.dev",
       // - makes sure the token is not used before at least 3 seconds.
       notBefore: 3,
-      expiresIn: "3h",
+      expiresIn: 3 * 60 * 60, // 3 hours
     });
 
     return token;
@@ -46,6 +46,26 @@ class Utils {
 
       return false;
     }
+  }
+
+  static getUsernameFromJwt(token: string): string | null {
+    const decodedToken = this.getJwtPayload(token);
+
+    if (typeof decodedToken === "object" && "username" in decodedToken) {
+      return decodedToken.username;
+    }
+
+    return null;
+  }
+
+  static postgresConnectionUri(
+    user: string,
+    password: string,
+    host: string,
+    port: string,
+    dbName: string
+  ): string {
+    return `postgres://${user}:${password}@${host}:${port}/${dbName}`;
   }
 }
 

@@ -64,6 +64,22 @@ class AbsenceDetails {
   factory AbsenceDetails.fromJson(String source) =>
       AbsenceDetails.fromMap(json.decode(source) as Map<String, dynamic>);
 
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'activity': activity,
+      'date': date,
+      'dateH': dateH,
+      'day': day,
+      'isExcused': isExcused,
+      'late': late,
+      'section': section,
+      'time': time,
+      'weekNo': weekNo,
+    };
+  }
+
+  String toJson() => json.encode(toMap());
+
   @override
   String toString() {
     return 'AbsenceDetails(activity: $activity, date: $date, dateH: $dateH, day: $day, isExcused: $isExcused, late: $late, section: $section, time: $time, weekNo: $weekNo)';

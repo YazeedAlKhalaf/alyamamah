@@ -61,18 +61,19 @@ class _CoursesViewState extends ConsumerState<CoursesView> {
             );
           },
         ),
-        actions: [
-          IconButton(
-            icon: Text(
-              coursesViewModel.isRamadan
-                  ? '🥘 ${context.s.regular}'
-                  : '📿 ${context.s.ramadan}',
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-            onPressed: () async {
-              await ref.read(coursesViewModelProvider).toggleRamadanMode();
-            },
-          ),
+        actions: const [
+          // TODO: add this back when ramadan comes back.
+          // IconButton(
+          //   icon: Text(
+          //     coursesViewModel.isRamadan
+          //         ? '🥘 ${context.s.regular}'
+          //         : '📿 ${context.s.ramadan}',
+          //     style: Theme.of(context).textTheme.bodyMedium,
+          //   ),
+          //   onPressed: () async {
+          //     await ref.read(coursesViewModelProvider).toggleRamadanMode();
+          //   },
+          // ),
         ],
       ),
       body: SafeArea(

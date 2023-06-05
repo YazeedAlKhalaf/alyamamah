@@ -122,44 +122,56 @@ class _PaywallViewState extends ConsumerState<PaywallView> {
                                       final errorCode =
                                           PurchasesErrorHelper.getErrorCode(e);
 
-                                      if (errorCode ==
-                                          PurchasesErrorCode
-                                              .purchaseCancelledError) {
-                                        if (context.mounted) {
-                                          YUSnackBar.show(
-                                            context,
-                                            message: context
-                                                .s.purchase_has_been_cancelled,
-                                          );
-                                        }
-                                      } else if (errorCode ==
-                                          PurchasesErrorCode
-                                              .purchaseInvalidError) {
-                                        if (context.mounted) {
-                                          YUSnackBar.show(
-                                            context,
-                                            message: context.s.purchase_invalid,
-                                          );
-                                        }
-                                      } else if (errorCode ==
-                                          PurchasesErrorCode
-                                              .purchaseNotAllowedError) {
-                                        if (context.mounted) {
-                                          YUSnackBar.show(
-                                            context,
-                                            message:
-                                                context.s.purchase_not_allowed,
-                                          );
-                                        }
-                                      } else if (errorCode ==
-                                          PurchasesErrorCode
-                                              .paymentPendingError) {
-                                        if (context.mounted) {
-                                          YUSnackBar.show(
-                                            context,
-                                            message: context.s.purchase_pending,
-                                          );
-                                        }
+                                      switch (errorCode) {
+                                        case PurchasesErrorCode
+                                              .paymentPendingError:
+                                          if (context.mounted) {
+                                            YUSnackBar.show(
+                                              context,
+                                              message:
+                                                  context.s.purchase_pending,
+                                            );
+                                          }
+                                          break;
+                                        case PurchasesErrorCode
+                                              .purchaseCancelledError:
+                                          if (context.mounted) {
+                                            YUSnackBar.show(
+                                              context,
+                                              message: context.s
+                                                  .purchase_has_been_cancelled,
+                                            );
+                                          }
+                                          break;
+                                        case PurchasesErrorCode
+                                              .purchaseInvalidError:
+                                          if (context.mounted) {
+                                            YUSnackBar.show(
+                                              context,
+                                              message:
+                                                  context.s.purchase_invalid,
+                                            );
+                                          }
+                                          break;
+                                        case PurchasesErrorCode
+                                              .purchaseNotAllowedError:
+                                          if (context.mounted) {
+                                            YUSnackBar.show(
+                                              context,
+                                              message: context
+                                                  .s.purchase_not_allowed,
+                                            );
+                                          }
+                                          break;
+                                        default:
+                                          if (context.mounted) {
+                                            YUSnackBar.show(
+                                              context,
+                                              message: context
+                                                  .s.unknown_service_error,
+                                            );
+                                          }
+                                          break;
                                       }
                                     }
 

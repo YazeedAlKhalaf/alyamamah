@@ -37,13 +37,14 @@ class RevCatController extends Controller {
         console.log("Test webhook received successfully");
         return res.status(200).json(req.body).end();
       case "INITIAL_PURCHASE":
-      case "RENEWAL":
-        const user = await User.findOne({
+        console.log("Initial purchase webhook received successfully");
+        const initialUser = await User.findOne({
           where: {
             username: event.app_user_id,
           },
         });
-        if (user === null) {
+        if (initialUser == null) {
+          console.log("user not found");
           return res
             .status(400)
             .json({
@@ -52,9 +53,38 @@ class RevCatController extends Controller {
             .end();
         }
 
-        user.subscriptionTier = stringToSubscriptionTier(event.product_id);
-        user.subscriptionExpiration = new Date(event.expiration_at_ms);
-        await user.save();
+        initialUser.subscriptionTier = stringToSubscriptionTier(
+          event.product_id
+        );
+        initialUser.subscriptionExpiration = new Date(event.expiration_at_ms);
+        await initialUser.save();
+
+        return res.status(200).json(req.body).end();
+
+      case "RENEWAL":
+        console.log("Renewal webhook received successfully");
+        const renewalUser = await User.findOne({
+          where: {
+            username: event.app_user_id,
+          },
+        });
+        if (renewalUser == null) {
+          console.log("user not found");
+          return res
+            .status(400)
+            .json({
+              error: "user not found",
+            })
+            .end();
+        }
+
+        renewalUser.subscriptionTier = stringToSubscriptionTier(
+          event.product_id
+        );
+        renewalUser.subscriptionExpiration = new Date(event.expiration_at_ms);
+        await renewalUser.save();
+
+        return res.status(200).json(req.body).end();
 
       case "EXPIRATION":
         const expiredUser = await User.findOne({
@@ -62,7 +92,8 @@ class RevCatController extends Controller {
             username: event.app_user_id,
           },
         });
-        if (expiredUser === null) {
+        if (expiredUser == null) {
+          console.log("user not found");
           return res
             .status(400)
             .json({
@@ -74,6 +105,8 @@ class RevCatController extends Controller {
         expiredUser.subscriptionTier = null;
         expiredUser.subscriptionExpiration = null;
         await expiredUser.save();
+
+        return res.status(200).json(req.body).end();
 
       case "CANCELLATION":
       case "UNCANCELLATION":

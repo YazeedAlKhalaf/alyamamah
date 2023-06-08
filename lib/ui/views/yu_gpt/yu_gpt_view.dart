@@ -59,8 +59,6 @@ class _YuGptViewState extends ConsumerState<YuGptView> {
               return;
             }
 
-            print(ref.read(yuRouterProvider).currentChild);
-
             await ref.read(yuRouterProvider).push(
                   PaywallRoute(
                     title: title,

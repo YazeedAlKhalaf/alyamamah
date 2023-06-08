@@ -48,10 +48,9 @@ class YuApiService {
 
       /// This is needed only when testing locally
       /// and using ngrok to route traffic to your local instance of the server.
-      headers: {
-        // TODO: remove this
-        'ngrok-skip-browser-warning': 'lol',
-      },
+      // headers: {
+      //   'ngrok-skip-browser-warning': 'lol',
+      // },
     );
 
     /// This interceptor has an activation path and activation credentials,

@@ -137,27 +137,46 @@ class _YuGptViewState extends ConsumerState<YuGptView> {
       ),
       body: Column(
         children: [
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: Constants.padding,
+          if (yuGptState.messages.isEmpty)
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const CircleAvatar(
+                    child: Icon(Icons.smart_toy_rounded),
+                  ),
+                  const SizedBox(height: Constants.spacing),
+                  Text(
+                    'Your best companion for school work!',
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ],
               ),
-              child: ListView.separated(
-                reverse: true,
-                itemCount: yuGptState.messages.length,
-                itemBuilder: (BuildContext context, int index) {
-                  final message = yuGptState.messages.reversed.toList()[index];
+            ).animate().scale(duration: 300.milliseconds)
+          else
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: Constants.padding,
+                ),
+                child: ListView.separated(
+                  reverse: true,
+                  itemCount: yuGptState.messages.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final message =
+                        yuGptState.messages.reversed.toList()[index];
 
-                  return GptMessageItem(
-                    message: message,
-                  );
-                },
-                separatorBuilder: (BuildContext context, int index) {
-                  return const SizedBox(height: Constants.padding);
-                },
+                    return GptMessageItem(
+                      message: message,
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, int index) {
+                    return const SizedBox(height: Constants.padding);
+                  },
+                ),
               ),
             ),
-          ),
           const SizedBox(height: Constants.spacing),
           if (yuGptState.errorType != null)
             ...[

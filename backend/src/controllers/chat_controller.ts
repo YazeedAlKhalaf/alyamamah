@@ -17,7 +17,7 @@ import SubscriptionTier from "../models/subscription_tier";
 import ModelName from "../models/model_name";
 
 const FREE_TIER_MAX_API_CALLS = 5;
-const GPT_4_MAX_API_CALLS_COUNT_PER_INTERVAL = 2;
+const GPT_4_MAX_API_CALLS_COUNT_PER_INTERVAL = 25;
 const GPT_4_MAX_API_CALLS_INTERVAL = 3 * 60 * 60 * 1000; // 3 hours
 
 class ChatController extends Controller {
@@ -43,6 +43,7 @@ class ChatController extends Controller {
 
     const username = Utils.getUsernameFromJwt(token);
     if (username == null) {
+      console.log("username is null");
       // This means the JWT token is invalid, or doesn't have a username.
       // The user shouldn't be able to reach this stage without a username.
       return res.status(500).end();
@@ -54,12 +55,15 @@ class ChatController extends Controller {
       },
     });
     if (user == null) {
+      console.log("user is null");
       // The user shouldn't be able to reach this stage without a user instance in the database,
       // since login creates it and login is required to reach this stage.
       return res.status(500).end();
     }
 
     if (user.isGenerating) {
+      console.log("user is already generating");
+
       return res.status(400).json({
         errorCode: "user-is-generating",
         message:
@@ -71,6 +75,8 @@ class ChatController extends Controller {
       user.subscriptionTier === null &&
       user.apiCallsCount >= FREE_TIER_MAX_API_CALLS
     ) {
+      console.log(`reached the limit of ${FREE_TIER_MAX_API_CALLS} api calls`);
+
       // Status code 402 means payment required.
       return res.status(402).json({
         errorCode: "free-tier-api-calls-limit-reached",
@@ -84,6 +90,8 @@ class ChatController extends Controller {
       user.subscriptionExpiration &&
       user.subscriptionExpiration < new Date()
     ) {
+      console.log("alyamamah gpt subscription expired");
+
       // Status code 402 means payment required.
       return res.status(402).json({
         errorCode: "alyamamah-gpt-subscription-expired",
@@ -98,6 +106,8 @@ class ChatController extends Controller {
 
     if (modelName === "gpt-4") {
       if (user.gpt4ApiCallsResetTime < gpt4IntervalAgo) {
+        console.log("resetting gpt4 api calls count");
+
         user.gpt4ApiCallsCount = 0;
         user.gpt4ApiCallsResetTime = now;
         await user.save();
@@ -105,6 +115,7 @@ class ChatController extends Controller {
         user.gpt4ApiCallsCount >= GPT_4_MAX_API_CALLS_COUNT_PER_INTERVAL
       ) {
         console.log("reached the limit of 25 api calls");
+
         return res.status(429).json({
           errorCode: "gpt-4-api-calls-limit-reached",
           message:
@@ -115,6 +126,8 @@ class ChatController extends Controller {
 
     user.isGenerating = true;
     await user.save();
+
+    console.log("user is generating");
 
     const messages: BaseChatMessage[] = [];
     chatList.forEach((chat: Chat) => {
@@ -145,6 +158,8 @@ class ChatController extends Controller {
       ],
     });
 
+    console.log("calling the chat model, this may take a while");
+
     await chat.call([
       new SystemChatMessage(
         "You are AlYamamahGPT, a chatbot that can helps Al Yamamah University students manage their life in the university. You always are helpful, and you are always ready to help students. You shouldn't do anything unethical or illegal, but helping students is okay. You should explain anything they ask you about that is related to thier studies. You should also help them with their personal life, but you shouldn't do anything illegal or unethicial."
@@ -152,12 +167,16 @@ class ChatController extends Controller {
       ...messages,
     ]);
 
+    console.log("finished calling the chat model");
+
     user.increment("apiCallsCount", { by: 1 });
     if (modelName === "gpt-4") {
       user.increment("gpt4ApiCallsCount", { by: 1 });
     }
     user.isGenerating = false;
     await user.save();
+
+    console.log("user is not generating and everything is good!");
 
     res.end();
   }

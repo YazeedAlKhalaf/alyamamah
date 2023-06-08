@@ -4,7 +4,6 @@ import 'dart:typed_data';
 
 import 'package:alyamamah/core/constants.dart';
 import 'package:alyamamah/core/services/shared_prefs/shared_prefs_service.dart';
-import 'package:alyamamah/core/services/yu_api/interceptors/yu_api_402_interceptor.dart';
 import 'package:alyamamah/core/services/yu_api/interceptors/yu_api_auth_interceptor.dart';
 import 'package:alyamamah/core/services/yu_api/interceptors/yu_api_demo_mode_interceptor.dart';
 import 'package:alyamamah/core/services/yu_api/models/chat.dart';
@@ -22,7 +21,6 @@ final yuApiServiceProvider = Provider((ref) {
     yuApiAuthInterceptor: YuApiAuthInterceptor(
       sharedPrefsService: ref.read(sharedPrefsServiceProvider),
     ),
-    yuApi402Interceptor: YuApi402Interceptor(),
   );
 });
 
@@ -32,17 +30,14 @@ class YuApiService {
   final Dio _dio;
   final YuApiDemoModeInterceptor _yuApiDemoModeInterceptor;
   final YuApiAuthInterceptor _yuApiAuthInterceptor;
-  final YuApi402Interceptor _yuApi402Interceptor;
 
   YuApiService({
     required Dio dio,
     required YuApiDemoModeInterceptor yuApiDemoModeInterceptor,
     required YuApiAuthInterceptor yuApiAuthInterceptor,
-    required YuApi402Interceptor yuApi402Interceptor,
   })  : _dio = dio,
         _yuApiDemoModeInterceptor = yuApiDemoModeInterceptor,
-        _yuApiAuthInterceptor = yuApiAuthInterceptor,
-        _yuApi402Interceptor = yuApi402Interceptor {
+        _yuApiAuthInterceptor = yuApiAuthInterceptor {
     _dio.options = BaseOptions(
       baseUrl: Constants.yuApiBaseUrl,
 
@@ -59,8 +54,6 @@ class YuApiService {
     _dio.interceptors.add(_yuApiDemoModeInterceptor);
 
     _dio.interceptors.add(_yuApiAuthInterceptor);
-
-    _dio.interceptors.add(_yuApi402Interceptor);
 
     /// This must be the last step always.
     _dio.addSentry();
@@ -80,13 +73,6 @@ class YuApiService {
         },
       );
 
-      if (response.statusCode == 401) {
-        _log.severe('login | invalid credentials.');
-        throw const YuApiServiceException(
-          YuApiServiceExceptionType.invalidCredentials,
-        );
-      }
-
       if (response.statusCode == 200 &&
           response.data['accessToken'] != null &&
           response.data['message'] == null) {
@@ -94,6 +80,17 @@ class YuApiService {
       }
 
       _log.severe('login | something weird went wrong.');
+      throw const YuApiServiceException();
+    } on DioError catch (e) {
+      _log.severe('login | dio error: $e.');
+
+      if (e.response?.statusCode == 401) {
+        _log.severe('login | invalid credentials.');
+        throw const YuApiServiceException(
+          YuApiServiceExceptionType.invalidCredentials,
+        );
+      }
+
       throw const YuApiServiceException();
     } catch (e) {
       if (e is YuApiServiceException) rethrow;

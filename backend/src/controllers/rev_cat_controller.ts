@@ -27,7 +27,7 @@ class RevCatController extends Controller {
     const { event } = req.body;
     const { environment, type } = event;
     console.log(`got webhook of type: ${type}`);
-    if (environment === "SANDBOX") {
+    if (environment === "SANDBOX" && process.env.NODE_ENV === "production") {
       console.log("Sandbox webhook received successfully");
       return res.status(200).json(req.body).end();
     }

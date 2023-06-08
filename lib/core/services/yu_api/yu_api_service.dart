@@ -8,6 +8,7 @@ import 'package:alyamamah/core/services/yu_api/interceptors/yu_api_402_intercept
 import 'package:alyamamah/core/services/yu_api/interceptors/yu_api_auth_interceptor.dart';
 import 'package:alyamamah/core/services/yu_api/interceptors/yu_api_demo_mode_interceptor.dart';
 import 'package:alyamamah/core/services/yu_api/models/chat.dart';
+import 'package:alyamamah/core/services/yu_api/models/model_name.dart';
 import 'package:alyamamah/core/services/yu_api/yu_api_service_exception.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -106,38 +107,19 @@ class YuApiService {
   /// Streams the tokens as they are received from the server.
   Stream<String> chat({
     required List<Chat> chats,
+    required ModelName modelName,
   }) async* {
     try {
       final response = await _dio.get<ResponseBody>(
         '/chat',
         data: {
           'chatList': chats.map((e) => e.toMap()).toList(),
+          'modelName': modelName.name,
         },
         options: Options(
           responseType: ResponseType.stream,
         ),
       );
-
-      if (response.statusCode == 401) {
-        _log.severe('chat | invalid credentials.');
-        throw const YuApiServiceException(
-          YuApiServiceExceptionType.invalidCredentials,
-        );
-      }
-
-      if (response.statusCode == 400) {
-        _log.severe('chat | invalid request.');
-        throw const YuApiServiceException(
-          YuApiServiceExceptionType.invalidRequest,
-        );
-      }
-
-      if (response.statusCode == 402) {
-        _log.severe('chat | payment required');
-        throw const YuApiServiceException(
-          YuApiServiceExceptionType.paymentRequired,
-        );
-      }
 
       final unit8Transformer =
           StreamTransformer<Uint8List, List<int>>.fromHandlers(
@@ -155,6 +137,50 @@ class YuApiService {
       }
 
       throw const YuApiServiceException();
+    } on DioError catch (e) {
+      final body = e.response?.data as ResponseBody?;
+
+      if (e.response?.statusCode == 401) {
+        _log.severe('chat | invalid credentials.');
+        throw const YuApiServiceException(
+          YuApiServiceExceptionType.invalidCredentials,
+        );
+      }
+
+      if (e.response?.statusCode == 400) {
+        _log.severe('chat | invalid request');
+
+        final bodyBytes = (await body?.stream.first);
+        if (bodyBytes != null) {
+          final bodyString = String.fromCharCodes(bodyBytes.toList());
+          _log.severe('chat | body: $bodyString');
+          final bodyMap = jsonDecode(bodyString) as Map<String, dynamic>;
+
+          if (bodyMap['errorCode'] == 'user-is-generating') {
+            throw const YuApiServiceException(
+              YuApiServiceExceptionType.userIsGenerating,
+            );
+          }
+        }
+
+        throw const YuApiServiceException(
+          YuApiServiceExceptionType.invalidRequest,
+        );
+      }
+
+      if (e.response?.statusCode == 402) {
+        _log.severe('chat | payment required');
+        throw const YuApiServiceException(
+          YuApiServiceExceptionType.paymentRequired,
+        );
+      }
+
+      if (e.response?.statusCode == 429) {
+        _log.severe('chat | too many requests.');
+        throw const YuApiServiceException(
+          YuApiServiceExceptionType.tooManyRequests,
+        );
+      }
     } catch (e) {
       if (e is YuApiServiceException) rethrow;
 

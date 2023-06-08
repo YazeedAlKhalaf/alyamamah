@@ -1,7 +1,9 @@
 import 'package:alyamamah/core/constants.dart';
 import 'package:alyamamah/core/extensions/build_context.dart';
+import 'package:alyamamah/core/extensions/yu_api_service_exception_type.dart';
 import 'package:alyamamah/core/router/yu_router.dart';
 import 'package:alyamamah/core/services/rev_cat/rev_cat_service.dart';
+import 'package:alyamamah/core/services/yu_api/models/model_name.dart';
 import 'package:alyamamah/core/services/yu_api/yu_api_service_exception.dart';
 import 'package:alyamamah/ui/views/yu_gpt/gpt_message_item.dart';
 import 'package:alyamamah/ui/views/yu_gpt/yu_gpt_state.dart';
@@ -9,6 +11,7 @@ import 'package:alyamamah/ui/views/yu_gpt/yu_gpt_view_model.dart';
 import 'package:alyamamah/ui/widgets/yu_snack_bar.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart' as intl;
 
@@ -33,36 +36,47 @@ class _YuGptViewState extends ConsumerState<YuGptView> {
     ref.read(yuGptViewModelProvider.notifier).addListener(
       (YuGptState yuGptState) async {
         if (yuGptState.errorType == YuApiServiceExceptionType.paymentRequired) {
-          final title = context.s.alyamamah_gpt;
-          final description = context.s.you_need_to_subscribe_first;
-          final noOfferingsText =
-              context.s.we_couldnt_find_any_offerings_for_you;
+          try {
+            final title = context.s.alyamamah_gpt;
+            final description = context.s.you_need_to_subscribe_first;
+            final noOfferingsText =
+                context.s.we_couldnt_find_any_offerings_for_you;
 
-          final customerInfo =
-              await ref.read(revCatServiceProvider).getCustomerInfo();
+            final customerInfo =
+                await ref.read(revCatServiceProvider).getCustomerInfo();
 
-          final offerings =
-              await ref.read(revCatServiceProvider).getOfferings();
+            final offerings =
+                await ref.read(revCatServiceProvider).getOfferings();
 
-          final offering = offerings.all[Constants.defaultOfferingId];
-          if (offering == null) {
+            final offering = offerings.all[Constants.defaultOfferingId];
+            if (offering == null) {
+              if (context.mounted) {
+                YUSnackBar.show(
+                  context,
+                  message: noOfferingsText,
+                );
+              }
+              return;
+            }
+
+            print(ref.read(yuRouterProvider).currentChild);
+
+            await ref.read(yuRouterProvider).push(
+                  PaywallRoute(
+                    title: title,
+                    description: description,
+                    packages: offering.availablePackages,
+                    customerInfo: customerInfo,
+                  ),
+                );
+          } catch (e) {
             if (context.mounted) {
               YUSnackBar.show(
                 context,
-                message: noOfferingsText,
+                message: context.s.unknown_service_error,
               );
             }
-            return;
           }
-
-          await ref.read(yuRouterProvider).push(
-                PaywallRoute(
-                  title: title,
-                  description: description,
-                  packages: offering.availablePackages,
-                  customerInfo: customerInfo,
-                ),
-              );
         }
       },
     );
@@ -83,6 +97,45 @@ class _YuGptViewState extends ConsumerState<YuGptView> {
             icon: const Icon(Icons.delete_forever_rounded),
           ),
         ],
+        bottom: yuGptState.messages.isNotEmpty
+            ? null
+            : PreferredSize(
+                preferredSize: const Size(double.infinity, 50),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: Constants.padding,
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: SegmentedButton<ModelName>(
+                          showSelectedIcon: false,
+                          segments: [
+                            ButtonSegment(
+                              value: ModelName.gpt3_5turbo,
+                              label: Text(ModelName.gpt3_5turbo.displayName),
+                              icon: const Icon(Icons.flash_on_rounded),
+                            ),
+                            ButtonSegment(
+                              value: ModelName.gpt4,
+                              label: Text(ModelName.gpt4.displayName),
+                              icon: const Icon(Icons.auto_awesome_rounded),
+                            ),
+                          ],
+                          selected: {yuGptState.modelName},
+                          onSelectionChanged: (Set<ModelName> modelNameSet) {
+                            if (modelNameSet.isNotEmpty) {
+                              ref
+                                  .read(yuGptViewModelProvider.notifier)
+                                  .setModelName(modelNameSet.first);
+                            }
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
       ),
       body: Column(
         children: [
@@ -108,6 +161,22 @@ class _YuGptViewState extends ConsumerState<YuGptView> {
             ),
           ),
           const SizedBox(height: Constants.spacing),
+          if (yuGptState.errorType != null)
+            ...[
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: Constants.padding,
+                ),
+                child: Text(
+                  yuGptState.errorType!.mapToString(context),
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        color: Theme.of(context).colorScheme.error,
+                      ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              const SizedBox(height: Constants.spacing),
+            ].animate().scale(duration: 300.milliseconds),
           Container(
             color: Theme.of(context).colorScheme.secondaryContainer,
             padding: const EdgeInsets.symmetric(
@@ -156,6 +225,21 @@ class _YuGptViewState extends ConsumerState<YuGptView> {
                               },
                       ),
                     ],
+                  ).animate().slideY(),
+                  const SizedBox(height: Constants.spacing),
+                  AnimatedContainer(
+                    height: yuGptState.modelName == ModelName.gpt4 ? 20 : 0,
+                    duration: 300.milliseconds,
+                    child: yuGptState.modelName == ModelName.gpt4
+                        ? Text(
+                            context.s.gpt_4_limits_message,
+                            style: Theme.of(context).textTheme.labelSmall,
+                          ).animate().fadeIn(
+                              duration: 300.milliseconds,
+                              delay: 100.milliseconds,
+                              curve: Curves.easeInOut,
+                            )
+                        : null,
                   ),
                   const SizedBox(height: Constants.spacing),
                 ],

@@ -30,6 +30,8 @@ class App {
   }
 
   public listen() {
+    this.app.disable("x-powered-by");
+
     const _port = process.env.PORT || this.port;
     this.app.listen(_port, () => {
       console.log(`🚀 Server listening on: http://localhost:${_port}`);

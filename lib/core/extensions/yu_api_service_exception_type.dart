@@ -15,6 +15,10 @@ extension YuApiServiceExceptionTypeExtensions on YuApiServiceExceptionType {
         return context.s.invalid_request;
       case YuApiServiceExceptionType.paymentRequired:
         return context.s.payment_required;
+      case YuApiServiceExceptionType.tooManyRequests:
+        return context.s.too_many_requests;
+      case YuApiServiceExceptionType.userIsGenerating:
+        return context.s.user_is_generating;
     }
   }
 }

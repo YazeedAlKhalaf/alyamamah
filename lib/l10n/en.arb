@@ -126,5 +126,8 @@
   "purchase_not_allowed": "Purchase is not allowed",
   "purchase_pending": "Purchase is pending",
   "we_couldnt_find_any_offerings_for_you": "We couldn't find any offerings for you",
-  "restore": "Restore"
+  "restore": "Restore",
+  "too_many_requests": "You have reached the limit of requests. Please try again later.",
+  "gpt_4_limits_message": "GPT-4 currently has a cap of 25 messages every 3 hours.",
+  "user_is_generating": "Only one concurrent generation is allowed per user, wait for the current generation to finish."
 }

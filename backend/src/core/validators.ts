@@ -1,5 +1,6 @@
 import * as expressValidator from "express-validator";
 import Chat from "../models/chat";
+import ModelName from "../models/model_name";
 
 class Validators {
   private usernameValidator = expressValidator
@@ -43,10 +44,24 @@ class Validators {
       return true;
     });
 
+  private modelNameValidator = expressValidator
+    .body("modelName")
+    .isString()
+    .isLength({ max: 100 })
+    .custom((model: ModelName) => {
+      if (model !== "gpt-3.5-turbo" && model !== "gpt-4") {
+        throw new Error(
+          `Invalid model. Model should be either "gpt-3.5-turbo" or "gpt-4".`
+        );
+      }
+
+      return true;
+    });
+
   static validateChat(): Array<expressValidator.ValidationChain> {
     const validators = new Validators();
 
-    return [validators.chatListValidator];
+    return [validators.chatListValidator, validators.modelNameValidator];
   }
 }
 

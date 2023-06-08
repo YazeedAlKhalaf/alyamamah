@@ -12,6 +12,8 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   declare id: CreationOptional<string>;
   declare username: string;
   declare apiCallsCount: CreationOptional<number>;
+  declare gpt4ApiCallsCount: CreationOptional<number>;
+  declare gpt4ApiCallsResetTime: CreationOptional<Date>;
   declare subscriptionTier: SubscriptionTier | null;
   declare subscriptionExpiration: Date | null;
   declare isGenerating: CreationOptional<boolean>;
@@ -33,6 +35,16 @@ User.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0,
+    },
+    gpt4ApiCallsCount: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0,
+    },
+    gpt4ApiCallsResetTime: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: new Date(),
     },
     subscriptionTier: {
       type: DataTypes.ENUM(...Object.values(SubscriptionTier)),

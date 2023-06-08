@@ -1,6 +1,7 @@
 import 'package:alyamamah/core/extensions/gpt_message_sender.dart';
 import 'package:alyamamah/core/models/optional.dart';
 import 'package:alyamamah/core/services/yu_api/models/chat.dart';
+import 'package:alyamamah/core/services/yu_api/models/model_name.dart';
 import 'package:alyamamah/core/services/yu_api/yu_api_service.dart';
 import 'package:alyamamah/core/services/yu_api/yu_api_service_exception.dart';
 import 'package:alyamamah/ui/views/yu_gpt/models/gpt_message.dart';
@@ -53,6 +54,7 @@ class YuGptViewModel extends StateNotifier<YuGptState> {
             );
           }).toList(),
         ],
+        modelName: state.modelName,
       );
 
       chatStream.listen(
@@ -75,6 +77,7 @@ class YuGptViewModel extends StateNotifier<YuGptState> {
             _log.severe('error listening to the tokens stream: $e');
 
             state = state.copyWith(
+              isGenerating: false,
               messages: state.messages..removeLast(),
               errorType: Optional(e.type),
             );
@@ -102,6 +105,12 @@ class YuGptViewModel extends StateNotifier<YuGptState> {
     state = state.copyWith(
       errorType: Optional(null),
       messages: const [],
+    );
+  }
+
+  void setModelName(ModelName newModelName) {
+    state = state.copyWith(
+      modelName: newModelName,
     );
   }
 }

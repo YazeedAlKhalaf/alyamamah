@@ -14,8 +14,11 @@ import Chat from "../models/chat";
 import Utils from "../core/utils";
 import User from "../models/user";
 import SubscriptionTier from "../models/subscription_tier";
+import ModelName from "../models/model_name";
 
 const FREE_TIER_MAX_API_CALLS = 5;
+const GPT_4_MAX_API_CALLS_COUNT_PER_INTERVAL = 2;
+const GPT_4_MAX_API_CALLS_INTERVAL = 3 * 60 * 60 * 1000; // 3 hours
 
 class ChatController extends Controller {
   public path: string = "/chat";
@@ -32,7 +35,11 @@ class ChatController extends Controller {
       return res.status(400).end();
     }
 
-    const { chatList, token }: { chatList: Chat[]; token: string } = req.body;
+    const {
+      chatList,
+      token,
+      modelName,
+    }: { chatList: Chat[]; token: string; modelName: ModelName } = req.body;
 
     const username = Utils.getUsernameFromJwt(token);
     if (username == null) {
@@ -54,6 +61,7 @@ class ChatController extends Controller {
 
     if (user.isGenerating) {
       return res.status(400).json({
+        errorCode: "user-is-generating",
         message:
           "You are already generating a response. Please wait for it to finish. Only one response can be generated at a time.",
       });
@@ -65,6 +73,7 @@ class ChatController extends Controller {
     ) {
       // Status code 402 means payment required.
       return res.status(402).json({
+        errorCode: "free-tier-api-calls-limit-reached",
         message:
           "You have reached the limit of 5 free trial API calls for your account.",
       });
@@ -77,8 +86,31 @@ class ChatController extends Controller {
     ) {
       // Status code 402 means payment required.
       return res.status(402).json({
+        errorCode: "alyamamah-gpt-subscription-expired",
         message: `Your subscription "${SubscriptionTier.alyamamahGPT.valueOf()}" has expired. Please renew your subscription to continue using the service.`,
       });
+    }
+
+    const now = new Date();
+    const gpt4IntervalAgo = new Date(
+      now.getTime() - GPT_4_MAX_API_CALLS_INTERVAL
+    );
+
+    if (modelName === "gpt-4") {
+      if (user.gpt4ApiCallsResetTime < gpt4IntervalAgo) {
+        user.gpt4ApiCallsCount = 0;
+        user.gpt4ApiCallsResetTime = now;
+        await user.save();
+      } else if (
+        user.gpt4ApiCallsCount >= GPT_4_MAX_API_CALLS_COUNT_PER_INTERVAL
+      ) {
+        console.log("reached the limit of 25 api calls");
+        return res.status(429).json({
+          errorCode: "gpt-4-api-calls-limit-reached",
+          message:
+            "You have reached the limit of 25 API calls per 3 hours to GPT-4 for your account.",
+        });
+      }
     }
 
     user.isGenerating = true;
@@ -97,7 +129,7 @@ class ChatController extends Controller {
 
     const chat = new ChatOpenAI({
       temperature: 0,
-      modelName: "gpt-3.5-turbo",
+      modelName: modelName,
       streaming: true,
       callbacks: [
         {
@@ -121,6 +153,9 @@ class ChatController extends Controller {
     ]);
 
     user.increment("apiCallsCount", { by: 1 });
+    if (modelName === "gpt-4") {
+      user.increment("gpt4ApiCallsCount", { by: 1 });
+    }
     user.isGenerating = false;
     await user.save();
 

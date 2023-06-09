@@ -146,6 +146,15 @@ class ChatController extends Controller {
       streaming: true,
       callbacks: [
         {
+          handleLLMEnd(output, runId, parentRunId) {
+            console.log("LLMEnd received");
+          },
+          handleLLMStart(llm, prompts, runId, parentRunId, extraParams) {
+            console.log("LLMStart received");
+          },
+          handleLLMError(err, runId, parentRunId) {
+            console.log(`LLMError received`);
+          },
           handleLLMNewToken(token: string) {
             // process.stdout.write(token);
             res.write(
@@ -160,14 +169,30 @@ class ChatController extends Controller {
 
     console.log("calling the chat model, this may take a while");
 
-    await chat.call([
-      new SystemChatMessage(
-        "You are AlYamamahGPT, a chatbot that can helps Al Yamamah University students manage their life in the university. You always are helpful, and you are always ready to help students. You shouldn't do anything unethical or illegal, but helping students is okay. You should explain anything they ask you about that is related to thier studies. You should also help them with their personal life, but you shouldn't do anything illegal or unethicial."
-      ),
-      ...messages,
-    ]);
+    try {
+      console.log(`started calling chat model`);
+      await chat.call([
+        new SystemChatMessage(
+          "You are AlYamamahGPT, a chatbot that can helps Al Yamamah University students manage their life in the university. You always are helpful, and you are always ready to help students. You shouldn't do anything unethical or illegal, but helping students is okay. You should explain anything they ask you about that is related to thier studies. You should also help them with their personal life, but you shouldn't do anything illegal or unethicial."
+        ),
+        ...messages,
+      ]);
+      console.log("finished calling the chat model");
+    } catch (err: any) {
+      if (err.response.data.error.code == "context_length_exceeded") {
+        console.error("context length exceeded");
 
-    console.log("finished calling the chat model");
+        user.isGenerating = false;
+        await user.save();
+
+        res.status(400).json({
+          errorCode: "context-length-exceeded",
+          message:
+            err.message ?? "The context length exceeded the maximum allowed.",
+        });
+        res.end();
+      }
+    }
 
     user.increment("apiCallsCount", { by: 1 });
     if (modelName === "gpt-4") {

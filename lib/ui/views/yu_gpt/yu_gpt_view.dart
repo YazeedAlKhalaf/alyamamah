@@ -98,11 +98,9 @@ class _YuGptViewState extends ConsumerState<YuGptView> {
         bottom: yuGptState.messages.isNotEmpty
             ? null
             : PreferredSize(
-                preferredSize: const Size(double.infinity, 50),
+                preferredSize: const Size(double.infinity, 70),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: Constants.padding,
-                  ),
+                  padding: const EdgeInsets.all(Constants.padding),
                   child: Row(
                     children: [
                       Expanded(
@@ -148,7 +146,7 @@ class _YuGptViewState extends ConsumerState<YuGptView> {
                   ),
                   const SizedBox(height: Constants.spacing),
                   Text(
-                    'Your best companion for school work!',
+                    context.s.your_best_companion_for_school_work,
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ],
@@ -156,24 +154,26 @@ class _YuGptViewState extends ConsumerState<YuGptView> {
             ).animate().scale(duration: 300.milliseconds)
           else
             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: Constants.padding,
-                ),
-                child: ListView.separated(
-                  reverse: true,
-                  itemCount: yuGptState.messages.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    final message =
-                        yuGptState.messages.reversed.toList()[index];
+              child: Scrollbar(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: Constants.padding,
+                  ),
+                  child: ListView.separated(
+                    reverse: true,
+                    itemCount: yuGptState.messages.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      final message =
+                          yuGptState.messages.reversed.toList()[index];
 
-                    return GptMessageItem(
-                      message: message,
-                    );
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return const SizedBox(height: Constants.padding);
-                  },
+                      return GptMessageItem(
+                        message: message,
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const SizedBox(height: Constants.padding);
+                    },
+                  ),
                 ),
               ),
             ),

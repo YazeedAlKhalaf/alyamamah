@@ -5,7 +5,8 @@ enum YuApiServiceExceptionType {
   invalidRequest,
   paymentRequired,
   tooManyRequests,
-  userIsGenerating
+  userIsGenerating,
+  contextLengthExceeded
 }
 
 class YuApiServiceException implements Exception {

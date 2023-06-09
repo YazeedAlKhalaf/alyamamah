@@ -19,6 +19,8 @@ extension YuApiServiceExceptionTypeExtensions on YuApiServiceExceptionType {
         return context.s.too_many_requests;
       case YuApiServiceExceptionType.userIsGenerating:
         return context.s.user_is_generating;
+      case YuApiServiceExceptionType.contextLengthExceeded:
+        return context.s.context_length_exceeded;
     }
   }
 }

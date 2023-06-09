@@ -129,5 +129,7 @@
   "restore": "Restore",
   "too_many_requests": "You have reached the limit of requests. Please try again later.",
   "gpt_4_limits_message": "GPT-4 currently has a cap of 25 messages every 3 hours.",
-  "user_is_generating": "Only one concurrent generation is allowed per user, wait for the current generation to finish."
+  "user_is_generating": "Only one concurrent generation is allowed per user, wait for the current generation to finish.",
+  "your_best_companion_for_school_work": "Your best companion for school work!",
+  "context_length_exceeded": "Your chat is too long for this model's context, start a new chat."
 }

@@ -32,7 +32,7 @@ class GptMessageItem extends StatelessWidget {
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               if (message.message.isNotEmpty)
-                Text(
+                SelectableText(
                   message.message,
                   style: Theme.of(context).textTheme.bodyLarge,
                   textDirection:

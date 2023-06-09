@@ -156,6 +156,10 @@ class YuApiService {
             throw const YuApiServiceException(
               YuApiServiceExceptionType.userIsGenerating,
             );
+          } else if (bodyMap['errorCode'] == 'context-length-exceeded') {
+            throw const YuApiServiceException(
+              YuApiServiceExceptionType.contextLengthExceeded,
+            );
           }
         }
 

@@ -59,7 +59,7 @@
   "password_is_required": "كلمة المرور مطلوبة",
   "collapse": "أغلق",
   "late_count": "عدد التأخيرات: {count}",
-  "no_absences_description": "كفو عليك، خليك كذا ولا تغيب على أي كلاس!",
+  "no_absences_description": "كفو عليك، خليك كذا ولا تغيب على أي محاضرة!",
   "course_code": "رمز المقرر",
   "room": "القاعة",
   "activity_description": "وصف النشاط",

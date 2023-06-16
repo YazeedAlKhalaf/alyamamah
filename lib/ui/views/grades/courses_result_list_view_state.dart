@@ -1,4 +1,5 @@
 import 'package:alyamamah/core/models/course_result.dart';
+import 'package:alyamamah/core/models/student_gpa.dart';
 import 'package:flutter/foundation.dart';
 
 enum CoursesResultListViewStatus {
@@ -11,20 +12,24 @@ enum CoursesResultListViewStatus {
 class CoursesResultListViewState {
   final CoursesResultListViewStatus status;
   final List<CourseResult> coursesResults;
+  final StudentGPA? studentGPA;
 
   CoursesResultListViewState({
     this.status = CoursesResultListViewStatus.unknown,
     this.coursesResults = const [],
+    this.studentGPA,
   });
 
   CoursesResultListViewState copyWith({
     CoursesResultListViewStatus? status,
     List<CourseResult>? coursesResults,
     String? selectedSemester,
+    StudentGPA? studentGPA,
   }) {
     return CoursesResultListViewState(
       status: status ?? this.status,
       coursesResults: coursesResults ?? this.coursesResults,
+      studentGPA: studentGPA ?? this.studentGPA,
     );
   }
 
@@ -33,11 +38,11 @@ class CoursesResultListViewState {
     if (identical(this, other)) return true;
 
     return other.status == status &&
-        listEquals(other.coursesResults, coursesResults);
+        listEquals(other.coursesResults, coursesResults) &&
+        other.studentGPA == studentGPA;
   }
 
   @override
-  int get hashCode {
-    return status.hashCode ^ coursesResults.hashCode;
-  }
+  int get hashCode =>
+      status.hashCode ^ coursesResults.hashCode ^ studentGPA.hashCode;
 }

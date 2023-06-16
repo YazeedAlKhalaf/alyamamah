@@ -6,6 +6,7 @@ import 'package:alyamamah/core/models/absence.dart';
 import 'package:alyamamah/core/models/actor_details.dart';
 import 'package:alyamamah/core/models/course_result.dart';
 import 'package:alyamamah/core/models/schedule.dart';
+import 'package:alyamamah/core/models/student_gpa.dart';
 import 'package:alyamamah/core/services/api/api_service_exception.dart';
 import 'package:alyamamah/core/services/api/interceptors/demo_mode_interceptor.dart';
 import 'package:alyamamah/core/services/api/interceptors/language_interceptor.dart';
@@ -318,6 +319,26 @@ class ApiService {
       if (e is ApiServiceException) rethrow;
 
       _log.severe('getCourseResults | unexpected exception: $e.');
+      throw const ApiServiceException();
+    }
+  }
+
+  Future<StudentGPA> getStudentGPA({required String semester}) async {
+    try {
+      final response = await _dio.get(
+        '/resources/student/coursesResults/getStudentGPA/$semester',
+      );
+
+      if (response.statusCode != 200) {
+        _log.severe('getStudentGPA | non 200 status code.');
+        throw const ApiServiceException();
+      }
+
+      return StudentGPA.fromMap(response.data);
+    } catch (e) {
+      if (e is ApiServiceException) rethrow;
+
+      _log.severe('getStudentGPA | unexpected exception: $e.');
       throw const ApiServiceException();
     }
   }

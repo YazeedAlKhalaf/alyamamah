@@ -39,4 +39,27 @@ class CoursesResultListViewModel
       );
     }
   }
+
+  Future<void> getStudentGPA({required String semester}) async {
+    try {
+      state = state.copyWith(
+        status: CoursesResultListViewStatus.loading,
+        studentGPA: null,
+      );
+
+      final studentGPA = await _apiService.getStudentGPA(
+        semester: semester,
+      );
+
+      state = state.copyWith(
+        status: CoursesResultListViewStatus.loaded,
+        studentGPA: studentGPA,
+      );
+    } on ApiServiceException {
+      state = state.copyWith(
+        status: CoursesResultListViewStatus.errorLoading,
+        studentGPA: null,
+      );
+    }
+  }
 }

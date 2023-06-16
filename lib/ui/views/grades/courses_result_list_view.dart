@@ -33,9 +33,10 @@ class _CoursesResultListViewState extends ConsumerState<CoursesResultListView> {
     Future(() async {
       await ref
           .read(coursesResultListViewModelProvider.notifier)
-          .getCoursesResults(
-            semester: widget.semester,
-          );
+          .getCoursesResults(semester: widget.semester);
+      await ref
+          .read(coursesResultListViewModelProvider.notifier)
+          .getStudentGPA(semester: widget.semester);
     });
   }
 
@@ -47,9 +48,10 @@ class _CoursesResultListViewState extends ConsumerState<CoursesResultListView> {
       Future(() async {
         await ref
             .read(coursesResultListViewModelProvider.notifier)
-            .getCoursesResults(
-              semester: widget.semester,
-            );
+            .getCoursesResults(semester: widget.semester);
+        await ref
+            .read(coursesResultListViewModelProvider.notifier)
+            .getStudentGPA(semester: widget.semester);
       });
     }
   }
@@ -74,9 +76,10 @@ class _CoursesResultListViewState extends ConsumerState<CoursesResultListView> {
       onRefresh: () async {
         await ref
             .read(coursesResultListViewModelProvider.notifier)
-            .getCoursesResults(
-              semester: widget.semester,
-            );
+            .getCoursesResults(semester: widget.semester);
+        await ref
+            .read(coursesResultListViewModelProvider.notifier)
+            .getStudentGPA(semester: widget.semester);
       },
       child: isErrorLoading
           ? ErrorView(
@@ -116,22 +119,29 @@ class _CoursesResultListViewState extends ConsumerState<CoursesResultListView> {
                     label: Text(context.s.choose_semester),
                   ),
                 )
-              : ListView.separated(
-                  itemCount: coursesResultListViewModel.coursesResults.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    final courseResult =
-                        coursesResultListViewModel.coursesResults[index];
+              : Column(
+                  children: [
+                    Expanded(
+                      child: ListView.separated(
+                        itemCount:
+                            coursesResultListViewModel.coursesResults.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          final courseResult =
+                              coursesResultListViewModel.coursesResults[index];
 
-                    return CourseResultListTile(
-                      index: index,
-                      courseResult: courseResult,
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return const SizedBox(
-                      height: Constants.spacing,
-                    );
-                  },
+                          return CourseResultListTile(
+                            index: index,
+                            courseResult: courseResult,
+                          );
+                        },
+                        separatorBuilder: (context, index) {
+                          return const SizedBox(
+                            height: Constants.spacing,
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 ),
     );
   }

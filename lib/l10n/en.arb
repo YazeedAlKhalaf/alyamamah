@@ -73,7 +73,7 @@
   "regular": "Regular",
   "ramadan": "Ramadan",
   "choose_semester": "Choose Semester",
-  "choose_semester_description": "This shows the current and the previous semester only. Sadly because of an API limitation I can't show all the semesters.",
+  "choose_semester_description": "This shows all the semester since you have joined the university.",
   "current": "current",
   "previous": "previous",
   "edit": "Edit",
@@ -131,5 +131,9 @@
   "gpt_4_limits_message": "GPT-4 currently has a cap of 25 messages every 3 hours.",
   "user_is_generating": "Only one concurrent generation is allowed per user, wait for the current generation to finish.",
   "your_best_companion_for_school_work": "Your best companion for school work!",
-  "context_length_exceeded": "Your chat is too long for this model's context, start a new chat."
+  "context_length_exceeded": "Your chat is too long for this model's context, start a new chat.",
+  "first_semester_year1_year2": "First Semester ({year1}/{year2})",
+  "second_semester_year1_year2": "Second Semester ({year1}/{year2})",
+  "summer_semester_year1_year2": "Summer Semester ({year1}/{year2})",
+  "this_semester_has_no_courses_yet": "This semester has no courses yet"
 }

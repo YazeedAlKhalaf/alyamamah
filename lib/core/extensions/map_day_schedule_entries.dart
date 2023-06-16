@@ -14,6 +14,10 @@ extension MapDayScheduleEntries on Map<Day, List<ScheduleEntry>> {
 
     return jsonEncode(list);
   }
+
+  bool get isAllDaysEmpty {
+    return entries.every((element) => element.value.isEmpty);
+  }
 }
 
 Map<Day, List<ScheduleEntry>> mapDayScheduleEntriesFromJson(String jsonString) {

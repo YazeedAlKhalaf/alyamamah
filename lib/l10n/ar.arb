@@ -73,7 +73,7 @@
   "regular": "عادي",
   "ramadan": "رمضان",
   "choose_semester": "اختر الفصل الدراسي",
-  "choose_semester_description": "هذا يظهر الفصل الدراسي الحالي والسابق فقط. للأسف بسبب قيود واجهة برمجة التطبيقات (API)، لا يمكنني عرض جميع الفصول الدراسية",
+  "choose_semester_description": "هنا تعرض جميع الفصول الدراسية منذ انضمامك إلى الجامعة.",
   "current": "الحالي",
   "previous": "السابق",
   "edit": "تعديل",
@@ -131,5 +131,9 @@
   "gpt_4_limits_message": "GPT-4 حاليا يحد من الرسائل إلى 25 رسالة كل 3 ساعات.",
   "user_is_generating": "يمكنك توليد رسالة واحدة فقط بالتزامن، انتظر التوليدة الأخيرة إلى أن تنتهي.",
   "your_best_companion_for_school_work": "أفضل رفيق لك للعمل المدرسي!",
-  "context_length_exceeded": "المحادثة الخاصة بك طويلة جداً بالنسبة لسياق هذا النموذج، ابدأ محادثة جديدة."
+  "context_length_exceeded": "المحادثة الخاصة بك طويلة جداً بالنسبة لسياق هذا النموذج، ابدأ محادثة جديدة.",
+  "first_semester_year1_year2": "الفصل الأول ({year1}/{year2})",
+  "second_semester_year1_year2": "الفصل الثاني ({year1}/{year2})",
+  "summer_semester_year1_year2": "الفصل الصيفي ({year1}/{year2})",
+  "this_semester_has_no_courses_yet": "لا يوجد مقررات لهذا الفصل الدراسي بعد"
 }

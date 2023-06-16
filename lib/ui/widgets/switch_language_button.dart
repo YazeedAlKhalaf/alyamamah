@@ -1,4 +1,5 @@
 import 'package:alyamamah/ui/views/profile/widgets/language_bottom_sheet.dart';
+import 'package:alyamamah/ui/widgets/yu_show.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -9,7 +10,7 @@ class SwitchLanguageButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return IconButton(
       onPressed: () async {
-        await showModalBottomSheet(
+        await YUShow.modalBottomSheet(
           context: context,
           builder: (BuildContext context) {
             return const LanguageBottomSheet();

@@ -3,6 +3,7 @@ import 'package:alyamamah/core/providers/actor_details/actor_details_notifier.da
 import 'package:alyamamah/ui/views/student_info/student_info_view_model.dart';
 import 'package:alyamamah/ui/views/student_info/update_email_bottom_sheet.dart';
 import 'package:alyamamah/ui/views/student_info/update_mobile_bottom_sheet.dart';
+import 'package:alyamamah/ui/widgets/yu_show.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -45,7 +46,7 @@ class StudentInfoView extends ConsumerWidget {
                         trailing: TextButton(
                           child: Text(context.s.edit),
                           onPressed: () async {
-                            await showModalBottomSheet(
+                            await YUShow.modalBottomSheet(
                               context: context,
                               isScrollControlled: true,
                               builder: (BuildContext context) {
@@ -65,7 +66,7 @@ class StudentInfoView extends ConsumerWidget {
                         trailing: TextButton(
                           child: Text(context.s.edit),
                           onPressed: () async {
-                            await showModalBottomSheet(
+                            await YUShow.modalBottomSheet(
                               context: context,
                               isScrollControlled: true,
                               builder: (BuildContext context) {

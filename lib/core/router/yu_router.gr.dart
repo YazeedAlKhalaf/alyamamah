@@ -59,6 +59,12 @@ abstract class _$YURouter extends RootStackRouter {
         child: const ProfileView(),
       );
     },
+    YuGptRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const YuGptView(),
+      );
+    },
     StartupRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -99,12 +105,6 @@ abstract class _$YURouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const OnboardingView(),
-      );
-    },
-    YuGptRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const YuGptView(),
       );
     },
   };
@@ -243,6 +243,20 @@ class ProfileRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [YuGptView]
+class YuGptRoute extends PageRouteInfo<void> {
+  const YuGptRoute({List<PageRouteInfo>? children})
+      : super(
+          YuGptRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'YuGptRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
 /// [StartupView]
 class StartupRoute extends PageRouteInfo<void> {
   const StartupRoute({List<PageRouteInfo>? children})
@@ -370,20 +384,6 @@ class OnboardingRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'OnboardingRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [YuGptView]
-class YuGptRoute extends PageRouteInfo<void> {
-  const YuGptRoute({List<PageRouteInfo>? children})
-      : super(
-          YuGptRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'YuGptRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

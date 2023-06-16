@@ -3,6 +3,7 @@ import 'package:alyamamah/ui/views/courses/course_details_tile.dart';
 import 'package:alyamamah/ui/views/courses/course_details_view_model.dart';
 import 'package:alyamamah/ui/views/courses/manage_link_bottom_sheet.dart';
 import 'package:alyamamah/ui/views/courses/models/schedule_entry.dart';
+import 'package:alyamamah/ui/widgets/yu_show.dart';
 import 'package:alyamamah/ui/widgets/yu_snack_bar.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -64,7 +65,7 @@ class _CourseDetailsViewState extends ConsumerState<CourseDetailsView> {
               ),
               trailing: TextButton(
                 onPressed: () async {
-                  await showModalBottomSheet(
+                  await YUShow.modalBottomSheet(
                     context: context,
                     isScrollControlled: true,
                     builder: (BuildContext context) {

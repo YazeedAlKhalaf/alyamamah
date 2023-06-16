@@ -1,7 +1,10 @@
 import 'package:alyamamah/core/extensions/build_context.dart';
+import 'package:alyamamah/core/extensions/map_day_schedule_entries.dart';
 import 'package:alyamamah/ui/views/courses/change_semester_bottom_sheet.dart';
 import 'package:alyamamah/ui/views/courses/courses_schedule.dart';
+import 'package:alyamamah/ui/views/courses/courses_schedule_empty.dart';
 import 'package:alyamamah/ui/views/courses/courses_view_model.dart';
+import 'package:alyamamah/ui/widgets/yu_show.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -53,8 +56,9 @@ class _CoursesViewState extends ConsumerState<CoursesView> {
             style: Theme.of(context).textTheme.headlineMedium,
           ),
           onPressed: () async {
-            await showModalBottomSheet(
+            await YUShow.modalBottomSheet(
               context: context,
+              isScrollControlled: true,
               builder: (BuildContext context) {
                 return const ChangeSemesterBottomSheet();
               },
@@ -79,19 +83,23 @@ class _CoursesViewState extends ConsumerState<CoursesView> {
       body: SafeArea(
         child: coursesViewModel.isBusy
             ? const Center(child: CircularProgressIndicator())
-            : CoursesSchedule(
-                scheduleDays: coursesViewModel.scheduleDays,
-                startHour: lowestStartHour,
-                cellHeight: coursesViewModel.isRamadan ? 90 : 60,
-                onCourseTap: (onCourseTap) async {
-                  await ref
-                      .read(coursesViewModelProvider)
-                      .navigateToCourseDetails(onCourseTap);
-                },
-                onRefresh: () async {
-                  await ref.read(coursesViewModelProvider).getStudentSchedule();
-                },
-              ),
+            : coursesViewModel.scheduleDays.isAllDaysEmpty
+                ? const CoursesScheduleEmpty()
+                : CoursesSchedule(
+                    scheduleDays: coursesViewModel.scheduleDays,
+                    startHour: lowestStartHour,
+                    cellHeight: coursesViewModel.isRamadan ? 90 : 60,
+                    onCourseTap: (onCourseTap) async {
+                      await ref
+                          .read(coursesViewModelProvider)
+                          .navigateToCourseDetails(onCourseTap);
+                    },
+                    onRefresh: () async {
+                      await ref
+                          .read(coursesViewModelProvider)
+                          .getStudentSchedule();
+                    },
+                  ),
       ),
     );
   }

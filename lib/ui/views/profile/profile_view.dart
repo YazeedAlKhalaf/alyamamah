@@ -8,6 +8,7 @@ import 'package:alyamamah/ui/views/profile/profile_view_model.dart';
 import 'package:alyamamah/ui/views/profile/widgets/language_bottom_sheet.dart';
 import 'package:alyamamah/ui/views/profile/widgets/theme_bottom_sheet.dart';
 import 'package:alyamamah/ui/widgets/button_loading.dart';
+import 'package:alyamamah/ui/widgets/yu_show.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -122,7 +123,7 @@ class ProfileView extends ConsumerWidget {
                 themeService.themeMode.mapToString(context),
               ),
               onTap: () async {
-                await showModalBottomSheet(
+                await YUShow.modalBottomSheet(
                   context: context,
                   builder: (BuildContext context) {
                     return const ThemeBottomSheet();
@@ -140,7 +141,7 @@ class ProfileView extends ConsumerWidget {
                 Locale(context.s.localeName).mapToString(context),
               ),
               onTap: () async {
-                await showModalBottomSheet(
+                await YUShow.modalBottomSheet(
                   context: context,
                   builder: (BuildContext context) {
                     return const LanguageBottomSheet();

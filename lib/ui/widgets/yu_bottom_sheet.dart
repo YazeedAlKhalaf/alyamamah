@@ -1,5 +1,4 @@
 import 'package:alyamamah/core/constants.dart';
-import 'package:alyamamah/ui/widgets/drag_handle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -38,7 +37,6 @@ class _YUBottomSheetState extends ConsumerState<YUBottomSheet>
       ),
       child: BottomSheet(
         onClosing: () {},
-        enableDrag: true,
         animationController: animationController,
         builder: (BuildContext context) {
           return SafeArea(
@@ -50,8 +48,6 @@ class _YUBottomSheetState extends ConsumerState<YUBottomSheet>
               mainAxisSize: MainAxisSize.min,
               children: [
                 const SizedBox(height: Constants.spacing),
-                const DragHandle(),
-                const SizedBox(height: Constants.padding),
                 if (widget.title != null) ...[
                   Text(
                     widget.title!,

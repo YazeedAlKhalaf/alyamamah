@@ -4,7 +4,6 @@ import 'package:alyamamah/ui/views/absences/absences_view_model.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 @RoutePage()
 class AbsencesView extends ConsumerStatefulWidget {
@@ -40,31 +39,35 @@ class _AbsencesViewState extends ConsumerState<AbsencesView> {
           else if (!absencesViewModel.isBusy &&
               absencesViewModel.absences.isEmpty)
             Expanded(
-              child: RefreshIndicator(
-                onRefresh: () async {
-                  await ref.read(absencesViewModelProvider).getAbsences();
-                },
-                child: ListView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  children: [
-                    const SizedBox(height: Constants.spacing * 4),
-                    SvgPicture.asset(
-                      'assets/vectors/undraw_awesome_rlvy.svg',
-                      width: 200,
-                    ),
-                    const SizedBox(height: Constants.spacing * 4),
-                    Text(
-                      context.s.no_absences,
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.headlineMedium,
-                    ),
-                    const SizedBox(height: Constants.spacing * 4),
-                    Text(
-                      context.s.no_absences_description,
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                  ],
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: Constants.padding,
+                ),
+                child: RefreshIndicator(
+                  onRefresh: () async {
+                    await ref.read(absencesViewModelProvider).getAbsences();
+                  },
+                  child: ListView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    children: [
+                      const SizedBox(height: Constants.spacing * 4),
+                      Image.asset(
+                        'assets/images/man-searching-for-something.png',
+                        height: 350,
+                      ),
+                      Text(
+                        context.s.no_absences,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.headlineMedium,
+                      ),
+                      const SizedBox(height: Constants.spacing * 4),
+                      Text(
+                        context.s.no_absences_description,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             )

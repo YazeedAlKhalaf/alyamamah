@@ -1,5 +1,6 @@
 import 'package:alyamamah/core/extensions/build_context.dart';
 import 'package:alyamamah/core/providers/actor_details/actor_details_notifier.dart';
+import 'package:alyamamah/core/utils.dart';
 import 'package:alyamamah/ui/views/student_info/student_info_view_model.dart';
 import 'package:alyamamah/ui/views/student_info/update_email_bottom_sheet.dart';
 import 'package:alyamamah/ui/views/student_info/update_mobile_bottom_sheet.dart';
@@ -97,12 +98,12 @@ class StudentInfoView extends ConsumerWidget {
                       ),
                       ListTile(
                         leading: Text(
-                          '🏢',
+                          '📚',
                           style: Theme.of(context).textTheme.headlineMedium,
                         ),
-                        title: Text(context.s.campus),
+                        title: Text(context.s.major),
                         subtitle:
-                            Text(actorDetails?.sessionInfo.campusName ?? ''),
+                            Text(actorDetails?.sessionInfo.majorName ?? ''),
                       ),
                       ListTile(
                         leading: Text(
@@ -115,12 +116,27 @@ class StudentInfoView extends ConsumerWidget {
                       ),
                       ListTile(
                         leading: Text(
-                          '📚',
+                          '🏢',
                           style: Theme.of(context).textTheme.headlineMedium,
                         ),
-                        title: Text(context.s.major),
+                        title: Text(context.s.campus),
                         subtitle:
-                            Text(actorDetails?.sessionInfo.majorName ?? ''),
+                            Text(actorDetails?.sessionInfo.campusName ?? ''),
+                      ),
+                      ListTile(
+                        leading: Text(
+                          '🌱',
+                          style: Theme.of(context).textTheme.headlineMedium,
+                        ),
+                        title: Text(context.s.join_semester),
+                        subtitle: Text(
+                          actorDetails != null
+                              ? Utils.semesterToReadable(
+                                  context,
+                                  actorDetails.sessionInfo.joinSemester,
+                                )
+                              : '',
+                        ),
                       ),
                       ListTile(
                         leading: Text(

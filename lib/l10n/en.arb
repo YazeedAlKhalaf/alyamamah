@@ -135,5 +135,6 @@
   "first_semester_year1_year2": "First Semester ({year1}/{year2})",
   "second_semester_year1_year2": "Second Semester ({year1}/{year2})",
   "summer_semester_year1_year2": "Summer Semester ({year1}/{year2})",
-  "this_semester_has_no_courses_yet": "This semester has no courses yet"
+  "this_semester_has_no_courses_yet": "This semester has no courses yet",
+  "join_semester": "Join Semester"
 }

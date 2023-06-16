@@ -135,5 +135,6 @@
   "first_semester_year1_year2": "الفصل الأول ({year1}/{year2})",
   "second_semester_year1_year2": "الفصل الثاني ({year1}/{year2})",
   "summer_semester_year1_year2": "الفصل الصيفي ({year1}/{year2})",
-  "this_semester_has_no_courses_yet": "لا يوجد مقررات لهذا الفصل الدراسي بعد"
+  "this_semester_has_no_courses_yet": "لا يوجد مقررات لهذا الفصل الدراسي بعد",
+  "join_semester": "فصل الانضمام"
 }

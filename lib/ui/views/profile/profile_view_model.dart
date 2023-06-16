@@ -50,6 +50,9 @@ class ProfileViewModel extends ChangeNotifier {
   bool _isRestoring = false;
   bool get isRestoring => _isRestoring;
 
+  CustomerInfo? _restoredCustomerInfo;
+  CustomerInfo? get restoredCustomerInfo => _restoredCustomerInfo;
+
   Future<void> navigateToStudentInfo() async {
     await _yuRouter.push(const StudentInfoRoute());
   }
@@ -96,15 +99,15 @@ class ProfileViewModel extends ChangeNotifier {
     _isRestoring = true;
     notifyListeners();
 
-    final customerInfo = await _revCatService.restore();
-    if (customerInfo == null) {
+    _restoredCustomerInfo = await _revCatService.restore();
+    if (_restoredCustomerInfo == null) {
       _log.info('restorePurchases | Couldn\'t restore purchases.');
       _isRestoring = false;
       notifyListeners();
       return;
     }
 
-    _log.info('restorePurchases | customerInfo: $customerInfo');
+    _log.info('restorePurchases | customerInfo: $_restoredCustomerInfo');
     _isRestoring = false;
     notifyListeners();
   }

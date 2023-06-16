@@ -136,5 +136,7 @@
   "second_semester_year1_year2": "Second Semester ({year1}/{year2})",
   "summer_semester_year1_year2": "Summer Semester ({year1}/{year2})",
   "this_semester_has_no_courses_yet": "This semester has no courses yet",
-  "join_semester": "Join Semester"
+  "join_semester": "Join Semester",
+  "finished_restoring_successfully": "Finished restoring successfully",
+  "something_went_wrong_restoring_try_again": "Something went wrong while restoring, please try again"
 }

@@ -9,6 +9,7 @@ import 'package:alyamamah/ui/views/profile/widgets/language_bottom_sheet.dart';
 import 'package:alyamamah/ui/views/profile/widgets/theme_bottom_sheet.dart';
 import 'package:alyamamah/ui/widgets/button_loading.dart';
 import 'package:alyamamah/ui/widgets/yu_show.dart';
+import 'package:alyamamah/ui/widgets/yu_snack_bar.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -31,6 +32,17 @@ class ProfileView extends ConsumerWidget {
           TextButton(
             onPressed: () async {
               await ref.read(profileViewModelProvider).restorePurchases();
+
+              if (context.mounted) {
+                YUSnackBar.show(
+                  context,
+                  message:
+                      ref.read(profileViewModelProvider).restoredCustomerInfo !=
+                              null
+                          ? context.s.finished_restoring_successfully
+                          : context.s.something_went_wrong_restoring_try_again,
+                );
+              }
             },
             child: profileViewModel.isRestoring
                 ? const CircularProgressIndicator()

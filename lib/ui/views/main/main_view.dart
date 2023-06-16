@@ -1,6 +1,7 @@
 import 'package:alyamamah/core/extensions/build_context.dart';
 import 'package:alyamamah/ui/views/absences/absences_view.dart';
 import 'package:alyamamah/ui/views/courses/courses_view.dart';
+import 'package:alyamamah/ui/views/grades/grades_view.dart';
 import 'package:alyamamah/ui/views/main/main_view_model.dart';
 import 'package:alyamamah/ui/views/profile/profile_view.dart';
 import 'package:auto_route/auto_route.dart';
@@ -46,6 +47,10 @@ class MainView extends ConsumerWidget {
                   label: Text(context.s.absences),
                 ),
                 NavigationRailDestination(
+                  icon: const Icon(Icons.grade_rounded),
+                  label: Text(context.s.grades),
+                ),
+                NavigationRailDestination(
                   icon: const Icon(Icons.person_rounded),
                   label: Text(context.s.profile),
                 ),
@@ -80,6 +85,7 @@ class MainView extends ConsumerWidget {
                   const [
                     CoursesView(),
                     AbsencesView(),
+                    GradesView(),
                     ProfileView(),
                   ],
             ),
@@ -102,6 +108,10 @@ class MainView extends ConsumerWidget {
                 NavigationDestination(
                   icon: const Icon(Icons.calendar_today_rounded),
                   label: context.s.absences,
+                ),
+                NavigationDestination(
+                  icon: const Icon(Icons.grade_rounded),
+                  label: context.s.grades,
                 ),
                 NavigationDestination(
                   icon: const Icon(Icons.person_rounded),

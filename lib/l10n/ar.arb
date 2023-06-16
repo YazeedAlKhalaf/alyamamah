@@ -138,5 +138,8 @@
   "this_semester_has_no_courses_yet": "لا يوجد مقررات لهذا الفصل الدراسي بعد",
   "join_semester": "فصل الانضمام",
   "finished_restoring_successfully": "تمت الاستعادة بنجاح",
-  "something_went_wrong_restoring_try_again": "حدث خطأ أثناء الاستعادة، حاول مرة أخرى"
+  "something_went_wrong_restoring_try_again": "حدث خطأ أثناء الاستعادة، حاول مرة أخرى",
+  "grades": "الدرجات",
+  "the_grades_of_this_semester_are_not_available_yet": "درجات هذا الفصل الدراسي غير متوفرة بعد",
+  "something_went_wrong_fetching_grades_for_this_semester": "حدث خطأ أثناء جلب الدرجات لهذا الفصل الدراسي"
 }

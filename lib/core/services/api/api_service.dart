@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:alyamamah/core/constants.dart';
 import 'package:alyamamah/core/models/absence.dart';
 import 'package:alyamamah/core/models/actor_details.dart';
+import 'package:alyamamah/core/models/course_result.dart';
 import 'package:alyamamah/core/models/schedule.dart';
 import 'package:alyamamah/core/services/api/api_service_exception.dart';
 import 'package:alyamamah/core/services/api/interceptors/demo_mode_interceptor.dart';
@@ -293,6 +294,30 @@ class ApiService {
       if (e is ApiServiceException) rethrow;
 
       _log.severe('changeLanguage | unexpected exception: $e.');
+      throw const ApiServiceException();
+    }
+  }
+
+  Future<List<CourseResult>> getCoursesResults({
+    required String semester,
+  }) async {
+    try {
+      final response = await _dio.get(
+        '/resources/student/coursesResults/getCoursesResults/$semester',
+      );
+
+      if (response.statusCode != 200) {
+        _log.severe('getCourseResults | non 200 status code.');
+        throw const ApiServiceException();
+      }
+
+      return (response.data as List<dynamic>)
+          .map((x) => CourseResult.fromMap(x))
+          .toList();
+    } catch (e) {
+      if (e is ApiServiceException) rethrow;
+
+      _log.severe('getCourseResults | unexpected exception: $e.');
       throw const ApiServiceException();
     }
   }

@@ -1,9 +1,10 @@
 import 'package:alyamamah/core/extensions/build_context.dart';
 import 'package:alyamamah/core/extensions/map_day_schedule_entries.dart';
-import 'package:alyamamah/ui/views/courses/change_semester_bottom_sheet.dart';
+import 'package:alyamamah/core/utils.dart';
 import 'package:alyamamah/ui/views/courses/courses_schedule.dart';
-import 'package:alyamamah/ui/views/courses/courses_schedule_empty.dart';
 import 'package:alyamamah/ui/views/courses/courses_view_model.dart';
+import 'package:alyamamah/ui/widgets/change_semester_bottom_sheet.dart';
+import 'package:alyamamah/ui/widgets/empty_view.dart';
 import 'package:alyamamah/ui/widgets/yu_show.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -60,7 +61,12 @@ class _CoursesViewState extends ConsumerState<CoursesView> {
               context: context,
               isScrollControlled: true,
               builder: (BuildContext context) {
-                return const ChangeSemesterBottomSheet();
+                return ChangeSemesterBottomSheet(
+                  selectedSemester: coursesViewModel.selectedSemester,
+                  onSemesterChanged: (String semester) async {
+                    ref.read(coursesViewModelProvider).changeSemester(semester);
+                  },
+                );
               },
             );
           },
@@ -84,7 +90,37 @@ class _CoursesViewState extends ConsumerState<CoursesView> {
         child: coursesViewModel.isBusy
             ? const Center(child: CircularProgressIndicator())
             : coursesViewModel.scheduleDays.isAllDaysEmpty
-                ? const CoursesScheduleEmpty()
+                ? EmptyView(
+                    title: context.s.this_semester_has_no_courses_yet,
+                    subtitle: Utils.semesterToReadable(
+                      context,
+                      coursesViewModel.selectedSemester,
+                    ),
+                    action: FilledButton.icon(
+                      onPressed: () async {
+                        await YUShow.modalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (BuildContext context) {
+                            return ChangeSemesterBottomSheet(
+                              selectedSemester:
+                                  coursesViewModel.selectedSemester,
+                              onSemesterChanged: (String semester) async {
+                                ref
+                                    .read(coursesViewModelProvider)
+                                    .changeSemester(semester);
+                              },
+                            );
+                          },
+                        );
+                      },
+                      icon: const Icon(Icons.book_rounded),
+                      label: Text(context.s.choose_semester),
+                    ),
+                    onRefresh: () async {
+                      await coursesViewModel.getStudentSchedule();
+                    },
+                  )
                 : CoursesSchedule(
                     scheduleDays: coursesViewModel.scheduleDays,
                     startHour: lowestStartHour,

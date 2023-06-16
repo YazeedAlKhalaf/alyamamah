@@ -72,4 +72,44 @@ class Utils {
 
     return readableSemester;
   }
+
+  static Color? colorFromGrade(BuildContext context, String grade) {
+    final theme = Theme.of(context);
+    final bool isDarkMode = theme.brightness == Brightness.dark;
+
+    switch (grade) {
+      case 'A+':
+      case 'أ+':
+        return isDarkMode ? Colors.green[200] : Colors.green[800];
+      case 'A':
+      case 'أ':
+        return isDarkMode ? Colors.green[300] : Colors.green;
+      case 'B+':
+      case 'ب+':
+        return isDarkMode ? Colors.blue[300] : Colors.blue[700];
+      case 'B':
+      case 'ب':
+        return isDarkMode ? Colors.blue[400] : Colors.blue;
+      case 'C+':
+      case 'ج+':
+        return isDarkMode ? Colors.yellow[300] : Colors.yellow[700];
+      case 'C':
+      case 'ج':
+        return isDarkMode ? Colors.yellow[400] : Colors.yellow;
+      case 'D+':
+      case 'د+':
+        return isDarkMode ? Colors.orange[300] : Colors.orange[700];
+      case 'D':
+      case 'د':
+        return isDarkMode ? Colors.orange[400] : Colors.orange;
+      case 'F':
+      case 'هـ':
+      case 'W':
+      case 'IC':
+      case 'WA':
+        return isDarkMode ? Colors.red[300] : Colors.red;
+      default:
+        return null;
+    }
+  }
 }

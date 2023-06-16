@@ -138,5 +138,8 @@
   "this_semester_has_no_courses_yet": "This semester has no courses yet",
   "join_semester": "Join Semester",
   "finished_restoring_successfully": "Finished restoring successfully",
-  "something_went_wrong_restoring_try_again": "Something went wrong while restoring, please try again"
+  "something_went_wrong_restoring_try_again": "Something went wrong while restoring, please try again",
+  "grades": "Grades",
+  "the_grades_of_this_semester_are_not_available_yet": "The grades of this semester are not available yet",
+  "something_went_wrong_fetching_grades_for_this_semester": "Something went wrong while fetching grades for this semester"
 }

@@ -1,6 +1,7 @@
 import 'package:alyamamah/core/constants.dart';
 import 'package:alyamamah/core/extensions/build_context.dart';
 import 'package:alyamamah/ui/views/absences/absences_view_model.dart';
+import 'package:alyamamah/ui/widgets/empty_view.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -39,36 +40,12 @@ class _AbsencesViewState extends ConsumerState<AbsencesView> {
           else if (!absencesViewModel.isBusy &&
               absencesViewModel.absences.isEmpty)
             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: Constants.padding,
-                ),
-                child: RefreshIndicator(
-                  onRefresh: () async {
-                    await ref.read(absencesViewModelProvider).getAbsences();
-                  },
-                  child: ListView(
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    children: [
-                      const SizedBox(height: Constants.spacing * 4),
-                      Image.asset(
-                        'assets/images/man-searching-for-something.png',
-                        height: 350,
-                      ),
-                      Text(
-                        context.s.no_absences,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.headlineMedium,
-                      ),
-                      const SizedBox(height: Constants.spacing * 4),
-                      Text(
-                        context.s.no_absences_description,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      ),
-                    ],
-                  ),
-                ),
+              child: EmptyView(
+                title: context.s.no_absences,
+                subtitle: context.s.no_absences_description,
+                onRefresh: () async {
+                  await ref.read(absencesViewModelProvider).getAbsences();
+                },
               ),
             )
           else

@@ -1,18 +1,27 @@
 import 'package:alyamamah/core/extensions/build_context.dart';
 import 'package:alyamamah/core/providers/actor_details/actor_details_notifier.dart';
 import 'package:alyamamah/core/utils.dart';
-import 'package:alyamamah/ui/views/courses/courses_view_model.dart';
 import 'package:alyamamah/ui/widgets/yu_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ChangeSemesterBottomSheet extends ConsumerWidget {
-  const ChangeSemesterBottomSheet({super.key});
+  final String selectedSemester;
+
+  /// If you want the sheet to close instantly after the selects a semester,
+  /// dont await for stuff to finish because the close method runs after your
+  /// code runs.
+  final Future<void> Function(String semester) onSemesterChanged;
+
+  const ChangeSemesterBottomSheet({
+    super.key,
+    required this.selectedSemester,
+    required this.onSemesterChanged,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final actorDetails = ref.watch(actorDetailsProvider);
-    final coursesViewModel = ref.watch(coursesViewModelProvider);
 
     final semesters = actorDetails != null
         ? Utils.generateSemesterRange(
@@ -43,14 +52,14 @@ class ChangeSemesterBottomSheet extends ConsumerWidget {
                 subtitle: Text(
                   isFirst ? context.s.current : context.s.previous,
                 ),
-                trailing: coursesViewModel.selectedSemester == semester
+                trailing: selectedSemester == semester
                     ? Text(
                         '✅',
                         style: Theme.of(context).textTheme.bodyLarge,
                       )
                     : null,
                 onTap: () async {
-                  coursesViewModel.changeSemester(semester);
+                  await onSemesterChanged(semester);
 
                   if (context.mounted) {
                     Navigator.pop(context);

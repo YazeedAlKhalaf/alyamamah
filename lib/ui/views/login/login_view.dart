@@ -7,6 +7,7 @@ import 'package:alyamamah/ui/widgets/button_loading.dart';
 import 'package:alyamamah/ui/widgets/switch_language_button.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 @RoutePage()
@@ -44,7 +45,18 @@ class _LoginViewState extends ConsumerState<LoginView> {
                 Image.asset(
                   'assets/images/3d-flame-work-place-with-laptop-on-the-table-and-presentation-board-on-the-wall.png',
                   height: 250,
-                ),
+                )
+                    .animate(
+                      onComplete: (controller) => controller.loop(
+                        reverse: true,
+                      ),
+                    )
+                    .scale(
+                      duration: 3.seconds,
+                      begin: const Offset(0.9, 0.9),
+                      end: const Offset(1.1, 1.1),
+                      curve: Curves.easeInOut,
+                    ),
                 Form(
                   key: loginForm,
                   autovalidateMode: loginViewModel.autoValidateMode,

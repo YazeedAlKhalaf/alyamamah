@@ -4,6 +4,7 @@ import 'package:alyamamah/ui/views/onboarding/onboarding_view_model.dart';
 import 'package:alyamamah/ui/widgets/switch_language_button.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 @RoutePage()
@@ -39,8 +40,19 @@ class OnboardingView extends ConsumerWidget {
               Expanded(
                 flex: 20,
                 child: Image.asset(
-                  'assets/images/3d-business-man-and-woman-working-at-the-table.png',
-                ),
+                  'assets/images/man-and-woman-waving-saudi-clothing.png',
+                )
+                    .animate(
+                      onComplete: (controller) => controller.loop(
+                        reverse: true,
+                      ),
+                    )
+                    .scale(
+                      duration: 3.seconds,
+                      begin: const Offset(0.9, 0.9),
+                      end: const Offset(1.1, 1.1),
+                      curve: Curves.easeInOut,
+                    ),
               ),
               const Spacer(),
               FilledButton.tonal(

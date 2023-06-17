@@ -56,8 +56,9 @@ class CurrentHourLine extends StatelessWidget {
     ];
 
     return Positioned(
-      top: -offset +
-          (((now.hour - startHour) * 60) + now.minute) * cellHeight / 60,
+      top: (-offset +
+              (((now.hour - startHour) * 60) + now.minute) * cellHeight / 60) -
+          (12 * cellHeight / 60),
       left: 0,
       right: 0,
       child: Row(

@@ -1,5 +1,6 @@
 import 'package:alyamamah/core/extensions/locale.dart';
 import 'package:alyamamah/core/providers/actor_details/actor_details_notifier.dart';
+import 'package:alyamamah/core/providers/feature_flags/feature_flags_state_notifier.dart';
 import 'package:alyamamah/core/router/yu_router.dart';
 import 'package:alyamamah/core/services/api/api_service.dart';
 import 'package:alyamamah/core/services/api/api_service_exception.dart';
@@ -22,6 +23,8 @@ final loginViewModelProvider = ChangeNotifierProvider(
       revCatService: ref.read(revCatServiceProvider),
       yuApiService: ref.read(yuApiServiceProvider),
       firebaseMessagingService: ref.read(firebaseMessagingServiceProvider),
+      featureFlagsStateNotifier:
+          ref.read(featureFlagsStateNotifierProvider.notifier),
     );
   },
 );
@@ -36,6 +39,7 @@ class LoginViewModel extends ChangeNotifier {
   final RevCatService _revCatService;
   final YuApiService _yuApiService;
   final FirebaseMessagingService _firebaseMessagingService;
+  final FeatureFlagsStateNotifier _featureFlagsStateNotifier;
 
   LoginViewModel({
     required ApiService apiService,
@@ -45,13 +49,15 @@ class LoginViewModel extends ChangeNotifier {
     required RevCatService revCatService,
     required YuApiService yuApiService,
     required FirebaseMessagingService firebaseMessagingService,
+    required FeatureFlagsStateNotifier featureFlagsStateNotifier,
   })  : _apiService = apiService,
         _sharedPrefsService = sharedPrefsService,
         _yuRouter = yuRouter,
         _actorDetailsNotifier = actorDetailsNotifier,
         _revCatService = revCatService,
         _yuApiService = yuApiService,
-        _firebaseMessagingService = firebaseMessagingService;
+        _firebaseMessagingService = firebaseMessagingService,
+        _featureFlagsStateNotifier = featureFlagsStateNotifier;
 
   AutovalidateMode _autoValidateMode = AutovalidateMode.disabled;
   AutovalidateMode get autoValidateMode => _autoValidateMode;
@@ -140,6 +146,8 @@ class LoginViewModel extends ChangeNotifier {
       await _sharedPrefsService.saveAccessToken(
         accessToken: accessToken,
       );
+
+      await _featureFlagsStateNotifier.init(userId: username);
 
       await _yuRouter.pushAndPopUntil(
         MainRoute(),

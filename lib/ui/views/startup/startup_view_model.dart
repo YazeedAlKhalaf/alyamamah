@@ -1,6 +1,7 @@
 import 'package:alyamamah/core/extensions/locale.dart';
 import 'package:alyamamah/core/extensions/string.dart';
 import 'package:alyamamah/core/providers/actor_details/actor_details_notifier.dart';
+import 'package:alyamamah/core/providers/feature_flags/feature_flags_state_notifier.dart';
 import 'package:alyamamah/core/router/yu_router.dart';
 import 'package:alyamamah/core/services/api/api_service.dart';
 import 'package:alyamamah/core/services/api/api_service_exception.dart';
@@ -24,6 +25,8 @@ final startupViewModelProvider = ChangeNotifierProvider.autoDispose(
     yuApiService: ref.read(yuApiServiceProvider),
     connectivityService: ref.read(connectivityServiceProvider.notifier),
     firebaseMessagingService: ref.read(firebaseMessagingServiceProvider),
+    featureFlagsStateNotifier:
+        ref.read(featureFlagsStateNotifierProvider.notifier),
   ),
 );
 
@@ -38,6 +41,7 @@ class StartupViewModel extends ChangeNotifier {
   final YuApiService _yuApiService;
   final ConnectivityService _connectivityService;
   final FirebaseMessagingService _firebaseMessagingService;
+  final FeatureFlagsStateNotifier _featureFlagsStateNotifier;
 
   StartupViewModel({
     required ApiService apiService,
@@ -48,6 +52,7 @@ class StartupViewModel extends ChangeNotifier {
     required YuApiService yuApiService,
     required ConnectivityService connectivityService,
     required FirebaseMessagingService firebaseMessagingService,
+    required FeatureFlagsStateNotifier featureFlagsStateNotifier,
   })  : _apiService = apiService,
         _sharedPrefsService = sharedPrefsService,
         _yuRouter = yuRouter,
@@ -55,7 +60,8 @@ class StartupViewModel extends ChangeNotifier {
         _revCatService = revCatService,
         _yuApiService = yuApiService,
         _connectivityService = connectivityService,
-        _firebaseMessagingService = firebaseMessagingService;
+        _firebaseMessagingService = firebaseMessagingService,
+        _featureFlagsStateNotifier = featureFlagsStateNotifier;
 
   Future<void> handleStartup() async {
     // This is a hack, for some reason if the screen does not appear it breaks the app.
@@ -112,6 +118,8 @@ class StartupViewModel extends ChangeNotifier {
           );
           await _sharedPrefsService.saveAccessToken(accessToken: accessToken);
         }
+
+        await _featureFlagsStateNotifier.init(userId: username);
 
         _log.fine(
           'handleStartup | succeeded in logging in, going to main route.',

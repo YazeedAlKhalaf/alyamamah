@@ -30,4 +30,10 @@ class Constants {
   static const String defaultOfferingId = 'default';
   static const String alyamamahGPTProductId =
       'dev.alkhalaf.alyamamah.alyamamahGPT';
+
+  static const String unleashUrl =
+      'https://unleash-yu.alkhalaf.dev/api/frontend';
+  static const String unleashClientKey =
+      'default:production.04c7ab3b41adbb4b40ebf156b01a1c5c7d10e11dc572096349a9b41f';
+  static const String unleashAppName = 'alyamamah-app';
 }

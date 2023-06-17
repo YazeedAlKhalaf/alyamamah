@@ -1,4 +1,5 @@
 import 'package:alyamamah/core/providers/actor_details/actor_details_notifier.dart';
+import 'package:alyamamah/core/providers/feature_flags/feature_flags_state_notifier.dart';
 import 'package:alyamamah/core/router/yu_router.dart';
 import 'package:alyamamah/core/services/api/api_service.dart';
 import 'package:alyamamah/core/services/rev_cat/rev_cat_service.dart';
@@ -17,6 +18,8 @@ final profileViewModelProvider = ChangeNotifierProvider(
     apiService: ref.read(apiServiceProvider),
     widgetKitService: ref.read(widgetKitSerivceProvider),
     revCatService: ref.read(revCatServiceProvider),
+    featureFlagsStateNotifier:
+        ref.read(featureFlagsStateNotifierProvider.notifier),
   ),
 );
 
@@ -29,6 +32,7 @@ class ProfileViewModel extends ChangeNotifier {
   final ApiService _apiService;
   final WidgetKitService _widgetKitService;
   final RevCatService _revCatService;
+  final FeatureFlagsStateNotifier _featureFlagsStateNotifier;
 
   ProfileViewModel({
     required YURouter yuRouter,
@@ -37,12 +41,14 @@ class ProfileViewModel extends ChangeNotifier {
     required ApiService apiService,
     required WidgetKitService widgetKitService,
     required RevCatService revCatService,
+    required FeatureFlagsStateNotifier featureFlagsStateNotifier,
   })  : _yuRouter = yuRouter,
         _sharedPrefsService = sharedPrefsService,
         _actorDetailsNotifier = actorDetailsNotifier,
         _apiService = apiService,
         _widgetKitService = widgetKitService,
-        _revCatService = revCatService;
+        _revCatService = revCatService,
+        _featureFlagsStateNotifier = featureFlagsStateNotifier;
 
   bool _isBusy = false;
   bool get isBusy => _isBusy;
@@ -80,11 +86,16 @@ class ProfileViewModel extends ChangeNotifier {
     _isBusy = true;
     notifyListeners();
 
-    await _sharedPrefsService.deleteEverything();
     await _apiService.logout();
     _actorDetailsNotifier.setActorDetails(null);
 
     await _widgetKitService.deleteCoursesWidgetData();
+
+    await _featureFlagsStateNotifier.resetState();
+
+    // Keep this at the end so the ui data doesn't disappear for too long if
+    // the calls above take a while.
+    await _sharedPrefsService.deleteEverything();
 
     await _yuRouter.pushAndPopUntil(
       const LoginRoute(),

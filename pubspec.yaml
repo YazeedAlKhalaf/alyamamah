@@ -34,6 +34,7 @@ dependencies:
   sentry_dio: 7.6.3
   purchases_flutter: 4.12.0
   flutter_animate: 4.1.1+1
+  unleash_proxy_client_flutter: 1.2.1
   
 
 dev_dependencies:

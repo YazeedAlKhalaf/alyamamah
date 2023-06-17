@@ -3,6 +3,7 @@ import 'package:alyamamah/core/extensions/build_context.dart';
 import 'package:alyamamah/core/extensions/locale.dart';
 import 'package:alyamamah/core/extensions/theme_mode.dart';
 import 'package:alyamamah/core/providers/actor_details/actor_details_notifier.dart';
+import 'package:alyamamah/core/providers/feature_flags/feature_flags_state_notifier.dart';
 import 'package:alyamamah/core/services/theme/theme_service.dart';
 import 'package:alyamamah/ui/views/profile/profile_view_model.dart';
 import 'package:alyamamah/ui/views/profile/widgets/language_bottom_sheet.dart';
@@ -24,6 +25,7 @@ class ProfileView extends ConsumerWidget {
     final profileViewModel = ref.watch(profileViewModelProvider);
     final themeService = ref.watch(themeServiceProvider);
     final actorDetails = ref.watch(actorDetailsProvider);
+    final featureFlagsState = ref.watch(featureFlagsStateNotifierProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -80,40 +82,43 @@ class ProfileView extends ConsumerWidget {
                     .navigateToStudentInfo();
               },
             ),
-            ListTile(
-              leading: const CircleAvatar(
-                child: Icon(Icons.smart_toy_rounded),
-              ),
-              title: Text(
-                context.s.ask_alyamamah_gpt,
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              subtitle: Row(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(Constants.spacing),
-                      color: Theme.of(context).colorScheme.tertiary,
+            if (featureFlagsState.isAlyamamahGptEnabled)
+              ListTile(
+                leading: const CircleAvatar(
+                  child: Icon(Icons.smart_toy_rounded),
+                ),
+                title: Text(
+                  context.s.ask_alyamamah_gpt,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                subtitle: Row(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(Constants.spacing),
+                        color: Theme.of(context).colorScheme.tertiary,
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: Constants.padding / 2,
+                        vertical: 0,
+                      ),
+                      child: Text(
+                        context.s.new_word,
+                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                              color: Theme.of(context).colorScheme.onTertiary,
+                            ),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: Constants.padding / 2,
-                      vertical: 0,
-                    ),
-                    child: Text(
-                      context.s.new_word,
-                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                            color: Theme.of(context).colorScheme.onTertiary,
-                          ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ],
+                  ],
+                ),
+                trailing: const Icon(Icons.chevron_right_rounded),
+                onTap: () async {
+                  await ref
+                      .read(profileViewModelProvider)
+                      .navigateToYuGptView();
+                },
               ),
-              trailing: const Icon(Icons.chevron_right_rounded),
-              onTap: () async {
-                await ref.read(profileViewModelProvider).navigateToYuGptView();
-              },
-            ),
             const SizedBox(height: Constants.padding),
             Padding(
               padding: const EdgeInsets.symmetric(

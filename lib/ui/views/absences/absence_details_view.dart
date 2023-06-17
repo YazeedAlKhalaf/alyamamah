@@ -1,5 +1,7 @@
+import 'package:alyamamah/core/constants.dart';
 import 'package:alyamamah/core/extensions/build_context.dart';
 import 'package:alyamamah/core/models/absence.dart';
+import 'package:alyamamah/ui/views/absences/absence_details_list_tile.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
@@ -21,44 +23,14 @@ class AbsenceDetailsView extends StatelessWidget {
       body: ListView.separated(
         itemCount: absence.details.length,
         itemBuilder: (BuildContext context, int index) {
-          final details = absence.details[index];
+          final absenceDetails = absence.details[index];
 
-          return ListTile(
-            leading: Text(
-              details.section,
-              style: Theme.of(context).textTheme.displaySmall,
-            ),
-            title: Text(details.activity),
-            subtitle: Text('${details.date}\n${details.day}'),
-            isThreeLine: true,
-            trailing: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Checkbox(value: details.isExcused, onChanged: (_) {}),
-                      Text(context.s.excused),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Checkbox(value: details.late, onChanged: (_) {}),
-                      Text(context.s.late),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          );
+          return AbsenceDetailsListTile(absenceDetails: absenceDetails);
         },
-        separatorBuilder: (BuildContext context, int index) {
-          return const Divider();
+        separatorBuilder: (context, index) {
+          return const SizedBox(
+            height: Constants.spacing,
+          );
         },
       ),
     );

@@ -130,7 +130,6 @@ class _CoursesResultListViewState extends ConsumerState<CoursesResultListView> {
                               coursesResultListViewModel.coursesResults[index];
 
                           return CourseResultListTile(
-                            index: index,
                             courseResult: courseResult,
                           );
                         },

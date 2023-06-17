@@ -87,7 +87,7 @@ class ProfileViewModel extends ChangeNotifier {
     notifyListeners();
 
     await _apiService.logout();
-    _actorDetailsNotifier.setActorDetails(null);
+    await _sharedPrefsService.deleteEverything();
 
     await _widgetKitService.deleteCoursesWidgetData();
 
@@ -95,7 +95,7 @@ class ProfileViewModel extends ChangeNotifier {
 
     // Keep this at the end so the ui data doesn't disappear for too long if
     // the calls above take a while.
-    await _sharedPrefsService.deleteEverything();
+    _actorDetailsNotifier.setActorDetails(null);
 
     await _yuRouter.pushAndPopUntil(
       const LoginRoute(),

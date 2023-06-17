@@ -6,11 +6,9 @@ import 'package:flutter/material.dart';
 class CourseResultListTile extends StatelessWidget {
   const CourseResultListTile({
     super.key,
-    required this.index,
     required this.courseResult,
   });
 
-  final int index;
   final CourseResult courseResult;
 
   @override

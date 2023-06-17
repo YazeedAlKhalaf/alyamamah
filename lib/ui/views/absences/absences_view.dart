@@ -1,5 +1,6 @@
 import 'package:alyamamah/core/constants.dart';
 import 'package:alyamamah/core/extensions/build_context.dart';
+import 'package:alyamamah/ui/views/absences/absence_list_tile.dart';
 import 'package:alyamamah/ui/views/absences/absences_view_model.dart';
 import 'package:alyamamah/ui/widgets/empty_view.dart';
 import 'package:auto_route/auto_route.dart';
@@ -55,53 +56,17 @@ class _AbsencesViewState extends ConsumerState<AbsencesView> {
                 onRefresh: () async {
                   await ref.read(absencesViewModelProvider).getAbsences();
                 },
-                child: ListView.builder(
+                child: ListView.separated(
                   physics: const AlwaysScrollableScrollPhysics(),
                   itemCount: absencesViewModel.absences.length,
                   itemBuilder: (BuildContext context, int index) {
                     final absence = absencesViewModel.absences[index];
 
-                    final percentage = double.tryParse(
-                          absence.totalAbsencePercent,
-                        ) ??
-                        0;
-
-                    return ListTile(
-                      leading: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox.square(
-                            dimension: 25,
-                            child: CircularProgressIndicator(
-                              value: percentage / 20,
-                              backgroundColor: Theme.of(context)
-                                  .colorScheme
-                                  .primary
-                                  .withOpacity(0.3),
-                            ),
-                          ),
-                          const SizedBox(height: Constants.spacing),
-                          Text(
-                            '${absence.totalAbsencePercent}%',
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
-                      title: Text(absence.courseName),
-                      isThreeLine: true,
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(context.s.absences_count(absence.countAbsence)),
-                          Text(context.s.late_count(absence.countLate)),
-                        ],
-                      ),
-                      trailing: const Icon(Icons.chevron_right_rounded),
-                      onTap: () async {
-                        await ref
-                            .read(absencesViewModelProvider)
-                            .navigateToAbsenceDetails(absence);
-                      },
+                    return AbsenceListTile(absence: absence);
+                  },
+                  separatorBuilder: (context, index) {
+                    return const SizedBox(
+                      height: Constants.spacing,
                     );
                   },
                 ),

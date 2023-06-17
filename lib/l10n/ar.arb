@@ -143,5 +143,6 @@
   "the_grades_of_this_semester_are_not_available_yet": "درجات هذا الفصل الدراسي غير متوفرة بعد",
   "something_went_wrong_fetching_grades_for_this_semester": "حدث خطأ أثناء جلب الدرجات لهذا الفصل الدراسي",
   "semester_gpa": "معدل الفصل",
-  "cumulative_gpa": "المعدل التراكمي"
+  "cumulative_gpa": "المعدل التراكمي",
+  "no_student_gpa_returned": "معدل الطالب لم يرجع"
 }

@@ -83,7 +83,7 @@ class YuApiService {
 
       _log.severe('login | something weird went wrong.');
       throw const YuApiServiceException();
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       _log.severe('login | dio error: $e.');
 
       if (e.response?.statusCode == 401) {
@@ -135,7 +135,7 @@ class YuApiService {
       }
 
       throw const YuApiServiceException();
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       final body = e.response?.data as ResponseBody?;
 
       if (e.response?.statusCode == 401) {

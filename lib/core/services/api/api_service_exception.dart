@@ -2,6 +2,7 @@ enum ApiServiceExceptionType {
   unknown,
   invalidCredentials,
   sessionExpired,
+  noStudentGpaReturned,
 }
 
 class ApiServiceException implements Exception {

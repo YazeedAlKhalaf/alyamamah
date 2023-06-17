@@ -143,5 +143,6 @@
   "the_grades_of_this_semester_are_not_available_yet": "The grades of this semester are not available yet",
   "something_went_wrong_fetching_grades_for_this_semester": "Something went wrong while fetching grades for this semester",
   "semester_gpa": "Semester GPA",
-  "cumulative_gpa": "Cumulative GPA"
+  "cumulative_gpa": "Cumulative GPA",
+  "no_student_gpa_returned": "No student GPA returned"
 }

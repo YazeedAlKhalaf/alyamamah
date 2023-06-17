@@ -11,6 +11,8 @@ extension ApiServiceExceptionTypeX on ApiServiceExceptionType {
         return context.s.invalid_credentials;
       case ApiServiceExceptionType.sessionExpired:
         return context.s.session_expired;
+      case ApiServiceExceptionType.noStudentGpaReturned:
+        return context.s.no_student_gpa_returned;
     }
   }
 }

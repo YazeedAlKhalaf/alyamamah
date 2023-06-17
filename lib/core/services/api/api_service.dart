@@ -26,11 +26,12 @@ final apiServiceProvider = Provider(
     final dio = Dio();
 
     if (!kIsWeb && Platform.isAndroid) {
-      (dio.httpClientAdapter as IOHttpClientAdapter).onHttpClientCreate =
-          (HttpClient client) {
+      (dio.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {
+        final client = HttpClient();
         client.badCertificateCallback =
             (X509Certificate cert, String host, int port) => true;
-        return null;
+
+        return client;
       };
     }
 
@@ -77,15 +78,8 @@ class ApiService {
         _sessionExpiredInterceptor = sessionExpiredInterceptor,
         _languageInterceptor = languageInterceptor {
     _dio.options = BaseOptions(
-      baseUrl: kIsWeb
-          ? 'https://proxy.cors.sh/${Constants.apiUrl}'
-          : Constants.apiUrl,
+      baseUrl: Constants.apiUrl,
       responseType: ResponseType.json,
-      headers: kIsWeb
-          ? {
-              'x-cors-api-key': 'temp_d89d9390b3c2b8bc2757f3a06529d842',
-            }
-          : null,
     );
 
     /// This interceptor has an activation path and activation credentials,
@@ -332,6 +326,14 @@ class ApiService {
       if (response.statusCode != 200) {
         _log.severe('getStudentGPA | non 200 status code.');
         throw const ApiServiceException();
+      }
+
+      if (response.data['semesterGPA'] == null ||
+          response.data['cumGPA'] == null) {
+        _log.severe('getStudentGPA | semesterGPA or cumGPA is null.');
+        throw const ApiServiceException(
+          ApiServiceExceptionType.noStudentGpaReturned,
+        );
       }
 
       return StudentGPA.fromMap(response.data);

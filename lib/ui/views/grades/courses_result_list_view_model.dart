@@ -55,7 +55,15 @@ class CoursesResultListViewModel
         status: CoursesResultListViewStatus.loaded,
         studentGPA: studentGPA,
       );
-    } on ApiServiceException {
+    } on ApiServiceException catch (e) {
+      if (e.type == ApiServiceExceptionType.noStudentGpaReturned) {
+        state = state.copyWith(
+          status: CoursesResultListViewStatus.loaded,
+          studentGPA: null,
+        );
+        return;
+      }
+
       state = state.copyWith(
         status: CoursesResultListViewStatus.errorLoading,
         studentGPA: null,

@@ -1,13 +1,15 @@
 import 'dart:io' show Platform;
 
 import 'package:alyamamah/core/constants.dart';
+import 'package:alyamamah/core/services/rev_cat/rev_cat_web_service.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logging/logging.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 final revCatServiceProvider = Provider((ref) {
-  return RevCatService();
+  return kIsWeb ? RevCatWebService() : RevCatService();
 });
 
 class RevCatService {

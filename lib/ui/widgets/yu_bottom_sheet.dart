@@ -6,12 +6,14 @@ class YUBottomSheet extends ConsumerStatefulWidget {
   final String? title;
   final String? description;
   final List<Widget> children;
+  final bool areChildrenExpanded;
 
   const YUBottomSheet({
     super.key,
     this.title,
     this.description,
     required this.children,
+    this.areChildrenExpanded = false,
   });
 
   @override
@@ -31,6 +33,22 @@ class _YUBottomSheetState extends ConsumerState<YUBottomSheet>
 
   @override
   Widget build(BuildContext context) {
+    final result = Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: Constants.padding * 1.5,
+      ),
+      child: Material(
+        clipBehavior: Clip.hardEdge,
+        color: Theme.of(context).colorScheme.secondaryContainer,
+        borderRadius: BorderRadius.circular(Constants.padding),
+        child: Column(
+          children: [
+            ...widget.children,
+          ],
+        ),
+      ),
+    );
+
     return Padding(
       padding: EdgeInsets.only(
         bottom: MediaQuery.of(context).viewInsets.bottom,
@@ -47,7 +65,6 @@ class _YUBottomSheetState extends ConsumerState<YUBottomSheet>
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const SizedBox(height: Constants.spacing),
                 if (widget.title != null) ...[
                   Text(
                     widget.title!,
@@ -60,7 +77,7 @@ class _YUBottomSheetState extends ConsumerState<YUBottomSheet>
                     padding: const EdgeInsets.only(
                       left: Constants.padding,
                       right: Constants.padding,
-                      bottom: Constants.spacing,
+                      bottom: Constants.padding,
                     ),
                     child: Text(
                       widget.description!,
@@ -71,7 +88,10 @@ class _YUBottomSheetState extends ConsumerState<YUBottomSheet>
                     ),
                   ),
                 ],
-                ...widget.children,
+                if (widget.areChildrenExpanded)
+                  Expanded(child: result)
+                else
+                  result
               ],
             ),
           );

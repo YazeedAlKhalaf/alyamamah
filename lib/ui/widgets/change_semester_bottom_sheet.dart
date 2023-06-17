@@ -33,6 +33,7 @@ class ChangeSemesterBottomSheet extends ConsumerWidget {
     return YUBottomSheet(
       title: context.s.choose_semester,
       description: context.s.choose_semester_description,
+      areChildrenExpanded: true,
       children: [
         Expanded(
           child: ListView.builder(

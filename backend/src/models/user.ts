@@ -17,6 +17,7 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   declare subscriptionTier: SubscriptionTier | null;
   declare subscriptionExpiration: Date | null;
   declare isGenerating: CreationOptional<boolean>;
+  declare fcmToken: CreationOptional<string>;
 }
 
 User.init(
@@ -58,6 +59,10 @@ User.init(
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false,
+    },
+    fcmToken: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
   },
   { sequelize, tableName: "users" }

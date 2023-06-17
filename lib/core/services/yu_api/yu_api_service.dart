@@ -63,6 +63,7 @@ class YuApiService {
   Future<String> login({
     required String username,
     required String password,
+    required String fcmToken,
   }) async {
     try {
       final response = await _dio.post(
@@ -70,6 +71,7 @@ class YuApiService {
         data: {
           'username': username,
           'password': password,
+          'fcmToken': fcmToken,
         },
       );
 

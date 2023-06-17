@@ -15,10 +15,20 @@ class Validators {
     .isString()
     .isLength({ max: 100 });
 
+  private fcmTokenValidator = expressValidator
+    .body("fcmToken")
+    .optional()
+    .isString()
+    .isLength({ max: 500 });
+
   static validateLogin(): Array<expressValidator.ValidationChain> {
     const validators = new Validators();
 
-    return [validators.usernameValidator, validators.passwordValidator];
+    return [
+      validators.usernameValidator,
+      validators.passwordValidator,
+      validators.fcmTokenValidator,
+    ];
   }
 
   private chatListValidator = expressValidator

@@ -5,6 +5,7 @@ import 'package:alyamamah/core/router/yu_router.dart';
 import 'package:alyamamah/core/services/api/api_service.dart';
 import 'package:alyamamah/core/services/api/api_service_exception.dart';
 import 'package:alyamamah/core/services/connectivity/connectivity_service.dart';
+import 'package:alyamamah/core/services/firebase_messaging/firebase_messaging_service.dart';
 import 'package:alyamamah/core/services/rev_cat/rev_cat_service.dart';
 import 'package:alyamamah/core/services/shared_prefs/shared_prefs_service.dart';
 import 'package:alyamamah/core/services/yu_api/yu_api_service.dart';
@@ -22,6 +23,7 @@ final startupViewModelProvider = ChangeNotifierProvider.autoDispose(
     revCatService: ref.read(revCatServiceProvider),
     yuApiService: ref.read(yuApiServiceProvider),
     connectivityService: ref.read(connectivityServiceProvider.notifier),
+    firebaseMessagingService: ref.read(firebaseMessagingServiceProvider),
   ),
 );
 
@@ -35,6 +37,7 @@ class StartupViewModel extends ChangeNotifier {
   final RevCatService _revCatService;
   final YuApiService _yuApiService;
   final ConnectivityService _connectivityService;
+  final FirebaseMessagingService _firebaseMessagingService;
 
   StartupViewModel({
     required ApiService apiService,
@@ -44,13 +47,15 @@ class StartupViewModel extends ChangeNotifier {
     required RevCatService revCatService,
     required YuApiService yuApiService,
     required ConnectivityService connectivityService,
+    required FirebaseMessagingService firebaseMessagingService,
   })  : _apiService = apiService,
         _sharedPrefsService = sharedPrefsService,
         _yuRouter = yuRouter,
         _actorDetailsNotifier = actorDetailsNotifier,
         _revCatService = revCatService,
         _yuApiService = yuApiService,
-        _connectivityService = connectivityService;
+        _connectivityService = connectivityService,
+        _firebaseMessagingService = firebaseMessagingService;
 
   Future<void> handleStartup() async {
     // This is a hack, for some reason if the screen does not appear it breaks the app.
@@ -99,9 +104,11 @@ class StartupViewModel extends ChangeNotifier {
             'handleStartup | accessToken is null, getting a new one.',
           );
 
+          final fcmToken = await _firebaseMessagingService.getToken();
           final accessToken = await _yuApiService.login(
             username: username,
             password: password,
+            fcmToken: fcmToken ?? '',
           );
           await _sharedPrefsService.saveAccessToken(accessToken: accessToken);
         }

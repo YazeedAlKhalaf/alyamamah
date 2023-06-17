@@ -36,9 +36,5 @@
          <meta-data
             android:name="io.flutter.embedding.android.EnableImpeller"
             android:value="false" />
-        
-        <meta-data
-            android:name="AdaptyPublicSdkKey"
-            android:value="public_live_qz2nN8h5.KW3ap1vZ8P2KKQ9uejPa" />
     </application>
 </manifest>

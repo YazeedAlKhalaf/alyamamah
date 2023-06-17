@@ -2,10 +2,10 @@ final absencesSuccessResponse = [
   {
     'absenceDetails': [
       {
-        'activity': 'نظري',
+        'activity': 'Lecture',
         'date': '08/02/2023',
         'dateH': '17/07/1444',
-        'day': 'الاربعاء',
+        'day': 'Wednesday',
         'isExcused': false,
         'late': false,
         'section': '89',
@@ -13,15 +13,15 @@ final absencesSuccessResponse = [
         'weekNo': '4'
       }
     ],
-    'activity': 'نظري',
-    'campus': 'الرياض / ذكور',
+    'activity': 'Lecture',
+    'campus': 'Riyadh / Males',
     'countAbsence': '1',
     'countLate': '0',
-    'courseCode': 'احص 103',
-    'courseName': 'الاحتمالات والاحصاء',
+    'courseCode': 'Stat 103',
+    'courseName': 'Probabilities and Statistics',
     'courseNo': '838',
     'date': '',
-    'day': 'الاربعاء',
+    'day': 'Wednesday',
     'index': '',
     'isExcused': false,
     'late': false,
@@ -36,10 +36,10 @@ final absencesSuccessResponse = [
   {
     'absenceDetails': [
       {
-        'activity': 'نظري',
+        'activity': 'Lecture',
         'date': '17/01/2023',
         'dateH': '24/06/1444',
-        'day': 'الثلاثاء',
+        'day': 'Tuesday',
         'isExcused': false,
         'late': false,
         'section': '65',
@@ -47,15 +47,15 @@ final absencesSuccessResponse = [
         'weekNo': '1'
       }
     ],
-    'activity': 'نظري',
-    'campus': 'الرياض / ذكور',
+    'activity': 'Lecture',
+    'campus': 'Riyadh / Males',
     'countAbsence': '1',
     'countLate': '0',
-    'courseCode': 'ريض 104',
-    'courseName': 'حساب التفاضل و التكامل (1)',
+    'courseCode': 'MTH 104',
+    'courseName': 'Calculus and Integration (1)',
     'courseNo': '869',
     'date': '',
-    'day': 'الثلاثاء',
+    'day': 'Tuesday',
     'index': '',
     'isExcused': false,
     'late': false,
@@ -70,10 +70,10 @@ final absencesSuccessResponse = [
   {
     'absenceDetails': [
       {
-        'activity': 'نظري',
+        'activity': 'Lecture',
         'date': '07/02/2023',
         'dateH': '16/07/1444',
-        'day': 'الثلاثاء',
+        'day': 'Tuesday',
         'isExcused': false,
         'late': false,
         'section': '254',
@@ -81,15 +81,15 @@ final absencesSuccessResponse = [
         'weekNo': '4'
       }
     ],
-    'activity': 'نظري',
-    'campus': 'الرياض / ذكور',
+    'activity': 'Lecture',
+    'campus': 'Riyadh / Males',
     'countAbsence': '1',
     'countLate': '0',
-    'courseCode': 'عرب 102',
-    'courseName': 'مهارات التواصل في اللغة العربية',
+    'courseCode': 'ARB 102',
+    'courseName': 'Communication Skills in Arabic',
     'courseNo': '36',
     'date': '',
-    'day': 'الثلاثاء',
+    'day': 'Tuesday',
     'index': '',
     'isExcused': false,
     'late': false,
@@ -104,10 +104,10 @@ final absencesSuccessResponse = [
   {
     'absenceDetails': [
       {
-        'activity': 'نظري',
+        'activity': 'Lecture',
         'date': '07/02/2023',
         'dateH': '16/07/1444',
-        'day': 'الثلاثاء',
+        'day': 'Tuesday',
         'isExcused': false,
         'late': false,
         'section': '308',
@@ -115,15 +115,15 @@ final absencesSuccessResponse = [
         'weekNo': '4'
       }
     ],
-    'activity': 'نظري',
-    'campus': 'الرياض / ذكور',
+    'activity': 'Lecture',
+    'campus': 'Riyadh / Males',
     'countAbsence': '1',
     'countLate': '0',
-    'courseCode': 'فكر 101',
-    'courseName': 'التفكير النقدي',
+    'courseCode': 'PHL 101',
+    'courseName': 'Critical Thinking',
     'courseNo': '69',
     'date': '',
-    'day': 'الثلاثاء',
+    'day': 'Tuesday',
     'index': '',
     'isExcused': false,
     'late': false,
@@ -138,10 +138,10 @@ final absencesSuccessResponse = [
   {
     'absenceDetails': [
       {
-        'activity': 'نظري',
+        'activity': 'Lecture',
         'date': '07/02/2023',
         'dateH': '16/07/1444',
-        'day': 'الثلاثاء',
+        'day': 'Tuesday',
         'isExcused': false,
         'late': false,
         'section': '105',
@@ -149,10 +149,10 @@ final absencesSuccessResponse = [
         'weekNo': '4'
       },
       {
-        'activity': 'معمل',
+        'activity': 'Lab',
         'date': '07/02/2023',
         'dateH': '16/07/1444',
-        'day': 'الثلاثاء',
+        'day': 'Tuesday',
         'isExcused': false,
         'late': false,
         'section': '106',
@@ -160,15 +160,15 @@ final absencesSuccessResponse = [
         'weekNo': '4'
       }
     ],
-    'activity': 'معمل',
-    'campus': 'الرياض / ذكور',
+    'activity': 'Lab',
+    'campus': 'Riyadh / Males',
     'countAbsence': '2',
     'countLate': '0',
-    'courseCode': 'فيز 103',
-    'courseName': 'فيزياء (1)',
+    'courseCode': 'PHY 103',
+    'courseName': 'Physics (1)',
     'courseNo': '875',
     'date': '',
-    'day': 'الثلاثاء',
+    'day': 'Tuesday',
     'index': '',
     'isExcused': false,
     'late': false,

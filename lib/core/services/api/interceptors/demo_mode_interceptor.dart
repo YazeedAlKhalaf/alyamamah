@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:alyamamah/core/services/api/fixtures/absences_response.dart';
 import 'package:alyamamah/core/services/api/fixtures/actor_details_response.dart';
+import 'package:alyamamah/core/services/api/fixtures/course_results_response.dart';
+import 'package:alyamamah/core/services/api/fixtures/student_gpa_response.dart';
 import 'package:alyamamah/core/services/api/fixtures/student_schedule_response.dart';
 import 'package:dio/dio.dart';
 
@@ -47,14 +49,6 @@ class DemoModeInterceptor extends Interceptor {
   }
 
   Response? getFakeResponse(RequestOptions options) {
-    if (options.path.contains('/resources/student/schedule/studentSchedule/')) {
-      return Response<List<dynamic>>(
-        requestOptions: options,
-        statusCode: 200,
-        data: studentScheduleSuccessResponse,
-      );
-    }
-
     if (options.path
         .contains('/resources/common/commonServies/changeLanguage/')) {
       return Response<Map<String, dynamic>>(
@@ -71,11 +65,47 @@ class DemoModeInterceptor extends Interceptor {
           statusCode: 200,
           data: actorDetailsSuccessResponse,
         );
+      case '/resources/student/schedule/studentSchedule/20221':
+        return Response(
+          requestOptions: options,
+          statusCode: 200,
+          data: studentSchedule20221SuccessResponse,
+        );
+      case '/resources/student/schedule/studentSchedule/20222':
+        return Response(
+          requestOptions: options,
+          statusCode: 200,
+          data: studentSchedule20222SuccessResponse,
+        );
       case '/resources/student/absences/absences':
         return Response(
           requestOptions: options,
           statusCode: 200,
           data: absencesSuccessResponse,
+        );
+      case '/resources/student/coursesResults/getStudentGPA/20221':
+        return Response(
+          requestOptions: options,
+          statusCode: 200,
+          data: studentGpa20221SuccessResponse,
+        );
+      case '/resources/student/coursesResults/getCoursesResults/20221':
+        return Response(
+          requestOptions: options,
+          statusCode: 200,
+          data: courseResults20221SuccessResponse,
+        );
+      case '/resources/student/coursesResults/getStudentGPA/20222':
+        return Response(
+          requestOptions: options,
+          statusCode: 200,
+          data: studentGpa20222SuccessResponse,
+        );
+      case '/resources/student/coursesResults/getCoursesResults/20222':
+        return Response(
+          requestOptions: options,
+          statusCode: 200,
+          data: courseResults20222SuccessResponse,
         );
     }
 

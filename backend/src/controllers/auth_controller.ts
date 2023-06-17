@@ -33,7 +33,7 @@ class AuthController extends Controller {
       return res.status(400).end();
     }
 
-    const { username, password } = req.body;
+    const { username, password, fcmToken } = req.body;
 
     const shouldGiveUserJwt = await this.edugateApiService.checkUserCredentials(
       username,
@@ -51,6 +51,7 @@ class AuthController extends Controller {
       if (user == null) {
         user = await User.create({
           username: username,
+          fcmToken: fcmToken,
         });
       }
 

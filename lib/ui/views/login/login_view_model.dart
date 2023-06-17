@@ -3,6 +3,7 @@ import 'package:alyamamah/core/providers/actor_details/actor_details_notifier.da
 import 'package:alyamamah/core/router/yu_router.dart';
 import 'package:alyamamah/core/services/api/api_service.dart';
 import 'package:alyamamah/core/services/api/api_service_exception.dart';
+import 'package:alyamamah/core/services/firebase_messaging/firebase_messaging_service.dart';
 import 'package:alyamamah/core/services/rev_cat/rev_cat_service.dart';
 import 'package:alyamamah/core/services/shared_prefs/shared_prefs_service.dart';
 import 'package:alyamamah/core/services/yu_api/yu_api_service.dart';
@@ -20,6 +21,7 @@ final loginViewModelProvider = ChangeNotifierProvider(
       actorDetailsNotifier: ref.watch(actorDetailsProvider.notifier),
       revCatService: ref.read(revCatServiceProvider),
       yuApiService: ref.read(yuApiServiceProvider),
+      firebaseMessagingService: ref.read(firebaseMessagingServiceProvider),
     );
   },
 );
@@ -33,6 +35,7 @@ class LoginViewModel extends ChangeNotifier {
   final ActorDetailsNotifier _actorDetailsNotifier;
   final RevCatService _revCatService;
   final YuApiService _yuApiService;
+  final FirebaseMessagingService _firebaseMessagingService;
 
   LoginViewModel({
     required ApiService apiService,
@@ -41,12 +44,14 @@ class LoginViewModel extends ChangeNotifier {
     required ActorDetailsNotifier actorDetailsNotifier,
     required RevCatService revCatService,
     required YuApiService yuApiService,
+    required FirebaseMessagingService firebaseMessagingService,
   })  : _apiService = apiService,
         _sharedPrefsService = sharedPrefsService,
         _yuRouter = yuRouter,
         _actorDetailsNotifier = actorDetailsNotifier,
         _revCatService = revCatService,
-        _yuApiService = yuApiService;
+        _yuApiService = yuApiService,
+        _firebaseMessagingService = firebaseMessagingService;
 
   AutovalidateMode _autoValidateMode = AutovalidateMode.disabled;
   AutovalidateMode get autoValidateMode => _autoValidateMode;
@@ -126,9 +131,11 @@ class LoginViewModel extends ChangeNotifier {
         password: password,
       );
 
+      final fcmToken = await _firebaseMessagingService.getToken();
       final accessToken = await _yuApiService.login(
         username: username,
         password: password,
+        fcmToken: fcmToken ?? '',
       );
       await _sharedPrefsService.saveAccessToken(
         accessToken: accessToken,

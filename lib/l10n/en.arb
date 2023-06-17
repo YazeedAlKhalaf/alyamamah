@@ -144,5 +144,10 @@
   "something_went_wrong_fetching_grades_for_this_semester": "Something went wrong while fetching grades for this semester",
   "semester_gpa": "Semester GPA",
   "cumulative_gpa": "Cumulative GPA",
-  "no_student_gpa_returned": "No student GPA returned"
+  "no_student_gpa_returned": "No student GPA returned",
+  "unlock_a_world_of_instant_updates": "Unlock a world of instant updates! 🌟",
+  "dont_miss_a_beat_enable_notifications_we_promise_only_to_ping_when_its_worth_your_while": "Don't miss a beat, enable notifications. We promise only to ping when it's worth your while.",
+  "allow_notifications": "Allow Notifications",
+  "skip_for_now": "Skip for Now",
+  "notifications": "Notifications"
 }

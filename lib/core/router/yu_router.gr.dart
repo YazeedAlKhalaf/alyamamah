@@ -37,6 +37,18 @@ abstract class _$YURouter extends RootStackRouter {
         child: const StudentInfoView(),
       );
     },
+    NotificationsPermissionRoute.name: (routeData) {
+      final args = routeData.argsAs<NotificationsPermissionRouteArgs>(
+          orElse: () => const NotificationsPermissionRouteArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: NotificationsPermissionView(
+          key: args.key,
+          onPermissionGranted: args.onPermissionGranted,
+          onDismissed: args.onDismissed,
+        ),
+      );
+    },
     CourseDetailsRoute.name: (routeData) {
       final args = routeData.argsAs<CourseDetailsRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -174,6 +186,50 @@ class StudentInfoRoute extends PageRouteInfo<void> {
   static const String name = 'StudentInfoRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [NotificationsPermissionView]
+class NotificationsPermissionRoute
+    extends PageRouteInfo<NotificationsPermissionRouteArgs> {
+  NotificationsPermissionRoute({
+    Key? key,
+    void Function()? onPermissionGranted,
+    void Function()? onDismissed,
+    List<PageRouteInfo>? children,
+  }) : super(
+          NotificationsPermissionRoute.name,
+          args: NotificationsPermissionRouteArgs(
+            key: key,
+            onPermissionGranted: onPermissionGranted,
+            onDismissed: onDismissed,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'NotificationsPermissionRoute';
+
+  static const PageInfo<NotificationsPermissionRouteArgs> page =
+      PageInfo<NotificationsPermissionRouteArgs>(name);
+}
+
+class NotificationsPermissionRouteArgs {
+  const NotificationsPermissionRouteArgs({
+    this.key,
+    this.onPermissionGranted,
+    this.onDismissed,
+  });
+
+  final Key? key;
+
+  final void Function()? onPermissionGranted;
+
+  final void Function()? onDismissed;
+
+  @override
+  String toString() {
+    return 'NotificationsPermissionRouteArgs{key: $key, onPermissionGranted: $onPermissionGranted, onDismissed: $onDismissed}';
+  }
 }
 
 /// generated route for

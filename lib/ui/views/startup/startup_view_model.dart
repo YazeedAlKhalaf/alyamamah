@@ -7,6 +7,7 @@ import 'package:alyamamah/core/services/api/api_service.dart';
 import 'package:alyamamah/core/services/api/api_service_exception.dart';
 import 'package:alyamamah/core/services/connectivity/connectivity_service.dart';
 import 'package:alyamamah/core/services/firebase_messaging/firebase_messaging_service.dart';
+import 'package:alyamamah/core/services/permission_handler/permission_handler_service.dart';
 import 'package:alyamamah/core/services/rev_cat/rev_cat_service.dart';
 import 'package:alyamamah/core/services/shared_prefs/shared_prefs_service.dart';
 import 'package:alyamamah/core/services/yu_api/yu_api_service.dart';
@@ -14,6 +15,7 @@ import 'package:alyamamah/core/services/yu_api/yu_api_service_exception.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logging/logging.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 final startupViewModelProvider = ChangeNotifierProvider.autoDispose(
   (ref) => StartupViewModel(
@@ -27,6 +29,7 @@ final startupViewModelProvider = ChangeNotifierProvider.autoDispose(
     firebaseMessagingService: ref.read(firebaseMessagingServiceProvider),
     featureFlagsStateNotifier:
         ref.read(featureFlagsStateNotifierProvider.notifier),
+    permissionHandlerService: ref.read(permissionHandlerServiceProvider),
   ),
 );
 
@@ -42,6 +45,7 @@ class StartupViewModel extends ChangeNotifier {
   final ConnectivityService _connectivityService;
   final FirebaseMessagingService _firebaseMessagingService;
   final FeatureFlagsStateNotifier _featureFlagsStateNotifier;
+  final PermissionHandlerService _permissionHandlerService;
 
   StartupViewModel({
     required ApiService apiService,
@@ -53,6 +57,7 @@ class StartupViewModel extends ChangeNotifier {
     required ConnectivityService connectivityService,
     required FirebaseMessagingService firebaseMessagingService,
     required FeatureFlagsStateNotifier featureFlagsStateNotifier,
+    required PermissionHandlerService permissionHandlerService,
   })  : _apiService = apiService,
         _sharedPrefsService = sharedPrefsService,
         _yuRouter = yuRouter,
@@ -61,7 +66,8 @@ class StartupViewModel extends ChangeNotifier {
         _yuApiService = yuApiService,
         _connectivityService = connectivityService,
         _firebaseMessagingService = firebaseMessagingService,
-        _featureFlagsStateNotifier = featureFlagsStateNotifier;
+        _featureFlagsStateNotifier = featureFlagsStateNotifier,
+        _permissionHandlerService = permissionHandlerService;
 
   Future<void> handleStartup() async {
     // This is a hack, for some reason if the screen does not appear it breaks the app.
@@ -121,17 +127,34 @@ class StartupViewModel extends ChangeNotifier {
 
         await _featureFlagsStateNotifier.init(userId: username);
 
+        final notificationPermissionStatus =
+            await _permissionHandlerService.checkNotificationPermissionStatus();
+
         _log.fine(
           'handleStartup | succeeded in logging in, going to main route.',
         );
 
         // this is a hack for the weird navigator dirty assertion.
         await Future.delayed(const Duration(milliseconds: 50));
-
-        await _yuRouter.pushAndPopUntil(
+        _yuRouter.pushAndPopUntil(
           MainRoute(),
           predicate: (_) => false,
         );
+
+        // wait a bit for the user to understand what is going on.
+        await Future.delayed(const Duration(milliseconds: 1500));
+
+        if (!notificationPermissionStatus.isGranted &&
+            !notificationPermissionStatus.isDenied &&
+            !notificationPermissionStatus.isPermanentlyDenied &&
+            !notificationPermissionStatus.isRestricted &&
+            !notificationPermissionStatus.isLimited) {
+          _log.fine(
+            'handleStartup | succeeded in logging in and went to main route, but showing notification permission view first.',
+          );
+
+          await _yuRouter.push(NotificationsPermissionRoute());
+        }
       } on ApiServiceException catch (e) {
         _log.severe(
           'handleStartup | caught ApiServiceException logging in automatically: ${e.type}.',

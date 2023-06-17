@@ -144,5 +144,10 @@
   "something_went_wrong_fetching_grades_for_this_semester": "حدث خطأ أثناء جلب الدرجات لهذا الفصل الدراسي",
   "semester_gpa": "معدل الفصل",
   "cumulative_gpa": "المعدل التراكمي",
-  "no_student_gpa_returned": "معدل الطالب لم يرجع"
+  "no_student_gpa_returned": "معدل الطالب لم يرجع",
+  "unlock_a_world_of_instant_updates": "افتح عالماً من التحديثات الفورية 🌟",
+  "dont_miss_a_beat_enable_notifications_we_promise_only_to_ping_when_its_worth_your_while": "لا تفوت لحظة، فعّل الإشعارات. نوعدك بأننا سنرسل لك إشعاراً فقط عندما يكون الأمر يستحق العناء.",
+  "allow_notifications": "فعّل الإشعارات",
+  "skip_for_now": "ليس الآن",
+  "notifications": "الإشعارات"
 }

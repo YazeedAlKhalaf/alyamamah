@@ -21,4 +21,8 @@ class FirebaseMessagingService {
       return null;
     }
   }
+
+  Future<NotificationSettings> askPermission() async {
+    return _firebaseMessaging.requestPermission();
+  }
 }

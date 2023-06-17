@@ -35,6 +35,7 @@ dependencies:
   purchases_flutter: 5.0.0
   flutter_animate: 4.1.1+1
   unleash_proxy_client_flutter: 1.2.1
+  permission_handler: 10.3.0
   
 
 dev_dependencies:

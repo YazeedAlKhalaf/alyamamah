@@ -8,6 +8,7 @@ import 'package:alyamamah/ui/views/login/login_view.dart';
 import 'package:alyamamah/ui/views/main/main_view.dart';
 import 'package:alyamamah/ui/views/onboarding/onboarding_view.dart';
 import 'package:alyamamah/ui/views/paywall/paywall_view.dart';
+import 'package:alyamamah/ui/views/permissions/notification_permission_view.dart';
 import 'package:alyamamah/ui/views/profile/profile_view.dart';
 import 'package:alyamamah/ui/views/startup/startup_view.dart';
 import 'package:alyamamah/ui/views/student_info/student_info_view.dart';
@@ -42,5 +43,10 @@ class YURouter extends _$YURouter {
       fullscreenDialog: true,
     ),
     AutoRoute(page: YuGptRoute.page),
+    CustomRoute(
+      page: NotificationsPermissionRoute.page,
+      transitionsBuilder: TransitionsBuilders.slideBottom,
+      fullscreenDialog: true,
+    ),
   ];
 }

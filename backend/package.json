@@ -35,6 +35,7 @@
     "langchain": "^0.0.81",
     "pg": "^8.11.0",
     "pg-hstore": "^2.3.4",
-    "sequelize": "^6.31.1"
+    "sequelize": "^6.31.1",
+    "unleash-server": "^5.1.9"
   }
 }

@@ -144,11 +144,7 @@ class StartupViewModel extends ChangeNotifier {
         // wait a bit for the user to understand what is going on.
         await Future.delayed(const Duration(milliseconds: 1500));
 
-        if (!notificationPermissionStatus.isGranted &&
-            !notificationPermissionStatus.isDenied &&
-            !notificationPermissionStatus.isPermanentlyDenied &&
-            !notificationPermissionStatus.isRestricted &&
-            !notificationPermissionStatus.isLimited) {
+        if (notificationPermissionStatus.isDenied) {
           _log.fine(
             'handleStartup | succeeded in logging in and went to main route, but showing notification permission view first.',
           );

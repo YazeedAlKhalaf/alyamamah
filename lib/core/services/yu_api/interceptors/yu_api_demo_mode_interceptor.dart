@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:alyamamah/core/services/yu_api/fixtures/auth_login_response.dart';
 import 'package:alyamamah/core/services/yu_api/fixtures/chat_response.dart';
 import 'package:dio/dio.dart';
@@ -6,6 +8,11 @@ class YuApiDemoModeInterceptor extends Interceptor {
   bool _isInDemo = false;
   void disableDemoMode() {
     _isInDemo = false;
+  }
+
+  bool _usedChatTrial = false;
+  void resetChatTrial() {
+    _usedChatTrial = false;
   }
 
   @override
@@ -48,10 +55,26 @@ class YuApiDemoModeInterceptor extends Interceptor {
           data: authLoginSuccessResponse,
         );
       case '/chat':
+        if (_usedChatTrial) {
+          return Response(
+            requestOptions: options,
+            statusCode: 402,
+            data: ResponseBody(
+              Stream<Uint8List>.fromIterable([]),
+              402,
+            ),
+          );
+        }
+
+        _usedChatTrial = true;
+
         return Response(
           requestOptions: options,
           statusCode: 200,
-          data: chatSuccessResponse,
+          data: ResponseBody(
+            chatSuccessResponseBodyStream(),
+            200,
+          ),
         );
     }
     return null;

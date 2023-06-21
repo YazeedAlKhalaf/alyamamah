@@ -119,6 +119,13 @@ class YuApiService {
         ),
       );
 
+      if (response.statusCode == 402) {
+        _log.severe('chat | payment required');
+        throw const YuApiServiceException(
+          YuApiServiceExceptionType.paymentRequired,
+        );
+      }
+
       final unit8Transformer =
           StreamTransformer<Uint8List, List<int>>.fromHandlers(
         handleData: (data, sink) {

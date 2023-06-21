@@ -18,4 +18,14 @@ class GptMessage {
       message: message ?? this.message,
     );
   }
+
+  @override
+  bool operator ==(covariant GptMessage other) {
+    if (identical(this, other)) return true;
+
+    return other.sender == sender && other.message == message;
+  }
+
+  @override
+  int get hashCode => sender.hashCode ^ message.hashCode;
 }

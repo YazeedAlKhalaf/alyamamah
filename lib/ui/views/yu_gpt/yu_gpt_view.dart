@@ -33,9 +33,12 @@ class _YuGptViewState extends ConsumerState<YuGptView> {
 
     messageController = TextEditingController();
 
-    ref.read(yuGptViewModelProvider.notifier).addListener(
-      (YuGptState yuGptState) async {
-        if (yuGptState.errorType == YuApiServiceExceptionType.paymentRequired) {
+    ref.listenManual<YuGptState>(
+      yuGptViewModelProvider,
+      (YuGptState? previous, YuGptState current) async {
+        if (previous == current) return;
+
+        if (current.errorType == YuApiServiceExceptionType.paymentRequired) {
           try {
             final title = context.s.alyamamah_gpt;
             final description = context.s.you_need_to_subscribe_first;
@@ -59,6 +62,7 @@ class _YuGptViewState extends ConsumerState<YuGptView> {
               return;
             }
 
+            print('ahmad is cool!');
             await ref.read(yuRouterProvider).push(
                   PaywallRoute(
                     title: title,

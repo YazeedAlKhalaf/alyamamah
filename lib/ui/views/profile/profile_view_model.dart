@@ -63,20 +63,6 @@ class ProfileViewModel extends ChangeNotifier {
     await _yuRouter.push(const StudentInfoRoute());
   }
 
-  Future<void> navigateToPaywallView({
-    required String title,
-    required String description,
-    required List<Package> packages,
-    required CustomerInfo customerInfo,
-  }) async {
-    await _yuRouter.push(PaywallRoute(
-      title: title,
-      description: description,
-      packages: packages,
-      customerInfo: customerInfo,
-    ));
-  }
-
   Future<void> navigateToYuGptView() async {
     await _yuRouter.push(const YuGptRoute());
   }

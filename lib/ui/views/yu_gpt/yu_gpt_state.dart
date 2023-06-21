@@ -2,6 +2,7 @@ import 'package:alyamamah/core/models/optional.dart';
 import 'package:alyamamah/core/services/yu_api/models/model_name.dart';
 import 'package:alyamamah/core/services/yu_api/yu_api_service_exception.dart';
 import 'package:alyamamah/ui/views/yu_gpt/models/gpt_message.dart';
+import 'package:flutter/foundation.dart';
 
 class YuGptState {
   final List<GptMessage> messages;
@@ -28,5 +29,23 @@ class YuGptState {
       isGenerating: isGenerating ?? this.isGenerating,
       modelName: modelName ?? this.modelName,
     );
+  }
+
+  @override
+  bool operator ==(covariant YuGptState other) {
+    if (identical(this, other)) return true;
+
+    return listEquals(other.messages, messages) &&
+        other.errorType == errorType &&
+        other.isGenerating == isGenerating &&
+        other.modelName == modelName;
+  }
+
+  @override
+  int get hashCode {
+    return messages.hashCode ^
+        errorType.hashCode ^
+        isGenerating.hashCode ^
+        modelName.hashCode;
   }
 }

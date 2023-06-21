@@ -9,20 +9,19 @@ Al Yamamah make students lives easier.
 
 Features:
 
-- View your schedule easily
+- View your schedule easily since you joined university
 - Widget to view the schedule from your home screen (iOS only)
-- Widget to view the schedule from your home screen
 - See the absences directly
+- View your grades
 - Preview your profile and edit it seamlessly
 - Arabic and English language support
 - Dark and Light mode support
+- AlYamamahGPT, currently feature flagged: ChatGPT but with Al Yamamah knowledge.
 
 Currently the app supports the following platforms:
 
 - iOS
 - Android
-- macOS
-- Web
 
 Those platforms have some issues but are planned to be supported in the future:
 
@@ -30,6 +29,10 @@ Those platforms have some issues but are planned to be supported in the future:
   - No Firebase support yet for plugins I use.
 - Linux:
   - No Firebase support yet for plugins I use.
+- Web:
+  - Some CORS issue that needs fixing, and proxying doesn't work cuz the edugate API has SSL issues.
+- macOS:
+  - After adding revenue cat, things broke.
 
 ## How to run the app?
 

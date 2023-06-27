@@ -149,5 +149,7 @@
   "dont_miss_a_beat_enable_notifications_we_promise_only_to_ping_when_its_worth_your_while": "Don't miss a beat, enable notifications. We promise only to ping when it's worth your while.",
   "allow_notifications": "Allow Notifications",
   "skip_for_now": "Skip for Now",
-  "notifications": "Notifications"
+  "notifications": "Notifications",
+  "privacy_policy": "Privacy Policy",
+  "terms_of_use": "Terms of Use"
 }

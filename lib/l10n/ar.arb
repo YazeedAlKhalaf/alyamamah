@@ -149,5 +149,7 @@
   "dont_miss_a_beat_enable_notifications_we_promise_only_to_ping_when_its_worth_your_while": "لا تفوت لحظة، فعّل الإشعارات. نوعدك بأننا سنرسل لك إشعاراً فقط عندما يكون الأمر يستحق العناء.",
   "allow_notifications": "فعّل الإشعارات",
   "skip_for_now": "ليس الآن",
-  "notifications": "الإشعارات"
+  "notifications": "الإشعارات",
+  "privacy_policy": "سياسة الخصوصية",
+  "terms_of_use": "شروط الاستخدام"
 }

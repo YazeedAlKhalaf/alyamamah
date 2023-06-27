@@ -9,6 +9,7 @@ import 'package:alyamamah/ui/views/profile/profile_view_model.dart';
 import 'package:alyamamah/ui/views/profile/widgets/language_bottom_sheet.dart';
 import 'package:alyamamah/ui/views/profile/widgets/theme_bottom_sheet.dart';
 import 'package:alyamamah/ui/widgets/button_loading.dart';
+import 'package:alyamamah/ui/widgets/privacy_policy_and_terms_of_use_widget.dart';
 import 'package:alyamamah/ui/widgets/yu_show.dart';
 import 'package:alyamamah/ui/widgets/yu_snack_bar.dart';
 import 'package:auto_route/auto_route.dart';
@@ -259,6 +260,9 @@ class ProfileView extends ConsumerWidget {
                 },
               ),
             ),
+            const SizedBox(height: Constants.padding),
+            const PrivacyPolicyAndTermsOfUseWidget(),
+            const SizedBox(height: Constants.padding),
           ],
         ),
       ),

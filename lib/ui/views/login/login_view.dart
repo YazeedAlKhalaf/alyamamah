@@ -4,6 +4,7 @@ import 'package:alyamamah/core/extensions/build_context.dart';
 import 'package:alyamamah/core/extensions/yu_api_service_exception_type.dart';
 import 'package:alyamamah/ui/views/login/login_view_model.dart';
 import 'package:alyamamah/ui/widgets/button_loading.dart';
+import 'package:alyamamah/ui/widgets/privacy_policy_and_terms_of_use_widget.dart';
 import 'package:alyamamah/ui/widgets/switch_language_button.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -123,9 +124,9 @@ class _LoginViewState extends ConsumerState<LoginView> {
                       ? const ButtonLoading()
                       : Text(context.s.login),
                 ),
-                const SizedBox(height: Constants.padding),
                 if (loginViewModel.apiServiceExceptionType != null ||
-                    loginViewModel.yuApiServiceExceptionType != null)
+                    loginViewModel.yuApiServiceExceptionType != null) ...[
+                  const SizedBox(height: Constants.padding),
                   Text(
                     loginViewModel.apiServiceExceptionType
                             ?.mapToString(context) ??
@@ -137,6 +138,9 @@ class _LoginViewState extends ConsumerState<LoginView> {
                         ),
                     textAlign: TextAlign.center,
                   ),
+                ],
+                const SizedBox(height: Constants.padding),
+                const PrivacyPolicyAndTermsOfUseWidget(),
               ],
             ),
           ),

@@ -1,6 +1,7 @@
 import 'package:alyamamah/core/constants.dart';
 import 'package:alyamamah/core/extensions/build_context.dart';
 import 'package:alyamamah/ui/views/onboarding/onboarding_view_model.dart';
+import 'package:alyamamah/ui/widgets/privacy_policy_and_terms_of_use_widget.dart';
 import 'package:alyamamah/ui/widgets/switch_language_button.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -64,7 +65,8 @@ class OnboardingView extends ConsumerWidget {
                 },
                 child: Text(context.s.login),
               ),
-              const Spacer(),
+              const SizedBox(height: Constants.padding),
+              const PrivacyPolicyAndTermsOfUseWidget(),
             ],
           ),
         ),

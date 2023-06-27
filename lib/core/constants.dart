@@ -36,4 +36,9 @@ class Constants {
   static const String unleashClientKey =
       'default:production.04c7ab3b41adbb4b40ebf156b01a1c5c7d10e11dc572096349a9b41f';
   static const String unleashAppName = 'alyamamah-app';
+
+  static const String privacyPolicyUrl =
+      'https://alyamamah.alkhalaf.dev/privacy-policy';
+  static const String termsOfUseUrl =
+      'https://www.apple.com/legal/internet-services/itunes/dev/stdeula';
 }

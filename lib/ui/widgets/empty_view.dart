@@ -22,7 +22,7 @@ class EmptyView extends StatelessWidget {
       children: [
         Image.asset(
           'assets/images/man-searching-for-something.png',
-          height: 350,
+          height: 220,
         )
             .animate(
               onComplete: (controller) => controller.loop(
@@ -35,6 +35,7 @@ class EmptyView extends StatelessWidget {
               end: const Offset(0, 0),
               curve: Curves.easeInOut,
             ),
+        const SizedBox(height: Constants.padding * 2),
         Text(
           title,
           style: Theme.of(context).textTheme.headlineSmall,
@@ -47,12 +48,16 @@ class EmptyView extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: Constants.padding),
-        if (action != null) action!,
+        if (action != null)
+          Padding(
+            padding: const EdgeInsets.only(bottom: Constants.padding),
+            child: action!,
+          ),
       ],
     );
 
     return Padding(
-      padding: const EdgeInsets.all(Constants.padding),
+      padding: const EdgeInsets.symmetric(horizontal: Constants.padding),
       child: onRefresh == null
           ? result
           : RefreshIndicator(

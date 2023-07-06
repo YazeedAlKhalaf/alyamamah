@@ -22,7 +22,7 @@ class ErrorView extends StatelessWidget {
       children: [
         Image.asset(
           'assets/images/man-sitting-on-rocks-alone.png',
-          height: 350,
+          height: 220,
         )
             .animate(
               onComplete: (controller) => controller.loop(
@@ -54,7 +54,7 @@ class ErrorView extends StatelessWidget {
     );
 
     return Padding(
-      padding: const EdgeInsets.all(Constants.padding),
+      padding: const EdgeInsets.symmetric(horizontal: Constants.padding),
       child: onRefresh == null
           ? result
           : RefreshIndicator(

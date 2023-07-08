@@ -44,6 +44,8 @@ class _ScheduleBuilderViewState extends ConsumerState<ScheduleBuilderView> {
       ScheduleBuilderViewState? previous,
       ScheduleBuilderViewState current,
     ) async {
+      if (previous == current) return;
+
       switch (current.status) {
         case ScheduleBuilderViewStatus.submitted:
           YUSnackBar.show(

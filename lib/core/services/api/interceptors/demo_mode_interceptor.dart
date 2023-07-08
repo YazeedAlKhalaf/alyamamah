@@ -3,6 +3,10 @@ import 'dart:convert';
 import 'package:alyamamah/core/services/api/fixtures/absences_response.dart';
 import 'package:alyamamah/core/services/api/fixtures/actor_details_response.dart';
 import 'package:alyamamah/core/services/api/fixtures/course_results_response.dart';
+import 'package:alyamamah/core/services/api/fixtures/do_registration_response.dart';
+import 'package:alyamamah/core/services/api/fixtures/get_attempted_courses_response.dart';
+import 'package:alyamamah/core/services/api/fixtures/get_registration_hours_response.dart';
+import 'package:alyamamah/core/services/api/fixtures/offered_courses_response.dart';
 import 'package:alyamamah/core/services/api/fixtures/student_gpa_response.dart';
 import 'package:alyamamah/core/services/api/fixtures/student_schedule_response.dart';
 import 'package:dio/dio.dart';
@@ -106,6 +110,30 @@ class DemoModeInterceptor extends Interceptor {
           requestOptions: options,
           statusCode: 200,
           data: courseResults20222SuccessResponse,
+        );
+      case '/resources/student/reg/offeredCourses':
+        return Response(
+          requestOptions: options,
+          statusCode: 200,
+          data: offeredCoursesSuccessResponse,
+        );
+      case '/resources/student/reg/getAttemptedCourses':
+        return Response(
+          requestOptions: options,
+          statusCode: 200,
+          data: getAttemptedCoursesSuccessResponse,
+        );
+      case '/resources/student/reg/getRegHrs':
+        return Response(
+          requestOptions: options,
+          statusCode: 200,
+          data: getRegistrationHoursSuccessResponse,
+        );
+      case '/resources/student/reg/doRegistration':
+        return Response(
+          requestOptions: options,
+          statusCode: 200,
+          data: doRegistrationSuccessResponse,
         );
     }
 

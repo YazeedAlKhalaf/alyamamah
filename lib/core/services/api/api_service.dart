@@ -10,6 +10,7 @@ import 'package:alyamamah/core/models/offered_course.dart';
 import 'package:alyamamah/core/models/registration_hours.dart';
 import 'package:alyamamah/core/models/schedule.dart';
 import 'package:alyamamah/core/models/student_gpa.dart';
+import 'package:alyamamah/core/providers/cookie_jar/cookie_jar_provider.dart';
 import 'package:alyamamah/core/services/api/api_service_exception.dart';
 import 'package:alyamamah/core/services/api/interceptors/demo_mode_interceptor.dart';
 import 'package:alyamamah/core/services/api/interceptors/language_interceptor.dart';
@@ -40,7 +41,7 @@ final apiServiceProvider = Provider(
 
     return ApiService(
       dio: dio,
-      cookieJar: CookieJar(),
+      cookieJar: ref.read(cookieJarProvider),
       demoModeInterceptor: DemoModeInterceptor(),
       sessionExpiredInterceptor: SessionExpiredInterceptor(
         sharedPrefsService: ref.read(sharedPrefsServiceProvider),
@@ -422,16 +423,15 @@ class ApiService {
     required List<OfferedCourse> courses,
   }) async {
     try {
-      final response = await _dio.get(
+      final response = await _dio.post(
         '/resources/student/reg/doRegistration',
+        data: courses.map((e) => e.toMap()).toList(),
       );
 
       if (response.statusCode != 200) {
         _log.severe('doRegistration | non 200 status code.');
         throw const ApiServiceException();
       }
-
-      print('response: $response');
 
       return DoRegistrationResponse.fromMap(response.data);
     } catch (e) {

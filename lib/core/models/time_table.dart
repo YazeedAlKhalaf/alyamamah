@@ -75,6 +75,35 @@ class TimeTable {
   factory TimeTable.fromJson(String source) =>
       TimeTable.fromMap(json.decode(source) as Map<String, dynamic>);
 
+  Map<String, dynamic> toMap() {
+    final day = days.map((e) {
+      switch (e) {
+        case Day.sun:
+          return 'U';
+        case Day.mon:
+          return 'M';
+        case Day.tue:
+          return 'T';
+        case Day.wed:
+          return 'W';
+        case Day.thu:
+          return 'TH';
+        case Day.fri:
+        case Day.sat:
+          return '';
+      }
+    }).join(' ');
+
+    return <String, dynamic>{
+      'day': ' $day ',
+      'room': ' $room',
+      'time':
+          ' ${startTime.hour.toString().padLeft(2, '0')}:${startTime.minute.toString().padLeft(2, '0')} ${startTime.period.name} - ${endTime.hour.toString().padLeft(2, '0')}:${endTime.minute.toString().padLeft(2, '0')} ${endTime.period.name} '
+    };
+  }
+
+  String toJson() => json.encode(toMap());
+
   @override
   String toString() {
     return 'TimeTable(days: $days, room: $room, startTime: $startTime, endTime: $endTime)';

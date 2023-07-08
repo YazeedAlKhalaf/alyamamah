@@ -36,6 +36,7 @@ dependencies:
   flutter_animate: 4.1.1+1
   unleash_proxy_client_flutter: 1.2.1
   permission_handler: 10.3.0
+  flutter_inappwebview: 5.7.2+3
   
 
 dev_dependencies:

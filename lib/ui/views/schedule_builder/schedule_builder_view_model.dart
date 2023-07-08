@@ -2,19 +2,35 @@ import 'package:alyamamah/core/extensions/time_of_day.dart';
 import 'package:alyamamah/core/models/day.dart';
 import 'package:alyamamah/core/models/offered_course.dart';
 import 'package:alyamamah/core/models/time_table.dart';
+import 'package:alyamamah/core/services/api/api_service.dart';
+import 'package:alyamamah/core/services/api/api_service_exception.dart';
 import 'package:alyamamah/ui/views/courses/models/schedule_entry.dart';
 import 'package:alyamamah/ui/views/schedule_builder/models/conflict.dart';
 import 'package:alyamamah/ui/views/schedule_builder/models/offered_courses_schedule.dart';
 import 'package:alyamamah/ui/views/schedule_builder/schedule_builder_view_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:logging/logging.dart';
 
 final scheduleBuilderViewModelProvider =
     StateNotifierProvider<ScheduleBuilderViewModel, ScheduleBuilderViewState>(
-  (ref) => ScheduleBuilderViewModel(),
+  (ref) => ScheduleBuilderViewModel(
+    apiService: ref.read(apiServiceProvider),
+  ),
 );
 
 class ScheduleBuilderViewModel extends StateNotifier<ScheduleBuilderViewState> {
-  ScheduleBuilderViewModel() : super(ScheduleBuilderViewState());
+  final _log = Logger('ScheduleBuilderViewModel');
+
+  final ApiService _apiService;
+
+  ScheduleBuilderViewModel({
+    required ApiService apiService,
+  })  : _apiService = apiService,
+        super(ScheduleBuilderViewState());
+
+  void setSelectedScheduleIndex(int index) {
+    state = state.copyWith(selectedScheduleIndex: index);
+  }
 
   void generateSuggestedSchedules({
     required List<OfferedCourse> selectedCourses,
@@ -24,6 +40,7 @@ class ScheduleBuilderViewModel extends StateNotifier<ScheduleBuilderViewState> {
     if (selectedCoursesCopy.isEmpty) {
       state = state.copyWith(offeredCoursesSchedules: [
         const OfferedCoursesSchedule(
+          offeredCourses: [],
           scheduleDays: {
             Day.sun: [],
             Day.mon: [],
@@ -46,11 +63,13 @@ class ScheduleBuilderViewModel extends StateNotifier<ScheduleBuilderViewState> {
   }
 
   List<OfferedCoursesSchedule> _generateSchedulesForCourses(
-    List<OfferedCourse> courses,
-  ) {
+    List<OfferedCourse> courses, [
+    List<OfferedCourse> includedCourses = const [],
+  ]) {
     if (courses.isEmpty) {
       return [
-        const OfferedCoursesSchedule(
+        OfferedCoursesSchedule(
+          offeredCourses: includedCourses,
           scheduleDays: {
             Day.sun: [],
             Day.mon: [],
@@ -65,16 +84,25 @@ class ScheduleBuilderViewModel extends StateNotifier<ScheduleBuilderViewState> {
     }
 
     final course = courses.removeLast();
-    final smallerSchedules = _generateSchedulesForCourses(courses);
+    final smallerSchedules = _generateSchedulesForCourses(
+        courses, includedCourses); // pass down the already included courses
     final result = <OfferedCoursesSchedule>[];
 
     for (final timeTable in course.timeTable) {
       for (final smallerSchedule in smallerSchedules) {
         List<Conflict> conflicts = [];
         final hasConflicts = !_isFree(
-            smallerSchedule.scheduleDays, timeTable, course, conflicts);
+          smallerSchedule.scheduleDays,
+          timeTable,
+          course,
+          conflicts,
+        );
         final newSchedule = _copySchedule(smallerSchedule.scheduleDays);
+        final newIncludedCourses = List<OfferedCourse>.from(
+          includedCourses,
+        );
         if (!hasConflicts) {
+          newIncludedCourses.add(course);
           for (final day in timeTable.days) {
             final scheduleEntry = ScheduleEntry(
               startTime: timeTable.startTime,
@@ -93,6 +121,7 @@ class ScheduleBuilderViewModel extends StateNotifier<ScheduleBuilderViewState> {
           }
         }
         result.add(OfferedCoursesSchedule(
+          offeredCourses: newIncludedCourses,
           scheduleDays: newSchedule,
           hasConflicts: hasConflicts,
           conflicts: conflicts,
@@ -152,5 +181,49 @@ class ScheduleBuilderViewModel extends StateNotifier<ScheduleBuilderViewState> {
     );
 
     generateSuggestedSchedules(selectedCourses: offeredCoursesCopy);
+  }
+
+  Future<void> submitSchedule() async {
+    try {
+      state = state.copyWith(
+        status: ScheduleBuilderViewStatus.submitting,
+      );
+
+      final response = await _apiService.doRegistration(
+        courses: state.offeredCoursesSchedules[state.selectedScheduleIndex]
+            .offeredCourses,
+      );
+
+      switch (response.itemValue) {
+        case '1':
+          state = state.copyWith(
+            status: ScheduleBuilderViewStatus.submitted,
+          );
+          break;
+        case '2':
+          state = state.copyWith(
+            status: ScheduleBuilderViewStatus.paymentRequired,
+            paymentRequiredMessage: response.itemDesc,
+          );
+          break;
+        default:
+          state = state.copyWith(
+            status: ScheduleBuilderViewStatus.errorSubmitting,
+          );
+          break;
+      }
+    } on ApiServiceException catch (e) {
+      _log.severe('error submitting schedule: $e');
+
+      state = state.copyWith(
+        status: ScheduleBuilderViewStatus.errorSubmitting,
+      );
+
+      await Future.delayed(const Duration(seconds: 3));
+
+      state = state.copyWith(
+        status: ScheduleBuilderViewStatus.unknown,
+      );
+    }
   }
 }

@@ -128,7 +128,7 @@ class _CoursesViewState extends ConsumerState<CoursesView> {
                                 .push(const OfferedCoursesRoute());
                           },
                           icon: const Icon(Icons.calendar_month_rounded),
-                          label: Text(context.s.make_my_schedule),
+                          label: Text(context.s.build_my_schedule),
                         ),
                       ],
                     ),

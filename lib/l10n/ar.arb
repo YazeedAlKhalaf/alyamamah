@@ -152,7 +152,7 @@
   "notifications": "الإشعارات",
   "privacy_policy": "سياسة الخصوصية",
   "terms_of_use": "شروط الاستخدام",
-  "make_my_schedule": "اصنع جدولي",
+  "build_my_schedule": "أنشئ جدولي",
   "offered_courses": "المقررات المتاحة",
   "schedule_builder": "منشئ الجدول",
   "something_went_wrong_fetching_your_offered_courses": "حدث خطأ أثناء جلب المقررات المتاحة لك",
@@ -166,5 +166,13 @@
   "next": "التالي",
   "choose_schedule": "اختر الجدول",
   "schedule_has_conflicts": "الجدول يحتوي على تعارضات",
-  "remove_course": "إزالة المقرر"
+  "remove_course": "إزالة المقرر",
+  "you_have_to_pay_before_saving_this_schedule": "يجب عليك الدفع قبل حفظ هذا الجدول",
+  "open_payment_link": "افتح رابط الدفع",
+  "previous_credit_x": "📚 الرصيد السابق: {amount}",
+  "semester_fees_x": "💵 رسوم الفصل الدراسي: {amount}",
+  "total_x": "💼 الإجمالي: {amount}",
+  "by_tapping_the_button_above_youll_pay_youre_fees_securely_on_the_universitys_site": "بالضغط على الزر أعلاه، ستدفع رسومك بشكل آمن على موقع الجامعة",
+  "oops_it_looks_like_theres_a_problem_with_your_payment__please_confirm_your_payment_information_and_try_again": "عفواً، يبدو أن هناك مشكلة في عملية الدفع، يرجى التأكد من معلومات الدفع والمحاولة مرة أخرى",
+  "your_schedule_has_been_set_successfully__you_can_view_it_in_the_courses_tab": "عيّن جدولك بنجاح، يمكنك الإطلاع في صفحة المقررات"
 }

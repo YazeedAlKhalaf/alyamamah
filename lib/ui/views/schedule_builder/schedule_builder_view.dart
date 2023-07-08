@@ -1,10 +1,14 @@
-import 'package:alyamamah/core/constants.dart';
 import 'package:alyamamah/core/extensions/build_context.dart';
 import 'package:alyamamah/core/models/offered_course.dart';
-import 'package:alyamamah/ui/views/courses/course_widget.dart';
+import 'package:alyamamah/core/router/yu_router.dart';
 import 'package:alyamamah/ui/views/courses/courses_schedule.dart';
 import 'package:alyamamah/ui/views/courses/models/schedule_entry.dart';
+import 'package:alyamamah/ui/views/schedule_builder/offered_courses_conflicts_view.dart';
+import 'package:alyamamah/ui/views/schedule_builder/payment_required_bottom_sheet.dart';
 import 'package:alyamamah/ui/views/schedule_builder/schedule_builder_view_model.dart';
+import 'package:alyamamah/ui/views/schedule_builder/schedule_builder_view_state.dart';
+import 'package:alyamamah/ui/widgets/yu_show.dart';
+import 'package:alyamamah/ui/widgets/yu_snack_bar.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -35,6 +39,57 @@ class _ScheduleBuilderViewState extends ConsumerState<ScheduleBuilderView> {
             selectedCourses: widget.offeredCourses,
           );
     });
+
+    ref.listenManual(scheduleBuilderViewModelProvider, (
+      ScheduleBuilderViewState? previous,
+      ScheduleBuilderViewState current,
+    ) async {
+      switch (current.status) {
+        case ScheduleBuilderViewStatus.submitted:
+          YUSnackBar.show(
+            context,
+            message: context.s
+                .your_schedule_has_been_set_successfully__you_can_view_it_in_the_courses_tab,
+          );
+
+          ref.read(yuRouterProvider).popUntil(
+                ModalRoute.withName(MainRoute.name),
+              );
+          break;
+        case ScheduleBuilderViewStatus.paymentRequired:
+          await YUShow.modalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            builder: (BuildContext context) {
+              return PaymentRequiredBottomSheet(
+                paymentRequiredMessage: current.paymentRequiredMessage,
+                onPaymentSuccess: () async {
+                  ref.read(yuRouterProvider).popUntil(
+                        ModalRoute.withName(ScheduleBuilderRoute.name),
+                      );
+
+                  await ref
+                      .read(scheduleBuilderViewModelProvider.notifier)
+                      .submitSchedule();
+                },
+                onPaymentFailure: () async {
+                  ref.read(yuRouterProvider).popUntil(
+                        ModalRoute.withName(ScheduleBuilderRoute.name),
+                      );
+
+                  YUSnackBar.show(
+                    context,
+                    message: context.s
+                        .oops_it_looks_like_theres_a_problem_with_your_payment__please_confirm_your_payment_information_and_try_again,
+                  );
+                },
+              );
+            },
+          );
+          break;
+        default:
+      }
+    });
   }
 
   @override
@@ -48,95 +103,20 @@ class _ScheduleBuilderViewState extends ConsumerState<ScheduleBuilderView> {
         title: Text(context.s.schedule_builder),
       ),
       body: PageView.builder(
+        onPageChanged: (int pageIndex) {
+          ref
+              .read(scheduleBuilderViewModelProvider.notifier)
+              .setSelectedScheduleIndex(pageIndex);
+        },
         itemCount: scheduleBuilderViewState.offeredCoursesSchedules.length,
         itemBuilder: (BuildContext context, int index) {
           final offeredCoursesSchedule =
               scheduleBuilderViewState.offeredCoursesSchedules[index];
 
           if (offeredCoursesSchedule.hasConflicts) {
-            return ListView(
-              children: [
-                Text(
-                  context.s.schedule_has_conflicts,
-                  style: context.textTheme.bodyLarge?.copyWith(
-                    color: context.colorScheme.primary,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: Constants.padding),
-                ...offeredCoursesSchedule.conflicts.map((conflict) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: Constants.padding,
-                    ),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: context.colorScheme.tertiaryContainer,
-                        borderRadius: BorderRadius.circular(Constants.padding),
-                      ),
-                      padding: const EdgeInsets.all(Constants.padding),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                CourseWidget(
-                                  height: 80,
-                                  scheduleEntry: conflict.firstEntry,
-                                  onTap: () {},
-                                  isSmall: false,
-                                ),
-                                const SizedBox(height: Constants.spacing),
-                                FilledButton(
-                                  onPressed: () {
-                                    ref
-                                        .read(scheduleBuilderViewModelProvider
-                                            .notifier)
-                                        .removeCourseAndRegenerate(
-                                          widget.offeredCourses,
-                                          conflict.firstEntry.courseCode,
-                                        );
-                                  },
-                                  child: Text(context.s.remove_course),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(width: 20),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                CourseWidget(
-                                  height: 80,
-                                  scheduleEntry: conflict.secondEntry,
-                                  onTap: () {},
-                                  isSmall: false,
-                                ),
-                                const SizedBox(height: Constants.spacing),
-                                FilledButton(
-                                  onPressed: () {
-                                    ref
-                                        .read(scheduleBuilderViewModelProvider
-                                            .notifier)
-                                        .removeCourseAndRegenerate(
-                                          widget.offeredCourses,
-                                          conflict.secondEntry.courseCode,
-                                        );
-                                  },
-                                  child: Text(context.s.remove_course),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                }).toList(),
-              ],
+            return OfferedCoursesConflictsView(
+              conflicts: offeredCoursesSchedule.conflicts,
+              offeredCourses: widget.offeredCourses,
             );
           }
 
@@ -152,12 +132,25 @@ class _ScheduleBuilderViewState extends ConsumerState<ScheduleBuilderView> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             FilledButton(
-              onPressed: () async {
-                // TODO: navigate to success screen or payment screen based on response.
+              onPressed: switch (scheduleBuilderViewState.status) {
+                ScheduleBuilderViewStatus.submitting => null,
+                _ => () async {
+                    await ref
+                        .read(scheduleBuilderViewModelProvider.notifier)
+                        .submitSchedule();
+                  },
               },
-              child: Text(
-                context.s.choose_schedule,
-              ),
+              child: switch (scheduleBuilderViewState.status) {
+                ScheduleBuilderViewStatus.submitting => const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                ScheduleBuilderViewStatus.errorSubmitting => Text(
+                    context.s.please_try_again,
+                  ),
+                _ => Text(
+                    context.s.choose_schedule,
+                  ),
+              },
             ),
           ],
         ),

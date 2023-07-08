@@ -41,4 +41,9 @@ class Constants {
       'https://alyamamah.alkhalaf.dev/privacy-policy';
   static const String termsOfUseUrl =
       'https://www.apple.com/legal/internet-services/itunes/dev/stdeula';
+
+  static const String paymentUrl =
+      'https://edugate.yu.edu.sa/yu/ui/student/onlinePayment/index/forwardPaymentIndex.faces';
+  static const String loginUrl =
+      '$apiUrl/resources/common/commonServies/actorDetails/-1/1/2';
 }

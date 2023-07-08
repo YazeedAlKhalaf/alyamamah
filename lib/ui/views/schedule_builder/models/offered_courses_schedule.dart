@@ -1,25 +1,31 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:alyamamah/core/models/day.dart';
+import 'package:alyamamah/core/models/offered_course.dart';
 import 'package:alyamamah/ui/views/courses/models/schedule_entry.dart';
 import 'package:alyamamah/ui/views/schedule_builder/models/conflict.dart';
 import 'package:flutter/foundation.dart';
 
 class OfferedCoursesSchedule {
+  final List<OfferedCourse> offeredCourses;
   final Map<Day, List<ScheduleEntry>> scheduleDays;
   final bool hasConflicts;
   final List<Conflict> conflicts;
 
   const OfferedCoursesSchedule({
+    required this.offeredCourses,
     required this.scheduleDays,
     this.hasConflicts = false,
     this.conflicts = const [],
   });
 
   OfferedCoursesSchedule copyWith({
+    List<OfferedCourse>? offeredCourses,
     Map<Day, List<ScheduleEntry>>? scheduleDays,
     bool? hasConflicts,
     List<Conflict>? conflicts,
   }) {
     return OfferedCoursesSchedule(
+      offeredCourses: offeredCourses ?? this.offeredCourses,
       scheduleDays: scheduleDays ?? this.scheduleDays,
       hasConflicts: hasConflicts ?? this.hasConflicts,
       conflicts: conflicts ?? this.conflicts,

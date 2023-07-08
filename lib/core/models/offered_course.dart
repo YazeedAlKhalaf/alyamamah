@@ -191,6 +191,46 @@ class OfferedCourse {
   factory OfferedCourse.fromJson(String source) =>
       OfferedCourse.fromMap(json.decode(source) as Map<String, dynamic>);
 
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'courseId': courseId,
+      'courseCode': courseCode,
+      'courseEdition': courseEdition,
+      'creditHours': creditHours,
+      'courseSection': courseSection,
+      'courseName': courseName,
+      'activityCode': activityCode,
+      'activityDesc': activityDesc,
+      'campusName': campusName,
+      'campusId': campusId,
+      'buildingName': buildingName,
+      'roomCode': roomCode,
+      'roomDesc': roomDesc,
+      'secDays': secDays,
+      'secTimes': secTimes,
+      'teacherName': teacherName,
+      'isMain': isMain,
+      'isClosed': isClosed,
+      'timeTable': timeTable.map((x) => x.toMap()).toList(),
+      'sectionSeq': sectionSeq,
+      'examPeriod': examPeriod,
+      'status': status,
+      'regError': regError,
+      'containActivity': containActivity,
+      'freeCourse': freeCourse,
+      'bisect': bisect,
+      'categoryCode': categoryCode,
+      'groupSeq': groupSeq,
+      'groupType': groupType,
+      'sectionType': sectionType,
+      'fullWeb': fullWeb,
+      'overlapType': overlapType,
+      'courseGroup': courseGroup,
+    };
+  }
+
+  String toJson() => json.encode(toMap());
+
   @override
   String toString() {
     return 'OfferedCourse(courseId: $courseId, courseCode: $courseCode, courseEdition: $courseEdition, creditHours: $creditHours, courseSection: $courseSection, courseName: $courseName, activityCode: $activityCode, activityDesc: $activityDesc, campusName: $campusName, campusId: $campusId, buildingName: $buildingName, roomCode: $roomCode, roomDesc: $roomDesc, secDays: $secDays, secTimes: $secTimes, teacherName: $teacherName, isMain: $isMain, isClosed: $isClosed, timeTable: $timeTable, sectionSeq: $sectionSeq, examPeriod: $examPeriod, status: $status, regError: $regError, containActivity: $containActivity, freeCourse: $freeCourse, bisect: $bisect, categoryCode: $categoryCode, groupSeq: $groupSeq, groupType: $groupType, sectionType: $sectionType, fullWeb: $fullWeb, overlapType: $overlapType, courseGroup: $courseGroup)';

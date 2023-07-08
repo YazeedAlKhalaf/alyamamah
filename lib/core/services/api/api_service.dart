@@ -5,6 +5,9 @@ import 'package:alyamamah/core/constants.dart';
 import 'package:alyamamah/core/models/absence.dart';
 import 'package:alyamamah/core/models/actor_details.dart';
 import 'package:alyamamah/core/models/course_result.dart';
+import 'package:alyamamah/core/models/do_registration_response.dart';
+import 'package:alyamamah/core/models/offered_course.dart';
+import 'package:alyamamah/core/models/registration_hours.dart';
 import 'package:alyamamah/core/models/schedule.dart';
 import 'package:alyamamah/core/models/student_gpa.dart';
 import 'package:alyamamah/core/services/api/api_service_exception.dart';
@@ -341,6 +344,100 @@ class ApiService {
       if (e is ApiServiceException) rethrow;
 
       _log.severe('getStudentGPA | unexpected exception: $e.');
+      throw const ApiServiceException();
+    }
+  }
+
+  Future<List<OfferedCourse>> getOfferedCourses() async {
+    try {
+      final response = await _dio.post(
+        '/resources/student/reg/offeredCourses',
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        ),
+        data: [],
+      );
+
+      if (response.statusCode != 200) {
+        _log.severe('getOfferedCourses | non 200 status code.');
+        throw const ApiServiceException();
+      }
+
+      return (response.data as List<dynamic>)
+          .map((e) => OfferedCourse.fromMap(e))
+          .toList();
+    } catch (e) {
+      if (e is ApiServiceException) rethrow;
+
+      _log.severe('getOfferedCourses | unexpected exception: $e.');
+      throw const ApiServiceException();
+    }
+  }
+
+  Future<List<OfferedCourse>> getAttemptedCourses() async {
+    try {
+      final response = await _dio.get(
+        '/resources/student/reg/getAttemptedCourses',
+      );
+
+      if (response.statusCode != 200) {
+        _log.severe('getAttemptedCourses | non 200 status code.');
+        throw const ApiServiceException();
+      }
+
+      return (response.data as List<dynamic>)
+          .map((e) => OfferedCourse.fromMap(e))
+          .toList();
+    } catch (e) {
+      if (e is ApiServiceException) rethrow;
+
+      _log.severe('getAttemptedCourses | unexpected exception: $e.');
+      throw const ApiServiceException();
+    }
+  }
+
+  Future<RegistrationHours> getRegistrationHours() async {
+    try {
+      final response = await _dio.get(
+        '/resources/student/reg/getRegHrs',
+      );
+
+      if (response.statusCode != 200) {
+        _log.severe('getRegistrationHours | non 200 status code.');
+        throw const ApiServiceException();
+      }
+
+      return RegistrationHours.fromMap(response.data);
+    } catch (e) {
+      if (e is ApiServiceException) rethrow;
+
+      _log.severe('getRegistrationHours | unexpected exception: $e.');
+      throw const ApiServiceException();
+    }
+  }
+
+  Future<DoRegistrationResponse> doRegistration({
+    required List<OfferedCourse> courses,
+  }) async {
+    try {
+      final response = await _dio.get(
+        '/resources/student/reg/doRegistration',
+      );
+
+      if (response.statusCode != 200) {
+        _log.severe('doRegistration | non 200 status code.');
+        throw const ApiServiceException();
+      }
+
+      print('response: $response');
+
+      return DoRegistrationResponse.fromMap(response.data);
+    } catch (e) {
+      if (e is ApiServiceException) rethrow;
+
+      _log.severe('doRegistration | unexpected exception: $e.');
       throw const ApiServiceException();
     }
   }

@@ -1,4 +1,5 @@
 import 'package:alyamamah/core/models/absence.dart';
+import 'package:alyamamah/core/models/offered_course.dart';
 import 'package:alyamamah/ui/views/absences/absence_details_view.dart';
 import 'package:alyamamah/ui/views/absences/absences_view.dart';
 import 'package:alyamamah/ui/views/courses/course_details_view.dart';
@@ -10,6 +11,8 @@ import 'package:alyamamah/ui/views/onboarding/onboarding_view.dart';
 import 'package:alyamamah/ui/views/paywall/paywall_view.dart';
 import 'package:alyamamah/ui/views/permissions/notification_permission_view.dart';
 import 'package:alyamamah/ui/views/profile/profile_view.dart';
+import 'package:alyamamah/ui/views/schedule_builder/offered_courses_view.dart';
+import 'package:alyamamah/ui/views/schedule_builder/schedule_builder_view.dart';
 import 'package:alyamamah/ui/views/startup/startup_view.dart';
 import 'package:alyamamah/ui/views/student_info/student_info_view.dart';
 import 'package:alyamamah/ui/views/yu_gpt/yu_gpt_view.dart';
@@ -48,5 +51,7 @@ class YURouter extends _$YURouter {
       transitionsBuilder: TransitionsBuilders.slideBottom,
       fullscreenDialog: true,
     ),
+    AutoRoute(page: OfferedCoursesRoute.page),
+    AutoRoute(page: ScheduleBuilderRoute.page),
   ];
 }

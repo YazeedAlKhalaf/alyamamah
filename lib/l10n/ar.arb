@@ -151,5 +151,20 @@
   "skip_for_now": "ليس الآن",
   "notifications": "الإشعارات",
   "privacy_policy": "سياسة الخصوصية",
-  "terms_of_use": "شروط الاستخدام"
+  "terms_of_use": "شروط الاستخدام",
+  "make_my_schedule": "اصنع جدولي",
+  "offered_courses": "المقررات المتاحة",
+  "schedule_builder": "منشئ الجدول",
+  "something_went_wrong_fetching_your_offered_courses": "حدث خطأ أثناء جلب المقررات المتاحة لك",
+  "please_try_again": "حاول مرة أخرى",
+  "no_offered_courses_found": "لم يعثر على مقررات متاحة",
+  "wait_till_the_university_releases_the_courses_or_talk_to_your_advisor": "انتظر حتى تصدر الجامعة المقررات أو تحدث مع مستشارك",
+  "min_x": "الحد الأدنى\n{hours}",
+  "max_x": "الحد الأعلى\n{hours}",
+  "attempted_x": "المحجوزة\n{hours}",
+  "selected_x": "المحددة\n{hours}",
+  "next": "التالي",
+  "choose_schedule": "اختر الجدول",
+  "schedule_has_conflicts": "الجدول يحتوي على تعارضات",
+  "remove_course": "إزالة المقرر"
 }

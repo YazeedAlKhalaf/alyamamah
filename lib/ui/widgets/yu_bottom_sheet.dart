@@ -62,6 +62,7 @@ class _YUBottomSheetState extends ConsumerState<YUBottomSheet>
             right: false,
             left: false,
             bottom: true,
+            minimum: const EdgeInsets.only(bottom: Constants.padding),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [

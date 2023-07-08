@@ -6,12 +6,14 @@ class CourseWidget extends StatelessWidget {
   final double height;
   final ScheduleEntry scheduleEntry;
   final void Function()? onTap;
+  final bool isSmall;
 
   const CourseWidget({
     super.key,
     required this.height,
     required this.scheduleEntry,
     required this.onTap,
+    this.isSmall = true,
   });
 
   @override
@@ -32,6 +34,10 @@ class CourseWidget extends StatelessWidget {
           width: 1,
         ),
       ),
+      padding: switch (isSmall) {
+        true => null,
+        false => const EdgeInsets.symmetric(vertical: Constants.padding / 8),
+      },
       child: Material(
         color: Colors.transparent,
         child: InkWell(
@@ -47,7 +53,10 @@ class CourseWidget extends StatelessWidget {
                 scheduleEntry.startTime.format(context),
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                      fontSize: 9,
+                      fontSize: switch (isSmall) {
+                        true => 9,
+                        false => null,
+                      },
                     ),
               ),
               const Spacer(flex: 8),
@@ -55,7 +64,10 @@ class CourseWidget extends StatelessWidget {
                 '${scheduleEntry.courseCode}\n${scheduleEntry.room}',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: height <= 70 ? 8 : 10,
+                  fontSize: switch (isSmall) {
+                    true => height <= 70 ? 8 : 10,
+                    false => null,
+                  },
                 ),
               ),
               const Spacer(flex: 8),
@@ -63,7 +75,10 @@ class CourseWidget extends StatelessWidget {
                 scheduleEntry.endTime.format(context),
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                      fontSize: 9,
+                      fontSize: switch (isSmall) {
+                        true => 9,
+                        false => null,
+                      },
                     ),
               ),
             ],

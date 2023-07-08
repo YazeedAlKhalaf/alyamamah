@@ -49,6 +49,22 @@ abstract class _$YURouter extends RootStackRouter {
         ),
       );
     },
+    ScheduleBuilderRoute.name: (routeData) {
+      final args = routeData.argsAs<ScheduleBuilderRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: ScheduleBuilderView(
+          key: args.key,
+          offeredCourses: args.offeredCourses,
+        ),
+      );
+    },
+    OfferedCoursesRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const OfferedCoursesView(),
+      );
+    },
     CourseDetailsRoute.name: (routeData) {
       final args = routeData.argsAs<CourseDetailsRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -230,6 +246,58 @@ class NotificationsPermissionRouteArgs {
   String toString() {
     return 'NotificationsPermissionRouteArgs{key: $key, onPermissionGranted: $onPermissionGranted, onDismissed: $onDismissed}';
   }
+}
+
+/// generated route for
+/// [ScheduleBuilderView]
+class ScheduleBuilderRoute extends PageRouteInfo<ScheduleBuilderRouteArgs> {
+  ScheduleBuilderRoute({
+    Key? key,
+    required List<OfferedCourse> offeredCourses,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ScheduleBuilderRoute.name,
+          args: ScheduleBuilderRouteArgs(
+            key: key,
+            offeredCourses: offeredCourses,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'ScheduleBuilderRoute';
+
+  static const PageInfo<ScheduleBuilderRouteArgs> page =
+      PageInfo<ScheduleBuilderRouteArgs>(name);
+}
+
+class ScheduleBuilderRouteArgs {
+  const ScheduleBuilderRouteArgs({
+    this.key,
+    required this.offeredCourses,
+  });
+
+  final Key? key;
+
+  final List<OfferedCourse> offeredCourses;
+
+  @override
+  String toString() {
+    return 'ScheduleBuilderRouteArgs{key: $key, offeredCourses: $offeredCourses}';
+  }
+}
+
+/// generated route for
+/// [OfferedCoursesView]
+class OfferedCoursesRoute extends PageRouteInfo<void> {
+  const OfferedCoursesRoute({List<PageRouteInfo>? children})
+      : super(
+          OfferedCoursesRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'OfferedCoursesRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for

@@ -151,5 +151,20 @@
   "skip_for_now": "Skip for Now",
   "notifications": "Notifications",
   "privacy_policy": "Privacy Policy",
-  "terms_of_use": "Terms of Use"
+  "terms_of_use": "Terms of Use",
+  "make_my_schedule": "Make My Schedule",
+  "offered_courses": "Offered Courses",
+  "schedule_builder": "Schedule Builder",
+  "something_went_wrong_fetching_your_offered_courses": "Something went wrong while fetching your offered courses",
+  "please_try_again": "Please try again",
+  "no_offered_courses_found": "No offered courses found",
+  "wait_till_the_university_releases_the_courses_or_talk_to_your_advisor": "Wait till the university releases the courses or talk to your advisor",
+  "min_x": "Min\n{hours}",
+  "max_x": "Max\n{hours}",
+  "attempted_x": "Attempted\n{hours}",
+  "selected_x": "Selected\n{hours}",
+  "next": "Next",
+  "choose_schedule": "Choose Schedule",
+  "schedule_has_conflicts": "Schedule has conflicts",
+  "remove_course": "Remove Course"
 }

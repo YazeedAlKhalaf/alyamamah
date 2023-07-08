@@ -1,5 +1,6 @@
 import 'package:alyamamah/core/extensions/build_context.dart';
 import 'package:alyamamah/core/extensions/map_day_schedule_entries.dart';
+import 'package:alyamamah/core/router/yu_router.dart';
 import 'package:alyamamah/core/utils.dart';
 import 'package:alyamamah/ui/views/courses/courses_schedule.dart';
 import 'package:alyamamah/ui/views/courses/courses_view_model.dart';
@@ -96,26 +97,40 @@ class _CoursesViewState extends ConsumerState<CoursesView> {
                       context,
                       coursesViewModel.selectedSemester,
                     ),
-                    action: FilledButton.icon(
-                      onPressed: () async {
-                        await YUShow.modalBottomSheet(
-                          context: context,
-                          isScrollControlled: true,
-                          builder: (BuildContext context) {
-                            return ChangeSemesterBottomSheet(
-                              selectedSemester:
-                                  coursesViewModel.selectedSemester,
-                              onSemesterChanged: (String semester) async {
-                                ref
-                                    .read(coursesViewModelProvider)
-                                    .changeSemester(semester);
+                    action: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        FilledButton.icon(
+                          onPressed: () async {
+                            await YUShow.modalBottomSheet(
+                              context: context,
+                              isScrollControlled: true,
+                              builder: (BuildContext context) {
+                                return ChangeSemesterBottomSheet(
+                                  selectedSemester:
+                                      coursesViewModel.selectedSemester,
+                                  onSemesterChanged: (String semester) async {
+                                    ref
+                                        .read(coursesViewModelProvider)
+                                        .changeSemester(semester);
+                                  },
+                                );
                               },
                             );
                           },
-                        );
-                      },
-                      icon: const Icon(Icons.book_rounded),
-                      label: Text(context.s.choose_semester),
+                          icon: const Icon(Icons.book_rounded),
+                          label: Text(context.s.choose_semester),
+                        ),
+                        FilledButton.tonalIcon(
+                          onPressed: () async {
+                            await ref
+                                .read(yuRouterProvider)
+                                .push(const OfferedCoursesRoute());
+                          },
+                          icon: const Icon(Icons.calendar_month_rounded),
+                          label: Text(context.s.make_my_schedule),
+                        ),
+                      ],
                     ),
                     onRefresh: () async {
                       await coursesViewModel.getStudentSchedule();

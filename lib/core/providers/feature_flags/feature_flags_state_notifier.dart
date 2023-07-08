@@ -31,6 +31,9 @@ class FeatureFlagsStateNotifier extends StateNotifier<FeatureFlagsState> {
       isAlyamamahGptEnabled: _unleashService.isEnabled(
         UnleashFlags.alyamamahGpt,
       ),
+      isScheduleBuilderEnabled: _unleashService.isEnabled(
+        UnleashFlags.scheduleBuilder,
+      ),
     );
   }
 
@@ -39,6 +42,9 @@ class FeatureFlagsStateNotifier extends StateNotifier<FeatureFlagsState> {
     state = state.copyWith(
       isAlyamamahGptEnabled: _unleashService.isEnabled(
         UnleashFlags.alyamamahGpt,
+      ),
+      isScheduleBuilderEnabled: _unleashService.isEnabled(
+        UnleashFlags.scheduleBuilder,
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:alyamamah/core/extensions/build_context.dart';
 import 'package:alyamamah/core/extensions/map_day_schedule_entries.dart';
+import 'package:alyamamah/core/providers/feature_flags/feature_flags_state_notifier.dart';
 import 'package:alyamamah/core/router/yu_router.dart';
 import 'package:alyamamah/core/utils.dart';
 import 'package:alyamamah/ui/views/courses/courses_schedule.dart';
@@ -38,6 +39,7 @@ class _CoursesViewState extends ConsumerState<CoursesView> {
   @override
   Widget build(BuildContext context) {
     final coursesViewModel = ref.watch(coursesViewModelProvider);
+    final featureFlagsState = ref.watch(featureFlagsStateNotifierProvider);
 
     int lowestStartHour = 10000000000000;
     for (final e in coursesViewModel.scheduleDays.entries) {
@@ -121,15 +123,16 @@ class _CoursesViewState extends ConsumerState<CoursesView> {
                           icon: const Icon(Icons.book_rounded),
                           label: Text(context.s.choose_semester),
                         ),
-                        FilledButton.tonalIcon(
-                          onPressed: () async {
-                            await ref
-                                .read(yuRouterProvider)
-                                .push(const OfferedCoursesRoute());
-                          },
-                          icon: const Icon(Icons.calendar_month_rounded),
-                          label: Text(context.s.build_my_schedule),
-                        ),
+                        if (featureFlagsState.isScheduleBuilderEnabled)
+                          FilledButton.tonalIcon(
+                            onPressed: () async {
+                              await ref
+                                  .read(yuRouterProvider)
+                                  .push(const OfferedCoursesRoute());
+                            },
+                            icon: const Icon(Icons.calendar_month_rounded),
+                            label: Text(context.s.build_my_schedule),
+                          ),
                       ],
                     ),
                     onRefresh: () async {

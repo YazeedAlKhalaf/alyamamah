@@ -41,6 +41,10 @@ docker compose up -d
 
 The yq commands I use format the file in a way and replace the env placeholders, kindly revert the changes that remove the placeholders before pushing any commits.
 
+### Next Steps:
+
+- create a user with this command from inside the container: `ejabberdctl register admin localhost password`
+
 ## References:
 
 - Dockefile of ejabberd/ecs package: https://github.com/processone/docker-ejabberd/blob/master/ecs/Dockerfile

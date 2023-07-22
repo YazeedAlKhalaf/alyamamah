@@ -53,7 +53,8 @@ jobs:
             cd ~/stuff/alyamamah
             git pull
             cd ejabberd
-            docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@sha256:${{ github.sha }}
+            IMAGE_WITH_DIGEST=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.build-and-push.outputs.digest }}
+            docker pull $IMAGE_WITH_DIGEST
             if [ $(docker ps -q -f name=${{ env.CONTAINER_NAME }}) ]; then
                docker stop ${{ env.CONTAINER_NAME }}
                docker rm ${{ env.CONTAINER_NAME }}
@@ -63,4 +64,4 @@ jobs:
             -p 5269:5269 \
             -p 5280:5280 \
             --env-file ejabberd.env \
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@sha256:${{ github.sha }}
+            $IMAGE_WITH_DIGEST

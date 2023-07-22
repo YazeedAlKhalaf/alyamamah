@@ -1,11 +1,11 @@
-# ejabberd
+# 💬 ejabberd
 
 You need to run the `scripts/get_default_config.sh` script to get a brand new config file that is untouched.
 
 SQL Schema: https://docs.ejabberd.im/developer/sql-schema/
 PostgreSQL Schema: https://github.com/processone/ejabberd/blob/master/sql/pg.sql
 
-### Commands to initialize the database for ejabberd:
+### 👨‍💻 Commands to initialize the database for ejabberd:
 
 Run those SQL commands in order:
 
@@ -32,7 +32,7 @@ export POSTGRESQL_URL='postgres://ejabberd_svc:password@localhost:5432/ejabberd?
 migrate -database ${POSTGRESQL_URL} -path db/migrations up
 ```
 
-### After running the above commands, you can run the app in docker:
+### 🐟 After running the above commands, you can run the app in docker:
 
 ```
 docker compose build
@@ -41,10 +41,10 @@ docker compose up -d
 
 The yq commands I use format the file in a way and replace the env placeholders, kindly revert the changes that remove the placeholders before pushing any commits.
 
-### Next Steps:
+### ⬆️ Next Steps:
 
 - create a user with this command from inside the container: `ejabberdctl register admin localhost password`
 
-## References:
+## 📚 References:
 
 - Dockefile of ejabberd/ecs package: https://github.com/processone/docker-ejabberd/blob/master/ecs/Dockerfile

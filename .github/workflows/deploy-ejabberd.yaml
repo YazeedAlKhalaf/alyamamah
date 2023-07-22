@@ -36,12 +36,17 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
       - name: Build and push Docker image
+        id: build-push
         uses: docker/build-push-action@v4.1.1
         with:
           context: ./ejabberd
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+      
+      - name: Display the outputs of the build-push action
+        run: echo "Outputs is ${{ toJson(steps.build-push.outputs) }}"
+
 
       - name: Deploy to production
         uses: appleboy/ssh-action@v0.1.10

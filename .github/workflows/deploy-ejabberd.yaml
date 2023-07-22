@@ -40,6 +40,7 @@ jobs:
         with:
           context: ./ejabberd
           push: true
+          load: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
@@ -53,8 +54,7 @@ jobs:
             cd ~/stuff/alyamamah
             git pull
             cd ejabberd
-            IMAGE_WITH_DIGEST=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.build-and-push.outputs.digest }}
-            docker pull $IMAGE_WITH_DIGEST
+            docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.meta.outputs.imageid }}
             if [ $(docker ps -q -f name=${{ env.CONTAINER_NAME }}) ]; then
                docker stop ${{ env.CONTAINER_NAME }}
                docker rm ${{ env.CONTAINER_NAME }}
@@ -64,4 +64,4 @@ jobs:
             -p 5269:5269 \
             -p 5280:5280 \
             --env-file ejabberd.env \
-            $IMAGE_WITH_DIGEST
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.meta.outputs.imageid }}

@@ -1,4 +1,4 @@
-version: '3.1'
+version: "3.1"
 
 services:
   db:
@@ -12,3 +12,7 @@ services:
       - ./data:/var/lib/postgresql/data
     ports:
       - 5432:5432
+
+networks:
+  default:
+    name: alyamamah_network

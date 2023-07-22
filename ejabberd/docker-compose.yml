@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+  ejabberd:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5222:5222" # XMPP client connection
+      - "5269:5269" # XMPP server connection
+      - "5280:5280" # HTTP connection
+    volumes:
+      - ./conf/ejabberd.yml:/opt/ejabberd/conf/ejabberd.yml
+    env_file:
+      - ejabberd.env
+
+networks:
+  default:
+    name: alyamamah_network

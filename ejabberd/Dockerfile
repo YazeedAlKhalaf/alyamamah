@@ -20,7 +20,6 @@ USER root
 # Change permissions for the configuration file and the script
 RUN chmod +rw /opt/ejabberd/conf/ejabberd.yml \
     && chmod +x /home/entrypoint.sh
-USER ejabberd
 
 # Update ENTRYPOINT to use the custom script
 ENTRYPOINT ["/sbin/tini", "--", "/home/entrypoint.sh"]

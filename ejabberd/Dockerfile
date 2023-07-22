@@ -16,6 +16,9 @@ COPY --from=builder /usr/bin/yq /usr/bin/yq
 COPY conf/ejabberd.yml /opt/ejabberd/conf/ejabberd.yml
 COPY scripts/entrypoint.sh /home/entrypoint.sh
 
+# Change permissions for the configuration file
+RUN chmod +rw /opt/ejabberd/conf/ejabberd.yml
+
 # Update ENTRYPOINT to use the custom script
 ENTRYPOINT ["/sbin/tini", "--", "/home/entrypoint.sh"]
 CMD ["foreground"]

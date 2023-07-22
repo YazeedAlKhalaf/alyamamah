@@ -228,6 +228,10 @@ sql_port: "${SQL_PORT}"
 sql_database: "${SQL_DATABASE}"
 sql_username: "${SQL_USERNAME}"
 sql_password: "${SQL_PASSWORD}"
+# auth stuff
+auth_method: sql
+auth_password_format: scram
+auth_scram_hash: sha512
 ### Local Variables:
 ### mode: yaml
 ### End:

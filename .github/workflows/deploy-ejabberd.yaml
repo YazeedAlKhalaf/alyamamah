@@ -53,6 +53,7 @@ jobs:
             cd ~/stuff/alyamamah
             git pull
             cd ejabberd
+            echo "${{ steps.meta.outputs }}"
             docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.meta.outputs.imageid }}
             if [ $(docker ps -q -f name=${{ env.CONTAINER_NAME }}) ]; then
                docker stop ${{ env.CONTAINER_NAME }}

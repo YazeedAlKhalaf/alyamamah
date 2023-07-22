@@ -54,8 +54,10 @@ jobs:
             git pull
             cd ejabberd
             docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@sha256:${{ github.sha }}
-            docker stop ${{ env.CONTAINER_NAME }} || true
-            docker rm ${{ env.CONTAINER_NAME }} || true
+            if [ $(docker ps -q -f name=${{ env.CONTAINER_NAME }}) ]; then
+               docker stop ${{ env.CONTAINER_NAME }}
+               docker rm ${{ env.CONTAINER_NAME }}
+            fi
             docker run -d --name ${{ env.CONTAINER_NAME }} \
             -p 5222:5222 \
             -p 5269:5269 \

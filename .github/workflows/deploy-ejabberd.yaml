@@ -43,10 +43,6 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-      
-      - name: Display the outputs of the build-push action
-        run: echo "Outputs is ${{ toJson(steps.build-push.outputs) }}"
-
 
       - name: Deploy to production
         uses: appleboy/ssh-action@v0.1.10
@@ -58,8 +54,7 @@ jobs:
             cd ~/stuff/alyamamah
             git pull
             cd ejabberd
-            echo "${{ toJson(steps.meta.outputs) }}"
-            docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.meta.outputs.imageid }}
+            docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.build-push.outputs.digest }}
             if [ $(docker ps -q -f name=${{ env.CONTAINER_NAME }}) ]; then
                docker stop ${{ env.CONTAINER_NAME }}
                docker rm ${{ env.CONTAINER_NAME }}
@@ -69,4 +64,4 @@ jobs:
             -p 5269:5269 \
             -p 5280:5280 \
             --env-file ejabberd.env \
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.meta.outputs.imageid }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.build-push.outputs.digest }}

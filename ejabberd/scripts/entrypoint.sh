@@ -9,6 +9,7 @@ yq -i ".sql_port = env(SQL_PORT)" $CONFIG_FILE_PATH
 yq -i ".sql_database = env(SQL_DATABASE)" $CONFIG_FILE_PATH
 yq -i ".sql_username = env(SQL_USERNAME)" $CONFIG_FILE_PATH
 yq -i ".sql_password = env(SQL_PASSWORD)" $CONFIG_FILE_PATH
+yq -i ".hosts[0] = env(EJABBERD_HOST)" $CONFIG_FILE_PATH
 
 # Start ejabberd
 exec /opt/ejabberd-23.04/bin/ejabberdctl "$@"

@@ -16,15 +16,10 @@
 
 hosts:
   - localhost
-  - yu-chat.awesomedev.org
 loglevel: info
-ca_file: /opt/ejabberd/conf/cacert.pem
 certfiles:
-  - /opt/ejabberd/conf/server.pem
-## If you already have certificates, list them here
-# certfiles:
-#  - /etc/letsencrypt/live/domain.tld/fullchain.pem
-#  - /etc/letsencrypt/live/domain.tld/privkey.pem
+  - /opt/ejabberd/certs/fullchain.pem
+  - /opt/ejabberd/certs/privkey.pem
 listen:
   - port: 5222
     ip: "::"
@@ -224,11 +219,11 @@ modules:
 # db stuff
 default_db: sql
 sql_type: pgsql
-sql_server: "${SQL_SERVER}"
-sql_port: "${SQL_PORT}"
-sql_database: "${SQL_DATABASE}"
-sql_username: "${SQL_USERNAME}"
-sql_password: "${SQL_PASSWORD}"
+sql_server: "backend-db-1"
+sql_port: 5432
+sql_database: "ejabberd"
+sql_username: "ejabberd_svc"
+sql_password: "password"
 # auth stuff
 auth_method: sql
 auth_password_format: scram

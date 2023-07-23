@@ -45,6 +45,16 @@ The yq commands I use format the file in a way and replace the env placeholders,
 
 - create a user with this command from inside the container: `ejabberdctl register admin localhost password`
 
+## Generate certs
+
+Run this inside certs after deleting its contents:
+
+```
+openssl req -x509 -newkey rsa:4096 -keyout localhost.key -out localhost.pem -days 3650 -nodes -config localhost.cnf
+```
+
+Then change the extensions to `.pem`
+
 ## 📚 References:
 
 - Dockefile of ejabberd/ecs package: https://github.com/processone/docker-ejabberd/blob/master/ecs/Dockerfile

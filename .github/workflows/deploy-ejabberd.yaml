@@ -64,4 +64,6 @@ jobs:
             -p 5269:5269 \
             -p 5280:5280 \
             --env-file ejabberd.env \
+            -v /etc/letsencrypt/live/yu-chat.awesomedev.org/fullchain.pem:/opt/ejabberd/certs/fullchain.pem \
+            -v /etc/letsencrypt/live/yu-chat.awesomedev.org/privkey.pem:/opt/ejabberd/certs/privkey.pem \
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.build-push.outputs.digest }}

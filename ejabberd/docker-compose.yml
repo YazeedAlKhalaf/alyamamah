@@ -11,6 +11,8 @@ services:
       - "5280:5280" # HTTP connection
     volumes:
       - ./conf/ejabberd.yml:/opt/ejabberd/conf/ejabberd.yml
+      - ./certs/fullchain.pem:/opt/ejabberd/certs/fullchain.pem
+      - ./certs/privkey.pem:/opt/ejabberd/certs/privkey.pem
     env_file:
       - ejabberd.env
 

@@ -1,7 +1,12 @@
 import jwt from "jsonwebtoken";
 
+enum JwtAudience {
+  alyamamah = "alyamamah",
+  connectyCube = "connectyCube",
+}
+
 class Utils {
-  static generateJwtToken(username: string): string {
+  static generateJwtToken(username: string, audience: JwtAudience): string {
     const privateKey: string = Buffer.from(
       process.env.JWT_PRIVATE_KEY as string,
       "base64"
@@ -11,7 +16,7 @@ class Utils {
 
     const token: string = jwt.sign(payload, privateKey, {
       algorithm: "RS256",
-      audience: "alyamamah",
+      audience: audience.valueOf(),
       issuer: "https://yu.alkhalaf.dev",
       // - makes sure the token is not used before at least 3 seconds.
       notBefore: 3,
@@ -21,7 +26,10 @@ class Utils {
     return token;
   }
 
-  static getJwtPayload(token: string): string | jwt.JwtPayload {
+  static getJwtPayload(
+    token: string,
+    audience: JwtAudience
+  ): string | jwt.JwtPayload {
     const publicKey: string = Buffer.from(
       process.env.JWT_PUBLIC_KEY as string,
       "base64"
@@ -29,16 +37,19 @@ class Utils {
 
     return jwt.verify(token, publicKey, {
       algorithms: ["RS256"],
-      audience: "alyamamah",
+      audience: audience.valueOf(),
       issuer: "https://yu.alkhalaf.dev",
       ignoreExpiration: false,
       ignoreNotBefore: false,
     });
   }
 
-  static isJwtTokenValid(token: string): boolean {
+  static isJwtTokenValid(token: string, audience: JwtAudience): boolean {
     try {
-      const decodedToken: string | jwt.JwtPayload = this.getJwtPayload(token);
+      const decodedToken: string | jwt.JwtPayload = this.getJwtPayload(
+        token,
+        audience
+      );
 
       return decodedToken != null;
     } catch (error: any) {
@@ -48,8 +59,11 @@ class Utils {
     }
   }
 
-  static getUsernameFromJwt(token: string): string | null {
-    const decodedToken = this.getJwtPayload(token);
+  static getUsernameFromJwt(
+    token: string,
+    audience: JwtAudience
+  ): string | null {
+    const decodedToken = this.getJwtPayload(token, audience);
 
     if (typeof decodedToken === "object" && "username" in decodedToken) {
       return decodedToken.username;
@@ -70,3 +84,4 @@ class Utils {
 }
 
 export default Utils;
+export { JwtAudience };

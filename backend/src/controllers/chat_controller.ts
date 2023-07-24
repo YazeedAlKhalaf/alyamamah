@@ -11,7 +11,7 @@ import {
 } from "langchain/schema";
 import Validators from "../core/validators";
 import Chat from "../models/chat";
-import Utils from "../core/utils";
+import Utils, { JwtAudience } from "../core/utils";
 import User from "../models/user";
 import SubscriptionTier from "../models/subscription_tier";
 import ModelName from "../models/model_name";
@@ -41,7 +41,7 @@ class ChatController extends Controller {
       modelName,
     }: { chatList: Chat[]; token: string; modelName: ModelName } = req.body;
 
-    const username = Utils.getUsernameFromJwt(token);
+    const username = Utils.getUsernameFromJwt(token, JwtAudience.alyamamah);
     if (username == null) {
       console.log("username is null");
       // This means the JWT token is invalid, or doesn't have a username.

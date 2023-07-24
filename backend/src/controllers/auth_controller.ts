@@ -3,7 +3,7 @@ import Controller from "./controller";
 import EdugateApiService from "../services/edugate_api_service";
 import Validators from "../core/validators";
 import * as expressValidator from "express-validator";
-import Utils from "../core/utils";
+import Utils, { JwtAudience } from "../core/utils";
 import User from "../models/user";
 
 class AuthController extends Controller {
@@ -24,6 +24,10 @@ class AuthController extends Controller {
       "/login",
       ...Validators.validateLogin(),
       this.login.bind(this)
+    );
+    this.router.post(
+      "/verify-connecty-cube",
+      this.verifyConnectyCube.bind(this)
     );
   }
 
@@ -55,14 +59,44 @@ class AuthController extends Controller {
         });
       }
 
-      const jwt = Utils.generateJwtToken(username);
-      res.status(200).json({ accessToken: jwt, message: null });
+      const accessToken = Utils.generateJwtToken(
+        username,
+        JwtAudience.alyamamah
+      );
+      const connectyCubeToken = Utils.generateJwtToken(
+        username,
+        JwtAudience.connectyCube
+      );
+      res.status(200).json({
+        accessToken: accessToken,
+        connectyCubeToken: connectyCubeToken,
+        message: null,
+      });
     } else {
       res.status(401).json({
         accessToken: null,
+        connectyCubeToken: null,
         message: "invalid username or password",
       });
     }
+  }
+
+  private async verifyConnectyCube(req: Request, res: Response) {
+    const token = req.body.token;
+
+    const isTokenValid = Utils.isJwtTokenValid(token, JwtAudience.connectyCube);
+
+    if (!isTokenValid) {
+      res.status(422).json({ error: "User token is invalid" });
+      return;
+    }
+
+    const username = Utils.getUsernameFromJwt(token, JwtAudience.connectyCube);
+    res.status(200).json({
+      user: {
+        id: username,
+      },
+    });
   }
 }
 

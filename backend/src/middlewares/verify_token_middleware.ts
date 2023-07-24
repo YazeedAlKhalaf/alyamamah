@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import Utils from "../core/utils";
+import Utils, { JwtAudience } from "../core/utils";
 
 function verifyToken(req: Request, res: Response, next: NextFunction): void {
   let token = req.header("Authorization");
@@ -14,7 +14,7 @@ function verifyToken(req: Request, res: Response, next: NextFunction): void {
     return;
   }
 
-  const isTokenValid = Utils.isJwtTokenValid(token);
+  const isTokenValid = Utils.isJwtTokenValid(token, JwtAudience.alyamamah);
   if (!isTokenValid) {
     res.status(401).end();
     return;

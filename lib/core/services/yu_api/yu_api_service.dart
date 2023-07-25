@@ -7,6 +7,7 @@ import 'package:alyamamah/core/services/shared_prefs/shared_prefs_service.dart';
 import 'package:alyamamah/core/services/yu_api/interceptors/yu_api_auth_interceptor.dart';
 import 'package:alyamamah/core/services/yu_api/interceptors/yu_api_demo_mode_interceptor.dart';
 import 'package:alyamamah/core/services/yu_api/models/chat.dart';
+import 'package:alyamamah/core/services/yu_api/models/login_response.dart';
 import 'package:alyamamah/core/services/yu_api/models/model_name.dart';
 import 'package:alyamamah/core/services/yu_api/yu_api_service_exception.dart';
 import 'package:dio/dio.dart';
@@ -59,8 +60,8 @@ class YuApiService {
     _dio.addSentry();
   }
 
-  /// Returns an access token.
-  Future<String> login({
+  /// Returns an access token, and a connecty cube token.
+  Future<LoginResponse> login({
     required String username,
     required String password,
     required String fcmToken,
@@ -77,8 +78,9 @@ class YuApiService {
 
       if (response.statusCode == 200 &&
           response.data['accessToken'] != null &&
+          response.data['connectyCubeToken'] != null &&
           response.data['message'] == null) {
-        return response.data['accessToken'];
+        return LoginResponse.fromMap(response.data);
       }
 
       _log.severe('login | something weird went wrong.');

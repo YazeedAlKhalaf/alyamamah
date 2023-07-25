@@ -174,5 +174,9 @@
   "total_x": "💼 الإجمالي: {amount}",
   "by_tapping_the_button_above_youll_pay_youre_fees_securely_on_the_universitys_site": "بالضغط على الزر أعلاه، ستدفع رسومك بشكل آمن على موقع الجامعة",
   "oops_it_looks_like_theres_a_problem_with_your_payment__please_confirm_your_payment_information_and_try_again": "عفواً، يبدو أن هناك مشكلة في عملية الدفع، يرجى التأكد من معلومات الدفع والمحاولة مرة أخرى",
-  "your_schedule_has_been_set_successfully__you_can_view_it_in_the_courses_tab": "عيّن جدولك بنجاح، يمكنك الإطلاع في صفحة المقررات"
+  "your_schedule_has_been_set_successfully__you_can_view_it_in_the_courses_tab": "عيّن جدولك بنجاح، يمكنك الإطلاع في صفحة المقررات",
+  "chats": "المحادثات",
+  "something_went_wrong_fetching_your_chats": "حدث خطأ أثناء جلب المحادثات الخاصة بك",
+  "no_chats": "لا يوجد محادثات",
+  "no_chats_description": "لا يوجد محادثات لعرضها، هي مرتبطة بالمقررات التي تدرسها"
 }

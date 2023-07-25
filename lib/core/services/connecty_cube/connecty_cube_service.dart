@@ -41,4 +41,14 @@ class ConnectyCubeService {
       throw ConnectyCubeServiceException();
     }
   }
+
+  Future<PagedResult<CubeDialog>?> getChats() async {
+    try {
+      final pagedResult = await getDialogs();
+
+      return pagedResult;
+    } catch (e) {
+      throw ConnectyCubeServiceException();
+    }
+  }
 }

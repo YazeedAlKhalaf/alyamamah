@@ -14,6 +14,7 @@ class Constants {
   static const String usernameKey = 'username';
   static const String passwordKey = 'password';
   static const String accessTokenKey = 'accessToken';
+  static const String connectyCubeTokenKey = 'connectyCubeToken';
   static const String localeKey = 'locale';
   static const String themeModeKey = 'themeMode';
   static const String coursesWidgetDataKey = 'coursesWidgetData';
@@ -46,4 +47,8 @@ class Constants {
       'https://edugate.yu.edu.sa/yu/ui/student/onlinePayment/index/forwardPaymentIndex.faces';
   static const String loginUrl =
       '$apiUrl/resources/common/commonServies/actorDetails/-1/1/2';
+
+  static const String connectyCubeAppId = '7222';
+  static const String connectyCubeAuthKey = 'y2CTErBKpMQdtmr';
+  static const String connectyCubeAuthSecret = 'araHfeOM-hSuQFH';
 }

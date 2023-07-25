@@ -1,4 +1,6 @@
 PODS:
+  - device_info_plus (0.0.1):
+    - Flutter
   - Firebase/Analytics (10.10.0):
     - Firebase/Core
   - Firebase/Core (10.10.0):
@@ -66,6 +68,9 @@ PODS:
   - flutter_inappwebview/Core (0.0.1):
     - Flutter
     - OrderedSet (~> 5.0)
+  - flutter_webrtc (0.9.31):
+    - Flutter
+    - WebRTC-SDK (= 104.5112.17)
   - flutter_widgetkit (0.0.1):
     - Flutter
   - GoogleAppMeasurement (10.10.0):
@@ -119,6 +124,9 @@ PODS:
   - OrderedSet (5.0.0)
   - package_info_plus (0.4.5):
     - Flutter
+  - path_provider_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
   - permission_handler_apple (9.1.0):
     - Flutter
   - PromisesObjC (2.2.0)
@@ -140,15 +148,19 @@ PODS:
     - FlutterMacOS
   - url_launcher_ios (0.0.1):
     - Flutter
+  - WebRTC-SDK (104.5112.17)
 
 DEPENDENCIES:
+  - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
   - firebase_analytics (from `.symlinks/plugins/firebase_analytics/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
   - Flutter (from `Flutter`)
   - flutter_inappwebview (from `.symlinks/plugins/flutter_inappwebview/ios`)
+  - flutter_webrtc (from `.symlinks/plugins/flutter_webrtc/ios`)
   - flutter_widgetkit (from `.symlinks/plugins/flutter_widgetkit/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
+  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - purchases_flutter (from `.symlinks/plugins/purchases_flutter/ios`)
   - sentry_flutter (from `.symlinks/plugins/sentry_flutter/ios`)
@@ -173,8 +185,11 @@ SPEC REPOS:
     - RevenueCat
     - Sentry
     - SentryPrivate
+    - WebRTC-SDK
 
 EXTERNAL SOURCES:
+  device_info_plus:
+    :path: ".symlinks/plugins/device_info_plus/ios"
   firebase_analytics:
     :path: ".symlinks/plugins/firebase_analytics/ios"
   firebase_core:
@@ -185,10 +200,14 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_inappwebview:
     :path: ".symlinks/plugins/flutter_inappwebview/ios"
+  flutter_webrtc:
+    :path: ".symlinks/plugins/flutter_webrtc/ios"
   flutter_widgetkit:
     :path: ".symlinks/plugins/flutter_widgetkit/ios"
   package_info_plus:
     :path: ".symlinks/plugins/package_info_plus/ios"
+  path_provider_foundation:
+    :path: ".symlinks/plugins/path_provider_foundation/darwin"
   permission_handler_apple:
     :path: ".symlinks/plugins/permission_handler_apple/ios"
   purchases_flutter:
@@ -201,6 +220,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
+  device_info_plus: 7545d84d8d1b896cb16a4ff98c19f07ec4b298ea
   Firebase: facd334e557a979bd03a0b58d90fd56b52b8aba0
   firebase_analytics: 1a5ad75876257318ba5fdc6bf7aae73b6e98d0cf
   firebase_core: 85b6664038311940ad60584eaabc73103c61f5de
@@ -212,6 +232,7 @@ SPEC CHECKSUMS:
   FirebaseMessaging: 8a3b9a8b98ce72a42d22e69865cf662e38d2d6f5
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_inappwebview: bfd58618f49dc62f2676de690fc6dcda1d6c3721
+  flutter_webrtc: 02c023207f972145a3bc8c7aada86754f264d563
   flutter_widgetkit: a0e9b0d50ee9bec366dad36c639509daaafc397a
   GoogleAppMeasurement: bbbfd4bcb2b40ae9b772c3b0823a58c1e3d618f9
   GoogleDataTransport: f0308f5905a745f94fb91fea9c6cbaf3831cb1bd
@@ -219,6 +240,7 @@ SPEC CHECKSUMS:
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
   package_info_plus: fd030dabf36271f146f1f3beacd48f564b0f17f7
+  path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
   permission_handler_apple: 8f116445eff3c0e7c65ad60f5fef5490aa94b4e4
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
   purchases_flutter: fce6a2e39538100d8637d13217819747ea3e595a
@@ -229,6 +251,7 @@ SPEC CHECKSUMS:
   SentryPrivate: 2eaabf598a46d4b9b8822aef766df2a84caf2e6f
   shared_preferences_foundation: 986fc17f3d3251412d18b0265f9c64113a8c2472
   url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
+  WebRTC-SDK: 082ae4893212534a779ca233f19a9df8efd5f3bd
 
 PODFILE CHECKSUM: d6021d2513532e2cf24c808951c337e6e8020724
 

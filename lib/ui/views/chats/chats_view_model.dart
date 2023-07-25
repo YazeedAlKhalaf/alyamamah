@@ -43,27 +43,36 @@ class ChatsViewModel extends StateNotifier<ChatsViewState> {
 
   Future<void> getChats() async {
     try {
-      state = state.copyWith(status: ChatsViewStatus.loading);
+      state = state.copyWith(status: ChatsViewStatus.syncingChats);
 
       final schedule = await _apiService.getStudentSchedule(
         schedule: _currentSemester,
       );
 
       if (schedule.isNotEmpty) {
-        state = state.copyWith(status: ChatsViewStatus.syncingChats);
-        final scheduleSections = schedule.map((e) => e.section).toList();
+        final scheduleSections = schedule.map((e) => e.sectionSeq).toList();
+        state = state.copyWith(
+          schedules: schedule,
+        );
         await _yuApiService.syncChats(
           semester: _currentSemester,
           sections: scheduleSections,
         );
       }
+
       state = state.copyWith(status: ChatsViewStatus.loading);
 
       final pagedResult = await _connectyCubeService.getChats();
 
       state = state.copyWith(
         status: ChatsViewStatus.loaded,
-        chats: pagedResult == null ? [] : pagedResult.items,
+        chats: pagedResult == null
+            ? []
+            : pagedResult.items
+                .where(
+                  (dialog) => dialog.name?.startsWith(_currentSemester) == true,
+                )
+                .toList(),
       );
     } on ConnectyCubeServiceException catch (e) {
       _log.severe('getChats | failed to get chats: $e');

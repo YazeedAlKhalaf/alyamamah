@@ -93,6 +93,16 @@ abstract class _$YURouter extends RootStackRouter {
         child: const YuGptView(),
       );
     },
+    ChatRoute.name: (routeData) {
+      final args = routeData.argsAs<ChatRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: ChatView(
+          key: args.key,
+          chat: args.chat,
+        ),
+      );
+    },
     StartupRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -378,6 +388,43 @@ class YuGptRoute extends PageRouteInfo<void> {
   static const String name = 'YuGptRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ChatView]
+class ChatRoute extends PageRouteInfo<ChatRouteArgs> {
+  ChatRoute({
+    Key? key,
+    required CubeDialog chat,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ChatRoute.name,
+          args: ChatRouteArgs(
+            key: key,
+            chat: chat,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'ChatRoute';
+
+  static const PageInfo<ChatRouteArgs> page = PageInfo<ChatRouteArgs>(name);
+}
+
+class ChatRouteArgs {
+  const ChatRouteArgs({
+    this.key,
+    required this.chat,
+  });
+
+  final Key? key;
+
+  final CubeDialog chat;
+
+  @override
+  String toString() {
+    return 'ChatRouteArgs{key: $key, chat: $chat}';
+  }
 }
 
 /// generated route for

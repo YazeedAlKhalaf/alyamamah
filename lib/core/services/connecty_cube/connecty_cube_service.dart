@@ -51,4 +51,31 @@ class ConnectyCubeService {
       throw ConnectyCubeServiceException();
     }
   }
+
+  Future<CubeUser?> getUserUsingId({
+    required int userId,
+  }) async {
+    try {
+      final user = await getUserById(userId);
+
+      return user;
+    } catch (e) {
+      throw ConnectyCubeServiceException();
+    }
+  }
+
+  Future<Map<int, CubeUser>> getUsersByIds({
+    required List<int> userIds,
+  }) async {
+    try {
+      final users = await getAllUsersByIds(userIds.toSet());
+
+      return users!.items.asMap().map((key, value) => MapEntry(
+            value.id!,
+            value,
+          ));
+    } catch (e) {
+      throw ConnectyCubeServiceException();
+    }
+  }
 }

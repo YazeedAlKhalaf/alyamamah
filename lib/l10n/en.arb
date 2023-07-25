@@ -178,5 +178,7 @@
   "chats": "Chats",
   "something_went_wrong_fetching_your_chats": "Something went wrong while fetching your chats",
   "no_chats": "No chats",
-  "no_chats_description": "No chats yet, those are linked to your courses."
+  "no_chats_description": "No chats yet, those are linked to your courses",
+  "syncing_chats": "Syncing chats",
+  "loading_chats": "Loading chats"
 }

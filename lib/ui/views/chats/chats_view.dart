@@ -1,4 +1,6 @@
+import 'package:alyamamah/core/constants.dart';
 import 'package:alyamamah/core/extensions/build_context.dart';
+import 'package:alyamamah/ui/views/chats/chat_list_tile.dart';
 import 'package:alyamamah/ui/views/chats/chats_view_model.dart';
 import 'package:alyamamah/ui/views/chats/chats_view_state.dart';
 import 'package:alyamamah/ui/widgets/empty_view.dart';
@@ -37,8 +39,31 @@ class _ChatsViewState extends ConsumerState<ChatsView> {
           await ref.read(chatsViewModelProvider.notifier).getChats();
         },
         child: switch (chatsViewState.status) {
-          ChatsViewStatus.loading => const Center(
-              child: CircularProgressIndicator(),
+          ChatsViewStatus.loading => Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const CircularProgressIndicator(),
+                  const SizedBox(height: Constants.padding),
+                  Text(
+                    context.s.loading_chats,
+                    style: context.textTheme.bodyLarge,
+                  )
+                ],
+              ),
+            ),
+          ChatsViewStatus.syncingChats => Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const CircularProgressIndicator(),
+                  const SizedBox(height: Constants.padding),
+                  Text(
+                    context.s.syncing_chats,
+                    style: context.textTheme.bodyLarge,
+                  )
+                ],
+              ),
             ),
           ChatsViewStatus.errorLoading => ErrorView(
               title: context.s.something_went_wrong_fetching_your_chats,
@@ -49,16 +74,15 @@ class _ChatsViewState extends ConsumerState<ChatsView> {
               subtitle: context.s.no_chats_description,
             ),
           ChatsViewStatus.loaded when chatsViewState.chats.isNotEmpty =>
-            ListView.builder(
+            ListView.separated(
               itemCount: chatsViewState.chats.length,
               itemBuilder: (BuildContext context, int index) {
                 final chat = chatsViewState.chats[index];
 
-                return ListTile(
-                  title: Text(chat.name ?? ''),
-                  subtitle: Text(chat.lastMessage ?? ''),
-                  onTap: () {},
-                );
+                return ChatListTile(chat: chat);
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return const SizedBox(height: Constants.spacing);
               },
             ),
           _ => const SizedBox.shrink(),

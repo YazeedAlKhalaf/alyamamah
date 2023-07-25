@@ -199,6 +199,42 @@ class YuApiService {
       throw const YuApiServiceException();
     }
   }
+
+  /// Sync the user's chats with their semester schedule.
+  Future<void> syncChats({
+    required String semester,
+    required List<String> sections,
+  }) async {
+    try {
+      final response = await _dio.post(
+        '/connecty-cube/sync-chats',
+        data: {
+          'semester': semester,
+          'sections': sections,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        return;
+      }
+
+      throw const YuApiServiceException();
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 401) {
+        _log.severe('syncChats | invalid credentials.');
+        throw const YuApiServiceException(
+          YuApiServiceExceptionType.invalidCredentials,
+        );
+      }
+
+      throw const YuApiServiceException();
+    } catch (e) {
+      if (e is YuApiServiceException) rethrow;
+
+      _log.severe('syncChats | unexpected exception: $e.');
+      throw const YuApiServiceException();
+    }
+  }
 }
 
 class ChatResponseTransformer extends StreamTransformerBase<String, String> {

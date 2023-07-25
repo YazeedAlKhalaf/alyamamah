@@ -6,6 +6,7 @@ import * as unleash from "unleash-server";
 import AuthController from "./controllers/auth_controller";
 import ChatController from "./controllers/chat_controller";
 import RevCatController from "./controllers/rev_cat_controller";
+import ConnectyCubeController from "./controllers/connecty_cube_controller";
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ const app = new App({
     new AuthController(),
     new ChatController(),
     new RevCatController(),
+    new ConnectyCubeController(),
   ],
 });
 

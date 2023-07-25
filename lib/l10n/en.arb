@@ -174,5 +174,9 @@
   "total_x": "💼 Total: {amount}",
   "by_tapping_the_button_above_youll_pay_youre_fees_securely_on_the_universitys_site": "By tapping the above button, you'll pay your fees securely on the university's site.",
   "oops_it_looks_like_theres_a_problem_with_your_payment__please_confirm_your_payment_information_and_try_again": "Oops! It looks like there's a problem with your payment. Please confirm your payment information and try again.",
-  "your_schedule_has_been_set_successfully__you_can_view_it_in_the_courses_tab": "Your schedule has been set successfully. You can view it in the courses tab."
+  "your_schedule_has_been_set_successfully__you_can_view_it_in_the_courses_tab": "Your schedule has been set successfully. You can view it in the courses tab.",
+  "chats": "Chats",
+  "something_went_wrong_fetching_your_chats": "Something went wrong while fetching your chats",
+  "no_chats": "No chats",
+  "no_chats_description": "No chats yet, those are linked to your courses."
 }

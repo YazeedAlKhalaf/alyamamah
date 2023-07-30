@@ -78,9 +78,7 @@ class StartupViewModel extends ChangeNotifier {
   Future<void> handleStartup() async {
     // This is a hack, for some reason if the screen does not appear it breaks the app.
     // Error: FlutterError (setState() or markNeedsBuild() called during build.
-    await Future.delayed(const Duration(milliseconds: 300));
-
-    await _revCatService.initPlatformState();
+    await Future.delayed(const Duration(milliseconds: 10));
 
     final username = _sharedPrefsService.getUsername();
     final password = _sharedPrefsService.getPassword();
@@ -113,41 +111,50 @@ class StartupViewModel extends ChangeNotifier {
           username: username,
           password: password,
         );
-
         _actorDetailsNotifier.setActorDetails(actorDetails);
 
-        await _revCatService.logIn(username);
+        // Here we run stuff that we need
+        // but so we do not block the app from starting,
+        // we run them in the background, at least it gives the same effect
+        // when running a future like this without await :).
+        Future(() async {
+          await _revCatService.initPlatformState();
+          await _revCatService.logIn(username);
 
-        if (accessToken == null ||
-            accessToken.isJwtExpired() ||
-            connectyCubeToken == null ||
-            connectyCubeToken.isJwtExpired()) {
-          _log.fine(
-            'handleStartup | accessToken or connectyCubeToken is null, getting a new one.',
-          );
+          await _featureFlagsStateNotifier.init(userId: username);
 
-          final fcmToken = await _firebaseMessagingService.getToken();
-          final loginResponse = await _yuApiService.login(
-            username: username,
-            password: password,
-            fcmToken: fcmToken ?? '',
-          );
-          await _sharedPrefsService.saveAccessToken(
-            accessToken: loginResponse.accessToken,
-          );
-          await _sharedPrefsService.saveConnectyCubeToken(
-            connectyCubeToken: loginResponse.connectyCubeToken,
-          );
-        }
+          if (accessToken == null ||
+              accessToken.isJwtExpired() ||
+              connectyCubeToken == null ||
+              connectyCubeToken.isJwtExpired()) {
+            _log.fine(
+              'handleStartup | accessToken or connectyCubeToken is null, getting a new one.',
+            );
 
-        final newConnectyCubeToken = _sharedPrefsService.getConnectyCubeToken();
-        if (newConnectyCubeToken != null) {
-          await _connectyCubeService.login(
-            accessToken: newConnectyCubeToken,
-          );
-        }
+            final fcmToken = await _firebaseMessagingService.getToken();
+            final loginResponse = await _yuApiService.login(
+              username: username,
+              password: password,
+              fcmToken: fcmToken ?? '',
+            );
+            await _sharedPrefsService.saveAccessToken(
+              accessToken: loginResponse.accessToken,
+            );
+            await _sharedPrefsService.saveConnectyCubeToken(
+              connectyCubeToken: loginResponse.connectyCubeToken,
+            );
+          }
 
-        await _featureFlagsStateNotifier.init(userId: username);
+          final newConnectyCubeToken =
+              _sharedPrefsService.getConnectyCubeToken();
+          if (newConnectyCubeToken != null) {
+            await _connectyCubeService.login(
+              accessToken: newConnectyCubeToken,
+            );
+          }
+
+          _log.fine('handleStartup | finished the background tasks.');
+        });
 
         final notificationPermissionStatus =
             await _permissionHandlerService.checkNotificationPermissionStatus();
@@ -157,7 +164,7 @@ class StartupViewModel extends ChangeNotifier {
         );
 
         // this is a hack for the weird navigator dirty assertion.
-        await Future.delayed(const Duration(milliseconds: 50));
+        await Future.delayed(const Duration(milliseconds: 10));
         _yuRouter.pushAndPopUntil(
           MainRoute(),
           predicate: (_) => false,

@@ -133,37 +133,41 @@ class LoginViewModel extends ChangeNotifier {
         username: username,
         password: password,
       );
-
       _actorDetailsNotifier.setActorDetails(actorDetails);
 
-      await _revCatService.logIn(username);
+      Future(() async {
+        await _revCatService.initPlatformState();
+        await _revCatService.logIn(username);
 
-      await _sharedPrefsService.saveUsernameAndPassword(
-        username: username,
-        password: password,
-      );
+        await _featureFlagsStateNotifier.init(userId: username);
 
-      final fcmToken = await _firebaseMessagingService.getToken();
-      final loginResponse = await _yuApiService.login(
-        username: username,
-        password: password,
-        fcmToken: fcmToken ?? '',
-      );
-      await _sharedPrefsService.saveAccessToken(
-        accessToken: loginResponse.accessToken,
-      );
-      await _sharedPrefsService.saveConnectyCubeToken(
-        connectyCubeToken: loginResponse.connectyCubeToken,
-      );
-
-      final newConnectyCubeToken = _sharedPrefsService.getConnectyCubeToken();
-      if (newConnectyCubeToken != null) {
-        await _connectyCubeService.login(
-          accessToken: newConnectyCubeToken,
+        await _sharedPrefsService.saveUsernameAndPassword(
+          username: username,
+          password: password,
         );
-      }
 
-      await _featureFlagsStateNotifier.init(userId: username);
+        final fcmToken = await _firebaseMessagingService.getToken();
+        final loginResponse = await _yuApiService.login(
+          username: username,
+          password: password,
+          fcmToken: fcmToken ?? '',
+        );
+        await _sharedPrefsService.saveAccessToken(
+          accessToken: loginResponse.accessToken,
+        );
+        await _sharedPrefsService.saveConnectyCubeToken(
+          connectyCubeToken: loginResponse.connectyCubeToken,
+        );
+
+        final newConnectyCubeToken = _sharedPrefsService.getConnectyCubeToken();
+        if (newConnectyCubeToken != null) {
+          await _connectyCubeService.login(
+            accessToken: newConnectyCubeToken,
+          );
+        }
+
+        _log.fine('login | finished the background tasks.');
+      });
 
       await _yuRouter.pushAndPopUntil(
         MainRoute(),

@@ -38,6 +38,7 @@ dependencies:
   permission_handler: 10.3.0
   flutter_inappwebview: 5.7.2+3
   connectycube_sdk: 2.6.0
+  emoji_picker_flutter: 1.6.1
   
 dependency_overrides:
   intl: 0.18.1

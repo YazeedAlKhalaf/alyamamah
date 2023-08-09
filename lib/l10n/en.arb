@@ -180,5 +180,6 @@
   "no_chats": "No chats",
   "no_chats_description": "No chats yet, those are linked to your courses",
   "syncing_chats": "Syncing chats",
-  "loading_chats": "Loading chats"
+  "loading_chats": "Loading chats",
+  "get_chats": "Get Chats"
 }

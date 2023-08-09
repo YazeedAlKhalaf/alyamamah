@@ -81,7 +81,7 @@ class _ChatsViewState extends ConsumerState<ChatsView> {
                 onPressed: () async {
                   await ref.read(chatsViewModelProvider.notifier).getChats();
                 },
-                child: const Text('Get Chats'),
+                child: Text(context.s.get_chats),
               ),
             ),
         },

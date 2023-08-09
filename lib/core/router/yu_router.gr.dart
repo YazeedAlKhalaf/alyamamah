@@ -99,6 +99,7 @@ abstract class _$YURouter extends RootStackRouter {
         routeData: routeData,
         child: ChatView(
           key: args.key,
+          cubeUser: args.cubeUser,
           chat: args.chat,
         ),
       );
@@ -395,12 +396,14 @@ class YuGptRoute extends PageRouteInfo<void> {
 class ChatRoute extends PageRouteInfo<ChatRouteArgs> {
   ChatRoute({
     Key? key,
+    required CubeUser cubeUser,
     required CubeDialog chat,
     List<PageRouteInfo>? children,
   }) : super(
           ChatRoute.name,
           args: ChatRouteArgs(
             key: key,
+            cubeUser: cubeUser,
             chat: chat,
           ),
           initialChildren: children,
@@ -414,16 +417,19 @@ class ChatRoute extends PageRouteInfo<ChatRouteArgs> {
 class ChatRouteArgs {
   const ChatRouteArgs({
     this.key,
+    required this.cubeUser,
     required this.chat,
   });
 
   final Key? key;
 
+  final CubeUser cubeUser;
+
   final CubeDialog chat;
 
   @override
   String toString() {
-    return 'ChatRouteArgs{key: $key, chat: $chat}';
+    return 'ChatRouteArgs{key: $key, cubeUser: $cubeUser, chat: $chat}';
   }
 }
 

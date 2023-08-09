@@ -2,6 +2,7 @@ import 'package:alyamamah/core/constants.dart';
 import 'package:alyamamah/core/services/connecty_cube/connecty_cube_service_exception.dart';
 import 'package:connectycube_sdk/connectycube_sdk.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:logging/logging.dart';
 
 final connectyCubeServiceProvider = Provider(
   (ref) => ConnectyCubeService(
@@ -10,6 +11,8 @@ final connectyCubeServiceProvider = Provider(
 );
 
 class ConnectyCubeService {
+  final _log = Logger('ConnectyCubeService');
+
   final CubeSettings _cubeSettings;
 
   ConnectyCubeService({
@@ -17,6 +20,9 @@ class ConnectyCubeService {
   }) : _cubeSettings = cubeSettings {
     init();
   }
+
+  CubeUser? _currentUser;
+  CubeUser? get currentUser => _currentUser;
 
   void init() {
     _cubeSettings.init(
@@ -36,8 +42,21 @@ class ConnectyCubeService {
         password: 'password',
       ));
 
+      _currentUser = await signIn(CubeUser(
+        login: accessToken,
+        // This is just to satisfy the API, but only the login field is used.
+        password: 'password',
+      ));
+
+      _currentUser = await CubeChatConnection.instance.login(CubeUser(
+        login: accessToken,
+        // This is just to satisfy the API, but only the login field is used.
+        password: 'password',
+      ));
+
       return cubeSession;
     } catch (e) {
+      _log.severe('login | caught error: $e');
       throw ConnectyCubeServiceException();
     }
   }

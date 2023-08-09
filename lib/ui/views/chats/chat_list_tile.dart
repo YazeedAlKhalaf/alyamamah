@@ -100,7 +100,11 @@ class _ChatListTileState extends ConsumerState<ChatListTile> {
             ),
         },
         onTap: () async {
-          await ref.read(yuRouterProvider).push(ChatRoute(chat: widget.chat));
+          if (ref.read(connectyCubeServiceProvider).currentUser == null) return;
+          await ref.read(yuRouterProvider).push(ChatRoute(
+                cubeUser: ref.read(connectyCubeServiceProvider).currentUser!,
+                chat: widget.chat,
+              ));
         },
       ),
     );

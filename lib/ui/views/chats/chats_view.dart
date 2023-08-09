@@ -17,15 +17,6 @@ class ChatsView extends ConsumerStatefulWidget {
 
 class _ChatsViewState extends ConsumerState<ChatsView> {
   @override
-  void initState() {
-    super.initState();
-
-    Future(() async {
-      await ref.read(chatsViewModelProvider.notifier).getChats();
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     final chatsViewState = ref.watch(chatsViewModelProvider);
 
@@ -85,7 +76,14 @@ class _ChatsViewState extends ConsumerState<ChatsView> {
                 return const SizedBox(height: Constants.spacing);
               },
             ),
-          _ => const SizedBox.shrink(),
+          _ => Center(
+              child: FilledButton(
+                onPressed: () async {
+                  await ref.read(chatsViewModelProvider.notifier).getChats();
+                },
+                child: const Text('Get Chats'),
+              ),
+            ),
         },
       ),
     );

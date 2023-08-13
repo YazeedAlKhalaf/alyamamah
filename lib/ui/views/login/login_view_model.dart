@@ -4,8 +4,6 @@ import 'package:alyamamah/core/providers/feature_flags/feature_flags_state_notif
 import 'package:alyamamah/core/router/yu_router.dart';
 import 'package:alyamamah/core/services/api/api_service.dart';
 import 'package:alyamamah/core/services/api/api_service_exception.dart';
-import 'package:alyamamah/core/services/connecty_cube/connecty_cube_service.dart';
-import 'package:alyamamah/core/services/connecty_cube/connecty_cube_service_exception.dart';
 import 'package:alyamamah/core/services/firebase_messaging/firebase_messaging_service.dart';
 import 'package:alyamamah/core/services/rev_cat/rev_cat_service.dart';
 import 'package:alyamamah/core/services/shared_prefs/shared_prefs_service.dart';
@@ -27,7 +25,6 @@ final loginViewModelProvider = ChangeNotifierProvider(
       firebaseMessagingService: ref.read(firebaseMessagingServiceProvider),
       featureFlagsStateNotifier:
           ref.read(featureFlagsStateNotifierProvider.notifier),
-      connectyCubeService: ref.read(connectyCubeServiceProvider),
     );
   },
 );
@@ -43,7 +40,6 @@ class LoginViewModel extends ChangeNotifier {
   final YuApiService _yuApiService;
   final FirebaseMessagingService _firebaseMessagingService;
   final FeatureFlagsStateNotifier _featureFlagsStateNotifier;
-  final ConnectyCubeService _connectyCubeService;
 
   LoginViewModel({
     required ApiService apiService,
@@ -54,7 +50,6 @@ class LoginViewModel extends ChangeNotifier {
     required YuApiService yuApiService,
     required FirebaseMessagingService firebaseMessagingService,
     required FeatureFlagsStateNotifier featureFlagsStateNotifier,
-    required ConnectyCubeService connectyCubeService,
   })  : _apiService = apiService,
         _sharedPrefsService = sharedPrefsService,
         _yuRouter = yuRouter,
@@ -62,8 +57,7 @@ class LoginViewModel extends ChangeNotifier {
         _revCatService = revCatService,
         _yuApiService = yuApiService,
         _firebaseMessagingService = firebaseMessagingService,
-        _featureFlagsStateNotifier = featureFlagsStateNotifier,
-        _connectyCubeService = connectyCubeService;
+        _featureFlagsStateNotifier = featureFlagsStateNotifier;
 
   AutovalidateMode _autoValidateMode = AutovalidateMode.disabled;
   AutovalidateMode get autoValidateMode => _autoValidateMode;
@@ -155,16 +149,6 @@ class LoginViewModel extends ChangeNotifier {
         await _sharedPrefsService.saveAccessToken(
           accessToken: loginResponse.accessToken,
         );
-        await _sharedPrefsService.saveConnectyCubeToken(
-          connectyCubeToken: loginResponse.connectyCubeToken,
-        );
-
-        final newConnectyCubeToken = _sharedPrefsService.getConnectyCubeToken();
-        if (newConnectyCubeToken != null) {
-          await _connectyCubeService.login(
-            accessToken: newConnectyCubeToken,
-          );
-        }
 
         _log.fine('login | finished the background tasks.');
       });
@@ -182,11 +166,6 @@ class LoginViewModel extends ChangeNotifier {
       _log.severe('login | YuApiService with type: ${e.type}.');
 
       _yuApiServiceExceptionType = e.type;
-      notifyListeners();
-    } on ConnectyCubeServiceException {
-      _log.severe('login | ConnectyCubeServiceException.');
-
-      _yuApiServiceExceptionType = YuApiServiceExceptionType.unknown;
       notifyListeners();
     } catch (e) {
       _log.severe('login | Unknown error: $e.');

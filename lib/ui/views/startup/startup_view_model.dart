@@ -6,8 +6,6 @@ import 'package:alyamamah/core/router/yu_router.dart';
 import 'package:alyamamah/core/services/api/api_service.dart';
 import 'package:alyamamah/core/services/api/api_service_exception.dart';
 import 'package:alyamamah/core/services/connectivity/connectivity_service.dart';
-import 'package:alyamamah/core/services/connecty_cube/connecty_cube_service.dart';
-import 'package:alyamamah/core/services/connecty_cube/connecty_cube_service_exception.dart';
 import 'package:alyamamah/core/services/firebase_messaging/firebase_messaging_service.dart';
 import 'package:alyamamah/core/services/permission_handler/permission_handler_service.dart';
 import 'package:alyamamah/core/services/rev_cat/rev_cat_service.dart';
@@ -32,7 +30,6 @@ final startupViewModelProvider = ChangeNotifierProvider.autoDispose(
     featureFlagsStateNotifier:
         ref.read(featureFlagsStateNotifierProvider.notifier),
     permissionHandlerService: ref.read(permissionHandlerServiceProvider),
-    connectyCubeService: ref.read(connectyCubeServiceProvider),
   ),
 );
 
@@ -49,7 +46,6 @@ class StartupViewModel extends ChangeNotifier {
   final FirebaseMessagingService _firebaseMessagingService;
   final FeatureFlagsStateNotifier _featureFlagsStateNotifier;
   final PermissionHandlerService _permissionHandlerService;
-  final ConnectyCubeService _connectyCubeService;
 
   StartupViewModel({
     required ApiService apiService,
@@ -62,7 +58,6 @@ class StartupViewModel extends ChangeNotifier {
     required FirebaseMessagingService firebaseMessagingService,
     required FeatureFlagsStateNotifier featureFlagsStateNotifier,
     required PermissionHandlerService permissionHandlerService,
-    required ConnectyCubeService connectyCubeService,
   })  : _apiService = apiService,
         _sharedPrefsService = sharedPrefsService,
         _yuRouter = yuRouter,
@@ -72,8 +67,7 @@ class StartupViewModel extends ChangeNotifier {
         _connectivityService = connectivityService,
         _firebaseMessagingService = firebaseMessagingService,
         _featureFlagsStateNotifier = featureFlagsStateNotifier,
-        _permissionHandlerService = permissionHandlerService,
-        _connectyCubeService = connectyCubeService;
+        _permissionHandlerService = permissionHandlerService;
 
   Future<void> handleStartup() async {
     // This is a hack, for some reason if the screen does not appear it breaks the app.
@@ -83,7 +77,6 @@ class StartupViewModel extends ChangeNotifier {
     final username = _sharedPrefsService.getUsername();
     final password = _sharedPrefsService.getPassword();
     final accessToken = _sharedPrefsService.getAccessToken();
-    final connectyCubeToken = _sharedPrefsService.getConnectyCubeToken();
 
     if (username != null && password != null) {
       _log.fine(
@@ -123,12 +116,9 @@ class StartupViewModel extends ChangeNotifier {
 
           await _featureFlagsStateNotifier.init(userId: username);
 
-          if (accessToken == null ||
-              accessToken.isJwtExpired() ||
-              connectyCubeToken == null ||
-              connectyCubeToken.isJwtExpired()) {
+          if (accessToken == null || accessToken.isJwtExpired()) {
             _log.fine(
-              'handleStartup | accessToken or connectyCubeToken is null, getting a new one.',
+              'handleStartup | accessToken is null, getting a new one.',
             );
 
             final fcmToken = await _firebaseMessagingService.getToken();
@@ -139,17 +129,6 @@ class StartupViewModel extends ChangeNotifier {
             );
             await _sharedPrefsService.saveAccessToken(
               accessToken: loginResponse.accessToken,
-            );
-            await _sharedPrefsService.saveConnectyCubeToken(
-              connectyCubeToken: loginResponse.connectyCubeToken,
-            );
-          }
-
-          final newConnectyCubeToken =
-              _sharedPrefsService.getConnectyCubeToken();
-          if (newConnectyCubeToken != null) {
-            await _connectyCubeService.login(
-              accessToken: newConnectyCubeToken,
             );
           }
 
@@ -193,16 +172,6 @@ class StartupViewModel extends ChangeNotifier {
       } on YuApiServiceException catch (e) {
         _log.severe(
           'handleStartup | caught YuApiServiceException logging in automatically: ${e.type}.',
-        );
-
-        _connectivityService.setConnected(false);
-        await _yuRouter.pushAndPopUntil(
-          MainRoute(),
-          predicate: (_) => false,
-        );
-      } on ConnectyCubeServiceException catch (e) {
-        _log.severe(
-          'handleStartup | caught ConnectyCubeServiceException logging in automatically: $e.',
         );
 
         _connectivityService.setConnected(false);

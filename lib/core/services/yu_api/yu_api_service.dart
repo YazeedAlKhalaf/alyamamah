@@ -78,7 +78,6 @@ class YuApiService {
 
       if (response.statusCode == 200 &&
           response.data['accessToken'] != null &&
-          response.data['connectyCubeToken'] != null &&
           response.data['message'] == null) {
         return LoginResponse.fromMap(response.data);
       }

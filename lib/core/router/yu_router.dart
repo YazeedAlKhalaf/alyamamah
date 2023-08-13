@@ -2,7 +2,6 @@ import 'package:alyamamah/core/models/absence.dart';
 import 'package:alyamamah/core/models/offered_course.dart';
 import 'package:alyamamah/ui/views/absences/absence_details_view.dart';
 import 'package:alyamamah/ui/views/absences/absences_view.dart';
-import 'package:alyamamah/ui/views/chats/chat_view.dart';
 import 'package:alyamamah/ui/views/courses/course_details_view.dart';
 import 'package:alyamamah/ui/views/courses/courses_view.dart';
 import 'package:alyamamah/ui/views/courses/models/schedule_entry.dart';
@@ -18,7 +17,6 @@ import 'package:alyamamah/ui/views/startup/startup_view.dart';
 import 'package:alyamamah/ui/views/student_info/student_info_view.dart';
 import 'package:alyamamah/ui/views/yu_gpt/yu_gpt_view.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:connectycube_sdk/connectycube_sdk.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
@@ -55,6 +53,5 @@ class YURouter extends _$YURouter {
     ),
     AutoRoute(page: OfferedCoursesRoute.page),
     AutoRoute(page: ScheduleBuilderRoute.page),
-    AutoRoute(page: ChatRoute.page),
   ];
 }

@@ -60,23 +60,6 @@ class SharedPrefsService {
     await _sharedPreferences.remove(Constants.accessTokenKey);
   }
 
-  String? getConnectyCubeToken() {
-    return _sharedPreferences.getString(Constants.connectyCubeTokenKey);
-  }
-
-  Future<void> saveConnectyCubeToken({
-    required String connectyCubeToken,
-  }) async {
-    await _sharedPreferences.setString(
-      Constants.connectyCubeTokenKey,
-      connectyCubeToken,
-    );
-  }
-
-  Future<void> deleteConnectyCubeToken() async {
-    await _sharedPreferences.remove(Constants.connectyCubeTokenKey);
-  }
-
   String? getLocale() {
     return _sharedPreferences.getString(Constants.localeKey);
   }

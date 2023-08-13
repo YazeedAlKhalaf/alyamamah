@@ -1,7 +1,5 @@
 import 'package:alyamamah/core/extensions/build_context.dart';
-import 'package:alyamamah/core/providers/feature_flags/feature_flags_state_notifier.dart';
 import 'package:alyamamah/ui/views/absences/absences_view.dart';
-import 'package:alyamamah/ui/views/chats/chats_view.dart';
 import 'package:alyamamah/ui/views/courses/courses_view.dart';
 import 'package:alyamamah/ui/views/grades/grades_view.dart';
 import 'package:alyamamah/ui/views/main/main_view_model.dart';
@@ -25,7 +23,6 @@ class MainView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final mainViewModel = ref.watch(mainViewModelProvider);
-    final featureFlagsState = ref.watch(featureFlagsStateNotifierProvider);
 
     final isTablet = MediaQuery.of(context).size.shortestSide >= 600;
 
@@ -45,11 +42,6 @@ class MainView extends ConsumerWidget {
                   icon: const Icon(Icons.home_rounded),
                   label: Text(context.s.home),
                 ),
-                if (featureFlagsState.isChatEnabled)
-                  NavigationRailDestination(
-                    icon: const Icon(Icons.chat_rounded),
-                    label: Text(context.s.chats),
-                  ),
                 NavigationRailDestination(
                   icon: const Icon(Icons.calendar_today_rounded),
                   label: Text(context.s.absences),
@@ -92,7 +84,6 @@ class MainView extends ConsumerWidget {
               children: pages ??
                   [
                     const CoursesView(),
-                    if (featureFlagsState.isChatEnabled) const ChatsView(),
                     const AbsencesView(),
                     const GradesView(),
                     const ProfileView(),
@@ -114,11 +105,6 @@ class MainView extends ConsumerWidget {
                   icon: const Icon(Icons.home_rounded),
                   label: context.s.my_courses,
                 ),
-                if (featureFlagsState.isChatEnabled)
-                  NavigationDestination(
-                    icon: const Icon(Icons.chat_rounded),
-                    label: context.s.chats,
-                  ),
                 NavigationDestination(
                   icon: const Icon(Icons.calendar_today_rounded),
                   label: context.s.absences,

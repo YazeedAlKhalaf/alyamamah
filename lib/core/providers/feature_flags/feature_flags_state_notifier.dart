@@ -34,9 +34,6 @@ class FeatureFlagsStateNotifier extends StateNotifier<FeatureFlagsState> {
       isScheduleBuilderEnabled: _unleashService.isEnabled(
         UnleashFlags.scheduleBuilder,
       ),
-      isChatEnabled: _unleashService.isEnabled(
-        UnleashFlags.chat,
-      ),
     );
   }
 
@@ -48,9 +45,6 @@ class FeatureFlagsStateNotifier extends StateNotifier<FeatureFlagsState> {
       ),
       isScheduleBuilderEnabled: _unleashService.isEnabled(
         UnleashFlags.scheduleBuilder,
-      ),
-      isChatEnabled: _unleashService.isEnabled(
-        UnleashFlags.chat,
       ),
     );
   }

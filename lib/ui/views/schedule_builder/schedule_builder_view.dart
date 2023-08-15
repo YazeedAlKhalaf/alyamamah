@@ -2,11 +2,13 @@ import 'package:alyamamah/core/extensions/build_context.dart';
 import 'package:alyamamah/core/models/offered_course.dart';
 import 'package:alyamamah/core/router/yu_router.dart';
 import 'package:alyamamah/ui/views/courses/courses_schedule.dart';
+import 'package:alyamamah/ui/views/courses/courses_view_model.dart';
 import 'package:alyamamah/ui/views/courses/models/schedule_entry.dart';
 import 'package:alyamamah/ui/views/schedule_builder/offered_courses_conflicts_view.dart';
 import 'package:alyamamah/ui/views/schedule_builder/payment_required_bottom_sheet.dart';
 import 'package:alyamamah/ui/views/schedule_builder/schedule_builder_view_model.dart';
 import 'package:alyamamah/ui/views/schedule_builder/schedule_builder_view_state.dart';
+import 'package:alyamamah/ui/widgets/button_loading.dart';
 import 'package:alyamamah/ui/widgets/yu_show.dart';
 import 'package:alyamamah/ui/widgets/yu_snack_bar.dart';
 import 'package:auto_route/auto_route.dart';
@@ -104,31 +106,40 @@ class _ScheduleBuilderViewState extends ConsumerState<ScheduleBuilderView> {
       appBar: AppBar(
         title: Text(context.s.schedule_builder),
       ),
-      body: PageView.builder(
-        onPageChanged: (int pageIndex) {
-          ref
-              .read(scheduleBuilderViewModelProvider.notifier)
-              .setSelectedScheduleIndex(pageIndex);
-        },
-        itemCount: scheduleBuilderViewState.offeredCoursesSchedules.length,
-        itemBuilder: (BuildContext context, int index) {
-          final offeredCoursesSchedule =
-              scheduleBuilderViewState.offeredCoursesSchedules[index];
+      body: switch (scheduleBuilderViewState.status) {
+        ScheduleBuilderViewStatus.generating => const Center(
+            child: CircularProgressIndicator(),
+          ),
+        _ => PageView.builder(
+            onPageChanged: (int pageIndex) {
+              ref
+                  .read(scheduleBuilderViewModelProvider.notifier)
+                  .setSelectedScheduleIndex(pageIndex);
+            },
+            itemCount: scheduleBuilderViewState.offeredCoursesSchedules.length,
+            itemBuilder: (BuildContext context, int index) {
+              final offeredCoursesSchedule =
+                  scheduleBuilderViewState.offeredCoursesSchedules[index];
 
-          if (offeredCoursesSchedule.hasConflicts) {
-            return OfferedCoursesConflictsView(
-              conflicts: offeredCoursesSchedule.conflicts,
-              offeredCourses: widget.offeredCourses,
-            );
-          }
+              if (offeredCoursesSchedule.hasConflicts) {
+                return OfferedCoursesConflictsView(
+                  conflicts: offeredCoursesSchedule.conflicts,
+                  offeredCourses: widget.offeredCourses,
+                );
+              }
 
-          return CoursesSchedule(
-            scheduleDays: offeredCoursesSchedule.scheduleDays,
-            onCourseTap: (ScheduleEntry scheduleEntry) {},
-            onRefresh: () async {},
-          );
-        },
-      ),
+              return CoursesSchedule(
+                scheduleDays: offeredCoursesSchedule.scheduleDays,
+                onCourseTap: (ScheduleEntry scheduleEntry) async {
+                  await ref
+                      .read(coursesViewModelProvider)
+                      .navigateToCourseDetails(scheduleEntry);
+                },
+                onRefresh: () async {},
+              );
+            },
+          ),
+      },
       bottomNavigationBar: BottomAppBar(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -143,9 +154,7 @@ class _ScheduleBuilderViewState extends ConsumerState<ScheduleBuilderView> {
                   },
               },
               child: switch (scheduleBuilderViewState.status) {
-                ScheduleBuilderViewStatus.submitting => const Center(
-                    child: CircularProgressIndicator(),
-                  ),
+                ScheduleBuilderViewStatus.submitting => const ButtonLoading(),
                 ScheduleBuilderViewStatus.errorSubmitting => Text(
                     context.s.please_try_again,
                   ),

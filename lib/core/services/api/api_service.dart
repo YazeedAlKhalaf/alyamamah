@@ -441,4 +441,29 @@ class ApiService {
       throw const ApiServiceException();
     }
   }
+
+  Future<List<OfferedCourse>> getRelatedCourses({
+    required OfferedCourse offeredCourse,
+  }) async {
+    try {
+      final response = await _dio.post(
+        '/resources/student/reg/activityCourses',
+        data: offeredCourse.toMap(),
+      );
+
+      if (response.statusCode != 200) {
+        _log.severe('doRegistration | non 200 status code.');
+        throw const ApiServiceException();
+      }
+
+      return (response.data as List<dynamic>)
+          .map((e) => OfferedCourse.fromMap(e))
+          .toList();
+    } catch (e) {
+      if (e is ApiServiceException) rethrow;
+
+      _log.severe('getRelatedCourses | unexpected exception: $e.');
+      throw const ApiServiceException();
+    }
+  }
 }

@@ -36,7 +36,7 @@ class OfferedCourse {
   final String sectionType;
   final String fullWeb;
   final int overlapType;
-  final String courseGroup;
+  final List<OfferedCourse> activityCourses;
 
   OfferedCourse({
     required this.courseId,
@@ -71,7 +71,7 @@ class OfferedCourse {
     required this.sectionType,
     required this.fullWeb,
     required this.overlapType,
-    required this.courseGroup,
+    this.activityCourses = const [],
   });
 
   OfferedCourse copyWith({
@@ -107,7 +107,7 @@ class OfferedCourse {
     String? sectionType,
     String? fullWeb,
     int? overlapType,
-    String? courseGroup,
+    List<OfferedCourse>? activityCourses,
   }) {
     return OfferedCourse(
       courseId: courseId ?? this.courseId,
@@ -142,7 +142,7 @@ class OfferedCourse {
       sectionType: sectionType ?? this.sectionType,
       fullWeb: fullWeb ?? this.fullWeb,
       overlapType: overlapType ?? this.overlapType,
-      courseGroup: courseGroup ?? this.courseGroup,
+      activityCourses: activityCourses ?? this.activityCourses,
     );
   }
 
@@ -184,7 +184,7 @@ class OfferedCourse {
       sectionType: map['sectionType'] as String,
       fullWeb: map['fullWeb'] as String,
       overlapType: map['overlapType'] as int,
-      courseGroup: map['courseGroup'] as String,
+      activityCourses: [],
     );
   }
 
@@ -225,7 +225,6 @@ class OfferedCourse {
       'sectionType': sectionType,
       'fullWeb': fullWeb,
       'overlapType': overlapType,
-      'courseGroup': courseGroup,
     };
   }
 
@@ -233,7 +232,7 @@ class OfferedCourse {
 
   @override
   String toString() {
-    return 'OfferedCourse(courseId: $courseId, courseCode: $courseCode, courseEdition: $courseEdition, creditHours: $creditHours, courseSection: $courseSection, courseName: $courseName, activityCode: $activityCode, activityDesc: $activityDesc, campusName: $campusName, campusId: $campusId, buildingName: $buildingName, roomCode: $roomCode, roomDesc: $roomDesc, secDays: $secDays, secTimes: $secTimes, teacherName: $teacherName, isMain: $isMain, isClosed: $isClosed, timeTable: $timeTable, sectionSeq: $sectionSeq, examPeriod: $examPeriod, status: $status, regError: $regError, containActivity: $containActivity, freeCourse: $freeCourse, bisect: $bisect, categoryCode: $categoryCode, groupSeq: $groupSeq, groupType: $groupType, sectionType: $sectionType, fullWeb: $fullWeb, overlapType: $overlapType, courseGroup: $courseGroup)';
+    return 'OfferedCourse(courseId: $courseId, courseCode: $courseCode, courseEdition: $courseEdition, creditHours: $creditHours, courseSection: $courseSection, courseName: $courseName, activityCode: $activityCode, activityDesc: $activityDesc, campusName: $campusName, campusId: $campusId, buildingName: $buildingName, roomCode: $roomCode, roomDesc: $roomDesc, secDays: $secDays, secTimes: $secTimes, teacherName: $teacherName, isMain: $isMain, isClosed: $isClosed, timeTable: $timeTable, sectionSeq: $sectionSeq, examPeriod: $examPeriod, status: $status, regError: $regError, containActivity: $containActivity, freeCourse: $freeCourse, bisect: $bisect, categoryCode: $categoryCode, groupSeq: $groupSeq, groupType: $groupType, sectionType: $sectionType, fullWeb: $fullWeb, overlapType: $overlapType, activityCourses: $activityCourses)';
   }
 
   @override
@@ -272,7 +271,7 @@ class OfferedCourse {
         other.sectionType == sectionType &&
         other.fullWeb == fullWeb &&
         other.overlapType == overlapType &&
-        other.courseGroup == courseGroup;
+        listEquals(other.activityCourses, activityCourses);
   }
 
   @override
@@ -309,6 +308,6 @@ class OfferedCourse {
         sectionType.hashCode ^
         fullWeb.hashCode ^
         overlapType.hashCode ^
-        courseGroup.hashCode;
+        activityCourses.hashCode;
   }
 }

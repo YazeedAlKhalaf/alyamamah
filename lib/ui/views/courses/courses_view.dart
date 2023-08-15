@@ -74,7 +74,7 @@ class _CoursesViewState extends ConsumerState<CoursesView> {
             );
           },
         ),
-        actions: const [
+        actions: [
           // TODO: add this back when ramadan comes back.
           // IconButton(
           //   icon: Text(
@@ -87,6 +87,13 @@ class _CoursesViewState extends ConsumerState<CoursesView> {
           //     await ref.read(coursesViewModelProvider).toggleRamadanMode();
           //   },
           // ),
+          if (featureFlagsState.isScheduleBuilderEnabled)
+            IconButton(
+              icon: const Icon(Icons.schedule_rounded),
+              onPressed: () {
+                ref.read(yuRouterProvider).push(const OfferedCoursesRoute());
+              },
+            ),
         ],
       ),
       body: SafeArea(
@@ -143,10 +150,10 @@ class _CoursesViewState extends ConsumerState<CoursesView> {
                     scheduleDays: coursesViewModel.scheduleDays,
                     startHour: lowestStartHour,
                     cellHeight: coursesViewModel.isRamadan ? 90 : 60,
-                    onCourseTap: (onCourseTap) async {
+                    onCourseTap: (scheduleEntry) async {
                       await ref
                           .read(coursesViewModelProvider)
-                          .navigateToCourseDetails(onCourseTap);
+                          .navigateToCourseDetails(scheduleEntry);
                     },
                     onRefresh: () async {
                       await ref

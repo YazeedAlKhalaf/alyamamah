@@ -21,6 +21,8 @@ extension TimeOfDayX on TimeOfDay {
     return Duration(hours: hourDifference, minutes: minuteDifference);
   }
 
+  int get inMinutes => hour * 60 + minute;
+
   String toJson() {
     return '$hour:$minute';
   }

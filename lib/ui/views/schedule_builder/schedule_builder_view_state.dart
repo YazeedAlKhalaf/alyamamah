@@ -3,6 +3,8 @@ import 'package:flutter/foundation.dart';
 
 enum ScheduleBuilderViewStatus {
   unknown,
+  generating,
+  generated,
   submitting,
   submitted,
   errorSubmitting,

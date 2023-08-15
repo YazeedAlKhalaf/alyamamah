@@ -13,7 +13,7 @@ enum OfferedCoursesViewStatus {
 class OfferedCoursesViewState {
   final OfferedCoursesViewStatus status;
   final List<OfferedCourse> offeredCourses;
-  final List<String> selectedCourseCodes;
+  final Set<String> selectedCourseCodes;
   final RegistrationHours? registrationHours;
 
   double get selectedHours => selectedCourseCodes.fold(
@@ -21,8 +21,9 @@ class OfferedCoursesViewState {
         (previousValue, courseCode) =>
             previousValue +
             offeredCourses
-                .singleWhere(
-                    (offeredCourse) => offeredCourse.courseCode == courseCode)
+                .firstWhere(
+                  (offeredCourse) => offeredCourse.courseCode == courseCode,
+                )
                 .creditHours,
       );
 
@@ -34,17 +35,31 @@ class OfferedCoursesViewState {
       )
       .toList();
 
+  List<OfferedCourse> get uniqueNameCourses {
+    final seenNames = <String>{};
+    final uniqueCourses = <OfferedCourse>[];
+
+    for (final course in [...offeredCourses]) {
+      if (!seenNames.contains(course.courseCode)) {
+        seenNames.add(course.courseCode);
+        uniqueCourses.add(course);
+      }
+    }
+
+    return uniqueCourses;
+  }
+
   OfferedCoursesViewState({
     this.status = OfferedCoursesViewStatus.unknown,
     this.offeredCourses = const [],
-    this.selectedCourseCodes = const [],
+    this.selectedCourseCodes = const {},
     this.registrationHours,
   });
 
   OfferedCoursesViewState copyWith({
     OfferedCoursesViewStatus? status,
     List<OfferedCourse>? offeredCourses,
-    List<String>? selectedCourseCodes,
+    Set<String>? selectedCourseCodes,
     Optional<RegistrationHours?>? registrationHours,
   }) {
     return OfferedCoursesViewState(
@@ -63,7 +78,7 @@ class OfferedCoursesViewState {
 
     return other.status == status &&
         listEquals(other.offeredCourses, offeredCourses) &&
-        listEquals(other.selectedCourseCodes, selectedCourseCodes) &&
+        setEquals(other.selectedCourseCodes, selectedCourseCodes) &&
         other.registrationHours == registrationHours;
   }
 

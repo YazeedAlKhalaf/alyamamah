@@ -58,8 +58,7 @@ class OfferedCoursesConflictsView extends ConsumerWidget {
                           onPressed: () {
                             ref
                                 .read(scheduleBuilderViewModelProvider.notifier)
-                                .removeCourseAndRegenerate(
-                                  offeredCourses,
+                                .removeCourseFromSelectedSchedule(
                                   conflict.firstEntry.courseCode,
                                 );
                           },
@@ -84,8 +83,7 @@ class OfferedCoursesConflictsView extends ConsumerWidget {
                           onPressed: () {
                             ref
                                 .read(scheduleBuilderViewModelProvider.notifier)
-                                .removeCourseAndRegenerate(
-                                  offeredCourses,
+                                .removeCourseFromSelectedSchedule(
                                   conflict.secondEntry.courseCode,
                                 );
                           },

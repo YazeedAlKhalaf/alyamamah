@@ -131,10 +131,11 @@ class _OfferedCoursesViewState extends ConsumerState<OfferedCoursesView> {
                           .getOfferedCourses();
                     },
                     child: ListView.builder(
-                      itemCount: offeredCoursesViewState.offeredCourses.length,
+                      itemCount:
+                          offeredCoursesViewState.uniqueNameCourses.length,
                       itemBuilder: (BuildContext context, int index) {
                         final offeredCourse =
-                            offeredCoursesViewState.offeredCourses[index];
+                            offeredCoursesViewState.uniqueNameCourses[index];
 
                         return OfferedCourseListTile(
                           offeredCourse: offeredCourse,
@@ -168,10 +169,17 @@ class _OfferedCoursesViewState extends ConsumerState<OfferedCoursesView> {
                               99999)
                   ? null
                   : () async {
+                      final selectedCourseCodes =
+                          offeredCoursesViewState.selectedCourseCodes;
+                      final offeredCourses = offeredCoursesViewState
+                          .offeredCourses
+                          .where((element) {
+                        return selectedCourseCodes.contains(element.courseCode);
+                      }).toList();
+
                       await ref.read(yuRouterProvider).push(
                             ScheduleBuilderRoute(
-                              offeredCourses: offeredCoursesViewState
-                                  .selectedOfferedCourses,
+                              offeredCourses: offeredCourses,
                             ),
                           );
                     },

@@ -34,10 +34,10 @@ class OfferedCoursesViewModel extends StateNotifier<OfferedCoursesViewState> {
 
       state = state.copyWith(
         status: OfferedCoursesViewStatus.loaded,
-        offeredCourses: offeredCourses,
+        offeredCourses: [...offeredCourses, ...attemptedCourses],
         registrationHours: Optional(registrationHours),
         selectedCourseCodes:
-            attemptedCourses.map((course) => course.courseCode).toList(),
+            attemptedCourses.map((course) => course.courseCode).toSet(),
       );
     } on ApiServiceException catch (e) {
       _log.severe('error fetching offered courses: $e');
@@ -49,12 +49,12 @@ class OfferedCoursesViewModel extends StateNotifier<OfferedCoursesViewState> {
   }
 
   void toggleOfferedCourse(String courseCode) {
-    final selectedCourseCodes = List<String>.from(state.selectedCourseCodes);
+    final selectedCourseCodes = Set<String>.from(state.selectedCourseCodes);
 
     if (selectedCourseCodes.contains(courseCode)) {
       selectedCourseCodes.remove(courseCode);
     } else {
-      final creditHours = state.offeredCourses
+      final creditHours = state.uniqueNameCourses
           .singleWhere(
             (offeredCourse) => offeredCourse.courseCode == courseCode,
           )

@@ -37,6 +37,7 @@ dependencies:
   unleash_proxy_client_flutter: 1.2.1
   permission_handler: 10.3.0
   flutter_inappwebview: 5.7.2+3
+  crypto: 3.0.3
   
 dependency_overrides:
   intl: 0.18.1

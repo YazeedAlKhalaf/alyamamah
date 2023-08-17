@@ -9,5 +9,5 @@ final darkTheme = ThemeData(
   appBarTheme: const AppBarTheme(
     centerTitle: true,
   ),
-  fontFamily: 'Tajawal',
+  fontFamily: 'IBM Plex Sans Arabic',
 );

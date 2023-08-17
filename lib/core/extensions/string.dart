@@ -56,4 +56,19 @@ extension StringX on String {
     final now = DateTime.now().millisecondsSinceEpoch / 1000;
     return now > exp;
   }
+
+  String toTitleCase() {
+    return split(' ')
+        .map((word) => word[0].toUpperCase() + word.substring(1).toLowerCase())
+        .join(' ');
+  }
+
+  String toTwoNamesMaximum() {
+    final names = split(' ');
+    if (names.length <= 2) {
+      return this;
+    }
+
+    return '${names[0]} ${names[names.length - 1]}';
+  }
 }

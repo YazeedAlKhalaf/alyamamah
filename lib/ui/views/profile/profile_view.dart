@@ -1,6 +1,7 @@
 import 'package:alyamamah/core/constants.dart';
 import 'package:alyamamah/core/extensions/build_context.dart';
 import 'package:alyamamah/core/extensions/locale.dart';
+import 'package:alyamamah/core/extensions/string.dart';
 import 'package:alyamamah/core/extensions/theme_mode.dart';
 import 'package:alyamamah/core/providers/actor_details/actor_details_notifier.dart';
 import 'package:alyamamah/core/providers/feature_flags/feature_flags_state_notifier.dart';
@@ -10,6 +11,7 @@ import 'package:alyamamah/ui/views/profile/widgets/language_bottom_sheet.dart';
 import 'package:alyamamah/ui/views/profile/widgets/theme_bottom_sheet.dart';
 import 'package:alyamamah/ui/widgets/button_loading.dart';
 import 'package:alyamamah/ui/widgets/privacy_policy_and_terms_of_use_widget.dart';
+import 'package:alyamamah/ui/widgets/section_container.dart';
 import 'package:alyamamah/ui/widgets/yu_show.dart';
 import 'package:alyamamah/ui/widgets/yu_snack_bar.dart';
 import 'package:auto_route/auto_route.dart';
@@ -63,190 +65,214 @@ class ProfileView extends ConsumerWidget {
         child: ListView(
           physics: const AlwaysScrollableScrollPhysics(),
           children: [
-            ListTile(
-              leading: const CircleAvatar(child: Icon(Icons.person_rounded)),
-              title: Text(
-                Localizations.localeOf(context).languageCode == 'ar'
-                    ? actorDetails?.sessionInfo.actorName ?? ''
-                    : actorDetails?.sessionInfo.actorNameEn ?? '',
-                style: Theme.of(context).textTheme.labelLarge,
-              ),
-              subtitle: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    actorDetails?.sessionInfo.academicMail ?? '',
-                    style: Theme.of(context).textTheme.labelMedium,
-                    textDirection: TextDirection.ltr,
+            SectionContainer(
+              showTopPadding: false,
+              children: [
+                ListTile(
+                  leading:
+                      const CircleAvatar(child: Icon(Icons.person_rounded)),
+                  title: Text(
+                    (Localizations.localeOf(context).languageCode == 'ar'
+                            ? actorDetails?.sessionInfo.actorName ?? ''
+                            : (actorDetails?.sessionInfo.actorNameEn ?? '')
+                                .toTitleCase())
+                        .toTwoNamesMaximum(),
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
-                ],
-              ),
-              trailing: const Icon(Icons.chevron_right_rounded),
-              onTap: () async {
-                await ref
-                    .read(profileViewModelProvider)
-                    .navigateToStudentInfo();
-              },
+                  subtitle: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        actorDetails?.sessionInfo.academicMail ?? '',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                        textDirection: TextDirection.ltr,
+                      ),
+                    ],
+                  ),
+                  trailing: const Icon(Icons.chevron_right_rounded),
+                  onTap: () async {
+                    await ref
+                        .read(profileViewModelProvider)
+                        .navigateToStudentInfo();
+                  },
+                ),
+              ],
             ),
-            if (featureFlagsState.isAlyamamahGptEnabled)
-              ListTile(
-                leading: const CircleAvatar(
-                  child: Icon(Icons.smart_toy_rounded),
-                ),
-                title: Text(
-                  context.s.ask_alyamamah_gpt,
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                subtitle: Row(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(Constants.spacing),
-                        color: Theme.of(context).colorScheme.tertiary,
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: Constants.padding / 2,
-                        vertical: 0,
-                      ),
-                      child: Text(
-                        context.s.new_word,
-                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                              color: Theme.of(context).colorScheme.onTertiary,
-                            ),
-                        textAlign: TextAlign.center,
-                      ),
+            const SizedBox(height: Constants.padding),
+            SectionContainer(
+              showTopPadding: false,
+              children: [
+                if (featureFlagsState.isAlyamamahGptEnabled)
+                  ListTile(
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: Constants.padding,
+                      vertical: Constants.spacing,
                     ),
-                  ],
+                    leading: const CircleAvatar(
+                      child: Icon(Icons.smart_toy_rounded),
+                    ),
+                    title: Text(
+                      context.s.ask_alyamamah_gpt,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                    trailing: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                BorderRadius.circular(Constants.spacing),
+                            color: Theme.of(context).colorScheme.tertiary,
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: Constants.padding / 2,
+                            vertical: 0,
+                          ),
+                          child: Text(
+                            context.s.new_word,
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelSmall
+                                ?.copyWith(
+                                  color:
+                                      Theme.of(context).colorScheme.onTertiary,
+                                ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ],
+                    ),
+                    onTap: () async {
+                      await ref
+                          .read(profileViewModelProvider)
+                          .navigateToYuGptView();
+                    },
+                  ),
+              ],
+            ),
+            const SizedBox(height: Constants.padding),
+            SectionContainer(
+              children: [
+                Text(
+                  context.s.appearance,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
-                trailing: const Icon(Icons.chevron_right_rounded),
-                onTap: () async {
-                  await ref
-                      .read(profileViewModelProvider)
-                      .navigateToYuGptView();
-                },
-              ),
-            const SizedBox(height: Constants.padding),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: Constants.padding,
-              ),
-              child: Text(
-                context.s.appearance,
-                style: Theme.of(context).textTheme.labelLarge,
-              ),
-            ),
-            const SizedBox(height: Constants.spacing),
-            ListTile(
-              leading: Text(
-                '🎨',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-              title: Text(context.s.theme),
-              subtitle: Text(
-                themeService.themeMode.mapToString(context),
-              ),
-              onTap: () async {
-                await YUShow.modalBottomSheet(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return const ThemeBottomSheet();
+                ListTile(
+                  leading: Text(
+                    '🎨',
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                  title: Text(context.s.theme),
+                  subtitle: Text(
+                    themeService.themeMode.mapToString(context),
+                  ),
+                  trailing: const Icon(Icons.chevron_right_rounded),
+                  onTap: () async {
+                    await YUShow.modalBottomSheet(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return const ThemeBottomSheet();
+                      },
+                    );
                   },
-                );
-              },
-            ),
-            ListTile(
-              leading: Text(
-                '🌐',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-              title: Text(context.s.language),
-              subtitle: Text(
-                Locale(context.s.localeName).mapToString(context),
-              ),
-              onTap: () async {
-                await YUShow.modalBottomSheet(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return const LanguageBottomSheet();
+                ),
+                ListTile(
+                  leading: Text(
+                    '🌐',
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                  title: Text(context.s.language),
+                  subtitle: Text(
+                    Locale(context.s.localeName).mapToString(context),
+                  ),
+                  trailing: const Icon(Icons.chevron_right_rounded),
+                  onTap: () async {
+                    await YUShow.modalBottomSheet(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return const LanguageBottomSheet();
+                      },
+                    );
                   },
-                );
-              },
+                ),
+              ],
             ),
             const SizedBox(height: Constants.padding),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: Constants.padding,
-              ),
-              child: Text(
-                context.s.about_us,
-                style: Theme.of(context).textTheme.labelLarge,
-              ),
-            ),
-            const SizedBox(height: Constants.spacing),
-            // ListTile(
-            //   leading: Text(
-            //     '⭐️',
-            //     style: Theme.of(context).textTheme.headlineMedium,
-            //   ),
-            //   title: Text(
-            //     context.s.rate_us_on_the_store(
-            //       Theme.of(context).platform == TargetPlatform.iOS
-            //           ? context.s.app_store
-            //           : context.s.play_store,
-            //     ),
-            //   ),
-            //   onTap: () {},
-            // ),
-            ListTile(
-              leading: Text(
-                '🐦',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-              title: Text(context.s.follow_us_on_twitter),
-              onTap: () async {
-                final canLaunch = await url_launcher.canLaunchUrl(
-                  Uri.parse(Constants.twitterLink),
-                );
-                if (canLaunch) {
-                  await url_launcher.launchUrl(
-                    Uri.parse(Constants.twitterLink),
-                  );
-                }
-              },
-            ),
-            ListTile(
-              leading: Text(
-                '％',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-              title: Text(context.s.semester_progress_tool),
-              onTap: () async {
-                final canLaunch = await url_launcher.canLaunchUrl(
-                  Uri.parse(Constants.semesterProgressLink),
-                );
-                if (canLaunch) {
-                  await url_launcher.launchUrl(
-                    Uri.parse(Constants.semesterProgressLink),
-                  );
-                }
-              },
-            ),
-            ListTile(
-              leading: Text(
-                '🗓️',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-              title: Text(context.s.tuwaiq_classrooms_tool),
-              onTap: () async {
-                final canLaunch = await url_launcher.canLaunchUrl(
-                  Uri.parse(Constants.tuwaiqClassroomsLink),
-                );
-                if (canLaunch) {
-                  await url_launcher.launchUrl(
-                    Uri.parse(Constants.tuwaiqClassroomsLink),
-                  );
-                }
-              },
+            SectionContainer(
+              children: [
+                Text(
+                  context.s.about_us,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                // ListTile(
+                //   leading: Text(
+                //     '⭐️',
+                //     style: Theme.of(context).textTheme.headlineMedium,
+                //   ),
+                //   title: Text(
+                //     context.s.rate_us_on_the_store(
+                //       Theme.of(context).platform == TargetPlatform.iOS
+                //           ? context.s.app_store
+                //           : context.s.play_store,
+                //     ),
+                //   ),
+                //   onTap: () {},
+                // ),
+                ListTile(
+                  leading: Text(
+                    '𝕏',
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                  title: Text(context.s.follow_us_on_twitter),
+                  trailing: const Icon(Icons.chevron_right_rounded),
+                  onTap: () async {
+                    final canLaunch = await url_launcher.canLaunchUrl(
+                      Uri.parse(Constants.twitterLink),
+                    );
+                    if (canLaunch) {
+                      await url_launcher.launchUrl(
+                        Uri.parse(Constants.twitterLink),
+                      );
+                    }
+                  },
+                ),
+                ListTile(
+                  leading: Text(
+                    '％',
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                  title: Text(context.s.semester_progress_tool),
+                  trailing: const Icon(Icons.chevron_right_rounded),
+                  onTap: () async {
+                    final canLaunch = await url_launcher.canLaunchUrl(
+                      Uri.parse(Constants.semesterProgressLink),
+                    );
+                    if (canLaunch) {
+                      await url_launcher.launchUrl(
+                        Uri.parse(Constants.semesterProgressLink),
+                      );
+                    }
+                  },
+                ),
+                ListTile(
+                  leading: Text(
+                    '📆',
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                  title: Text(context.s.tuwaiq_rooms_tool),
+                  trailing: const Icon(Icons.chevron_right_rounded),
+                  onTap: () async {
+                    final canLaunch = await url_launcher.canLaunchUrl(
+                      Uri.parse(Constants.tuwaiqClassroomsLink),
+                    );
+                    if (canLaunch) {
+                      await url_launcher.launchUrl(
+                        Uri.parse(Constants.tuwaiqClassroomsLink),
+                      );
+                    }
+                  },
+                ),
+              ],
             ),
             const SizedBox(height: Constants.padding),
             Padding(

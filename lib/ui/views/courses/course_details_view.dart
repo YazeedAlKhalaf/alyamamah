@@ -45,7 +45,12 @@ class _CourseDetailsViewState extends ConsumerState<CourseDetailsView> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.scheduleEntry.courseName),
+        title: Text(
+          widget.scheduleEntry.courseName,
+          style: const TextStyle(
+            fontWeight: FontWeight.w500,
+          ),
+        ),
       ),
       body: SafeArea(
         child: ListView(

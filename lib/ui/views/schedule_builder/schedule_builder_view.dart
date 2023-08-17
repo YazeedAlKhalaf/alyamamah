@@ -104,7 +104,12 @@ class _ScheduleBuilderViewState extends ConsumerState<ScheduleBuilderView> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.s.schedule_builder),
+        title: Text(
+          context.s.schedule_builder,
+          style: const TextStyle(
+            fontWeight: FontWeight.w500,
+          ),
+        ),
       ),
       body: switch (scheduleBuilderViewState.status) {
         ScheduleBuilderViewStatus.generating => const Center(

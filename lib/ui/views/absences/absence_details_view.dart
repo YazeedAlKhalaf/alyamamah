@@ -18,7 +18,12 @@ class AbsenceDetailsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.s.absence_details),
+        title: Text(
+          context.s.absence_details,
+          style: const TextStyle(
+            fontWeight: FontWeight.w500,
+          ),
+        ),
       ),
       body: ListView.separated(
         itemCount: absence.details.length,

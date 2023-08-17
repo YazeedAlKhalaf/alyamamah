@@ -21,7 +21,12 @@ class GradesView extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.s.grades),
+        title: Text(
+          context.s.grades,
+          style: const TextStyle(
+            fontWeight: FontWeight.w500,
+          ),
+        ),
         leading: IconButton(
           icon: Text(
             '📚',

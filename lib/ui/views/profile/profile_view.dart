@@ -30,7 +30,12 @@ class ProfileView extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.s.profile),
+        title: Text(
+          context.s.profile,
+          style: const TextStyle(
+            fontWeight: FontWeight.w500,
+          ),
+        ),
         actions: [
           TextButton(
             onPressed: () async {

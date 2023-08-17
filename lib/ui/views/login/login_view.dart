@@ -31,7 +31,12 @@ class _LoginViewState extends ConsumerState<LoginView> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.s.login),
+        title: Text(
+          context.s.login,
+          style: const TextStyle(
+            fontWeight: FontWeight.w500,
+          ),
+        ),
         actions: const [
           SwitchLanguageButton(),
         ],

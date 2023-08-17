@@ -32,7 +32,12 @@ class _AbsencesViewState extends ConsumerState<AbsencesView> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.s.absences),
+        title: Text(
+          context.s.absences,
+          style: const TextStyle(
+            fontWeight: FontWeight.w500,
+          ),
+        ),
       ),
       body: Column(
         children: [

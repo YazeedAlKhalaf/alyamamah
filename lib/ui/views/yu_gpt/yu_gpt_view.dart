@@ -89,7 +89,12 @@ class _YuGptViewState extends ConsumerState<YuGptView> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.s.ask_alyamamah_gpt),
+        title: Text(
+          context.s.ask_alyamamah_gpt,
+          style: const TextStyle(
+            fontWeight: FontWeight.w500,
+          ),
+        ),
         actions: [
           IconButton.filledTonal(
             onPressed: () {

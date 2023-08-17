@@ -37,7 +37,12 @@ class _OfferedCoursesViewState extends ConsumerState<OfferedCoursesView> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.s.offered_courses),
+        title: Text(
+          context.s.offered_courses,
+          style: const TextStyle(
+            fontWeight: FontWeight.w500,
+          ),
+        ),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(60 + Constants.padding),
           child: switch (offeredCoursesViewState.registrationHours) {

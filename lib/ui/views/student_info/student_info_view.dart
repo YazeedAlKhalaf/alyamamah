@@ -20,7 +20,12 @@ class StudentInfoView extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.s.student_information),
+        title: Text(
+          context.s.student_information,
+          style: const TextStyle(
+            fontWeight: FontWeight.w500,
+          ),
+        ),
       ),
       body: SafeArea(
         child: studentInfoViewModel.isLoading

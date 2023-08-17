@@ -52,7 +52,12 @@ class _CoursesViewState extends ConsumerState<CoursesView> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.s.my_courses),
+        title: Text(
+          context.s.my_courses,
+          style: const TextStyle(
+            fontWeight: FontWeight.w500,
+          ),
+        ),
         surfaceTintColor: Theme.of(context).colorScheme.surface,
         leading: IconButton(
           icon: Text(

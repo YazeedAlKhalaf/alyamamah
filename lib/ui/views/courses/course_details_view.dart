@@ -94,10 +94,13 @@ class _CourseDetailsViewState extends ConsumerState<CourseDetailsView> {
                             'could not open link: ${courseDetailsViewModel.link}',
                             e,
                           );
-                          YUSnackBar.show(
-                            context,
-                            message: context.s.failed_to_open_link,
-                          );
+
+                          if (context.mounted) {
+                            YUSnackBar.show(
+                              context,
+                              message: context.s.failed_to_open_link,
+                            );
+                          }
                         }
                       }
                     }

@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "astro-build.astro-vscode",
+    "Dart-Code.dart-code",
+    "Dart-Code.flutter"
+  ],
+  "unwantedRecommendations": []
+}

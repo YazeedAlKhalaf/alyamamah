@@ -29,6 +29,12 @@
         "for": ["run-test", "run-test-file"]
       },
       "args": ["--update-goldens"]
+    },
+    {
+      "command": "./website/node_modules/.bin/astro dev",
+      "name": "Development server",
+      "request": "launch",
+      "type": "node-terminal"
     }
   ]
 }

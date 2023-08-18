@@ -1,0 +1,12 @@
+---
+const { href, text } = Astro.props;
+---
+
+<a
+  href={href}
+  class="text-sm font-medium text-blue-950 hover:text-white transition-colors duration-300 ease-in-out py-2 px-3 rounded-lg hover:bg-orange-600 focus:outline-none focus:ring focus:ring-orange-200 focus:ring-opacity-50"
+  aria-label={text}
+  role="menuitem"
+>
+  {text}
+</a>

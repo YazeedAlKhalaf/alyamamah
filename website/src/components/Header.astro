@@ -1,0 +1,18 @@
+---
+import MenuItem from "./MenuItem.astro";
+---
+
+<header class="bg-orange-200">
+  <div class="flex flex-row px-3 py-5 items-center max-w-4xl mx-auto">
+    <a href="/" class="flex-grow flex flex-row items-center gap-2">
+      <img
+        src="/logo-rounded.png"
+        class="w-10 h-10 drop-shadow-xl rounded-full"
+        alt="al yamamah logo with rounded corners"
+      />
+      <h1 class="text-2xl font-bold text-black flex-grow">Al Yamamah</h1>
+    </a>
+
+    <MenuItem href="/privacy-policy" text="Privacy Policy" />
+  </div>
+</header>

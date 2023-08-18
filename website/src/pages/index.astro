@@ -1,14 +1,27 @@
 ---
+import Layout from "../layouts/Layout.astro";
+import DownloadButtons from "../components/DownloadButtons.astro";
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width" />
-    <title>Al Yamamah | Best Student Companion</title>
-  </head>
-  <body>
-    <h1>Al Yamamah | Best Student Companion</h1>
-  </body>
-</html>
+<Layout
+  title="Al Yamamah | Best Student Companion"
+  description="Al Yamamah is the app that all university students wish to have during their university life! It is a modern solution that connects directly to Al Yamamah University services and provides a pleasant-looking user interface. The app works on both iOS and Android."
+>
+  <section
+    class="pt-5 px-5 flex flex-col md:flex-row items-center gap-8 md:gap-10"
+  >
+    <img
+      src="/logo-rounded.png"
+      class="w-64 h-64 drop-shadow-xl rounded-full"
+      alt="al yamamah logo with rounded corners"
+    />
+    <div class="text-center md:text-start">
+      <h1 class="text-2xl font-medium">Al Yamamah app</h1>
+      <h3 class="text-xl">
+        The app that every student dreams to have with them!
+      </h3>
+      <h5 class="text-md text-gray-400">Your ULTIMATE companion 😉</h5>
+      <DownloadButtons />
+    </div>
+  </section>
+</Layout>

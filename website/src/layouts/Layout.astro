@@ -1,8 +1,25 @@
 ---
+import { SEO } from "astro-seo";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 
+export interface Props {
+  title?: string;
+  description?: string;
+}
+
 const { title, description } = Astro.props;
+const makeTitle = title ? title + " | " + "Al Yamamah" : "Al Yamamah";
+const makeDescription = description
+  ? description
+  : "Al Yamamah is the app that all university students wish to have during their university life! It is a modern solution that connects directly to Al Yamamah University services and provides a pleasant-looking user interface. The app works on both iOS and Android.";
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
+
+const resolvedImageWithDomain = new URL(
+  "/opengraph.png",
+  Astro.site
+).toString();
 ---
 
 <html lang="en">
@@ -18,8 +35,30 @@ const { title, description } = Astro.props;
       rel="stylesheet"
     />
 
-    <title>{title}</title>
-    <meta name="description" content={description} />
+    <title>{makeTitle}</title>
+    <meta name="description" content={makeDescription} />
+
+    <SEO
+      title={makeTitle}
+      description={makeDescription}
+      canonical={canonicalURL}
+      twitter={{
+        creator: "@yazeedalkhalaf",
+        site: "@yazeedalkhalaf",
+        card: "summary_large_image",
+      }}
+      openGraph={{
+        basic: {
+          url: canonicalURL,
+          type: "website",
+          title: `Al Yamamah`,
+          image: resolvedImageWithDomain,
+        },
+        image: {
+          alt: "Al Yamamah opengraph",
+        },
+      }}
+    />
   </head>
   <body class="bg-orange-50 flex flex-col min-h-screen">
     <Header />
@@ -27,5 +66,13 @@ const { title, description } = Astro.props;
       <slot />
     </main>
     <Footer />
+
+    <style is:global>
+      /* Improve Page speed */
+      /* https://css-tricks.com/almanac/properties/c/content-visibility/ */
+      img {
+        content-visibility: auto;
+      }
+    </style>
   </body>
 </html>

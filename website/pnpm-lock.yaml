@@ -11,6 +11,9 @@ dependencies:
   astro:
     specifier: ^2.10.10
     version: 2.10.10
+  astro-seo:
+    specifier: ^0.7.5
+    version: 0.7.5
   tailwindcss:
     specifier: ^3.0.24
     version: 3.3.3
@@ -999,6 +1002,10 @@ packages:
 
   /array-iterate@2.0.1:
     resolution: {integrity: sha512-I1jXZMjAgCMmxT4qxXfPXa6SthSoE8h6gkSI9BGGNv8mP8G/v0blc+qFnZu6K42vTOiuME596QaLO0TP3Lk0xg==}
+    dev: false
+
+  /astro-seo@0.7.5:
+    resolution: {integrity: sha512-bo5PiB4Y30PP9QS6OnYcVOr1fKDE52mvJys/3HgeiM2h+/hS7jESUHZMx6VX7yRid1yMGHsp2OyVTA9DrdPyPg==}
     dev: false
 
   /astro@2.10.10:

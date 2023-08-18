@@ -28,17 +28,8 @@ class CourseWidget extends StatelessWidget {
         horizontal: Constants.spacing / 4,
       ),
       decoration: BoxDecoration(
-        color: generateColor(
-          scheduleEntry.courseCode,
-          brightness: Theme.of(context).brightness,
-        ),
-        borderRadius: BorderRadius.circular(
-          Constants.spacing,
-        ),
-        border: Border.all(
-          color: Theme.of(context).colorScheme.onPrimaryContainer,
-          width: 1,
-        ),
+        color: generateBorderColor(generateColor(scheduleEntry.courseCode)),
+        borderRadius: BorderRadius.circular(Constants.spacing),
       ),
       padding: switch (isSmall) {
         true => null,
@@ -59,11 +50,20 @@ class CourseWidget extends StatelessWidget {
                 scheduleEntry.startTime.format(context),
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                      fontSize: switch (isSmall) {
-                        true => 9,
-                        false => null,
-                      },
+                  fontSize: switch (isSmall) {
+                    true => 9,
+                    false => null,
+                  },
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  shadows: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.5),
+                      blurRadius: 2,
+                      offset: const Offset(0, 1),
                     ),
+                  ],
+                ),
               ),
               const Spacer(flex: 8),
               Text(
@@ -74,6 +74,15 @@ class CourseWidget extends StatelessWidget {
                     true => height <= 70 ? 8 : 10,
                     false => null,
                   },
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  shadows: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.5),
+                      blurRadius: 2,
+                      offset: const Offset(0, 1),
+                    ),
+                  ],
                 ),
               ),
               const Spacer(flex: 8),
@@ -81,11 +90,20 @@ class CourseWidget extends StatelessWidget {
                 scheduleEntry.endTime.format(context),
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                      fontSize: switch (isSmall) {
-                        true => 9,
-                        false => null,
-                      },
+                  fontSize: switch (isSmall) {
+                    true => 9,
+                    false => null,
+                  },
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  shadows: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.5),
+                      blurRadius: 2,
+                      offset: const Offset(0, 1),
                     ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -95,19 +113,60 @@ class CourseWidget extends StatelessWidget {
   }
 }
 
-Color generateColor(String input, {required Brightness brightness}) {
-  final bytes = utf8.encode(input);
-  final digest = sha256.convert(bytes);
+Color generateColor(String input) {
+  List<String> parts = input.split(' ');
 
-  // sha-256 is made of 32 bytes, so anything between 0 and 31 is okay to use.
-  final hue = (digest.bytes[8] / 255.0) * 360.0;
+  String subject;
+  String number;
 
-  double lightness;
-  if (brightness == Brightness.light) {
-    lightness = (digest.bytes[9] % 35) / 100 + 0.6;
+  if (parts.length != 2) {
+    subject = input;
+    number = input;
   } else {
-    lightness = (digest.bytes[9] % 30) / 100 + 0.1;
+    subject = parts[0];
+    number = parts[1];
   }
 
-  return HSLColor.fromAHSL(1.0, hue, 0.75, lightness).toColor();
+  // Hash the subject to determine the hue.
+  final subjectBytes = utf8.encode(subject);
+  final subjectDigest = sha256.convert(subjectBytes);
+  final hueByteValue = (subjectDigest.bytes[8] << 8) + subjectDigest.bytes[9];
+  final hue = (hueByteValue % 65536) / 65536.0 * 360.0;
+
+  // Hash the number to determine saturation and lightness.
+  final numberBytes = utf8.encode(number);
+  final numberDigest = sha256.convert(numberBytes);
+
+  double saturation = 0.4 + (numberDigest.bytes[10] % 51 / 100);
+  double lightness = 0.4 + (numberDigest.bytes[11] % 31 / 100);
+
+  // Adjust lightness and saturation
+  // if the color falls within the green spectrum.
+  if (hue >= 60 && hue <= 180) {
+    saturation = 0.6;
+    lightness = 0.5;
+  }
+
+  return HSLColor.fromAHSL(1.0, hue, saturation, lightness).toColor();
+}
+
+Color generateBorderColor(Color originalColor) {
+  final hslOriginal = HSLColor.fromColor(originalColor);
+
+  // Adjust lightness for the border color
+  // If the original color is quite dark, we'll make the border lighter.
+  // Otherwise, we'll make it darker.
+  double borderLightness = (hslOriginal.lightness < 0.5)
+      ? hslOriginal.lightness + 0.15
+      : hslOriginal.lightness - 0.15;
+  borderLightness = borderLightness.clamp(0.0, 1.0);
+
+  final borderColor = HSLColor.fromAHSL(
+    hslOriginal.alpha,
+    hslOriginal.hue,
+    hslOriginal.saturation,
+    borderLightness,
+  );
+
+  return borderColor.toColor();
 }

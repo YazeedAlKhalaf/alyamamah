@@ -65,6 +65,7 @@ Future<void> main() async {
         options.enableUserInteractionBreadcrumbs = true;
         options.enableUserInteractionTracing = true;
         options.enableBreadcrumbTrackingForCurrentPlatform();
+        options.maxResponseBodySize = MaxResponseBodySize.always;
 
         // uncomment this to enable debug mode, in debug mode only.
         // assert(() {

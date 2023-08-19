@@ -181,5 +181,7 @@
   "no_chats_description": "No chats yet, those are linked to your courses",
   "syncing_chats": "Syncing chats",
   "loading_chats": "Loading chats",
-  "get_chats": "Get Chats"
+  "get_chats": "Get Chats",
+  "all_the_courses_that_you_have_selected_have_conflicts_please_remove_some_courses_and_try_again": "All the courses that you have selected have conflicts. Please remove some courses and try again.",
+  "go_back": "Go Back"
 }

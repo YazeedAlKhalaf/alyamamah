@@ -181,5 +181,7 @@
   "no_chats_description": "لا يوجد محادثات لعرضها، هي مرتبطة بالمقررات التي تدرسها",
   "syncing_chats": "جاري مزامنة المحادثات",
   "loading_chats": "جاري تحميل المحادثات",
-  "get_chats": "احصل على المحادثات"
+  "get_chats": "احصل على المحادثات",
+  "all_the_courses_that_you_have_selected_have_conflicts_please_remove_some_courses_and_try_again": "جميع المقررات التي اخترتها تحتوي على تعارضات، رجاء أزل بعض المقررات وحاول مرة أخرى",
+  "go_back": "عودة"
 }

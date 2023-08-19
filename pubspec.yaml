@@ -38,6 +38,7 @@ dependencies:
   permission_handler: 10.3.0
   flutter_inappwebview: 5.7.2+3
   crypto: 3.0.3
+  package_info_plus: 4.1.0
 
 dependency_overrides:
   intl: 0.18.1

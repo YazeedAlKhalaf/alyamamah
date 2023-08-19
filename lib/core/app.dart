@@ -1,4 +1,5 @@
 import 'package:alyamamah/core/providers/firebase_analytics/firebase_analytics_provider.dart';
+import 'package:alyamamah/core/providers/package_info/package_info_provider.dart';
 import 'package:alyamamah/core/router/yu_router.dart';
 import 'package:alyamamah/core/services/locale/locale_service.dart';
 import 'package:alyamamah/core/services/shared_prefs/shared_prefs_service.dart';
@@ -8,17 +9,20 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class App extends StatelessWidget {
   final SharedPreferences sharedPreferences;
+  final PackageInfo packageInfo;
   @visibleForTesting
   final List<Override> overrides;
 
   const App({
     super.key,
     required this.sharedPreferences,
+    required this.packageInfo,
     this.overrides = const [],
   });
 
@@ -27,6 +31,7 @@ class App extends StatelessWidget {
     return ProviderScope(
       overrides: [
         sharedPreferencesProvider.overrideWith((ref) => sharedPreferences),
+        packageInfoProvider.overrideWith((ref) => packageInfo),
         ...overrides,
       ],
       child: const AppWithoutProviderScope(),

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:alyamamah/core/services/api/fixtures/absences_response.dart';
+import 'package:alyamamah/core/services/api/fixtures/acitivity_courses.dart';
 import 'package:alyamamah/core/services/api/fixtures/actor_details_response.dart';
 import 'package:alyamamah/core/services/api/fixtures/course_results_response.dart';
 import 'package:alyamamah/core/services/api/fixtures/do_registration_response.dart';
@@ -135,8 +136,13 @@ class DemoModeInterceptor extends Interceptor {
           statusCode: 200,
           data: doRegistrationSuccessResponse,
         );
+      case '/resources/student/reg/activityCourses':
+        return Response(
+          requestOptions: options,
+          statusCode: 200,
+          data: activityCoursesSuccessResponse,
+        );
     }
-
     return null;
   }
 }

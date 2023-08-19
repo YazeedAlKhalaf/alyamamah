@@ -7,6 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:sentry_logging/sentry_logging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -43,10 +44,12 @@ Future<void> main() async {
   );
 
   final sharedPreferences = await SharedPreferences.getInstance();
+  final packageInfo = await PackageInfo.fromPlatform();
 
   if (kDebugMode) {
     runApp(App(
       sharedPreferences: sharedPreferences,
+      packageInfo: packageInfo,
     ));
   } else {
     await SentryFlutter.init(
@@ -75,6 +78,7 @@ Future<void> main() async {
           child: SentryScreenshotWidget(
             child: App(
               sharedPreferences: sharedPreferences,
+              packageInfo: packageInfo,
             ),
           ),
         ),

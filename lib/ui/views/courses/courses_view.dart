@@ -94,7 +94,7 @@ class _CoursesViewState extends ConsumerState<CoursesView> {
           // ),
           if (featureFlagsState.isScheduleBuilderEnabled)
             IconButton(
-              icon: const Icon(Icons.schedule_rounded),
+              icon: const Icon(Icons.edit_calendar_rounded),
               onPressed: () {
                 ref.read(yuRouterProvider).push(const OfferedCoursesRoute());
               },

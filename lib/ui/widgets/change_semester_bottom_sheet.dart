@@ -49,9 +49,15 @@ class ChangeSemesterBottomSheet extends ConsumerWidget {
                 ),
                 title: Text(
                   Utils.semesterToReadable(context, semester),
+                  style: context.textTheme.titleMedium?.copyWith(
+                    color: context.colorScheme.onSecondaryContainer,
+                  ),
                 ),
                 subtitle: Text(
                   isFirst ? context.s.current : context.s.previous,
+                  style: context.textTheme.bodyMedium?.copyWith(
+                    color: context.colorScheme.onSecondaryContainer,
+                  ),
                 ),
                 trailing: selectedSemester == semester
                     ? Text(

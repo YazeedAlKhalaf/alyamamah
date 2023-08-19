@@ -1,8 +1,8 @@
 import 'package:alyamamah/core/constants.dart';
+import 'package:alyamamah/core/extensions/build_context.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class YUBottomSheet extends ConsumerStatefulWidget {
+class YUBottomSheet extends StatelessWidget {
   final String? title;
   final String? description;
   final List<Widget> children;
@@ -17,21 +17,6 @@ class YUBottomSheet extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<YUBottomSheet> createState() => _YUBottomSheetState();
-}
-
-class _YUBottomSheetState extends ConsumerState<YUBottomSheet>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController animationController;
-
-  @override
-  void initState() {
-    super.initState();
-
-    animationController = BottomSheet.createAnimationController(this);
-  }
-
-  @override
   Widget build(BuildContext context) {
     final result = Padding(
       padding: const EdgeInsets.symmetric(
@@ -39,11 +24,11 @@ class _YUBottomSheetState extends ConsumerState<YUBottomSheet>
       ),
       child: Material(
         clipBehavior: Clip.hardEdge,
-        color: Theme.of(context).colorScheme.secondaryContainer,
+        color: context.colorScheme.secondaryContainer,
         borderRadius: BorderRadius.circular(Constants.padding),
         child: Column(
           children: [
-            ...widget.children,
+            ...children,
           ],
         ),
       ),
@@ -53,50 +38,43 @@ class _YUBottomSheetState extends ConsumerState<YUBottomSheet>
       padding: EdgeInsets.only(
         bottom: MediaQuery.of(context).viewInsets.bottom,
       ),
-      child: BottomSheet(
-        onClosing: () {},
-        animationController: animationController,
-        builder: (BuildContext context) {
-          return SafeArea(
-            top: false,
-            right: false,
-            left: false,
-            bottom: true,
-            minimum: const EdgeInsets.only(bottom: Constants.padding),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (widget.title != null) ...[
-                  Text(
-                    widget.title!,
-                    style: Theme.of(context).textTheme.headlineSmall,
+      child: SafeArea(
+        top: false,
+        right: false,
+        left: false,
+        bottom: true,
+        minimum: const EdgeInsets.only(bottom: Constants.padding),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (title != null) ...[
+              Text(
+                title!,
+                style: context.textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: Constants.spacing),
+            ],
+            if (description != null) ...[
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: Constants.padding,
+                  right: Constants.padding,
+                  bottom: Constants.padding,
+                ),
+                child: Text(
+                  description!,
+                  style: context.textTheme.bodyMedium?.copyWith(
+                    color: context.colorScheme.outline,
                   ),
-                  const SizedBox(height: Constants.spacing),
-                ],
-                if (widget.description != null) ...[
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: Constants.padding,
-                      right: Constants.padding,
-                      bottom: Constants.padding,
-                    ),
-                    child: Text(
-                      widget.description!,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: Theme.of(context).colorScheme.outline,
-                          ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ],
-                if (widget.areChildrenExpanded)
-                  Expanded(child: result)
-                else
-                  result
-              ],
-            ),
-          );
-        },
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+            if (areChildrenExpanded) Expanded(child: result) else result
+          ],
+        ),
       ),
     );
   }

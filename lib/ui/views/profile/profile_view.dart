@@ -77,14 +77,16 @@ class ProfileView extends ConsumerWidget {
                             : (actorDetails?.sessionInfo.actorNameEn ?? '')
                                 .toTitleCase())
                         .toTwoNamesMaximum(),
-                    style: Theme.of(context).textTheme.bodyLarge,
+                    style: context.textTheme.titleMedium?.copyWith(
+                      color: context.colorScheme.onSecondaryContainer,
+                    ),
                   ),
                   subtitle: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
                         actorDetails?.sessionInfo.academicMail ?? '',
-                        style: Theme.of(context).textTheme.bodyMedium,
+                        style: context.textTheme.bodyMedium,
                         textDirection: TextDirection.ltr,
                       ),
                     ],
@@ -113,7 +115,9 @@ class ProfileView extends ConsumerWidget {
                     ),
                     title: Text(
                       context.s.ask_alyamamah_gpt,
-                      style: Theme.of(context).textTheme.bodyLarge,
+                      style: context.textTheme.titleMedium?.copyWith(
+                        color: context.colorScheme.onSecondaryContainer,
+                      ),
                     ),
                     trailing: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -122,7 +126,7 @@ class ProfileView extends ConsumerWidget {
                           decoration: BoxDecoration(
                             borderRadius:
                                 BorderRadius.circular(Constants.spacing),
-                            color: Theme.of(context).colorScheme.tertiary,
+                            color: context.colorScheme.tertiary,
                           ),
                           padding: const EdgeInsets.symmetric(
                             horizontal: Constants.padding / 2,
@@ -130,13 +134,9 @@ class ProfileView extends ConsumerWidget {
                           ),
                           child: Text(
                             context.s.new_word,
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelSmall
-                                ?.copyWith(
-                                  color:
-                                      Theme.of(context).colorScheme.onTertiary,
-                                ),
+                            style: context.textTheme.labelSmall?.copyWith(
+                              color: context.colorScheme.onTertiary,
+                            ),
                             textAlign: TextAlign.center,
                           ),
                         ),
@@ -155,16 +155,27 @@ class ProfileView extends ConsumerWidget {
               children: [
                 Text(
                   context.s.appearance,
-                  style: Theme.of(context).textTheme.titleMedium,
+                  style: context.textTheme.titleMedium?.copyWith(
+                    color: context.colorScheme.onSecondaryContainer,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 ListTile(
                   leading: Text(
                     '🎨',
-                    style: Theme.of(context).textTheme.headlineMedium,
+                    style: context.textTheme.headlineMedium,
                   ),
-                  title: Text(context.s.theme),
+                  title: Text(
+                    context.s.theme,
+                    style: context.textTheme.titleMedium?.copyWith(
+                      color: context.colorScheme.onSecondaryContainer,
+                    ),
+                  ),
                   subtitle: Text(
                     themeService.themeMode.mapToString(context),
+                    style: context.textTheme.bodyMedium?.copyWith(
+                      color: context.colorScheme.onSecondaryContainer,
+                    ),
                   ),
                   trailing: const Icon(Icons.chevron_right_rounded),
                   onTap: () async {
@@ -179,11 +190,19 @@ class ProfileView extends ConsumerWidget {
                 ListTile(
                   leading: Text(
                     '🌐',
-                    style: Theme.of(context).textTheme.headlineMedium,
+                    style: context.textTheme.headlineMedium,
                   ),
-                  title: Text(context.s.language),
+                  title: Text(
+                    context.s.language,
+                    style: context.textTheme.titleMedium?.copyWith(
+                      color: context.colorScheme.onSecondaryContainer,
+                    ),
+                  ),
                   subtitle: Text(
                     Locale(context.s.localeName).mapToString(context),
+                    style: context.textTheme.bodyMedium?.copyWith(
+                      color: context.colorScheme.onSecondaryContainer,
+                    ),
                   ),
                   trailing: const Icon(Icons.chevron_right_rounded),
                   onTap: () async {
@@ -202,16 +221,19 @@ class ProfileView extends ConsumerWidget {
               children: [
                 Text(
                   context.s.about_us,
-                  style: Theme.of(context).textTheme.titleMedium,
+                  style: context.textTheme.titleMedium?.copyWith(
+                    color: context.colorScheme.onSecondaryContainer,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 // ListTile(
                 //   leading: Text(
                 //     '⭐️',
-                //     style: Theme.of(context).textTheme.headlineMedium,
+                //     style: context.textTheme.headlineMedium,
                 //   ),
                 //   title: Text(
                 //     context.s.rate_us_on_the_store(
-                //       Theme.of(context).platform == TargetPlatform.iOS
+                //       context.platform == TargetPlatform.iOS
                 //           ? context.s.app_store
                 //           : context.s.play_store,
                 //     ),
@@ -221,9 +243,14 @@ class ProfileView extends ConsumerWidget {
                 ListTile(
                   leading: Text(
                     '𝕏',
-                    style: Theme.of(context).textTheme.headlineMedium,
+                    style: context.textTheme.headlineMedium,
                   ),
-                  title: Text(context.s.follow_us_on_twitter),
+                  title: Text(
+                    context.s.follow_us_on_twitter,
+                    style: context.textTheme.titleMedium?.copyWith(
+                      color: context.colorScheme.onSecondaryContainer,
+                    ),
+                  ),
                   trailing: const Icon(Icons.chevron_right_rounded),
                   onTap: () async {
                     final canLaunch = await url_launcher.canLaunchUrl(
@@ -239,9 +266,14 @@ class ProfileView extends ConsumerWidget {
                 ListTile(
                   leading: Text(
                     '％',
-                    style: Theme.of(context).textTheme.headlineMedium,
+                    style: context.textTheme.headlineMedium,
                   ),
-                  title: Text(context.s.semester_progress_tool),
+                  title: Text(
+                    context.s.semester_progress_tool,
+                    style: context.textTheme.titleMedium?.copyWith(
+                      color: context.colorScheme.onSecondaryContainer,
+                    ),
+                  ),
                   trailing: const Icon(Icons.chevron_right_rounded),
                   onTap: () async {
                     final canLaunch = await url_launcher.canLaunchUrl(
@@ -257,9 +289,14 @@ class ProfileView extends ConsumerWidget {
                 ListTile(
                   leading: Text(
                     '📆',
-                    style: Theme.of(context).textTheme.headlineMedium,
+                    style: context.textTheme.headlineMedium,
                   ),
-                  title: Text(context.s.tuwaiq_rooms_tool),
+                  title: Text(
+                    context.s.tuwaiq_rooms_tool,
+                    style: context.textTheme.titleMedium?.copyWith(
+                      color: context.colorScheme.onSecondaryContainer,
+                    ),
+                  ),
                   trailing: const Icon(Icons.chevron_right_rounded),
                   onTap: () async {
                     final canLaunch = await url_launcher.canLaunchUrl(

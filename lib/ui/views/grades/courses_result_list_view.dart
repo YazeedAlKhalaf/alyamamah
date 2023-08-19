@@ -119,28 +119,19 @@ class _CoursesResultListViewState extends ConsumerState<CoursesResultListView> {
                     label: Text(context.s.choose_semester),
                   ),
                 )
-              : Column(
-                  children: [
-                    Expanded(
-                      child: ListView.separated(
-                        itemCount:
-                            coursesResultListViewModel.coursesResults.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          final courseResult =
-                              coursesResultListViewModel.coursesResults[index];
+              : ListView.separated(
+                  itemCount: coursesResultListViewModel.coursesResults.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final courseResult =
+                        coursesResultListViewModel.coursesResults[index];
 
-                          return CourseResultListTile(
-                            courseResult: courseResult,
-                          );
-                        },
-                        separatorBuilder: (context, index) {
-                          return const SizedBox(
-                            height: Constants.spacing,
-                          );
-                        },
-                      ),
-                    ),
-                  ],
+                    return CourseResultListTile(
+                      courseResult: courseResult,
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, int index) {
+                    return const SizedBox(height: Constants.spacing);
+                  },
                 ),
     );
   }

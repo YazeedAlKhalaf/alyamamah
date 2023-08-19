@@ -56,17 +56,15 @@ class AbsenceListTile extends ConsumerWidget {
         ),
         title: Text(
           absence.courseName,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Theme.of(context).colorScheme.onSecondaryContainer,
+          style: context.textTheme.titleMedium?.copyWith(
+            color: context.colorScheme.onSecondaryContainer,
           ),
         ),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(context.s.absences_count(absence.countAbsence)),
-            Text(context.s.late_count(absence.countLate)),
-          ],
+        subtitle: Text(
+          '${context.s.absences_count(absence.countAbsence)} | ${context.s.lates_count(absence.countLate)}',
+          style: context.textTheme.bodyMedium?.copyWith(
+            color: context.colorScheme.onSecondaryContainer,
+          ),
         ),
         trailing: const Icon(Icons.chevron_right_rounded),
         onTap: () async {

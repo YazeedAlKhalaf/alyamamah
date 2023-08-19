@@ -71,7 +71,9 @@ class GradesView extends ConsumerWidget {
                       Text(
                         context.s.semester_gpa,
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyLarge,
+                        style: context.textTheme.titleMedium?.copyWith(
+                          color: context.colorScheme.onSecondaryContainer,
+                        ),
                       ),
                       Text(
                         isCurrentGradesEmpty ||
@@ -80,9 +82,9 @@ class GradesView extends ConsumerWidget {
                             : coursesResultListViewState
                                 .studentGPA!.semesterGPA,
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
+                        style: context.textTheme.bodyLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ],
                   ),
@@ -101,7 +103,9 @@ class GradesView extends ConsumerWidget {
                       Text(
                         context.s.cumulative_gpa,
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyLarge,
+                        style: context.textTheme.titleMedium?.copyWith(
+                          color: context.colorScheme.onSecondaryContainer,
+                        ),
                       ),
                       Text(
                         isCurrentGradesEmpty ||
@@ -109,9 +113,9 @@ class GradesView extends ConsumerWidget {
                             ? ''
                             : coursesResultListViewState.studentGPA!.cumGPA,
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
+                        style: context.textTheme.bodyLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ],
                   ),

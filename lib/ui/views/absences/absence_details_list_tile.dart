@@ -34,16 +34,15 @@ class AbsenceDetailsListTile extends ConsumerWidget {
         ),
         title: Text(
           absenceDetails.activity,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Theme.of(context).colorScheme.onSecondaryContainer,
+          style: context.textTheme.titleMedium?.copyWith(
+            color: context.colorScheme.onSecondaryContainer,
           ),
         ),
         subtitle: Text(
           '${absenceDetails.date}\n${absenceDetails.day}',
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Theme.of(context).colorScheme.onSecondaryContainer,
-              ),
+          style: context.textTheme.bodyMedium?.copyWith(
+            color: context.colorScheme.onSecondaryContainer,
+          ),
         ),
         trailing: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

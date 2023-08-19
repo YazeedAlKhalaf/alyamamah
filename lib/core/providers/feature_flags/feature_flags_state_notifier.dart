@@ -34,6 +34,9 @@ class FeatureFlagsStateNotifier extends StateNotifier<FeatureFlagsState> {
       isScheduleBuilderEnabled: _unleashService.isEnabled(
         UnleashFlags.scheduleBuilder,
       ),
+      isScheduleHourLabelsEnabled: _unleashService.isEnabled(
+        UnleashFlags.scheduleHoursLabels,
+      ),
     );
   }
 
@@ -45,6 +48,9 @@ class FeatureFlagsStateNotifier extends StateNotifier<FeatureFlagsState> {
       ),
       isScheduleBuilderEnabled: _unleashService.isEnabled(
         UnleashFlags.scheduleBuilder,
+      ),
+      isScheduleHourLabelsEnabled: _unleashService.isEnabled(
+        UnleashFlags.scheduleHoursLabels,
       ),
     );
   }

@@ -19,57 +19,51 @@ class CoursesColumn extends StatelessWidget {
     required this.onCourseTap,
   });
 
+  double _computeMaxHeight() {
+    return scheduleEntries.fold<double>(0,
+        (double previousValue, ScheduleEntry entry) {
+      double entryTop = _computeEntryTop(entry);
+      double entryHeight = _computeEntryHeight(entry);
+      return math.max(previousValue, entryTop + entryHeight);
+    });
+  }
+
+  double _computeEntryTop(ScheduleEntry entry) {
+    final minutesFromStart =
+        (entry.startTime.hour - startHour) * 60 + entry.startTime.minute;
+    return (minutesFromStart * cellHeight) / 60;
+  }
+
+  double _computeEntryHeight(ScheduleEntry entry) {
+    final durationInMinutes =
+        entry.startTime.difference(entry.endTime).inMinutes;
+    return (durationInMinutes * cellHeight) / 60;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Column(
-        children: <Widget>[
-          SizedBox(
-            height: scheduleEntries.fold<double>(0,
-                (double previousValue, ScheduleEntry entry) {
-              final double entryTop =
-                  (((entry.startTime.hour - startHour) * 60) +
-                          entry.startTime.minute.toDouble()) *
-                      cellHeight /
-                      60;
-              final double entryHeight = (entry.startTime
-                          .difference(entry.endTime)
-                          .inMinutes
-                          .toDouble() *
-                      cellHeight) /
-                  60;
-
-              return math.max(previousValue, entryTop + entryHeight);
-            }),
-            child: Stack(
-              alignment: Alignment.topCenter,
-              children: scheduleEntries.map(
-                (ScheduleEntry scheduleEntry) {
-                  return Positioned(
-                    left: 2,
-                    right: 2,
-                    top: (((scheduleEntry.startTime.hour - startHour) * 60) +
-                            scheduleEntry.startTime.minute.toDouble()) *
-                        cellHeight /
-                        60,
-                    child: CourseWidget(
-                      height: (scheduleEntry.startTime
-                                  .difference(scheduleEntry.endTime)
-                                  .inMinutes
-                                  .toDouble() *
-                              cellHeight) /
-                          60,
-                      scheduleEntry: scheduleEntry,
-                      onTap: () {
-                        onCourseTap(scheduleEntry);
-                      },
-                    ),
-                  );
-                },
-              ).toList(),
-            ),
-          ),
-        ],
+      child: SizedBox(
+        height: _computeMaxHeight(),
+        child: Stack(
+          alignment: Alignment.topCenter,
+          children: scheduleEntries.map(
+            (ScheduleEntry scheduleEntry) {
+              return Positioned(
+                left: 2,
+                right: 2,
+                top: _computeEntryTop(scheduleEntry),
+                child: CourseWidget(
+                  height: _computeEntryHeight(scheduleEntry),
+                  scheduleEntry: scheduleEntry,
+                  onTap: () {
+                    onCourseTap(scheduleEntry);
+                  },
+                ),
+              );
+            },
+          ).toList(),
+        ),
       ),
     );
   }

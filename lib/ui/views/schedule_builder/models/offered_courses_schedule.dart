@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:alyamamah/core/models/day.dart';
 import 'package:alyamamah/core/models/offered_course.dart';
 import 'package:alyamamah/ui/views/courses/models/schedule_entry.dart';

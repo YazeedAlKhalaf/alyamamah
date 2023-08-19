@@ -2,14 +2,16 @@ import 'package:alyamamah/core/constants.dart';
 import 'package:alyamamah/core/extensions/day.dart';
 import 'package:alyamamah/core/extensions/int.dart';
 import 'package:alyamamah/core/models/day.dart';
+import 'package:alyamamah/core/providers/feature_flags/feature_flags_state_notifier.dart';
 import 'package:alyamamah/ui/views/courses/courses_column.dart';
 import 'package:alyamamah/ui/views/courses/current_hour_line.dart';
 import 'package:alyamamah/ui/views/courses/models/schedule_entry.dart';
 import 'package:alyamamah/ui/views/courses/schedule_grid.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CoursesSchedule extends StatefulWidget {
+class CoursesSchedule extends ConsumerStatefulWidget {
   final Map<Day, List<ScheduleEntry>> scheduleDays;
   final int startHour;
   final double cellHeight;
@@ -26,10 +28,10 @@ class CoursesSchedule extends StatefulWidget {
   });
 
   @override
-  State<CoursesSchedule> createState() => _CoursesScheduleState();
+  ConsumerState<CoursesSchedule> createState() => _CoursesScheduleState();
 }
 
-class _CoursesScheduleState extends State<CoursesSchedule> {
+class _CoursesScheduleState extends ConsumerState<CoursesSchedule> {
   late ScrollController scrollController;
   double scrollOffset = 0;
 
@@ -48,6 +50,10 @@ class _CoursesScheduleState extends State<CoursesSchedule> {
 
   @override
   Widget build(BuildContext context) {
+    final isScheduleHourLabelsEnabled = ref
+        .watch(featureFlagsStateNotifierProvider)
+        .isScheduleHourLabelsEnabled;
+
     TextStyle todayDayStyle(bool isToday) {
       return TextStyle(
         color: isToday ? null : Theme.of(context).colorScheme.outline,
@@ -56,7 +62,8 @@ class _CoursesScheduleState extends State<CoursesSchedule> {
 
     return Row(
       children: [
-        const SizedBox(width: Constants.padding * 2),
+        if (isScheduleHourLabelsEnabled)
+          const SizedBox(width: Constants.padding * 2),
         Expanded(
           child: Column(
             children: [
@@ -92,8 +99,10 @@ class _CoursesScheduleState extends State<CoursesSchedule> {
                       scrollOffset: scrollOffset,
                     ),
                     LayoutBuilder(
-                      builder:
-                          (BuildContext context, BoxConstraints constraints) {
+                      builder: (
+                        BuildContext context,
+                        BoxConstraints constraints,
+                      ) {
                         return RefreshIndicator(
                           onRefresh: widget.onRefresh,
                           child: SingleChildScrollView(

@@ -1,8 +1,10 @@
 import 'package:alyamamah/core/constants.dart';
 import 'package:alyamamah/core/extensions/build_context.dart';
+import 'package:alyamamah/core/providers/feature_flags/feature_flags_state_notifier.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ScheduleGrid extends StatelessWidget {
+class ScheduleGrid extends ConsumerWidget {
   final double cellHeight;
   final int horizontalSegments;
   final int startHour;
@@ -17,7 +19,11 @@ class ScheduleGrid extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isScheduleHourLabelsEnabled = ref
+        .watch(featureFlagsStateNotifierProvider)
+        .isScheduleHourLabelsEnabled;
+
     return Stack(
       children: [
         CustomPaint(
@@ -28,15 +34,16 @@ class ScheduleGrid extends StatelessWidget {
             horizontalSegments: horizontalSegments,
           ),
         ),
-        CustomPaint(
-          size: Size.infinite,
-          painter: HourLabelPainter(
-            context,
-            startHour: startHour,
-            cellHeight: cellHeight,
-            scrollOffset: scrollOffset,
+        if (isScheduleHourLabelsEnabled)
+          CustomPaint(
+            size: Size.infinite,
+            painter: HourLabelPainter(
+              context,
+              startHour: startHour,
+              cellHeight: cellHeight,
+              scrollOffset: scrollOffset,
+            ),
           ),
-        ),
       ],
     );
   }
@@ -78,7 +85,7 @@ class HourLabelPainter extends CustomPainter {
 
       const padding = Constants.spacing / 2;
       final xOffset =
-          isRtl ? size.width + padding : -textPainter.width - padding;
+          isRtl ? size.width + padding : -textPainter.width - (padding / 3);
       final centeringAmount = textPainter.height / 3;
       textPainter.paint(
         canvas,

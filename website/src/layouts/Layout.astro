@@ -12,10 +12,9 @@ const { title, description } = Astro.props;
 const makeTitle = title ? title + " | " + "Al Yamamah" : "Al Yamamah";
 const makeDescription = description
   ? description
-  : "Al Yamamah is the app that all university students wish to have during their university life! It is a modern solution that connects directly to Al Yamamah University services and provides a pleasant-looking user interface. The app works on both iOS and Android.";
+  : "Al Yamamah is the app all university students wish to have! Connect directly to Al Yamamah University services with a modern and pleasant interface. Available on iOS and Android.";
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
-
 const resolvedImageWithDomain = new URL(
   "/opengraph.png",
   Astro.site
@@ -62,7 +61,7 @@ const resolvedImageWithDomain = new URL(
   </head>
   <body class="bg-orange-50 flex flex-col min-h-screen">
     <Header />
-    <main class="max-w-4xl mx-auto flex-grow">
+    <main class="max-w-4xl mx-auto flex-grow py-5">
       <slot />
     </main>
     <Footer />

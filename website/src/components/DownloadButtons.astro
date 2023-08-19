@@ -1,8 +1,9 @@
 ---
+const { shouldCenterThings = false } = Astro.props;
 ---
 
 <section
-  class="mt-3 md:mt-8 flex flex-row justify-center md:justify-start gap-5"
+  class=`mt-3 md:mt-8 flex flex-row justify-center ${ shouldCenterThings ? "" : "md:justify-start"} gap-5`
 >
   <a
     href="https://apps.apple.com/sa/app/al-yamamah/id6446075372"

@@ -3,72 +3,88 @@
 
 ![feature-graphic](./readme_images/feature-graphic.png)
 
-# Al Yamamah
+# 📚 Al Yamamah
 
-Al Yamamah make students lives easier.
+> Simplifying student life, one feature at a time.
 
-Features:
+### 🌟 Features:
 
-- View your schedule easily since you joined university
-- Widget to view the schedule from your home screen (iOS only)
-- See the absences directly
-- View your grades
-- Preview your profile and edit it seamlessly
-- Arabic and English language support
-- Dark and Light mode support
-- AlYamamahGPT, currently feature flagged: ChatGPT but with Al Yamamah knowledge.
+- 📅 View your complete university schedule at a glance.
+- 📲 Quick schedule widget for your home screen (iOS exclusive!).
+- ❌ Monitor your absences in real-time.
+- 📈 Access your academic grades.
+- 🧑‍🎓 Customize and preview your profile.
+- 🌍 Arabic & English language compatibility.
+- 🌛 Toggle between Dark and Light modes.
+- 💬 **AlYamamahGPT**: Think ChatGPT, but infused with Al Yamamah wisdom (currently in beta).
 
-Currently the app supports the following platforms:
+### 📱 Supported Platforms:
 
-- iOS
-- Android
+- iOS ✅
+- Android ✅
 
-Those platforms have some issues but are planned to be supported in the future:
+### 🚧 Platforms In Progress:
 
-- Windows:
-  - No Firebase support yet for plugins I use.
-- Linux:
-  - No Firebase support yet for plugins I use.
-- Web:
-  - Some CORS issue that needs fixing, and proxying doesn't work cuz the edugate API has SSL issues.
-- macOS:
-  - After adding revenue cat, things broke.
+- **Windows & Linux**: Awaiting Firebase plugin support.
+- **Web**: Tackling CORS and SSL issues with the edugate API.
+- **macOS**: Some glitches post-integration with Revenue Cat.
 
-## How to run the app?
+## 🚀 Getting Started:
 
-This is a Flutter app. You must have Flutter installed and working on your machine. Do that if you didn't yet by following their official documentation:
-https://docs.flutter.dev/get-started/install
+To set this up, you'll need a working Flutter environment. If you haven't got Flutter on your machine, [get it here](https://docs.flutter.dev/get-started/install).
 
-Now for the fun part:
+Steps:
 
-1. `git clone git@github.com:YazeedAlKhalaf/alyamamah.git`
-2. `cd alyamamah`
-3. Create a Firebase project, and set it up. This will be needed because the app uses Firebase for analytics. Use the `flutterfire` cli and you should be good to go! You can run it with my project but you won't be able to use some features since you don't have some of my secrets that are required for connecting to some Firebase APIs. Currently you need to add four files or use the later method. The files are:
-   1. `android/app/google-services.json`
-   2. `ios/Runner/GoogleService-Info.plist`
-   3. `macos/Runner/GoogleService-Info.plist`
-   4. `lib/firebase_options.dart` by copying `lib/firebase_options.dart.example` and filling it with data from the files above.
-   5. If you use the `flutterfire` cli, it will generate two files in iOS and macOS folders. Not sure why but I kept an example json file in those places in case you need it to run the app:
-      1. `ios/firebase_app_id_file.json`
-      2. `macos/firebase_app_id_file.json`
-4. `flutter pub get`
-5. `flutter run`, make sure a simulator, an emulator, or a real device is connected.
+1. Clone the repo:
 
-This app calls the university API. If you don't have an account at Al Yamamah University, use the demo account:
+```
+git clone git@github.com:YazeedAlKhalaf/alyamamah.git
+```
+
+1. Navigate into the directory:
+
+```
+cd alyamamah
+```
+
+3. Set up Firebase:
+   - Start a Firebase project for analytics.
+   - Use the `flutterfire` cli for easy setup. If you're not using my Firebase project, you'll miss some features (you won't have the required secrets for certain Firebase APIs).
+   - You'll need to add the following:
+     1. `android/app/google-services.json`
+     2. `ios/Runner/GoogleService-Info.plist`
+     3. `macos/Runner/GoogleService-Info.plist`
+     4. Create `lib/firebase_options.dart` by copying `lib/firebase_options.dart.example` and populating it with your Firebase data.
+     5. Note: The `flutterfire` cli will generate two files for iOS and macOS. Use the example JSON files provided if you run into issues:
+        1. `ios/firebase_app_id_file.json`
+        2. `macos/firebase_app_id_file.json`
+4. Fetch dependencies:
+
+```
+flutter pub get
+```
+
+5. Run the app (ensure you have a simulator, emulator, or real device connected):
+
+```
+flutter run
+```
+
+💡 **Demo Mode**: Don't have an Al Yamamah University account? Use the demo credentials:
 
 - Username: `200011150`
 - Password: `Aa1234aa@`
 
-If you are ineterested in how this works, see the demo interceptor [here](https://github.com/YazeedAlKhalaf/alyamamah/blob/main/lib/core/services/api/interceptors/demo_mode_interceptor.dart).
+Get an inside look at how this works in the [demo interceptor](https://github.com/YazeedAlKhalaf/alyamamah/blob/main/lib/core/services/api/interceptors/demo_mode_interceptor.dart).
 
-## How to generate icons?
+## 🎨 Icon Generation:
 
-Run the following command:
+For updating or generating icons, run:
 
 ```
 flutter pub run flutter_launcher_icons
 ```
 
-## Sponsors
+## 💖 Special Thanks to Our Sponsors:
 
 <a href="https://sentry.io"><img src="https://raw.githubusercontent.com/YazeedAlKhalaf/alyamamah/main/readme_images/sentry-logo.png" width="150px" alt="sentry logo as a sponsor" /></a>

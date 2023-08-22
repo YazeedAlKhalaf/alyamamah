@@ -7,6 +7,12 @@
 
 import Foundation
 
-enum Day: String, Decodable {
-    case sun, mon, tue, wed, thu, fri, sat
+enum Day: String, Decodable, CodingKey {
+    case sun = "sun"
+    case mon = "mon"
+    case tue = "tue"
+    case wed = "wed"
+    case thu = "thu"
+    case fri = "fri"
+    case sat = "sat"
 }

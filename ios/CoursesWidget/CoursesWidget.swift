@@ -30,11 +30,11 @@ struct Provider: TimelineProvider {
         return CoursesEntry(
             date: Date(),
             courses: [
-                "sun": coursesList,
-                "mon": coursesList,
-                "tue": coursesList,
-                "wed": coursesList,
-                "thu": coursesList,
+                .sun: coursesList,
+                .mon: coursesList,
+                .tue: coursesList,
+                .wed: coursesList,
+                .thu: coursesList,
             ]
         )
     }
@@ -59,11 +59,11 @@ struct Provider: TimelineProvider {
         let entry = CoursesEntry(
             date: Date(),
             courses: [
-                "sun": coursesList,
-                "mon": coursesList,
-                "tue": coursesList,
-                "wed": coursesList,
-                "thu": coursesList,
+                .sun: coursesList,
+                .mon: coursesList,
+                .tue: coursesList,
+                .wed: coursesList,
+                .thu: coursesList,
             ]
         )
         completion(entry)
@@ -71,7 +71,7 @@ struct Provider: TimelineProvider {
     
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         var entries: [CoursesEntry] = []
-        var courses: [String: [Course]] = [String: [Course]]()
+        var courses: [Day: [Course]] = [Day: [Course]]()
         
         let sharedDefaults = UserDefaults.init(
             suiteName: "group.dev.alkhalaf.alyamamah.shared"
@@ -86,10 +86,11 @@ struct Provider: TimelineProvider {
                     
                     let coursesData = coursesWidgetData?.data(using: .utf8)
                     
-                    courses = try decoder.decode(
-                        [String: [Course]].self,
+                    let dayCourses = try decoder.decode(
+                        DayCourses.self,
                         from: coursesData!
                     )
+                    courses = dayCourses.courses
                     print("decoded the courses successfully: \(courses)")
                 }
             } catch {
@@ -109,14 +110,14 @@ struct Provider: TimelineProvider {
 
 struct CoursesEntry: TimelineEntry {
     let date: Date
-    let courses: [String: [Course]]
+    let courses: [Day: [Course]]
 }
 
 struct CoursesWidgetEntryView : View {
     var entry: Provider.Entry
     
     let calendar = Calendar.current
-    let day: String
+    let day: Day
     
     init(entry: Provider.Entry) {
         self.entry = entry
@@ -126,22 +127,22 @@ struct CoursesWidgetEntryView : View {
         print("initializing stuff: \(weekday)")
         switch weekday {
         case "Sunday":
-            day = "sun"
+            day = .sun
         case "Monday":
-            day = "mon"
+            day = .mon
         case "Tuesday":
-            day = "tue"
+            day = .tue
         case "Wednesday":
-            day = "wed"
+            day = .wed
         case "Thursday":
-            day = "thu"
+            day = .thu
         case "Friday":
-            day = "fri"
+            day = .fri
         case "Saturday":
-            day = "sat"
+            day = .sat
         default:
             print("lol this was reached and it shouldn't be reached!")
-            day = "sun"
+            day = .sun
         }
         
     }
@@ -151,7 +152,7 @@ struct CoursesWidgetEntryView : View {
         HStack(alignment: .top, spacing: 5) {
             VStack {
                 Spacer()
-                Text(day)
+                Text(day.rawValue)
                     .font(.caption)
                     .foregroundColor(.gray)
                 Text(calendar.component(.day, from: entry.date).formatted())
@@ -195,7 +196,7 @@ struct CoursesWidget_Previews: PreviewProvider {
             entry: CoursesEntry(
                 date: Date(),
                 courses: [
-                    "sun": [
+                    .sun: [
                         Course(
                             color: .red,
                             courseCode: "PHL 101",

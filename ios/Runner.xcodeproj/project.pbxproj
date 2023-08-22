@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		054FFCEC2A951DAD003602A9 /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054FFCEB2A951DAD003602A9 /* ColorExtensions.swift */; };
 		054FFCF12A95205B003602A9 /* TimeOfDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054FFCF02A95205B003602A9 /* TimeOfDay.swift */; };
+		054FFD072A9546AF003602A9 /* DayCourses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054FFD062A9546AF003602A9 /* DayCourses.swift */; };
 		05E1734C29BC9FE1001C8AF0 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05E1734B29BC9FE1001C8AF0 /* WidgetKit.framework */; };
 		05E1734E29BC9FE1001C8AF0 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05E1734D29BC9FE1001C8AF0 /* SwiftUI.framework */; };
 		05E1735129BC9FE1001C8AF0 /* CoursesWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E1735029BC9FE1001C8AF0 /* CoursesWidgetBundle.swift */; };
@@ -66,6 +67,7 @@
 /* Begin PBXFileReference section */
 		054FFCEB2A951DAD003602A9 /* ColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
 		054FFCF02A95205B003602A9 /* TimeOfDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeOfDay.swift; sourceTree = "<group>"; };
+		054FFD062A9546AF003602A9 /* DayCourses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayCourses.swift; sourceTree = "<group>"; };
 		05E1734A29BC9FE1001C8AF0 /* CoursesWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CoursesWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		05E1734B29BC9FE1001C8AF0 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		05E1734D29BC9FE1001C8AF0 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -135,6 +137,7 @@
 				05E1736829BCD1B8001C8AF0 /* Day.swift */,
 				05E1736629BCAE26001C8AF0 /* Course.swift */,
 				054FFCF02A95205B003602A9 /* TimeOfDay.swift */,
+				054FFD062A9546AF003602A9 /* DayCourses.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -412,6 +415,7 @@
 				054FFCF12A95205B003602A9 /* TimeOfDay.swift in Sources */,
 				05E1735329BC9FE1001C8AF0 /* CoursesWidget.swift in Sources */,
 				05E1736529BCA860001C8AF0 /* CourseRow.swift in Sources */,
+				054FFD072A9546AF003602A9 /* DayCourses.swift in Sources */,
 				05E1735129BC9FE1001C8AF0 /* CoursesWidgetBundle.swift in Sources */,
 				054FFCEC2A951DAD003602A9 /* ColorExtensions.swift in Sources */,
 			);

@@ -71,7 +71,7 @@ struct CoursesWidgetEntryView : View {
             Divider()
             Spacer()
             VStack(spacing: 10) {
-                if ((entry.courses[day]?.isEmpty) == nil) {
+                if ((entry.courses[day]?.isEmpty) == true) {
                     Spacer()
                     Text("You have no classes today 😎")
                     Spacer()

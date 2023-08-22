@@ -13,6 +13,7 @@
 		054FFD0B2A9548FD003602A9 /* WidgetRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054FFD0A2A9548FD003602A9 /* WidgetRepository.swift */; };
 		054FFD142A954CD8003602A9 /* CalendarExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054FFD132A954CD8003602A9 /* CalendarExtensions.swift */; };
 		054FFD182A954FB3003602A9 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054FFD172A954FB3003602A9 /* Utils.swift */; };
+		054FFD1B2A955508003602A9 /* CoursesAccessoryWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054FFD1A2A955508003602A9 /* CoursesAccessoryWidget.swift */; };
 		05E1734C29BC9FE1001C8AF0 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05E1734B29BC9FE1001C8AF0 /* WidgetKit.framework */; };
 		05E1734E29BC9FE1001C8AF0 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05E1734D29BC9FE1001C8AF0 /* SwiftUI.framework */; };
 		05E1735129BC9FE1001C8AF0 /* CoursesWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E1735029BC9FE1001C8AF0 /* CoursesWidgetBundle.swift */; };
@@ -74,6 +75,7 @@
 		054FFD0A2A9548FD003602A9 /* WidgetRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetRepository.swift; sourceTree = "<group>"; };
 		054FFD132A954CD8003602A9 /* CalendarExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarExtensions.swift; sourceTree = "<group>"; };
 		054FFD172A954FB3003602A9 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		054FFD1A2A955508003602A9 /* CoursesAccessoryWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesAccessoryWidget.swift; sourceTree = "<group>"; };
 		05E1734A29BC9FE1001C8AF0 /* CoursesWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CoursesWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		05E1734B29BC9FE1001C8AF0 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		05E1734D29BC9FE1001C8AF0 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -169,6 +171,7 @@
 			isa = PBXGroup;
 			children = (
 				05E1735229BC9FE1001C8AF0 /* CoursesWidget.swift */,
+				054FFD1A2A955508003602A9 /* CoursesAccessoryWidget.swift */,
 			);
 			path = Widgets;
 			sourceTree = "<group>";
@@ -450,6 +453,7 @@
 				05E1735329BC9FE1001C8AF0 /* CoursesWidget.swift in Sources */,
 				054FFD182A954FB3003602A9 /* Utils.swift in Sources */,
 				05E1736529BCA860001C8AF0 /* CourseRow.swift in Sources */,
+				054FFD1B2A955508003602A9 /* CoursesAccessoryWidget.swift in Sources */,
 				054FFD072A9546AF003602A9 /* DayCourses.swift in Sources */,
 				05E1735129BC9FE1001C8AF0 /* CoursesWidgetBundle.swift in Sources */,
 				054FFD0B2A9548FD003602A9 /* WidgetRepository.swift in Sources */,

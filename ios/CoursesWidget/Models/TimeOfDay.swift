@@ -53,3 +53,12 @@ extension TimeOfDay: Decodable {
         minute = try values.decode(Int.self, forKey: .minute)
     }
 }
+
+extension TimeOfDay: Comparable {
+    static func < (lhs: TimeOfDay, rhs: TimeOfDay) -> Bool {
+        if lhs.hour != rhs.hour {
+            return lhs.hour < rhs.hour
+        }
+        return lhs.minute < rhs.minute
+    }
+}

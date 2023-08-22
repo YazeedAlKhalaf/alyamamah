@@ -12,5 +12,6 @@ import SwiftUI
 struct CoursesWidgetBundle: WidgetBundle {
     var body: some Widget {
         CoursesWidget()
+        CoursesAccessoryWidget()
     }
 }

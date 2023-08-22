@@ -36,7 +36,9 @@ struct TimeOfDay: Hashable {
     }
     
     var formattedByPeriod: String {
-        return "\(periodHour):\(minute) \(period)"
+        let paddedHour = String(format: "%02d", periodHour)
+        let paddedMinute = String(format: "%02d", minute)
+        return "\(paddedHour):\(paddedMinute) \(period)"
     }
     
     enum CodingKeys: String, CodingKey {

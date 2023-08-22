@@ -16,6 +16,9 @@ struct CourseRow: View {
     
     var body: some View {
         HStack {
+            Circle()
+                .fill(course.color)
+                .frame(width: 15, height: 15)
             Text("\(course.courseCode) @ \(course.roomName)")
                 .font(.caption)
                 .bold()

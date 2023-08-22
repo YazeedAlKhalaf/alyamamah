@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		054FFCEC2A951DAD003602A9 /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054FFCEB2A951DAD003602A9 /* ColorExtensions.swift */; };
 		05E1734C29BC9FE1001C8AF0 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05E1734B29BC9FE1001C8AF0 /* WidgetKit.framework */; };
 		05E1734E29BC9FE1001C8AF0 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05E1734D29BC9FE1001C8AF0 /* SwiftUI.framework */; };
 		05E1735129BC9FE1001C8AF0 /* CoursesWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E1735029BC9FE1001C8AF0 /* CoursesWidgetBundle.swift */; };
@@ -62,6 +63,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		054FFCEB2A951DAD003602A9 /* ColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
 		05E1734A29BC9FE1001C8AF0 /* CoursesWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CoursesWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		05E1734B29BC9FE1001C8AF0 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		05E1734D29BC9FE1001C8AF0 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -117,13 +119,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		054FFCEA2A951D94003602A9 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				054FFCEB2A951DAD003602A9 /* ColorExtensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		054FFCED2A951FAC003602A9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				05E1736629BCAE26001C8AF0 /* Course.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		05E1734F29BC9FE1001C8AF0 /* CoursesWidget */ = {
 			isa = PBXGroup;
 			children = (
+				054FFCED2A951FAC003602A9 /* Models */,
+				054FFCEA2A951D94003602A9 /* Extensions */,
 				05E1735029BC9FE1001C8AF0 /* CoursesWidgetBundle.swift */,
 				05E1735229BC9FE1001C8AF0 /* CoursesWidget.swift */,
 				05E1736429BCA860001C8AF0 /* CourseRow.swift */,
-				05E1736629BCAE26001C8AF0 /* Course.swift */,
 				05E1736829BCD1B8001C8AF0 /* DayEnum.swift */,
 				05E1735429BC9FE2001C8AF0 /* Assets.xcassets */,
 				05E1735629BC9FE2001C8AF0 /* Info.plist */,
@@ -390,6 +409,7 @@
 				05E1735329BC9FE1001C8AF0 /* CoursesWidget.swift in Sources */,
 				05E1736529BCA860001C8AF0 /* CourseRow.swift in Sources */,
 				05E1735129BC9FE1001C8AF0 /* CoursesWidgetBundle.swift in Sources */,
+				054FFCEC2A951DAD003602A9 /* ColorExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

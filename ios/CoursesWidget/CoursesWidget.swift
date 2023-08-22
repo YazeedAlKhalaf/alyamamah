@@ -12,12 +12,14 @@ struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> CoursesEntry {
         let coursesList = [
             Course(
+                color: .blue,
                 courseCode: "PHL 101",
                 roomName: "F109",
                 startTime: "9:30 am",
                 endTime: "10:20 am"
             ),
             Course(
+                color: .red,
                 courseCode: "ARB 101",
                 roomName: "ONLINE",
                 startTime: "9:30 am",
@@ -40,12 +42,14 @@ struct Provider: TimelineProvider {
     func getSnapshot(in context: Context, completion: @escaping (CoursesEntry) -> ()) {
         let coursesList = [
             Course(
+                color: .red,
                 courseCode: "PHL 101",
                 roomName: "F109",
                 startTime: "9:30 am",
                 endTime: "10:20 am"
             ),
             Course(
+                color: .blue,
                 courseCode: "ARB 101",
                 roomName: "ONLINE",
                 startTime: "9:30 am",
@@ -192,36 +196,42 @@ struct CoursesWidget_Previews: PreviewProvider {
                 courses: [
                    "sun": [
                         Course(
+                            color: .red,
                             courseCode: "PHL 101",
                             roomName: "F109",
                             startTime: "9:30 am",
                             endTime: "10:20 am"
                         ),
                         Course(
+                            color: .blue,
                             courseCode: "ARB 101",
                             roomName: "ONLINE",
                             startTime: "9:30 am",
                             endTime: "10:20 am"
                         ),
                         Course(
+                            color: .red,
                             courseCode: "ARB 101",
                             roomName: "ONLINE",
                             startTime: "9:30 am",
                             endTime: "10:20 am"
                         ),
                         Course(
+                            color: .blue,
                             courseCode: "ARB 101",
                             roomName: "ONLINE",
                             startTime: "9:30 am",
                             endTime: "10:20 am"
                         ),
                         Course(
+                            color: .red,
                             courseCode: "ARB 101",
                             roomName: "ONLINE",
                             startTime: "9:30 am",
                             endTime: "10:20 am"
                         ),
                         Course(
+                            color: .blue,
                             courseCode: "ARB 101",
                             roomName: "ONLINE",
                             startTime: "9:30 am",

@@ -9,6 +9,7 @@ import 'package:alyamamah/core/services/api/api_service.dart';
 import 'package:alyamamah/core/services/api/api_service_exception.dart';
 import 'package:alyamamah/core/services/shared_prefs/shared_prefs_service.dart';
 import 'package:alyamamah/core/services/widget_kit/widget_kit_service.dart';
+import 'package:alyamamah/core/utils.dart';
 import 'package:alyamamah/ui/views/courses/models/schedule_entry.dart';
 import 'package:alyamamah/ui/views/courses/models/time_mapping.dart';
 import 'package:flutter/material.dart';
@@ -188,6 +189,9 @@ class CoursesViewModel extends ChangeNotifier {
         scheduleDaysRamadan.forEach((day, scheduleEntryList) {
           for (ScheduleEntry scheduleEntry in scheduleEntryList) {
             iosWidgetCoursesDays[day]!.add(IosWidgetCourse(
+              color: Utils.generateBorderColor(
+                Utils.generateColorFromCourse(scheduleEntry.courseCode),
+              ),
               startTime: scheduleEntry.startTime,
               endTime: scheduleEntry.endTime,
               roomName: scheduleEntry.room,
@@ -199,6 +203,9 @@ class CoursesViewModel extends ChangeNotifier {
         scheduleDaysRegular.forEach((day, scheduleEntryList) {
           for (ScheduleEntry scheduleEntry in scheduleEntryList) {
             iosWidgetCoursesDays[day]!.add(IosWidgetCourse(
+              color: Utils.generateBorderColor(
+                Utils.generateColorFromCourse(scheduleEntry.courseCode),
+              ),
               startTime: scheduleEntry.startTime,
               endTime: scheduleEntry.endTime,
               roomName: scheduleEntry.room,
@@ -250,6 +257,9 @@ class CoursesViewModel extends ChangeNotifier {
       scheduleDaysRamadan.forEach((day, scheduleEntryList) {
         for (ScheduleEntry scheduleEntry in scheduleEntryList) {
           iosWidgetCoursesDays[day]!.add(IosWidgetCourse(
+            color: Utils.generateBorderColor(
+              Utils.generateColorFromCourse(scheduleEntry.courseCode),
+            ),
             startTime: scheduleEntry.startTime,
             endTime: scheduleEntry.endTime,
             roomName: scheduleEntry.room,
@@ -261,6 +271,9 @@ class CoursesViewModel extends ChangeNotifier {
       scheduleDaysRegular.forEach((day, scheduleEntryList) {
         for (ScheduleEntry scheduleEntry in scheduleEntryList) {
           iosWidgetCoursesDays[day]!.add(IosWidgetCourse(
+            color: Utils.generateBorderColor(
+              Utils.generateColorFromCourse(scheduleEntry.courseCode),
+            ),
             startTime: scheduleEntry.startTime,
             endTime: scheduleEntry.endTime,
             roomName: scheduleEntry.room,

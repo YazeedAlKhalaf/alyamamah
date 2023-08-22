@@ -14,8 +14,8 @@ struct Course: Identifiable, Hashable {
     let color: Color
     let courseCode: String
     let roomName: String
-    let startTime: String
-    let endTime: String
+    let startTime: TimeOfDay
+    let endTime: TimeOfDay
     
     enum CodingKeys: String, CodingKey {
         case color  = "color"
@@ -30,12 +30,12 @@ extension Course: Decodable {
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         
-        let colorString = try values.decode(String.self, forKey: .color)
-        color = Color(hex: colorString) ?? .accentColor
+        let colorRaw = try values.decode(String.self, forKey: .color)
+        color = Color(hex: colorRaw) ?? .accentColor
         
         courseCode = try values.decode(String.self, forKey: .courseCode)
         roomName = try values.decode(String.self, forKey: .roomName)
-        startTime = try values.decode(String.self, forKey: .startTime)
-        endTime = try values.decode(String.self, forKey: .endTime)
+        startTime = try values.decode(TimeOfDay.self, forKey: .startTime)
+        endTime = try values.decode(TimeOfDay.self, forKey: .endTime)
     }
 }

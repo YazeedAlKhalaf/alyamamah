@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		054FFCEC2A951DAD003602A9 /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054FFCEB2A951DAD003602A9 /* ColorExtensions.swift */; };
+		054FFCF12A95205B003602A9 /* TimeOfDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054FFCF02A95205B003602A9 /* TimeOfDay.swift */; };
 		05E1734C29BC9FE1001C8AF0 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05E1734B29BC9FE1001C8AF0 /* WidgetKit.framework */; };
 		05E1734E29BC9FE1001C8AF0 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05E1734D29BC9FE1001C8AF0 /* SwiftUI.framework */; };
 		05E1735129BC9FE1001C8AF0 /* CoursesWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E1735029BC9FE1001C8AF0 /* CoursesWidgetBundle.swift */; };
@@ -16,7 +17,7 @@
 		05E1735929BC9FE2001C8AF0 /* CoursesWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 05E1734A29BC9FE1001C8AF0 /* CoursesWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		05E1736529BCA860001C8AF0 /* CourseRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E1736429BCA860001C8AF0 /* CourseRow.swift */; };
 		05E1736729BCAE26001C8AF0 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E1736629BCAE26001C8AF0 /* Course.swift */; };
-		05E1736929BCD1B8001C8AF0 /* DayEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E1736829BCD1B8001C8AF0 /* DayEnum.swift */; };
+		05E1736929BCD1B8001C8AF0 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E1736829BCD1B8001C8AF0 /* Day.swift */; };
 		05E99A8F2A24E64300851D54 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05E99A8E2A24E64300851D54 /* StoreKit.framework */; };
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
@@ -64,6 +65,7 @@
 
 /* Begin PBXFileReference section */
 		054FFCEB2A951DAD003602A9 /* ColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
+		054FFCF02A95205B003602A9 /* TimeOfDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeOfDay.swift; sourceTree = "<group>"; };
 		05E1734A29BC9FE1001C8AF0 /* CoursesWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CoursesWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		05E1734B29BC9FE1001C8AF0 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		05E1734D29BC9FE1001C8AF0 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -75,7 +77,7 @@
 		05E1736029BCA2A8001C8AF0 /* CoursesWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CoursesWidgetExtension.entitlements; sourceTree = "<group>"; };
 		05E1736429BCA860001C8AF0 /* CourseRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseRow.swift; sourceTree = "<group>"; };
 		05E1736629BCAE26001C8AF0 /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
-		05E1736829BCD1B8001C8AF0 /* DayEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayEnum.swift; sourceTree = "<group>"; };
+		05E1736829BCD1B8001C8AF0 /* Day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
 		05E99A8E2A24E64300851D54 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
 		1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
@@ -130,7 +132,9 @@
 		054FFCED2A951FAC003602A9 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				05E1736829BCD1B8001C8AF0 /* Day.swift */,
 				05E1736629BCAE26001C8AF0 /* Course.swift */,
+				054FFCF02A95205B003602A9 /* TimeOfDay.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -143,7 +147,6 @@
 				05E1735029BC9FE1001C8AF0 /* CoursesWidgetBundle.swift */,
 				05E1735229BC9FE1001C8AF0 /* CoursesWidget.swift */,
 				05E1736429BCA860001C8AF0 /* CourseRow.swift */,
-				05E1736829BCD1B8001C8AF0 /* DayEnum.swift */,
 				05E1735429BC9FE2001C8AF0 /* Assets.xcassets */,
 				05E1735629BC9FE2001C8AF0 /* Info.plist */,
 			);
@@ -405,7 +408,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				05E1736729BCAE26001C8AF0 /* Course.swift in Sources */,
-				05E1736929BCD1B8001C8AF0 /* DayEnum.swift in Sources */,
+				05E1736929BCD1B8001C8AF0 /* Day.swift in Sources */,
+				054FFCF12A95205B003602A9 /* TimeOfDay.swift in Sources */,
 				05E1735329BC9FE1001C8AF0 /* CoursesWidget.swift in Sources */,
 				05E1736529BCA860001C8AF0 /* CourseRow.swift in Sources */,
 				05E1735129BC9FE1001C8AF0 /* CoursesWidgetBundle.swift in Sources */,

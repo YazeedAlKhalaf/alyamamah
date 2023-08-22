@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:alyamamah/core/extensions/time_of_day.dart';
 import 'package:flutter/material.dart';
 
 class IosWidgetCourse {
@@ -38,9 +39,8 @@ class IosWidgetCourse {
       'color': '#${color.value.toRadixString(16)}',
       'courseCode': courseCode,
       'roomName': roomName,
-      'startTime':
-          '${startTime.hour}:${startTime.minute} ${startTime.period.name}',
-      'endTime': '${endTime.hour}:${endTime.minute} ${endTime.period.name}',
+      'startTime': startTime.toMap(),
+      'endTime': endTime.toMap(),
     };
   }
 

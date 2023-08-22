@@ -23,10 +23,9 @@ struct CourseRow: View {
                 .font(.caption)
                 .bold()
             Spacer()
-            Text("\(course.startTime) - \(course.endTime)")
+            Text("\(course.startTime.formattedByPeriod) - \(course.endTime.formattedByPeriod)")
                 .font(.caption)
                 .foregroundColor(.gray)
         }
-        
     }
 }

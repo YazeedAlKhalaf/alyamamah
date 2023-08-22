@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 extension TimeOfDayX on TimeOfDay {
@@ -23,15 +25,16 @@ extension TimeOfDayX on TimeOfDay {
 
   int get inMinutes => hour * 60 + minute;
 
-  String toJson() {
-    return '$hour:$minute';
+  Map<String, int> toMap() {
+    return {'hour': hour, 'minute': minute};
   }
 }
 
-TimeOfDay timeOfDayFromJson(String jsonString) {
-  List<String> hourAndMinute = jsonString.split(':');
+TimeOfDay timeOfDayFromJson(String json) {
+  final map = jsonDecode(json) as Map<String, int>;
+
   return TimeOfDay(
-    hour: int.parse(hourAndMinute[0]),
-    minute: int.parse(hourAndMinute[1]),
+    hour: map['hour'] as int,
+    minute: map['minute'] as int,
   );
 }

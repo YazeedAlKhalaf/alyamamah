@@ -15,15 +15,15 @@ struct Provider: TimelineProvider {
                 color: .blue,
                 courseCode: "PHL 101",
                 roomName: "F109",
-                startTime: "9:30 am",
-                endTime: "10:20 am"
+                startTime: TimeOfDay(hour: 9, minute: 30),
+                endTime: TimeOfDay(hour: 10, minute: 20)
             ),
             Course(
                 color: .red,
                 courseCode: "ARB 101",
                 roomName: "ONLINE",
-                startTime: "9:30 am",
-                endTime: "10:20 am"
+                startTime: TimeOfDay(hour: 10, minute: 30),
+                endTime: TimeOfDay(hour: 11, minute: 20)
             )
         ]
         
@@ -45,16 +45,16 @@ struct Provider: TimelineProvider {
                 color: .red,
                 courseCode: "PHL 101",
                 roomName: "F109",
-                startTime: "9:30 am",
-                endTime: "10:20 am"
+                startTime: TimeOfDay(hour: 9, minute: 30),
+                endTime: TimeOfDay(hour: 10, minute: 20)
             ),
             Course(
                 color: .blue,
                 courseCode: "ARB 101",
                 roomName: "ONLINE",
-                startTime: "9:30 am",
-                endTime: "10:20 am"
-            )
+                startTime: TimeOfDay(hour: 10, minute: 30),
+                endTime: TimeOfDay(hour: 11, minute: 20)
+            ),
         ]
         let entry = CoursesEntry(
             date: Date(),
@@ -71,28 +71,29 @@ struct Provider: TimelineProvider {
     
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         var entries: [CoursesEntry] = []
+        var courses: [String: [Course]] = [String: [Course]]()
         
         let sharedDefaults = UserDefaults.init(
             suiteName: "group.dev.alkhalaf.alyamamah.shared"
         )
-        var courses: [String: [Course]] = [String: [Course]]()
-        
-        print("checking if shared defaults is nil")
         if (sharedDefaults != nil) {
             do {
-                let shared = sharedDefaults?.string(forKey: "coursesWidgetData")
-                print("checking if shared is nil")
-                if (shared != nil) {
+                let coursesWidgetData = sharedDefaults?.string(
+                    forKey: "coursesWidgetData"
+                )
+                if (coursesWidgetData != nil) {
                     let decoder = JSONDecoder()
-                    print("about to decode courses: \(shared!.data(using: .utf8)!)")
+                    
+                    let coursesData = coursesWidgetData?.data(using: .utf8)
+                    
                     courses = try decoder.decode(
                         [String: [Course]].self,
-                        from: shared!.data(using: .utf8)!
+                        from: coursesData!
                     )
-                    print("decoded the courses: \(courses)")
+                    print("decoded the courses successfully: \(courses)")
                 }
             } catch {
-                print(error)
+                print("failed to decode courses from shared storage.")
             }
         }
         
@@ -194,48 +195,48 @@ struct CoursesWidget_Previews: PreviewProvider {
             entry: CoursesEntry(
                 date: Date(),
                 courses: [
-                   "sun": [
+                    "sun": [
                         Course(
                             color: .red,
                             courseCode: "PHL 101",
                             roomName: "F109",
-                            startTime: "9:30 am",
-                            endTime: "10:20 am"
+                            startTime: TimeOfDay(hour: 9, minute: 30),
+                            endTime: TimeOfDay(hour: 10, minute: 20)
                         ),
                         Course(
                             color: .blue,
                             courseCode: "ARB 101",
                             roomName: "ONLINE",
-                            startTime: "9:30 am",
-                            endTime: "10:20 am"
+                            startTime: TimeOfDay(hour: 9, minute: 30),
+                            endTime: TimeOfDay(hour: 10, minute: 20)
                         ),
                         Course(
                             color: .red,
                             courseCode: "ARB 101",
                             roomName: "ONLINE",
-                            startTime: "9:30 am",
-                            endTime: "10:20 am"
+                            startTime: TimeOfDay(hour: 9, minute: 30),
+                            endTime: TimeOfDay(hour: 10, minute: 20)
                         ),
                         Course(
                             color: .blue,
                             courseCode: "ARB 101",
                             roomName: "ONLINE",
-                            startTime: "9:30 am",
-                            endTime: "10:20 am"
+                            startTime: TimeOfDay(hour: 9, minute: 30),
+                            endTime: TimeOfDay(hour: 10, minute: 20)
                         ),
                         Course(
                             color: .red,
                             courseCode: "ARB 101",
                             roomName: "ONLINE",
-                            startTime: "9:30 am",
-                            endTime: "10:20 am"
+                            startTime: TimeOfDay(hour: 9, minute: 30),
+                            endTime: TimeOfDay(hour: 10, minute: 20)
                         ),
                         Course(
                             color: .blue,
                             courseCode: "ARB 101",
                             roomName: "ONLINE",
-                            startTime: "9:30 am",
-                            endTime: "10:20 am"
+                            startTime: TimeOfDay(hour: 9, minute: 30),
+                            endTime: TimeOfDay(hour: 10, minute: 20)
                         )
                     ]
                 ]

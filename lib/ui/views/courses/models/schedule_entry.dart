@@ -97,8 +97,8 @@ class ScheduleEntry {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'startTime': startTime.toJson(),
-      'endTime': endTime.toJson(),
+      'startTime': startTime.toMap(),
+      'endTime': endTime.toMap(),
       'room': room,
       'activityDesc': activityDesc,
       'courseName': courseName,

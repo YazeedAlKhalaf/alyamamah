@@ -15,4 +15,7 @@ enum Day: String, Decodable, CodingKey {
     case thu = "thu"
     case fri = "fri"
     case sat = "sat"
+    
+    static let values: [Day] = [.sun, .mon, .tue, .wed, .thu]
+    static let allValues: [Day] = [.sun, .mon, .tue, .wed, .thu, .fri, .sat]
 }

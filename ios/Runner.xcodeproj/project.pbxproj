@@ -10,6 +10,9 @@
 		054FFCEC2A951DAD003602A9 /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054FFCEB2A951DAD003602A9 /* ColorExtensions.swift */; };
 		054FFCF12A95205B003602A9 /* TimeOfDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054FFCF02A95205B003602A9 /* TimeOfDay.swift */; };
 		054FFD072A9546AF003602A9 /* DayCourses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054FFD062A9546AF003602A9 /* DayCourses.swift */; };
+		054FFD0B2A9548FD003602A9 /* WidgetRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054FFD0A2A9548FD003602A9 /* WidgetRepository.swift */; };
+		054FFD142A954CD8003602A9 /* CalendarExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054FFD132A954CD8003602A9 /* CalendarExtensions.swift */; };
+		054FFD182A954FB3003602A9 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054FFD172A954FB3003602A9 /* Utils.swift */; };
 		05E1734C29BC9FE1001C8AF0 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05E1734B29BC9FE1001C8AF0 /* WidgetKit.framework */; };
 		05E1734E29BC9FE1001C8AF0 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05E1734D29BC9FE1001C8AF0 /* SwiftUI.framework */; };
 		05E1735129BC9FE1001C8AF0 /* CoursesWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E1735029BC9FE1001C8AF0 /* CoursesWidgetBundle.swift */; };
@@ -68,6 +71,9 @@
 		054FFCEB2A951DAD003602A9 /* ColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
 		054FFCF02A95205B003602A9 /* TimeOfDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeOfDay.swift; sourceTree = "<group>"; };
 		054FFD062A9546AF003602A9 /* DayCourses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayCourses.swift; sourceTree = "<group>"; };
+		054FFD0A2A9548FD003602A9 /* WidgetRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetRepository.swift; sourceTree = "<group>"; };
+		054FFD132A954CD8003602A9 /* CalendarExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarExtensions.swift; sourceTree = "<group>"; };
+		054FFD172A954FB3003602A9 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		05E1734A29BC9FE1001C8AF0 /* CoursesWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CoursesWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		05E1734B29BC9FE1001C8AF0 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		05E1734D29BC9FE1001C8AF0 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -127,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				054FFCEB2A951DAD003602A9 /* ColorExtensions.swift */,
+				054FFD132A954CD8003602A9 /* CalendarExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -142,16 +149,42 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		054FFD082A9548C0003602A9 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				054FFD0A2A9548FD003602A9 /* WidgetRepository.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		054FFD092A9548CD003602A9 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				05E1736429BCA860001C8AF0 /* CourseRow.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		054FFD192A9552CB003602A9 /* Widgets */ = {
+			isa = PBXGroup;
+			children = (
+				05E1735229BC9FE1001C8AF0 /* CoursesWidget.swift */,
+			);
+			path = Widgets;
+			sourceTree = "<group>";
+		};
 		05E1734F29BC9FE1001C8AF0 /* CoursesWidget */ = {
 			isa = PBXGroup;
 			children = (
+				054FFD192A9552CB003602A9 /* Widgets */,
+				054FFD092A9548CD003602A9 /* Components */,
+				054FFD082A9548C0003602A9 /* Repository */,
 				054FFCED2A951FAC003602A9 /* Models */,
 				054FFCEA2A951D94003602A9 /* Extensions */,
 				05E1735029BC9FE1001C8AF0 /* CoursesWidgetBundle.swift */,
-				05E1735229BC9FE1001C8AF0 /* CoursesWidget.swift */,
-				05E1736429BCA860001C8AF0 /* CourseRow.swift */,
 				05E1735429BC9FE2001C8AF0 /* Assets.xcassets */,
 				05E1735629BC9FE2001C8AF0 /* Info.plist */,
+				054FFD172A954FB3003602A9 /* Utils.swift */,
 			);
 			path = CoursesWidget;
 			sourceTree = "<group>";
@@ -412,11 +445,14 @@
 			files = (
 				05E1736729BCAE26001C8AF0 /* Course.swift in Sources */,
 				05E1736929BCD1B8001C8AF0 /* Day.swift in Sources */,
+				054FFD142A954CD8003602A9 /* CalendarExtensions.swift in Sources */,
 				054FFCF12A95205B003602A9 /* TimeOfDay.swift in Sources */,
 				05E1735329BC9FE1001C8AF0 /* CoursesWidget.swift in Sources */,
+				054FFD182A954FB3003602A9 /* Utils.swift in Sources */,
 				05E1736529BCA860001C8AF0 /* CourseRow.swift in Sources */,
 				054FFD072A9546AF003602A9 /* DayCourses.swift in Sources */,
 				05E1735129BC9FE1001C8AF0 /* CoursesWidgetBundle.swift in Sources */,
+				054FFD0B2A9548FD003602A9 /* WidgetRepository.swift in Sources */,
 				054FFCEC2A951DAD003602A9 /* ColorExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

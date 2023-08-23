@@ -185,9 +185,9 @@
 				054FFCED2A951FAC003602A9 /* Models */,
 				054FFCEA2A951D94003602A9 /* Extensions */,
 				05E1735029BC9FE1001C8AF0 /* CoursesWidgetBundle.swift */,
+				054FFD172A954FB3003602A9 /* Utils.swift */,
 				05E1735429BC9FE2001C8AF0 /* Assets.xcassets */,
 				05E1735629BC9FE2001C8AF0 /* Info.plist */,
-				054FFD172A954FB3003602A9 /* Utils.swift */,
 			);
 			path = CoursesWidget;
 			sourceTree = "<group>";

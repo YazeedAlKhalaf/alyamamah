@@ -11,7 +11,7 @@
 
 - 📅 **Schedule Builder**: Create and manage your own personalized university schedule. Easily add, edit, or remove classes, and see how they fit into your week.
 - 📅 View your complete university schedule at a glance.
-- 📲 Quick schedule widget for your home screen (iOS exclusive!).
+- 📲 Quick schedule widget for your home screen (iOS and Android).
 - ❌ Monitor your absences in real-time.
 - 📈 Access your academic grades.
 - 🧑‍🎓 Customize and preview your profile.

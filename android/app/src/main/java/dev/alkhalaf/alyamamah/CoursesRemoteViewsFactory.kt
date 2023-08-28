@@ -11,14 +11,14 @@ import android.widget.RemoteViewsService
 import dev.alkhalaf.alyamamah.extensions.containsArabicLetters
 
 import java.util.Calendar
-import org.json.JSONObject
-import es.antonborri.home_widget.HomeWidgetPlugin
 
 import dev.alkhalaf.alyamamah.extensions.mapWeekdayToDay
 import dev.alkhalaf.alyamamah.models.Course
 import dev.alkhalaf.alyamamah.models.Day
+import dev.alkhalaf.alyamamah.repositories.WidgetRepository
 
 class CoursesRemoteViewsFactory(private val context: Context, intent: Intent) : RemoteViewsService.RemoteViewsFactory {
+    private val widgetRepository = WidgetRepository()
 
     private var dayCoursesMap: MutableMap<Day, Array<Course>> = mutableMapOf()
     private var todayCourses: Array<Course> = arrayOf()
@@ -26,26 +26,12 @@ class CoursesRemoteViewsFactory(private val context: Context, intent: Intent) : 
     override fun onCreate() {}
 
     override fun onDataSetChanged() {
-        val widgetData = HomeWidgetPlugin.getData(context)
-
-        val coursesWidgetDataRaw = widgetData.getString("coursesWidgetData", "{}")
-        val coursesWidgetDataMap = JSONObject(coursesWidgetDataRaw)
-
-        val dayCoursesMap: MutableMap<Day, Array<Course>> = mutableMapOf()
-        for (day in Day.values()) {
-            val coursesArrayJson = coursesWidgetDataMap.optJSONArray(day.abbreviation) ?: continue
-            val coursesForDay = Array(coursesArrayJson.length()) { i ->
-                Course.fromJson(coursesArrayJson.getJSONObject(i))
-            }
-            dayCoursesMap[day] = coursesForDay
-        }
-
-        this.dayCoursesMap = dayCoursesMap
+        dayCoursesMap = widgetRepository.getCoursesWidgetData(context).toMutableMap()
 
         val calendar = Calendar.getInstance()
         val currentDay = calendar.mapWeekdayToDay()
 
-        this.todayCourses = dayCoursesMap[currentDay] ?: arrayOf()
+        todayCourses = dayCoursesMap[currentDay] ?: arrayOf()
     }
 
     override fun onDestroy() {}

@@ -20,7 +20,7 @@ dependencies:
   cookie_jar: 3.0.1 # check this
   logging: 1.2.0
   shared_preferences: 2.2.0
-  flutter_widgetkit: 1.0.3
+  home_widget: 0.3.0
   url_launcher: 6.1.12
   hijri: 3.0.0
   flutter_svg: 2.0.7

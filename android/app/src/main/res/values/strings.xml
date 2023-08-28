@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="appwidget_text">Courses Schedule</string>
+    <string name="add_widget">Add widget</string>
+    <string name="app_widget_description">Always be on top of your courses schedule!</string>
+</resources>

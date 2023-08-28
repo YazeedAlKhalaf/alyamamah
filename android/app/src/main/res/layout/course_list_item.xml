@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="8dp">
+
+    <!-- Circle -->
+    <ImageView
+        android:id="@+id/color_circle"
+        android:contentDescription="@string/color_circle_description"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/circle_shape" />
+
+    <!-- Course Code and Room -->
+    <TextView
+        android:id="@+id/course_room_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/color_circle"
+        android:layout_marginStart="8dp"
+        android:text="Course Code @ Room Name"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:layout_weight="4"
+        android:gravity="start"
+        android:layout_gravity="center_vertical" />
+
+    <!-- Time -->
+    <TextView
+        android:id="@+id/start_end_time"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Start Time - End Time"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:layout_weight="3"
+        android:gravity="start"
+        android:layout_gravity="center_vertical" />
+
+</LinearLayout>

@@ -3,4 +3,5 @@
     <string name="appwidget_text">Courses Schedule</string>
     <string name="add_widget">Add widget</string>
     <string name="app_widget_description">Always be on top of your courses schedule!</string>
+    <string name="color_circle_description">Circle with a color that matches the color of the course in the app</string>
 </resources>

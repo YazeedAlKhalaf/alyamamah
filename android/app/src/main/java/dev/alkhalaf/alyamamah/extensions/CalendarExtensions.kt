@@ -1,9 +1,7 @@
 package dev.alkhalaf.alyamamah.extensions
 
-import android.util.Log
 import dev.alkhalaf.alyamamah.models.Day
 import java.util.Calendar
-import java.util.Date
 
 fun Calendar.mapWeekdayToDay(): Day {
     return when (this.get(Calendar.DAY_OF_WEEK)) {

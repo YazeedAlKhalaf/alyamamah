@@ -21,6 +21,14 @@
                 android:resource="@xml/courses_widget_info" />
         </receiver>
 
+        <service android:name=".CoursesWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </service>
+
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"

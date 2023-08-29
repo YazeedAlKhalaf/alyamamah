@@ -5,6 +5,7 @@ import 'package:alyamamah/core/services/api/api_service.dart';
 import 'package:alyamamah/core/services/rev_cat/rev_cat_service.dart';
 import 'package:alyamamah/core/services/shared_prefs/shared_prefs_service.dart';
 import 'package:alyamamah/core/services/widget_kit/widget_kit_service.dart';
+import 'package:alyamamah/core/services/widget_kit/widget_kit_service_exception.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logging/logging.dart';
@@ -68,27 +69,35 @@ class ProfileViewModel extends ChangeNotifier {
   }
 
   Future<void> logout() async {
-    _log.info('logout | Logging out.');
-    _isBusy = true;
-    notifyListeners();
+    try {
+      _log.info('logout | Logging out.');
+      _isBusy = true;
+      notifyListeners();
 
-    await _apiService.logout();
-    await _sharedPrefsService.deleteEverything();
+      await _apiService.logout();
+      await _sharedPrefsService.deleteEverything();
 
-    await _widgetKitService.deleteCoursesWidgetData();
+      await _widgetKitService.deleteCoursesWidgetData();
 
-    await _featureFlagsStateNotifier.resetState();
+      await _featureFlagsStateNotifier.resetState();
 
-    // Keep this at the end so the ui data doesn't disappear for too long if
-    // the calls above take a while.
-    _actorDetailsNotifier.setActorDetails(null);
+      // Keep this at the end so the ui data doesn't disappear for too long if
+      // the calls above take a while.
+      _actorDetailsNotifier.setActorDetails(null);
 
-    await _yuRouter.pushAndPopUntil(
-      const LoginRoute(),
-      predicate: (_) => false,
-    );
-    _isBusy = false;
-    notifyListeners();
+      await _yuRouter.pushAndPopUntil(
+        const LoginRoute(),
+        predicate: (_) => false,
+      );
+      _isBusy = false;
+      notifyListeners();
+    } on WidgetKitServiceException catch (e) {
+      _log.severe('logout | failed to deleteCoursesWidgetData: $e');
+    } catch (e) {
+      _log.severe('logout | failed to logout for unexpected reason: $e');
+      _isBusy = false;
+      notifyListeners();
+    }
   }
 
   Future<void> restorePurchases() async {

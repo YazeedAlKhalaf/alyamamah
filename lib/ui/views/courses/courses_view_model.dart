@@ -9,6 +9,7 @@ import 'package:alyamamah/core/services/api/api_service.dart';
 import 'package:alyamamah/core/services/api/api_service_exception.dart';
 import 'package:alyamamah/core/services/shared_prefs/shared_prefs_service.dart';
 import 'package:alyamamah/core/services/widget_kit/widget_kit_service.dart';
+import 'package:alyamamah/core/services/widget_kit/widget_kit_service_exception.dart';
 import 'package:alyamamah/core/utils.dart';
 import 'package:alyamamah/ui/views/courses/models/schedule_entry.dart';
 import 'package:alyamamah/ui/views/courses/models/time_mapping.dart';
@@ -230,7 +231,9 @@ class CoursesViewModel extends ChangeNotifier {
       }
     } on PlatformException catch (e) {
       _log.severe('getStudentSchedule() | exception: $e');
-    } on Exception catch (e) {
+    } on WidgetKitServiceException catch (e) {
+      _log.severe('getStudentSchedule() | exception: $e');
+    } catch (e) {
       _log.severe('getStudentSchedule() | exception: $e');
     }
 

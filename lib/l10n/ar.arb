@@ -183,5 +183,12 @@
   "loading_chats": "جاري تحميل المحادثات",
   "get_chats": "احصل على المحادثات",
   "all_the_courses_that_you_have_selected_have_conflicts_please_remove_some_courses_and_try_again": "جميع المقررات التي اخترتها تحتوي على تعارضات، رجاء أزل بعض المقررات وحاول مرة أخرى",
-  "go_back": "عودة"
+  "go_back": "عودة",
+  "temporary_maintenance": "صيانة مؤقتة",
+  "temporary_maintenance_description": "التطبيق يخضع حاليًا لأعمال صيانة لتحسين تجربتك. أنا أعمل بجهد لإعادته للعمل. شكرًا لصبرك وتفهمك.",
+  "for_any_concerns_or_feedback_feel_free_to_reach_out": "لأي استفسارات أو تعليقات، لا تتردد في التواصل:",
+  "email_x": "البريد الإلكتروني: {x}",
+  "failed_to_launch_email_app": "فشل في قتح تطبيق البريد الإلكتروني.",
+  "twitter_dm": "رسالة عبر تويتر",
+  "failed_to_launch_twitter_app": "فشل في فتح تطبيق تويتر."
 }

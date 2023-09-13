@@ -74,6 +74,8 @@ class StartupViewModel extends ChangeNotifier {
     // Error: FlutterError (setState() or markNeedsBuild() called during build.
     await Future.delayed(const Duration(milliseconds: 10));
 
+    await _featureFlagsStateNotifier.init(userId: '');
+
     final username = _sharedPrefsService.getUsername();
     final password = _sharedPrefsService.getPassword();
     final accessToken = _sharedPrefsService.getAccessToken();

@@ -183,5 +183,12 @@
   "loading_chats": "Loading chats",
   "get_chats": "Get Chats",
   "all_the_courses_that_you_have_selected_have_conflicts_please_remove_some_courses_and_try_again": "All the courses that you have selected have conflicts. Please remove some courses and try again.",
-  "go_back": "Go Back"
+  "go_back": "Go Back",
+  "temporary_maintenance": "Temporary Maintenance",
+  "temporary_maintenance_description": "The app is currently undergoing maintenance to enhance your experience. I'm working hard to bring it back up. Thank you for your patience and understanding.",
+  "for_any_concerns_or_feedback_feel_free_to_reach_out": "For any concerns or feedback, feel free to reach out:",
+  "email_x": "Email: {x}",
+  "failed_to_launch_email_app": "Failed to launch email app.",
+  "twitter_dm": "Twitter DM",
+  "failed_to_launch_twitter_app": "Failed to launch Twitter app."
 }

@@ -40,6 +40,9 @@ class FeatureFlagsStateNotifier extends StateNotifier<FeatureFlagsState> {
       isNumberGradesEnabled: _unleashService.isEnabled(
         UnleashFlags.numberGrades,
       ),
+      isAppEnabled: _unleashService.isEnabled(
+        UnleashFlags.appEnabled,
+      ),
     );
   }
 
@@ -57,6 +60,9 @@ class FeatureFlagsStateNotifier extends StateNotifier<FeatureFlagsState> {
       ),
       isNumberGradesEnabled: _unleashService.isEnabled(
         UnleashFlags.numberGrades,
+      ),
+      isAppEnabled: _unleashService.isEnabled(
+        UnleashFlags.appEnabled,
       ),
     );
   }

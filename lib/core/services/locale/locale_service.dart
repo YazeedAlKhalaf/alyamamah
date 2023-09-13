@@ -37,7 +37,8 @@ class LocaleService extends ChangeNotifier {
 
   Locale? _locale;
   Locale? get locale => _locale;
-  Future<void> setLocale(Locale? locale) async {
+  Future<void> setLocale(Locale? locale,
+      {bool onlyChangeLocale = false}) async {
     _log.info('setting the locale: $locale');
 
     _locale = locale;
@@ -46,6 +47,7 @@ class LocaleService extends ChangeNotifier {
     if (locale != null) {
       _log.info('saving the locale: ${locale.languageCode}');
       await _sharedPrefsService.saveLocale(locale.languageCode);
+      if (onlyChangeLocale) return;
 
       _log.info('changing the language on the server.');
       final changeLanguageLocale = locale.mapToChangeLanguageLocale();

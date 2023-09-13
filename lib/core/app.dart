@@ -1,3 +1,4 @@
+import 'package:alyamamah/core/providers/feature_flags/feature_flags_state_notifier.dart';
 import 'package:alyamamah/core/providers/firebase_analytics/firebase_analytics_provider.dart';
 import 'package:alyamamah/core/providers/package_info/package_info_provider.dart';
 import 'package:alyamamah/core/router/yu_router.dart';
@@ -5,6 +6,7 @@ import 'package:alyamamah/core/services/locale/locale_service.dart';
 import 'package:alyamamah/core/services/shared_prefs/shared_prefs_service.dart';
 import 'package:alyamamah/core/services/theme/theme_service.dart';
 import 'package:alyamamah/core/themes/themes.dart';
+import 'package:alyamamah/ui/views/app_disabled/app_disabled_view.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -47,6 +49,8 @@ class AppWithoutProviderScope extends ConsumerWidget {
     final yuRouter = ref.read(yuRouterProvider);
     final themeService = ref.watch(themeServiceProvider);
     final localeService = ref.watch(localeServiceProvider);
+    final isAppEnabled =
+        ref.watch(featureFlagsStateNotifierProvider).isAppEnabled;
 
     return MaterialApp.router(
       routerConfig: yuRouter.config(
@@ -64,6 +68,10 @@ class AppWithoutProviderScope extends ConsumerWidget {
       theme: Themes.light,
       darkTheme: Themes.dark,
       builder: (BuildContext context, Widget? child) {
+        if (!isAppEnabled) {
+          return const AppDisabledView();
+        }
+
         return GestureDetector(
           onTap: () {
             FocusManager.instance.primaryFocus?.unfocus();

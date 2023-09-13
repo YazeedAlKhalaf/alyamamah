@@ -37,6 +37,9 @@ class FeatureFlagsStateNotifier extends StateNotifier<FeatureFlagsState> {
       isScheduleHourLabelsEnabled: _unleashService.isEnabled(
         UnleashFlags.scheduleHoursLabels,
       ),
+      isNumberGradesEnabled: _unleashService.isEnabled(
+        UnleashFlags.numberGrades,
+      ),
     );
   }
 
@@ -51,6 +54,9 @@ class FeatureFlagsStateNotifier extends StateNotifier<FeatureFlagsState> {
       ),
       isScheduleHourLabelsEnabled: _unleashService.isEnabled(
         UnleashFlags.scheduleHoursLabels,
+      ),
+      isNumberGradesEnabled: _unleashService.isEnabled(
+        UnleashFlags.numberGrades,
       ),
     );
   }

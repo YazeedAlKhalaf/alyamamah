@@ -1,10 +1,12 @@
 import 'package:alyamamah/core/constants.dart';
 import 'package:alyamamah/core/extensions/build_context.dart';
 import 'package:alyamamah/core/models/course_result.dart';
+import 'package:alyamamah/core/providers/feature_flags/feature_flags_state_notifier.dart';
 import 'package:alyamamah/core/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CourseResultListTile extends StatelessWidget {
+class CourseResultListTile extends ConsumerWidget {
   const CourseResultListTile({
     super.key,
     required this.courseResult,
@@ -13,7 +15,10 @@ class CourseResultListTile extends StatelessWidget {
   final CourseResult courseResult;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isNumberGradeEnabled =
+        ref.watch(featureFlagsStateNotifierProvider).isNumberGradesEnabled;
+
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: Constants.padding,
@@ -60,7 +65,9 @@ class CourseResultListTile extends StatelessWidget {
           ),
         ),
         trailing: Text(
-          '${courseResult.gradeDesc}\n${courseResult.confirmedMark}',
+          isNumberGradeEnabled
+              ? '${courseResult.gradeDesc}\n${courseResult.confirmedMark}'
+              : courseResult.gradeDesc,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.bold,

@@ -59,7 +59,8 @@ class CourseResult {
   factory CourseResult.fromMap(Map<String, dynamic> map) {
     return CourseResult(
       activityDesc: map['activityDesc'] as String,
-      confirmedMark: map['confirmedMark'] as String,
+      confirmedMark:
+          map['confirmedMark'] == null ? '' : map['confirmedMark'] as String,
       courseCode: map['courseCode'] as String,
       courseName: map['courseName'] as String,
       courseNo: map['courseNo'] as String,

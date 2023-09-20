@@ -26,7 +26,11 @@ sequelize
   });
 
 sequelize
-  .sync()
+  .sync({
+    // this is the last time this will be used, going to Golang :)
+    // and will use migrations like a normal person 😂
+    alter: true,
+  })
   .then(() => {
     console.log("Database synced successfully.");
   })

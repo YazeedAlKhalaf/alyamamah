@@ -4,8 +4,6 @@ import dotenv from "dotenv";
 import * as unleash from "unleash-server";
 
 import AuthController from "./controllers/auth_controller";
-import ChatController from "./controllers/chat_controller";
-import RevCatController from "./controllers/rev_cat_controller";
 import ConnectyCubeController from "./controllers/connecty_cube_controller";
 
 dotenv.config();
@@ -14,12 +12,7 @@ dotenv.config();
 const app = new App({
   port: 3000,
   middlewares: [express.json(), express.urlencoded({ extended: true })],
-  controllers: [
-    new AuthController(),
-    new ChatController(),
-    new RevCatController(),
-    new ConnectyCubeController(),
-  ],
+  controllers: [new AuthController(), new ConnectyCubeController()],
 });
 
 app.listen();

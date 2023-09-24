@@ -1,9 +1,9 @@
 [![codecov](https://codecov.io/github/YazeedAlKhalaf/alyamamah/branch/main/graph/badge.svg?token=AS27LN330N)](https://codecov.io/github/YazeedAlKhalaf/alyamamah)
 [![Codemagic build status](https://api.codemagic.io/apps/64057683f94c592e7c8a026b/64057683f94c592e7c8a026a/status_badge.svg)](https://codemagic.io/apps/64057683f94c592e7c8a026b/64057683f94c592e7c8a026a/latest_build)
 
-![feature-graphic](./readme_images/feature-graphic.png)
+![feature-graphic](../readme_images/feature-graphic.png)
 
-# 📚 Al Yamamah
+# 📱 Al Yamamah Mobile App
 
 > Simplifying student life, one feature at a time.
 
@@ -35,19 +35,20 @@ To set this up, you'll need a working Flutter environment. If you haven't got Fl
 
 Steps:
 
-1. Clone the repo:
+1. Clone the main repo if you haven't already:
 
 ```
 git clone git@github.com:YazeedAlKhalaf/alyamamah.git
 ```
 
-1. Navigate into the directory:
+2. Navigate into the `mobile` directory:
 
 ```
-cd alyamamah
+cd alyamamah/mobile
 ```
 
 3. Set up Firebase:
+
    - Start a Firebase project for analytics.
    - Use the `flutterfire` cli for easy setup. If you're not using my Firebase project, you'll miss some features (you won't have the required secrets for certain Firebase APIs).
    - You'll need to add the following:
@@ -58,6 +59,7 @@ cd alyamamah
      5. Note: The `flutterfire` cli will generate two files for iOS and macOS. Use the example JSON files provided if you run into issues:
         1. `ios/firebase_app_id_file.json`
         2. `macos/firebase_app_id_file.json`
+
 4. Fetch dependencies:
 
 ```
@@ -98,7 +100,3 @@ For updating or generating icons, run:
 ```
 flutter pub run flutter_launcher_icons
 ```
-
-## 💖 Special Thanks to Our Sponsors:
-
-<a href="https://sentry.io"><img src="https://raw.githubusercontent.com/YazeedAlKhalaf/alyamamah/main/readme_images/sentry-logo.png" width="150px" alt="sentry logo as a sponsor" /></a>

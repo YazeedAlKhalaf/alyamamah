@@ -39,7 +39,7 @@ You can use the docker-compose.yaml file to get a local postgres db up and runni
 Then you have to run this manually, before doing anything:
 
 ```
-CREATE DATABASE alyamamah;
+CREATE DATABASE users;
 ```
 
 ## To run the app easily

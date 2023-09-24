@@ -17,7 +17,6 @@
 - 🧑‍🎓 Customize and preview your profile.
 - 🌍 Arabic & English language compatibility.
 - 🌛 Toggle between Dark and Light modes.
-- 💬 **AlYamamahGPT**: Think ChatGPT, but infused with Al Yamamah wisdom (currently in beta).
 
 ### 📱 Supported Platforms:
 
@@ -77,6 +76,20 @@ flutter run
 - Password: `Aa1234aa@`
 
 Get an inside look at how this works in the [demo interceptor](https://github.com/YazeedAlKhalaf/alyamamah/blob/main/lib/core/services/api/interceptors/demo_mode_interceptor.dart).
+
+## How to generate files from proto?
+
+You need two things:
+
+- protoc
+- the protoc plugin for dart
+  Follow this guide: https://github.com/google/protobuf.dart/tree/master/protoc_plugin#how-to-build
+
+Or you can basically run this command to install the dart plugin for protoc:
+
+```
+dart pub global activate protoc_plugin
+```
 
 ## 🎨 Icon Generation:
 

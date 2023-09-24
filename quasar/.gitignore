@@ -1,0 +1,4 @@
+*.env
+*.pem
+coverage.out
+postgres-data/

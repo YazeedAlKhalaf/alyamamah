@@ -1,0 +1,48 @@
+version: '3'
+
+tasks:
+  new-mig-users:
+    desc: Create a new migration for users service.
+    cmds:
+      - migrate create -dir pkg/users/store/migrations/ -ext sql --seq {{.MIG_NAME}}
+    requires:
+      vars: [MIG_NAME]
+  
+  sqlc-gen:
+    desc: Generate store code using sqlc.
+    cmds:
+      - sqlc generate
+
+  mock-gen:
+    desc: Generate mocks for interfaces specificed in mockery yaml file.
+    cmds:
+      - rm -rf mocks/
+      - mockery
+  
+  gen:
+    desc: Generate all code with gen tasks.
+    deps:
+      - sqlc-gen
+      # - mock-gen
+  
+  test:
+    desc: Run tests for all packages.
+    cmds:
+      - go test ./...
+  
+  test-cov:
+    desc: Run tests for all packages and generate coverage report.
+    cmds:
+      - go test -coverpkg=./... -coverprofile=coverage.out ./...
+
+  test-cov-show:
+    desc: Run tests for all packages and generate coverage report.
+    deps:
+      - test-cov
+    cmds:
+      - go tool cover -html=coverage.out
+  
+  run:
+    desc: Run the server.
+    cmds:
+      - go run cmd/main.go

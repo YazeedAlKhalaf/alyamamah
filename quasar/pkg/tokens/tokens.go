@@ -2,13 +2,21 @@ package tokens
 
 import (
 	"crypto/rsa"
+	"errors"
 	"time"
 
 	"github.com/YazeedAlKhalaf/alyamamah/quasar/pkg/audience"
 	"github.com/golang-jwt/jwt"
 )
 
-const tokenValidity = time.Hour * 3
+var (
+	ErrInvalidIssuer = errors.New("invalid issuer")
+)
+
+const (
+	tokenValidity = time.Hour * 3
+	issuer        = "https://yu.alkhalaf.dev"
+)
 
 type tokens struct {
 	PublicKey  *rsa.PublicKey
@@ -24,6 +32,7 @@ func (t tokens) NewToken(username string, aud audience.Audience) (*string, error
 		jwt.StandardClaims{
 			Audience:  string(aud),
 			ExpiresAt: expiresAt.Unix(),
+			Issuer:    issuer,
 		},
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodRS256, claims)
@@ -39,10 +48,23 @@ func (t tokens) NewToken(username string, aud audience.Audience) (*string, error
 func (t tokens) ParseToken(token string) (*QuasarClaims, error) {
 	claims := QuasarClaims{}
 	_, err := jwt.ParseWithClaims(token, &claims, func(token *jwt.Token) (interface{}, error) {
+		err := token.Claims.Valid()
+		if err != nil {
+			return nil, err
+		}
+
+		if _, ok := token.Method.(*jwt.SigningMethodRSA); !ok {
+			return nil, jwt.ErrSignatureInvalid
+		}
+
 		return t.PublicKey, nil
 	})
 	if err != nil {
 		return nil, err
+	}
+
+	if claims.Issuer != issuer {
+		return nil, ErrInvalidIssuer
 	}
 
 	return &claims, nil

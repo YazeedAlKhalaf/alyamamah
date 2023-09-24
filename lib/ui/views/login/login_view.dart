@@ -1,7 +1,7 @@
 import 'package:alyamamah/core/constants.dart';
 import 'package:alyamamah/core/extensions/api_service_exception_type.dart';
+import 'package:alyamamah/core/extensions/auth_repository_exception_type.dart';
 import 'package:alyamamah/core/extensions/build_context.dart';
-import 'package:alyamamah/core/extensions/yu_api_service_exception_type.dart';
 import 'package:alyamamah/ui/views/login/login_view_model.dart';
 import 'package:alyamamah/ui/widgets/button_loading.dart';
 import 'package:alyamamah/ui/widgets/privacy_policy_and_terms_of_use_widget.dart';
@@ -130,12 +130,12 @@ class _LoginViewState extends ConsumerState<LoginView> {
                       : Text(context.s.login),
                 ),
                 if (loginViewModel.apiServiceExceptionType != null ||
-                    loginViewModel.yuApiServiceExceptionType != null) ...[
+                    loginViewModel.authRepositoryExceptionType != null) ...[
                   const SizedBox(height: Constants.padding),
                   Text(
                     loginViewModel.apiServiceExceptionType
                             ?.mapToString(context) ??
-                        loginViewModel.yuApiServiceExceptionType
+                        loginViewModel.authRepositoryExceptionType
                             ?.mapToString(context) ??
                         '',
                     style: Theme.of(context).textTheme.labelMedium?.copyWith(

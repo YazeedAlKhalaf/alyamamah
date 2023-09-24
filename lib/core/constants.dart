@@ -5,6 +5,11 @@ class Constants {
   static const String apiUrl = 'https://edugate.yu.edu.sa/yu';
   static const String yuApiBaseUrl = 'https://api-yu.alkhalaf.dev';
 
+  static const String quasarApiHost = String.fromEnvironment('QUASAR_API_HOST');
+  static const int quasarApiPort = int.fromEnvironment('QUASAR_API_PORT');
+  static const bool isQuasarClientChannelSecure =
+      bool.fromEnvironment('IS_QUASAR_CLIENT_CHANNEL_SECURE');
+
   static const String sharedAppGroup = 'group.dev.alkhalaf.alyamamah.shared';
   static const String twitterLink = 'https://twitter.com/YazeedAlKhalaf';
   static const String semesterProgressLink =
@@ -38,7 +43,7 @@ class Constants {
   static const String unleashAppName = 'alyamamah-app';
 
   static const String privacyPolicyUrl =
-      'https://alyamamah.alkhalaf.dev/privacy-policy';
+      'https://yu.alkhalaf.dev/privacy-policy';
   static const String termsOfUseUrl =
       'https://www.apple.com/legal/internet-services/itunes/dev/stdeula';
 

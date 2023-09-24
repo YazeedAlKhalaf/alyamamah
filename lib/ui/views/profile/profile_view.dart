@@ -4,7 +4,6 @@ import 'package:alyamamah/core/extensions/locale.dart';
 import 'package:alyamamah/core/extensions/string.dart';
 import 'package:alyamamah/core/extensions/theme_mode.dart';
 import 'package:alyamamah/core/providers/actor_details/actor_details_notifier.dart';
-import 'package:alyamamah/core/providers/feature_flags/feature_flags_state_notifier.dart';
 import 'package:alyamamah/core/services/theme/theme_service.dart';
 import 'package:alyamamah/ui/views/profile/profile_view_model.dart';
 import 'package:alyamamah/ui/views/profile/widgets/language_bottom_sheet.dart';
@@ -13,7 +12,6 @@ import 'package:alyamamah/ui/widgets/button_loading.dart';
 import 'package:alyamamah/ui/widgets/privacy_policy_and_terms_of_use_widget.dart';
 import 'package:alyamamah/ui/widgets/section_container.dart';
 import 'package:alyamamah/ui/widgets/yu_show.dart';
-import 'package:alyamamah/ui/widgets/yu_snack_bar.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -28,7 +26,6 @@ class ProfileView extends ConsumerWidget {
     final profileViewModel = ref.watch(profileViewModelProvider);
     final themeService = ref.watch(themeServiceProvider);
     final actorDetails = ref.watch(actorDetailsProvider);
-    final featureFlagsState = ref.watch(featureFlagsStateNotifierProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -38,28 +35,6 @@ class ProfileView extends ConsumerWidget {
             fontWeight: FontWeight.w500,
           ),
         ),
-        actions: [
-          TextButton(
-            onPressed: () async {
-              await ref.read(profileViewModelProvider).restorePurchases();
-
-              if (context.mounted) {
-                YUSnackBar.show(
-                  context,
-                  message:
-                      ref.read(profileViewModelProvider).restoredCustomerInfo !=
-                              null
-                          ? context.s.finished_restoring_successfully
-                          : context.s.something_went_wrong_restoring_try_again,
-                );
-              }
-            },
-            child: profileViewModel.isRestoring
-                ? const CircularProgressIndicator()
-                : Text(context.s.restore),
-          ),
-          const SizedBox(width: Constants.spacing),
-        ],
       ),
       body: SafeArea(
         child: ListView(
@@ -98,56 +73,6 @@ class ProfileView extends ConsumerWidget {
                         .navigateToStudentInfo();
                   },
                 ),
-              ],
-            ),
-            const SizedBox(height: Constants.padding),
-            SectionContainer(
-              showTopPadding: false,
-              children: [
-                if (featureFlagsState.isAlyamamahGptEnabled)
-                  ListTile(
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: Constants.padding,
-                      vertical: Constants.spacing,
-                    ),
-                    leading: const CircleAvatar(
-                      child: Icon(Icons.smart_toy_rounded),
-                    ),
-                    title: Text(
-                      context.s.ask_alyamamah_gpt,
-                      style: context.textTheme.titleMedium?.copyWith(
-                        color: context.colorScheme.onSecondaryContainer,
-                      ),
-                    ),
-                    trailing: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius:
-                                BorderRadius.circular(Constants.spacing),
-                            color: context.colorScheme.tertiary,
-                          ),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: Constants.padding / 2,
-                            vertical: 0,
-                          ),
-                          child: Text(
-                            context.s.new_word,
-                            style: context.textTheme.labelSmall?.copyWith(
-                              color: context.colorScheme.onTertiary,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ],
-                    ),
-                    onTap: () async {
-                      await ref
-                          .read(profileViewModelProvider)
-                          .navigateToYuGptView();
-                    },
-                  ),
               ],
             ),
             const SizedBox(height: Constants.padding),

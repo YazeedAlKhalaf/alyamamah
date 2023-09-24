@@ -5,9 +5,16 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "alyamamah",
+      "name": "alyamamah (local)",
       "request": "launch",
-      "type": "dart"
+      "type": "dart",
+      "args": ["--dart-define-from-file=dart-define/local.json"]
+    },
+    {
+      "name": "alyamamah (prod)",
+      "request": "launch",
+      "type": "dart",
+      "args": ["--dart-define-from-file=dart-define/prod.json"]
     },
     {
       "name": "alyamamah (profile mode)",

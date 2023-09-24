@@ -31,16 +31,18 @@ dependencies:
   sentry_flutter: 7.9.0
   sentry_logging: 7.9.0
   sentry_dio: 7.9.0
-  purchases_flutter: 5.6.2
   flutter_animate: 4.2.0+1
   unleash_proxy_client_flutter: 1.4.0
   permission_handler: 10.4.3
   flutter_inappwebview: 5.7.2+3
   crypto: 3.0.3
   package_info_plus: 4.1.0
+  grpc: 3.2.4
+  protobuf: 3.1.0
 
 dependency_overrides:
   intl: 0.18.1
+  watcher: 1.1.0
 
 dev_dependencies:
   flutter_test:

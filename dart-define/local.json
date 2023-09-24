@@ -1,0 +1,5 @@
+{
+  "QUASAR_API_HOST": "localhost",
+  "QUASAR_API_PORT": 50051,
+  "IS_QUASAR_CLIENT_CHANNEL_SECURE": false
+}

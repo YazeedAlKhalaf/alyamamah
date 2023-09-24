@@ -1,14 +1,13 @@
 import 'package:alyamamah/core/extensions/locale.dart';
 import 'package:alyamamah/core/providers/actor_details/actor_details_notifier.dart';
 import 'package:alyamamah/core/providers/feature_flags/feature_flags_state_notifier.dart';
+import 'package:alyamamah/core/repository/auth/auth_repository.dart';
+import 'package:alyamamah/core/repository/auth/auth_repository_exception.dart';
 import 'package:alyamamah/core/router/yu_router.dart';
 import 'package:alyamamah/core/services/api/api_service.dart';
 import 'package:alyamamah/core/services/api/api_service_exception.dart';
 import 'package:alyamamah/core/services/firebase_messaging/firebase_messaging_service.dart';
-import 'package:alyamamah/core/services/rev_cat/rev_cat_service.dart';
 import 'package:alyamamah/core/services/shared_prefs/shared_prefs_service.dart';
-import 'package:alyamamah/core/services/yu_api/yu_api_service.dart';
-import 'package:alyamamah/core/services/yu_api/yu_api_service_exception.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logging/logging.dart';
@@ -20,8 +19,7 @@ final loginViewModelProvider = ChangeNotifierProvider(
       sharedPrefsService: ref.read(sharedPrefsServiceProvider),
       yuRouter: ref.read(yuRouterProvider),
       actorDetailsNotifier: ref.watch(actorDetailsProvider.notifier),
-      revCatService: ref.read(revCatServiceProvider),
-      yuApiService: ref.read(yuApiServiceProvider),
+      authRepository: ref.read(authRepositoryProvider),
       firebaseMessagingService: ref.read(firebaseMessagingServiceProvider),
       featureFlagsStateNotifier:
           ref.read(featureFlagsStateNotifierProvider.notifier),
@@ -36,8 +34,7 @@ class LoginViewModel extends ChangeNotifier {
   final SharedPrefsService _sharedPrefsService;
   final YURouter _yuRouter;
   final ActorDetailsNotifier _actorDetailsNotifier;
-  final RevCatService _revCatService;
-  final YuApiService _yuApiService;
+  final AuthRepository _authRepository;
   final FirebaseMessagingService _firebaseMessagingService;
   final FeatureFlagsStateNotifier _featureFlagsStateNotifier;
 
@@ -46,16 +43,14 @@ class LoginViewModel extends ChangeNotifier {
     required SharedPrefsService sharedPrefsService,
     required YURouter yuRouter,
     required ActorDetailsNotifier actorDetailsNotifier,
-    required RevCatService revCatService,
-    required YuApiService yuApiService,
+    required AuthRepository authRepository,
     required FirebaseMessagingService firebaseMessagingService,
     required FeatureFlagsStateNotifier featureFlagsStateNotifier,
   })  : _apiService = apiService,
         _sharedPrefsService = sharedPrefsService,
         _yuRouter = yuRouter,
         _actorDetailsNotifier = actorDetailsNotifier,
-        _revCatService = revCatService,
-        _yuApiService = yuApiService,
+        _authRepository = authRepository,
         _firebaseMessagingService = firebaseMessagingService,
         _featureFlagsStateNotifier = featureFlagsStateNotifier;
 
@@ -70,9 +65,9 @@ class LoginViewModel extends ChangeNotifier {
   ApiServiceExceptionType? get apiServiceExceptionType =>
       _apiServiceExceptionType;
 
-  YuApiServiceExceptionType? _yuApiServiceExceptionType;
-  YuApiServiceExceptionType? get yuApiServiceExceptionType =>
-      _yuApiServiceExceptionType;
+  AuthRepositoryExceptionType? _authRepositoryExceptionType;
+  AuthRepositoryExceptionType? get authRepositoryExceptionType =>
+      _authRepositoryExceptionType;
 
   String _username = '';
   String get username => _username;
@@ -130,9 +125,6 @@ class LoginViewModel extends ChangeNotifier {
       _actorDetailsNotifier.setActorDetails(actorDetails);
 
       Future(() async {
-        await _revCatService.initPlatformState();
-        await _revCatService.logIn(username);
-
         await _featureFlagsStateNotifier.init(userId: username);
 
         await _sharedPrefsService.saveUsernameAndPassword(
@@ -141,7 +133,7 @@ class LoginViewModel extends ChangeNotifier {
         );
 
         final fcmToken = await _firebaseMessagingService.getToken();
-        final loginResponse = await _yuApiService.login(
+        final loginResponse = await _authRepository.login(
           username: username,
           password: password,
           fcmToken: fcmToken ?? '',
@@ -162,15 +154,15 @@ class LoginViewModel extends ChangeNotifier {
 
       _apiServiceExceptionType = e.type;
       notifyListeners();
-    } on YuApiServiceException catch (e) {
-      _log.severe('login | YuApiService with type: ${e.type}.');
+    } on AuthRepositoryException catch (e) {
+      _log.severe('login | AuthRepositoryException with type: ${e.type}.');
 
-      _yuApiServiceExceptionType = e.type;
+      _authRepositoryExceptionType = e.type;
       notifyListeners();
     } catch (e) {
       _log.severe('login | Unknown error: $e.');
 
-      _yuApiServiceExceptionType = YuApiServiceExceptionType.unknown;
+      _authRepositoryExceptionType = AuthRepositoryExceptionType.unknown;
       notifyListeners();
     }
 

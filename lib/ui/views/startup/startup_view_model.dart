@@ -1,17 +1,15 @@
 import 'package:alyamamah/core/extensions/locale.dart';
-import 'package:alyamamah/core/extensions/string.dart';
 import 'package:alyamamah/core/providers/actor_details/actor_details_notifier.dart';
 import 'package:alyamamah/core/providers/feature_flags/feature_flags_state_notifier.dart';
+import 'package:alyamamah/core/repository/auth/auth_repository.dart';
+import 'package:alyamamah/core/repository/auth/auth_repository_exception.dart';
 import 'package:alyamamah/core/router/yu_router.dart';
 import 'package:alyamamah/core/services/api/api_service.dart';
 import 'package:alyamamah/core/services/api/api_service_exception.dart';
 import 'package:alyamamah/core/services/connectivity/connectivity_service.dart';
 import 'package:alyamamah/core/services/firebase_messaging/firebase_messaging_service.dart';
 import 'package:alyamamah/core/services/permission_handler/permission_handler_service.dart';
-import 'package:alyamamah/core/services/rev_cat/rev_cat_service.dart';
 import 'package:alyamamah/core/services/shared_prefs/shared_prefs_service.dart';
-import 'package:alyamamah/core/services/yu_api/yu_api_service.dart';
-import 'package:alyamamah/core/services/yu_api/yu_api_service_exception.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logging/logging.dart';
@@ -23,8 +21,7 @@ final startupViewModelProvider = ChangeNotifierProvider.autoDispose(
     sharedPrefsService: ref.read(sharedPrefsServiceProvider),
     yuRouter: ref.read(yuRouterProvider),
     actorDetailsNotifier: ref.read(actorDetailsProvider.notifier),
-    revCatService: ref.read(revCatServiceProvider),
-    yuApiService: ref.read(yuApiServiceProvider),
+    authRepository: ref.read(authRepositoryProvider),
     connectivityService: ref.read(connectivityServiceProvider.notifier),
     firebaseMessagingService: ref.read(firebaseMessagingServiceProvider),
     featureFlagsStateNotifier:
@@ -40,8 +37,7 @@ class StartupViewModel extends ChangeNotifier {
   final SharedPrefsService _sharedPrefsService;
   final YURouter _yuRouter;
   final ActorDetailsNotifier _actorDetailsNotifier;
-  final RevCatService _revCatService;
-  final YuApiService _yuApiService;
+  final AuthRepository _authRepository;
   final ConnectivityService _connectivityService;
   final FirebaseMessagingService _firebaseMessagingService;
   final FeatureFlagsStateNotifier _featureFlagsStateNotifier;
@@ -52,8 +48,7 @@ class StartupViewModel extends ChangeNotifier {
     required SharedPrefsService sharedPrefsService,
     required YURouter yuRouter,
     required ActorDetailsNotifier actorDetailsNotifier,
-    required RevCatService revCatService,
-    required YuApiService yuApiService,
+    required AuthRepository authRepository,
     required ConnectivityService connectivityService,
     required FirebaseMessagingService firebaseMessagingService,
     required FeatureFlagsStateNotifier featureFlagsStateNotifier,
@@ -62,8 +57,7 @@ class StartupViewModel extends ChangeNotifier {
         _sharedPrefsService = sharedPrefsService,
         _yuRouter = yuRouter,
         _actorDetailsNotifier = actorDetailsNotifier,
-        _revCatService = revCatService,
-        _yuApiService = yuApiService,
+        _authRepository = authRepository,
         _connectivityService = connectivityService,
         _firebaseMessagingService = firebaseMessagingService,
         _featureFlagsStateNotifier = featureFlagsStateNotifier,
@@ -78,7 +72,6 @@ class StartupViewModel extends ChangeNotifier {
 
     final username = _sharedPrefsService.getUsername();
     final password = _sharedPrefsService.getPassword();
-    final accessToken = _sharedPrefsService.getAccessToken();
 
     if (username != null && password != null) {
       _log.fine(
@@ -113,26 +106,21 @@ class StartupViewModel extends ChangeNotifier {
         // we run them in the background, at least it gives the same effect
         // when running a future like this without await :).
         Future(() async {
-          await _revCatService.initPlatformState();
-          await _revCatService.logIn(username);
-
           await _featureFlagsStateNotifier.init(userId: username);
 
-          if (accessToken == null || accessToken.isJwtExpired()) {
-            _log.fine(
-              'handleStartup | accessToken is null, getting a new one.',
-            );
+          _log.fine(
+            'handleStartup | accessToken is null, getting a new one.',
+          );
 
-            final fcmToken = await _firebaseMessagingService.getToken();
-            final loginResponse = await _yuApiService.login(
-              username: username,
-              password: password,
-              fcmToken: fcmToken ?? '',
-            );
-            await _sharedPrefsService.saveAccessToken(
-              accessToken: loginResponse.accessToken,
-            );
-          }
+          final fcmToken = await _firebaseMessagingService.getToken();
+          final loginResponse = await _authRepository.login(
+            username: username,
+            password: password,
+            fcmToken: fcmToken ?? '',
+          );
+          await _sharedPrefsService.saveAccessToken(
+            accessToken: loginResponse.accessToken,
+          );
 
           _log.fine('handleStartup | finished the background tasks.');
         });
@@ -171,9 +159,9 @@ class StartupViewModel extends ChangeNotifier {
           MainRoute(),
           predicate: (_) => false,
         );
-      } on YuApiServiceException catch (e) {
+      } on AuthRepositoryException catch (e) {
         _log.severe(
-          'handleStartup | caught YuApiServiceException logging in automatically: ${e.type}.',
+          'handleStartup | caught AuthRepositoryException logging in automatically: ${e.type}.',
         );
 
         _connectivityService.setConnected(false);

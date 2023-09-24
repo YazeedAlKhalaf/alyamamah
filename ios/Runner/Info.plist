@@ -74,6 +74,13 @@
 	      <key>NSTemporaryExceptionMinimumTLSVersion</key>
 	      <string>TLSv1.1</string>
 	    </dict>
+		<key>localhost</key>
+        <dict>
+            <key>NSIncludesSubdomains</key>
+            <false/>
+            <key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+            <true/>
+        </dict>
 	  </dict>
 	</dict>
 </dict>

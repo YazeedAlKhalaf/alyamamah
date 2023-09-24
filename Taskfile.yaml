@@ -5,4 +5,4 @@ tasks:
     desc: Generate Go code from proto files
     cmds:
       - protoc --go_out=quasar/pkg/api/ --go_opt=paths=source_relative --go-grpc_out=quasar/pkg/api/ --go-grpc_opt=paths=source_relative proto/*.proto
-      - protoc --dart_out=grpc:lib/gen/ proto/*.proto
+      - protoc --dart_out=grpc:mobile/lib/gen/ proto/*.proto

@@ -51,19 +51,20 @@ func (s *server) CreateFeedback(ctx context.Context, r *feedbackpb.CreateFeedbac
 }
 
 func (s *server) GetFeedback(ctx context.Context, r *feedbackpb.GetFeedbackRequest) (*feedbackpb.GetFeedbackResponse, error) {
+	claims, ok := s.quasarmetadata.GetClaims(ctx)
+	if !ok {
+		log.Ctx(ctx).Error().Msg("couldn't get claims")
+		return nil, status.Error(codes.Internal, "internal error")
+	}
+
+	user, err := s.usersSvc.GetUserByUsername(ctx, claims.Payload.Username)
+	if err != nil {
+		log.Ctx(ctx).Err(err).Msg("couldn't get user")
+		return nil, err
+	}
+
 	var fis []*feedbackpb.FeedbackItem
 	if r.Id == nil {
-		claims, ok := s.quasarmetadata.GetClaims(ctx)
-		if !ok {
-			log.Ctx(ctx).Error().Msg("couldn't get claims")
-			return nil, status.Error(codes.Internal, "internal error")
-		}
-
-		user, err := s.usersSvc.GetUserByUsername(ctx, claims.Payload.Username)
-		if err != nil {
-			log.Ctx(ctx).Err(err).Msg("couldn't get user")
-			return nil, err
-		}
 
 		resp, err := s.feedbackSvc.SvcGetFeedbackByUserId(ctx, &feedbacksvcpb.SvcGetFeedbackByUserIdRequest{
 			UserId: user.ID,
@@ -84,6 +85,11 @@ func (s *server) GetFeedback(ctx context.Context, r *feedbackpb.GetFeedbackReque
 		if err != nil {
 			log.Ctx(ctx).Err(err).Msg("couldn't get feedback")
 			return nil, err
+		}
+
+		if resp.FeedbackItem.UserId != user.ID {
+			log.Ctx(ctx).Error().Msg("user doesn't own feedback")
+			return nil, status.Error(codes.PermissionDenied, "permission denied")
 		}
 
 		fis = make([]*feedbackpb.FeedbackItem, 1)

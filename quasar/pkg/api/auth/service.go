@@ -3,7 +3,7 @@ package auth
 import (
 	"context"
 
-	authpb "github.com/YazeedAlKhalaf/alyamamah/quasar/pkg/api/proto"
+	authpb "github.com/YazeedAlKhalaf/alyamamah/quasar/pkg/api/auth/proto"
 	"github.com/YazeedAlKhalaf/alyamamah/quasar/pkg/audience"
 	"github.com/YazeedAlKhalaf/alyamamah/quasar/pkg/quasarmetadata"
 	"github.com/YazeedAlKhalaf/alyamamah/quasar/pkg/tokens"

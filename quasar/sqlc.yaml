@@ -7,3 +7,10 @@ sql:
       go:
         package: "sqlc"
         out: "pkg/users/store/sqlc"
+  - engine: "postgresql"
+    schema: "pkg/feedback/store/migrations/"
+    queries: "pkg/feedback/store/queries/"
+    gen:
+      go:
+        package: "sqlc"
+        out: "pkg/feedback/store/sqlc"

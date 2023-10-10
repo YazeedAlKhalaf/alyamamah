@@ -59,8 +59,8 @@ func (s *store) UpdateFcmTokenByUsername(ctx context.Context, username string, f
 	return &user, nil
 }
 
-func NewStore(queries sqlc.Queries) Store {
+func NewStore(conn *sql.DB) Store {
 	return &store{
-		queries: queries,
+		queries: *sqlc.New(conn),
 	}
 }

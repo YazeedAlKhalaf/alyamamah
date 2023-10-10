@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+option go_package = "github.com/YazeedAlKhalaf/alyamamah/quasar/pkg/api/feedback;feedbackpb";
+
+message GetFeedbackCategoriesRequest {}
+
+message FeedbackCategory {
+    string id = 1;
+    string name_ar = 2;
+    string name_en = 3;
+}
+
+message GetFeedbackCategoriesResponse {
+    repeated FeedbackCategory categories = 1;
+}
+
+message CreateFeedbackRequest {
+    string title = 1;
+    string body = 2;
+    string category_id = 3;
+}
+
+message CreateFeedbackResponse {}
+
+message FeedbackItem {
+    string id = 1;
+    string title = 2;
+    string body = 3;
+    FeedbackCategory category = 4;
+}
+
+message GetFeedbackRequest {
+    optional string id = 1;
+}
+
+message GetFeedbackResponse {
+    repeated FeedbackItem feedback_items = 1;
+}
+
+service Feedback {
+    rpc GetFeedbackCategories(GetFeedbackCategoriesRequest) returns (GetFeedbackCategoriesResponse);
+    rpc CreateFeedback(CreateFeedbackRequest) returns (CreateFeedbackResponse);
+    rpc GetFeedback(GetFeedbackRequest) returns (GetFeedbackResponse);
+}

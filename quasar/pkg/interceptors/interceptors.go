@@ -5,7 +5,7 @@ import (
 	"os"
 	"strings"
 
-	authpb "github.com/YazeedAlKhalaf/alyamamah/quasar/pkg/api/proto"
+	authpb "github.com/YazeedAlKhalaf/alyamamah/quasar/pkg/api/auth/proto"
 	"github.com/YazeedAlKhalaf/alyamamah/quasar/pkg/quasarmetadata"
 	tokens "github.com/YazeedAlKhalaf/alyamamah/quasar/pkg/tokens"
 	"github.com/rs/zerolog"

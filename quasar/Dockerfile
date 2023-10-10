@@ -7,4 +7,5 @@ FROM scratch
 COPY --from=builder /app/main /main
 COPY app.env.example /app.env
 COPY pkg/users/store/migrations /pkg/users/store/migrations
+COPY pkg/feedback/store/migrations /pkg/feedback/store/migrations
 CMD [ "/main" ]

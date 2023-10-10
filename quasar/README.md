@@ -43,6 +43,7 @@ Required databases:
 
 ```
 CREATE DATABASE users;
+CREATE DATABASE feedback;
 ```
 
 ## To generate a new migration for a specific service

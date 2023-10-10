@@ -7,6 +7,13 @@ tasks:
       - migrate create -dir pkg/users/store/migrations/ -ext sql --seq {{.MIG_NAME}}
     requires:
       vars: [MIG_NAME]
+
+  new-mig-feedback:
+    desc: Create a new migration for feedback service.
+    cmds:
+      - migrate create -dir pkg/feedback/store/migrations/ -ext sql --seq {{.MIG_NAME}}
+    requires:
+      vars: [MIG_NAME]
   
   sqlc-gen:
     desc: Generate store code using sqlc.
@@ -46,3 +53,8 @@ tasks:
     desc: Run the server.
     cmds:
       - go run cmd/main.go
+  
+  gen-proto:
+    desc: Generate Go code from proto files for the internal services.
+    cmds:
+      - mkdir -p pkg/feedback && protoc --go_out=pkg/feedback --go_opt=paths=source_relative --go-grpc_out=pkg/feedback --go-grpc_opt=paths=source_relative proto/feedback_svc.proto

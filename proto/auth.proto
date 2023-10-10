@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option go_package = "github.com/YazeedAlKhalaf/alyamamah/quasar/pkg/api;authpb";
+option go_package = "github.com/YazeedAlKhalaf/alyamamah/quasar/pkg/api/auth;authpb";
 
 message LoginRequest {
     string username = 1;

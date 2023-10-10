@@ -38,7 +38,20 @@ func (s *server) GetFeedbackCategories(ctx context.Context, r *feedbackpb.GetFee
 }
 
 func (s *server) CreateFeedback(ctx context.Context, r *feedbackpb.CreateFeedbackRequest) (*feedbackpb.CreateFeedbackResponse, error) {
-	_, err := s.feedbackSvc.SvcCreateFeedback(ctx, &feedbacksvcpb.SvcCreateFeedbackRequest{
+	claims, ok := s.quasarmetadata.GetClaims(ctx)
+	if !ok {
+		log.Ctx(ctx).Error().Msg("couldn't get claims")
+		return nil, status.Error(codes.Internal, "internal error")
+	}
+
+	user, err := s.usersSvc.GetUserByUsername(ctx, claims.Payload.Username)
+	if err != nil {
+		log.Ctx(ctx).Err(err).Msg("couldn't get user")
+		return nil, err
+	}
+
+	_, err = s.feedbackSvc.SvcCreateFeedback(ctx, &feedbacksvcpb.SvcCreateFeedbackRequest{
+		UserId:     user.ID,
 		Title:      r.Title,
 		Body:       r.Body,
 		CategoryId: r.CategoryId,

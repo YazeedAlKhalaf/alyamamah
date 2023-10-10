@@ -28,8 +28,8 @@ func (s *server) GetFeedbackCategories(ctx context.Context, r *feedbackpb.GetFee
 	}
 
 	fcs := make([]*feedbackpb.FeedbackCategory, len(resp.Categories))
-	for _, fc := range resp.Categories {
-		fcs = append(fcs, mapSvcFeedbackCategoryToPbFeedbackCategory(fc))
+	for i := range resp.Categories {
+		fcs[i] = mapSvcFeedbackCategoryToPbFeedbackCategory(resp.Categories[i])
 	}
 
 	return &feedbackpb.GetFeedbackCategoriesResponse{

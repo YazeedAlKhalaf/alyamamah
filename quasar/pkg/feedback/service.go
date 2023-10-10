@@ -13,13 +13,13 @@ type service struct {
 	store store.Store
 }
 
-func (*service) SvcCreateFeedback(context.Context, *feedbacksvcpb.SvcCreateFeedbackRequest) (*feedbacksvcpb.SvcCreateFeedbackResponse, error) {
+func (*service) SvcCreateFeedback(ctx context.Context, r *feedbacksvcpb.SvcCreateFeedbackRequest) (*feedbacksvcpb.SvcCreateFeedbackResponse, error) {
 	// TODO: implement me
 
 	return &feedbacksvcpb.SvcCreateFeedbackResponse{}, nil
 }
 
-func (*service) SvcGetFeedbackById(context.Context, *feedbacksvcpb.SvcGetFeedbackByIdRequest) (*feedbacksvcpb.SvcGetFeedbackByIdResponse, error) {
+func (s *service) SvcGetFeedbackById(ctx context.Context, r *feedbacksvcpb.SvcGetFeedbackByIdRequest) (*feedbacksvcpb.SvcGetFeedbackByIdResponse, error) {
 	// TODO: implement me
 
 	return &feedbacksvcpb.SvcGetFeedbackByIdResponse{
@@ -37,7 +37,7 @@ func (*service) SvcGetFeedbackById(context.Context, *feedbacksvcpb.SvcGetFeedbac
 	}, nil
 }
 
-func (*service) SvcGetFeedbackByUserId(context.Context, *feedbacksvcpb.SvcGetFeedbackByUserIdRequest) (*feedbacksvcpb.SvcGetFeedbackByUserIdResponse, error) {
+func (s *service) SvcGetFeedbackByUserId(ctx context.Context, r *feedbacksvcpb.SvcGetFeedbackByUserIdRequest) (*feedbacksvcpb.SvcGetFeedbackByUserIdResponse, error) {
 	// TODO: implement me
 
 	return &feedbacksvcpb.SvcGetFeedbackByUserIdResponse{
@@ -68,37 +68,19 @@ func (*service) SvcGetFeedbackByUserId(context.Context, *feedbacksvcpb.SvcGetFee
 	}, nil
 }
 
-func (*service) SvcGetFeedbackCategories(context.Context, *feedbacksvcpb.SvcGetFeedbackCategoriesRequest) (*feedbacksvcpb.SvcGetFeedbackCategoriesResponse, error) {
-	// TODO: implement me
+func (s *service) SvcGetFeedbackCategories(ctx context.Context, r *feedbacksvcpb.SvcGetFeedbackCategoriesRequest) (*feedbacksvcpb.SvcGetFeedbackCategoriesResponse, error) {
+	fcs, err := s.store.ListFeedbackCategory(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	fcsp := make([]*feedbacksvcpb.SvcFeedbackCategory, len(fcs))
+	for i := range fcs {
+		fcsp[i] = mapStoreFeedbackCategoryToSvcFeedbackCategory(fcs[i])
+	}
 
 	return &feedbacksvcpb.SvcGetFeedbackCategoriesResponse{
-		Categories: []*feedbacksvcpb.SvcFeedbackCategory{
-			{
-				Id:     "some-feedback-category-uuid-1",
-				NameAr: "تجربة الطالب",
-				NameEn: "Student Experience",
-			},
-			{
-				Id:     "some-feedback-category-uuid-2",
-				NameAr: "القضايا الأكاديمية",
-				NameEn: "Academic Concerns",
-			},
-			{
-				Id:     "some-feedback-category-uuid-3",
-				NameAr: "المرافق والبنية التحتية",
-				NameEn: "Facilities and Infrastructure",
-			},
-			{
-				Id:     "some-feedback-category-uuid-4",
-				NameAr: "Extracurricular Activities",
-				NameEn: "الأنشطة اللاصفية",
-			},
-			{
-				Id:     "some-feedback-category-uuid-5",
-				NameAr: "أخرى",
-				NameEn: "Other",
-			},
-		},
+		Categories: fcsp,
 	}, nil
 }
 

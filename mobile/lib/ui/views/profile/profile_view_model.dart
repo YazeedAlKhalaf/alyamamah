@@ -52,6 +52,10 @@ class ProfileViewModel extends ChangeNotifier {
     await _yuRouter.push(const StudentInfoRoute());
   }
 
+  Future<void> navigateToFeedbackRoute() async {
+    await _yuRouter.push(const FeedbackRoute());
+  }
+
   Future<void> logout() async {
     try {
       _log.info('logout | Logging out.');

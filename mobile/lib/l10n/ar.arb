@@ -190,5 +190,7 @@
   "email_x": "البريد الإلكتروني: {x}",
   "failed_to_launch_email_app": "فشل في قتح تطبيق البريد الإلكتروني.",
   "twitter_dm": "رسالة عبر تويتر",
-  "failed_to_launch_twitter_app": "فشل في فتح تطبيق تويتر."
+  "failed_to_launch_twitter_app": "فشل في فتح تطبيق تويتر.",
+  "feedback_for_student_council": "ملاحظات للمجلس الطلّابي",
+  "voice_your_concerns": "أعرب عن مخاوفك!"
 }

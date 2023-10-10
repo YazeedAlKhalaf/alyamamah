@@ -190,5 +190,7 @@
   "email_x": "Email: {x}",
   "failed_to_launch_email_app": "Failed to launch email app.",
   "twitter_dm": "Twitter DM",
-  "failed_to_launch_twitter_app": "Failed to launch Twitter app."
+  "failed_to_launch_twitter_app": "Failed to launch Twitter app.",
+  "feedback_for_student_council": "Feedback for Student Council",
+  "voice_your_concerns": "Voice Your Concerns!"
 }

@@ -77,6 +77,44 @@ class ProfileView extends ConsumerWidget {
             ),
             const SizedBox(height: Constants.padding),
             SectionContainer(
+              showTopPadding: false,
+              children: [
+                ListTile(
+                  leading: CircleAvatar(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(999),
+                      child: Image.asset(
+                        'assets/images/student-council-logo.png',
+                      ),
+                    ),
+                  ),
+                  title: Text(
+                    context.s.feedback_for_student_council,
+                    style: context.textTheme.titleMedium?.copyWith(
+                      color: context.colorScheme.onSecondaryContainer,
+                    ),
+                  ),
+                  subtitle: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        context.s.voice_your_concerns,
+                        style: context.textTheme.bodyMedium,
+                        textDirection: TextDirection.ltr,
+                      ),
+                    ],
+                  ),
+                  trailing: const Icon(Icons.chevron_right_rounded),
+                  onTap: () async {
+                    await ref
+                        .read(profileViewModelProvider)
+                        .navigateToFeedbackRoute();
+                  },
+                ),
+              ],
+            ),
+            const SizedBox(height: Constants.padding),
+            SectionContainer(
               children: [
                 Text(
                   context.s.appearance,

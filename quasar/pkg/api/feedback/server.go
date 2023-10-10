@@ -88,8 +88,8 @@ func (s *server) GetFeedback(ctx context.Context, r *feedbackpb.GetFeedbackReque
 		}
 
 		fis = make([]*feedbackpb.FeedbackItem, len(resp.FeedbackItems))
-		for _, fi := range resp.FeedbackItems {
-			fis = append(fis, mapSvcFeedbackItemToPbFeedbackItem(fi))
+		for i, fi := range resp.FeedbackItems {
+			fis[i] = mapSvcFeedbackItemToPbFeedbackItem(fi)
 		}
 	} else {
 		resp, err := s.feedbackSvc.SvcGetFeedbackById(ctx, &feedbacksvcpb.SvcGetFeedbackByIdRequest{

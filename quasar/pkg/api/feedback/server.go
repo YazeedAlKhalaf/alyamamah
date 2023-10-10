@@ -105,8 +105,9 @@ func (s *server) GetFeedback(ctx context.Context, r *feedbackpb.GetFeedbackReque
 			return nil, status.Error(codes.PermissionDenied, "permission denied")
 		}
 
-		fis = make([]*feedbackpb.FeedbackItem, 1)
-		fis = append(fis, mapSvcFeedbackItemToPbFeedbackItem(resp.FeedbackItem))
+		fis = []*feedbackpb.FeedbackItem{
+			mapSvcFeedbackItemToPbFeedbackItem(resp.FeedbackItem),
+		}
 	}
 
 	return &feedbackpb.GetFeedbackResponse{

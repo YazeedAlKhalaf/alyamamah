@@ -19,20 +19,20 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	FeedbackSvc_CreateFeedback_FullMethodName        = "/FeedbackSvc/CreateFeedback"
-	FeedbackSvc_GetFeedbackById_FullMethodName       = "/FeedbackSvc/GetFeedbackById"
-	FeedbackSvc_GetFeedbackByUserId_FullMethodName   = "/FeedbackSvc/GetFeedbackByUserId"
-	FeedbackSvc_GetFeedbackCategories_FullMethodName = "/FeedbackSvc/GetFeedbackCategories"
+	FeedbackSvc_SvcCreateFeedback_FullMethodName        = "/FeedbackSvc/SvcCreateFeedback"
+	FeedbackSvc_SvcGetFeedbackById_FullMethodName       = "/FeedbackSvc/SvcGetFeedbackById"
+	FeedbackSvc_SvcGetFeedbackByUserId_FullMethodName   = "/FeedbackSvc/SvcGetFeedbackByUserId"
+	FeedbackSvc_SvcGetFeedbackCategories_FullMethodName = "/FeedbackSvc/SvcGetFeedbackCategories"
 )
 
 // FeedbackSvcClient is the client API for FeedbackSvc service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type FeedbackSvcClient interface {
-	CreateFeedback(ctx context.Context, in *CreateFeedbackRequest, opts ...grpc.CallOption) (*CreateFeedbackResponse, error)
-	GetFeedbackById(ctx context.Context, in *GetFeedbackByIdRequest, opts ...grpc.CallOption) (*GetFeedbackByIdResponse, error)
-	GetFeedbackByUserId(ctx context.Context, in *GetFeedbackByUserIdRequest, opts ...grpc.CallOption) (*GetFeedbackByUserIdResponse, error)
-	GetFeedbackCategories(ctx context.Context, in *GetFeedbackCategoriesRequest, opts ...grpc.CallOption) (*GetFeedbackCategoriesResponse, error)
+	SvcCreateFeedback(ctx context.Context, in *SvcCreateFeedbackRequest, opts ...grpc.CallOption) (*SvcCreateFeedbackResponse, error)
+	SvcGetFeedbackById(ctx context.Context, in *SvcGetFeedbackByIdRequest, opts ...grpc.CallOption) (*SvcGetFeedbackByIdResponse, error)
+	SvcGetFeedbackByUserId(ctx context.Context, in *SvcGetFeedbackByUserIdRequest, opts ...grpc.CallOption) (*SvcGetFeedbackByUserIdResponse, error)
+	SvcGetFeedbackCategories(ctx context.Context, in *SvcGetFeedbackCategoriesRequest, opts ...grpc.CallOption) (*SvcGetFeedbackCategoriesResponse, error)
 }
 
 type feedbackSvcClient struct {
@@ -43,36 +43,36 @@ func NewFeedbackSvcClient(cc grpc.ClientConnInterface) FeedbackSvcClient {
 	return &feedbackSvcClient{cc}
 }
 
-func (c *feedbackSvcClient) CreateFeedback(ctx context.Context, in *CreateFeedbackRequest, opts ...grpc.CallOption) (*CreateFeedbackResponse, error) {
-	out := new(CreateFeedbackResponse)
-	err := c.cc.Invoke(ctx, FeedbackSvc_CreateFeedback_FullMethodName, in, out, opts...)
+func (c *feedbackSvcClient) SvcCreateFeedback(ctx context.Context, in *SvcCreateFeedbackRequest, opts ...grpc.CallOption) (*SvcCreateFeedbackResponse, error) {
+	out := new(SvcCreateFeedbackResponse)
+	err := c.cc.Invoke(ctx, FeedbackSvc_SvcCreateFeedback_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *feedbackSvcClient) GetFeedbackById(ctx context.Context, in *GetFeedbackByIdRequest, opts ...grpc.CallOption) (*GetFeedbackByIdResponse, error) {
-	out := new(GetFeedbackByIdResponse)
-	err := c.cc.Invoke(ctx, FeedbackSvc_GetFeedbackById_FullMethodName, in, out, opts...)
+func (c *feedbackSvcClient) SvcGetFeedbackById(ctx context.Context, in *SvcGetFeedbackByIdRequest, opts ...grpc.CallOption) (*SvcGetFeedbackByIdResponse, error) {
+	out := new(SvcGetFeedbackByIdResponse)
+	err := c.cc.Invoke(ctx, FeedbackSvc_SvcGetFeedbackById_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *feedbackSvcClient) GetFeedbackByUserId(ctx context.Context, in *GetFeedbackByUserIdRequest, opts ...grpc.CallOption) (*GetFeedbackByUserIdResponse, error) {
-	out := new(GetFeedbackByUserIdResponse)
-	err := c.cc.Invoke(ctx, FeedbackSvc_GetFeedbackByUserId_FullMethodName, in, out, opts...)
+func (c *feedbackSvcClient) SvcGetFeedbackByUserId(ctx context.Context, in *SvcGetFeedbackByUserIdRequest, opts ...grpc.CallOption) (*SvcGetFeedbackByUserIdResponse, error) {
+	out := new(SvcGetFeedbackByUserIdResponse)
+	err := c.cc.Invoke(ctx, FeedbackSvc_SvcGetFeedbackByUserId_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *feedbackSvcClient) GetFeedbackCategories(ctx context.Context, in *GetFeedbackCategoriesRequest, opts ...grpc.CallOption) (*GetFeedbackCategoriesResponse, error) {
-	out := new(GetFeedbackCategoriesResponse)
-	err := c.cc.Invoke(ctx, FeedbackSvc_GetFeedbackCategories_FullMethodName, in, out, opts...)
+func (c *feedbackSvcClient) SvcGetFeedbackCategories(ctx context.Context, in *SvcGetFeedbackCategoriesRequest, opts ...grpc.CallOption) (*SvcGetFeedbackCategoriesResponse, error) {
+	out := new(SvcGetFeedbackCategoriesResponse)
+	err := c.cc.Invoke(ctx, FeedbackSvc_SvcGetFeedbackCategories_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -83,10 +83,10 @@ func (c *feedbackSvcClient) GetFeedbackCategories(ctx context.Context, in *GetFe
 // All implementations must embed UnimplementedFeedbackSvcServer
 // for forward compatibility
 type FeedbackSvcServer interface {
-	CreateFeedback(context.Context, *CreateFeedbackRequest) (*CreateFeedbackResponse, error)
-	GetFeedbackById(context.Context, *GetFeedbackByIdRequest) (*GetFeedbackByIdResponse, error)
-	GetFeedbackByUserId(context.Context, *GetFeedbackByUserIdRequest) (*GetFeedbackByUserIdResponse, error)
-	GetFeedbackCategories(context.Context, *GetFeedbackCategoriesRequest) (*GetFeedbackCategoriesResponse, error)
+	SvcCreateFeedback(context.Context, *SvcCreateFeedbackRequest) (*SvcCreateFeedbackResponse, error)
+	SvcGetFeedbackById(context.Context, *SvcGetFeedbackByIdRequest) (*SvcGetFeedbackByIdResponse, error)
+	SvcGetFeedbackByUserId(context.Context, *SvcGetFeedbackByUserIdRequest) (*SvcGetFeedbackByUserIdResponse, error)
+	SvcGetFeedbackCategories(context.Context, *SvcGetFeedbackCategoriesRequest) (*SvcGetFeedbackCategoriesResponse, error)
 	mustEmbedUnimplementedFeedbackSvcServer()
 }
 
@@ -94,17 +94,17 @@ type FeedbackSvcServer interface {
 type UnimplementedFeedbackSvcServer struct {
 }
 
-func (UnimplementedFeedbackSvcServer) CreateFeedback(context.Context, *CreateFeedbackRequest) (*CreateFeedbackResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateFeedback not implemented")
+func (UnimplementedFeedbackSvcServer) SvcCreateFeedback(context.Context, *SvcCreateFeedbackRequest) (*SvcCreateFeedbackResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SvcCreateFeedback not implemented")
 }
-func (UnimplementedFeedbackSvcServer) GetFeedbackById(context.Context, *GetFeedbackByIdRequest) (*GetFeedbackByIdResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetFeedbackById not implemented")
+func (UnimplementedFeedbackSvcServer) SvcGetFeedbackById(context.Context, *SvcGetFeedbackByIdRequest) (*SvcGetFeedbackByIdResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SvcGetFeedbackById not implemented")
 }
-func (UnimplementedFeedbackSvcServer) GetFeedbackByUserId(context.Context, *GetFeedbackByUserIdRequest) (*GetFeedbackByUserIdResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetFeedbackByUserId not implemented")
+func (UnimplementedFeedbackSvcServer) SvcGetFeedbackByUserId(context.Context, *SvcGetFeedbackByUserIdRequest) (*SvcGetFeedbackByUserIdResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SvcGetFeedbackByUserId not implemented")
 }
-func (UnimplementedFeedbackSvcServer) GetFeedbackCategories(context.Context, *GetFeedbackCategoriesRequest) (*GetFeedbackCategoriesResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetFeedbackCategories not implemented")
+func (UnimplementedFeedbackSvcServer) SvcGetFeedbackCategories(context.Context, *SvcGetFeedbackCategoriesRequest) (*SvcGetFeedbackCategoriesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SvcGetFeedbackCategories not implemented")
 }
 func (UnimplementedFeedbackSvcServer) mustEmbedUnimplementedFeedbackSvcServer() {}
 
@@ -119,74 +119,74 @@ func RegisterFeedbackSvcServer(s grpc.ServiceRegistrar, srv FeedbackSvcServer) {
 	s.RegisterService(&FeedbackSvc_ServiceDesc, srv)
 }
 
-func _FeedbackSvc_CreateFeedback_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateFeedbackRequest)
+func _FeedbackSvc_SvcCreateFeedback_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SvcCreateFeedbackRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(FeedbackSvcServer).CreateFeedback(ctx, in)
+		return srv.(FeedbackSvcServer).SvcCreateFeedback(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: FeedbackSvc_CreateFeedback_FullMethodName,
+		FullMethod: FeedbackSvc_SvcCreateFeedback_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FeedbackSvcServer).CreateFeedback(ctx, req.(*CreateFeedbackRequest))
+		return srv.(FeedbackSvcServer).SvcCreateFeedback(ctx, req.(*SvcCreateFeedbackRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _FeedbackSvc_GetFeedbackById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetFeedbackByIdRequest)
+func _FeedbackSvc_SvcGetFeedbackById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SvcGetFeedbackByIdRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(FeedbackSvcServer).GetFeedbackById(ctx, in)
+		return srv.(FeedbackSvcServer).SvcGetFeedbackById(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: FeedbackSvc_GetFeedbackById_FullMethodName,
+		FullMethod: FeedbackSvc_SvcGetFeedbackById_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FeedbackSvcServer).GetFeedbackById(ctx, req.(*GetFeedbackByIdRequest))
+		return srv.(FeedbackSvcServer).SvcGetFeedbackById(ctx, req.(*SvcGetFeedbackByIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _FeedbackSvc_GetFeedbackByUserId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetFeedbackByUserIdRequest)
+func _FeedbackSvc_SvcGetFeedbackByUserId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SvcGetFeedbackByUserIdRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(FeedbackSvcServer).GetFeedbackByUserId(ctx, in)
+		return srv.(FeedbackSvcServer).SvcGetFeedbackByUserId(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: FeedbackSvc_GetFeedbackByUserId_FullMethodName,
+		FullMethod: FeedbackSvc_SvcGetFeedbackByUserId_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FeedbackSvcServer).GetFeedbackByUserId(ctx, req.(*GetFeedbackByUserIdRequest))
+		return srv.(FeedbackSvcServer).SvcGetFeedbackByUserId(ctx, req.(*SvcGetFeedbackByUserIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _FeedbackSvc_GetFeedbackCategories_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetFeedbackCategoriesRequest)
+func _FeedbackSvc_SvcGetFeedbackCategories_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SvcGetFeedbackCategoriesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(FeedbackSvcServer).GetFeedbackCategories(ctx, in)
+		return srv.(FeedbackSvcServer).SvcGetFeedbackCategories(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: FeedbackSvc_GetFeedbackCategories_FullMethodName,
+		FullMethod: FeedbackSvc_SvcGetFeedbackCategories_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FeedbackSvcServer).GetFeedbackCategories(ctx, req.(*GetFeedbackCategoriesRequest))
+		return srv.(FeedbackSvcServer).SvcGetFeedbackCategories(ctx, req.(*SvcGetFeedbackCategoriesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -199,20 +199,20 @@ var FeedbackSvc_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*FeedbackSvcServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "CreateFeedback",
-			Handler:    _FeedbackSvc_CreateFeedback_Handler,
+			MethodName: "SvcCreateFeedback",
+			Handler:    _FeedbackSvc_SvcCreateFeedback_Handler,
 		},
 		{
-			MethodName: "GetFeedbackById",
-			Handler:    _FeedbackSvc_GetFeedbackById_Handler,
+			MethodName: "SvcGetFeedbackById",
+			Handler:    _FeedbackSvc_SvcGetFeedbackById_Handler,
 		},
 		{
-			MethodName: "GetFeedbackByUserId",
-			Handler:    _FeedbackSvc_GetFeedbackByUserId_Handler,
+			MethodName: "SvcGetFeedbackByUserId",
+			Handler:    _FeedbackSvc_SvcGetFeedbackByUserId_Handler,
 		},
 		{
-			MethodName: "GetFeedbackCategories",
-			Handler:    _FeedbackSvc_GetFeedbackCategories_Handler,
+			MethodName: "SvcGetFeedbackCategories",
+			Handler:    _FeedbackSvc_SvcGetFeedbackCategories_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

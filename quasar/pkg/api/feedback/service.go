@@ -21,7 +21,7 @@ type server struct {
 }
 
 func (s *server) GetFeedbackCategories(ctx context.Context, r *feedbackpb.GetFeedbackCategoriesRequest) (*feedbackpb.GetFeedbackCategoriesResponse, error) {
-	resp, err := s.feedbackSvc.GetFeedbackCategories(ctx, &feedbacksvcpb.GetFeedbackCategoriesRequest{})
+	resp, err := s.feedbackSvc.SvcGetFeedbackCategories(ctx, &feedbacksvcpb.SvcGetFeedbackCategoriesRequest{})
 	if err != nil {
 		log.Ctx(ctx).Err(err).Msg("couldn't get feedback categories")
 		return nil, err
@@ -38,7 +38,7 @@ func (s *server) GetFeedbackCategories(ctx context.Context, r *feedbackpb.GetFee
 }
 
 func (s *server) CreateFeedback(ctx context.Context, r *feedbackpb.CreateFeedbackRequest) (*feedbackpb.CreateFeedbackResponse, error) {
-	_, err := s.feedbackSvc.CreateFeedback(ctx, &feedbacksvcpb.CreateFeedbackRequest{
+	_, err := s.feedbackSvc.SvcCreateFeedback(ctx, &feedbacksvcpb.SvcCreateFeedbackRequest{
 		Title:      r.Title,
 		Body:       r.Body,
 		CategoryId: r.CategoryId,
@@ -65,7 +65,7 @@ func (s *server) GetFeedback(ctx context.Context, r *feedbackpb.GetFeedbackReque
 			return nil, err
 		}
 
-		resp, err := s.feedbackSvc.GetFeedbackByUserId(ctx, &feedbacksvcpb.GetFeedbackByUserIdRequest{
+		resp, err := s.feedbackSvc.SvcGetFeedbackByUserId(ctx, &feedbacksvcpb.SvcGetFeedbackByUserIdRequest{
 			UserId: user.ID,
 		})
 		if err != nil {
@@ -78,7 +78,7 @@ func (s *server) GetFeedback(ctx context.Context, r *feedbackpb.GetFeedbackReque
 			fis = append(fis, mapSvcFeedbackItemToPbFeedbackItem(fi))
 		}
 	} else {
-		resp, err := s.feedbackSvc.GetFeedbackById(ctx, &feedbacksvcpb.GetFeedbackByIdRequest{
+		resp, err := s.feedbackSvc.SvcGetFeedbackById(ctx, &feedbacksvcpb.SvcGetFeedbackByIdRequest{
 			Id: *r.Id,
 		})
 		if err != nil {

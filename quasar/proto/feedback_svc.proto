@@ -2,53 +2,53 @@ syntax = "proto3";
 
 option go_package = "github.com/YazeedAlKhalaf/alyamamah/quasar/pkg/feedback;feedbacksvcpb";
 
-message FeedbackCategory {
+message SvcFeedbackCategory {
     string id = 1;
     string name_ar = 2;
     string name_en = 3;
 }
 
-message FeedbackItem {
+message SvcFeedbackItem {
     string id = 1;
     string title = 2;
     string body = 3;
-    FeedbackCategory category = 4;
+    SvcFeedbackCategory category = 4;
     string user_id = 5;
 }
 
-message CreateFeedbackRequest {
+message SvcCreateFeedbackRequest {
     string title = 1;
     string body = 2;
     string category_id = 3;
 }
 
-message CreateFeedbackResponse {}
+message SvcCreateFeedbackResponse {}
 
-message GetFeedbackByIdRequest {
+message SvcGetFeedbackByIdRequest {
     string id = 1;
 }
 
-message GetFeedbackByIdResponse {
-    FeedbackItem feedback_item = 1;
+message SvcGetFeedbackByIdResponse {
+    SvcFeedbackItem feedback_item = 1;
 }
 
-message GetFeedbackByUserIdRequest {
+message SvcGetFeedbackByUserIdRequest {
     string user_id = 1;
 }
 
-message GetFeedbackByUserIdResponse {
-    repeated FeedbackItem feedback_items = 1;
+message SvcGetFeedbackByUserIdResponse {
+    repeated SvcFeedbackItem feedback_items = 1;
 }
 
-message GetFeedbackCategoriesRequest {}
+message SvcGetFeedbackCategoriesRequest {}
 
-message GetFeedbackCategoriesResponse {
-    repeated FeedbackCategory categories = 1;
+message SvcGetFeedbackCategoriesResponse {
+    repeated SvcFeedbackCategory categories = 1;
 }
 
 service FeedbackSvc {
-    rpc CreateFeedback(CreateFeedbackRequest) returns (CreateFeedbackResponse);
-    rpc GetFeedbackById(GetFeedbackByIdRequest) returns (GetFeedbackByIdResponse);
-    rpc GetFeedbackByUserId(GetFeedbackByUserIdRequest) returns (GetFeedbackByUserIdResponse);
-    rpc GetFeedbackCategories(GetFeedbackCategoriesRequest) returns (GetFeedbackCategoriesResponse);
+    rpc SvcCreateFeedback(SvcCreateFeedbackRequest) returns (SvcCreateFeedbackResponse);
+    rpc SvcGetFeedbackById(SvcGetFeedbackByIdRequest) returns (SvcGetFeedbackByIdResponse);
+    rpc SvcGetFeedbackByUserId(SvcGetFeedbackByUserIdRequest) returns (SvcGetFeedbackByUserIdResponse);
+    rpc SvcGetFeedbackCategories(SvcGetFeedbackCategoriesRequest) returns (SvcGetFeedbackCategoriesResponse);
 }

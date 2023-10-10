@@ -13,21 +13,21 @@ type service struct {
 	store store.Store
 }
 
-func (*service) CreateFeedback(context.Context, *feedbacksvcpb.CreateFeedbackRequest) (*feedbacksvcpb.CreateFeedbackResponse, error) {
+func (*service) CreateFeedback(context.Context, *feedbacksvcpb.SvcCreateFeedbackRequest) (*feedbacksvcpb.SvcCreateFeedbackResponse, error) {
 	// TODO: implement me
 
-	return &feedbacksvcpb.CreateFeedbackResponse{}, nil
+	return &feedbacksvcpb.SvcCreateFeedbackResponse{}, nil
 }
 
-func (*service) GetFeedbackById(context.Context, *feedbacksvcpb.GetFeedbackByIdRequest) (*feedbacksvcpb.GetFeedbackByIdResponse, error) {
+func (*service) GetFeedbackById(context.Context, *feedbacksvcpb.SvcGetFeedbackByIdRequest) (*feedbacksvcpb.SvcGetFeedbackByIdResponse, error) {
 	// TODO: implement me
 
-	return &feedbacksvcpb.GetFeedbackByIdResponse{
-		FeedbackItem: &feedbacksvcpb.FeedbackItem{
+	return &feedbacksvcpb.SvcGetFeedbackByIdResponse{
+		FeedbackItem: &feedbacksvcpb.SvcFeedbackItem{
 			Id:    "some-feedback-uuid-1",
 			Title: "We need a parking solution",
 			Body:  "The parking area is too small for the number of students we have.",
-			Category: &feedbacksvcpb.FeedbackCategory{
+			Category: &feedbacksvcpb.SvcFeedbackCategory{
 				Id:     "some-feedback-category-uuid-1",
 				NameAr: "تجربة الطالب",
 				NameEn: "Student Experience",
@@ -37,16 +37,16 @@ func (*service) GetFeedbackById(context.Context, *feedbacksvcpb.GetFeedbackByIdR
 	}, nil
 }
 
-func (*service) GetFeedbackByUserId(context.Context, *feedbacksvcpb.GetFeedbackByUserIdRequest) (*feedbacksvcpb.GetFeedbackByUserIdResponse, error) {
+func (*service) GetFeedbackByUserId(context.Context, *feedbacksvcpb.SvcGetFeedbackByUserIdRequest) (*feedbacksvcpb.SvcGetFeedbackByUserIdResponse, error) {
 	// TODO: implement me
 
-	return &feedbacksvcpb.GetFeedbackByUserIdResponse{
-		FeedbackItems: []*feedbacksvcpb.FeedbackItem{
+	return &feedbacksvcpb.SvcGetFeedbackByUserIdResponse{
+		FeedbackItems: []*feedbacksvcpb.SvcFeedbackItem{
 			{
 				Id:    "some-feedback-uuid-1",
 				Title: "We need a parking solution",
 				Body:  "The parking area is too small for the number of students we have.",
-				Category: &feedbacksvcpb.FeedbackCategory{
+				Category: &feedbacksvcpb.SvcFeedbackCategory{
 					Id:     "some-feedback-category-uuid-1",
 					NameAr: "تجربة الطالب",
 					NameEn: "Student Experience",
@@ -57,7 +57,7 @@ func (*service) GetFeedbackByUserId(context.Context, *feedbacksvcpb.GetFeedbackB
 				Id:    "some-feedback-uuid-2",
 				Title: "We need restaurants on campus",
 				Body:  "The food court is too small for the number of students we have.",
-				Category: &feedbacksvcpb.FeedbackCategory{
+				Category: &feedbacksvcpb.SvcFeedbackCategory{
 					Id:     "some-feedback-category-uuid-1",
 					NameAr: "تجربة الطالب",
 					NameEn: "Student Experience",
@@ -68,11 +68,11 @@ func (*service) GetFeedbackByUserId(context.Context, *feedbacksvcpb.GetFeedbackB
 	}, nil
 }
 
-func (*service) GetFeedbackCategories(context.Context, *feedbacksvcpb.GetFeedbackCategoriesRequest) (*feedbacksvcpb.GetFeedbackCategoriesResponse, error) {
+func (*service) GetFeedbackCategories(context.Context, *feedbacksvcpb.SvcGetFeedbackCategoriesRequest) (*feedbacksvcpb.SvcGetFeedbackCategoriesResponse, error) {
 	// TODO: implement me
 
-	return &feedbacksvcpb.GetFeedbackCategoriesResponse{
-		Categories: []*feedbacksvcpb.FeedbackCategory{
+	return &feedbacksvcpb.SvcGetFeedbackCategoriesResponse{
+		Categories: []*feedbacksvcpb.SvcFeedbackCategory{
 			{
 				Id:     "some-feedback-category-uuid-1",
 				NameAr: "تجربة الطالب",

@@ -5,7 +5,7 @@ import (
 	feedbacksvcpb "github.com/YazeedAlKhalaf/alyamamah/quasar/pkg/feedback/proto"
 )
 
-func mapSvcFeedbackCategoryToPbFeedbackCategory(fc *feedbacksvcpb.FeedbackCategory) *feedbackpb.FeedbackCategory {
+func mapSvcFeedbackCategoryToPbFeedbackCategory(fc *feedbacksvcpb.SvcFeedbackCategory) *feedbackpb.FeedbackCategory {
 	return &feedbackpb.FeedbackCategory{
 		Id:     fc.Id,
 		NameAr: fc.NameAr,
@@ -13,7 +13,7 @@ func mapSvcFeedbackCategoryToPbFeedbackCategory(fc *feedbacksvcpb.FeedbackCatego
 	}
 }
 
-func mapSvcFeedbackItemToPbFeedbackItem(fi *feedbacksvcpb.FeedbackItem) *feedbackpb.FeedbackItem {
+func mapSvcFeedbackItemToPbFeedbackItem(fi *feedbacksvcpb.SvcFeedbackItem) *feedbackpb.FeedbackItem {
 	return &feedbackpb.FeedbackItem{
 		Id:       fi.Id,
 		Title:    fi.Title,

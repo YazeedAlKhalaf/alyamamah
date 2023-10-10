@@ -44,6 +44,7 @@ func (s *server) CreateFeedback(ctx context.Context, r *feedbackpb.CreateFeedbac
 		CategoryId: r.CategoryId,
 	})
 	if err != nil {
+		log.Ctx(ctx).Err(err).Msg("couldn't create feedback")
 		return nil, err
 	}
 
@@ -65,7 +66,6 @@ func (s *server) GetFeedback(ctx context.Context, r *feedbackpb.GetFeedbackReque
 
 	var fis []*feedbackpb.FeedbackItem
 	if r.Id == nil {
-
 		resp, err := s.feedbackSvc.SvcGetFeedbackByUserId(ctx, &feedbacksvcpb.SvcGetFeedbackByUserIdRequest{
 			UserId: user.ID,
 		})

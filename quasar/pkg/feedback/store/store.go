@@ -6,6 +6,7 @@ import (
 
 	"github.com/YazeedAlKhalaf/alyamamah/quasar/pkg/feedback/store/sqlc"
 	"github.com/google/uuid"
+	"github.com/rs/zerolog/log"
 )
 
 type Store interface {
@@ -28,6 +29,7 @@ func (s *store) CreateFeedback(ctx context.Context, userID uuid.UUID, categoryID
 		Body:       body,
 	})
 	if err != nil {
+		log.Ctx(ctx).Err(err).Msg("couldn't create feedback")
 		return nil, err
 	}
 
@@ -37,6 +39,7 @@ func (s *store) CreateFeedback(ctx context.Context, userID uuid.UUID, categoryID
 func (s *store) GetFeedbackById(ctx context.Context, id uuid.UUID) (*sqlc.Feedback, error) {
 	f, err := s.queries.GetFeedbackById(ctx, id)
 	if err != nil {
+		log.Ctx(ctx).Err(err).Msg("couldn't get feedback by id")
 		return nil, err
 	}
 
@@ -46,6 +49,7 @@ func (s *store) GetFeedbackById(ctx context.Context, id uuid.UUID) (*sqlc.Feedba
 func (s *store) ListFeedbackByUserId(ctx context.Context, userID uuid.UUID) ([]*sqlc.Feedback, error) {
 	f, err := s.queries.ListFeedbackByUserId(ctx, userID)
 	if err != nil {
+		log.Ctx(ctx).Err(err).Msg("couldn't list feedback by user id")
 		return nil, err
 	}
 
@@ -60,6 +64,7 @@ func (s *store) ListFeedbackByUserId(ctx context.Context, userID uuid.UUID) ([]*
 func (s *store) ListFeedbackCategory(ctx context.Context) ([]*sqlc.FeedbackCategory, error) {
 	fc, err := s.queries.ListFeedbackCategory(ctx)
 	if err != nil {
+		log.Ctx(ctx).Err(err).Msg("couldn't list feedback category")
 		return nil, err
 	}
 

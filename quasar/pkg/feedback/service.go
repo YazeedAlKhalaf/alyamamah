@@ -6,6 +6,7 @@ import (
 	feedbacksvcpb "github.com/YazeedAlKhalaf/alyamamah/quasar/pkg/feedback/proto"
 	"github.com/YazeedAlKhalaf/alyamamah/quasar/pkg/feedback/store"
 	"github.com/google/uuid"
+	"github.com/rs/zerolog/log"
 )
 
 type service struct {
@@ -17,16 +18,19 @@ type service struct {
 func (s *service) SvcCreateFeedback(ctx context.Context, r *feedbacksvcpb.SvcCreateFeedbackRequest) (*feedbacksvcpb.SvcCreateFeedbackResponse, error) {
 	uid, err := uuid.Parse(r.UserId)
 	if err != nil {
+		log.Ctx(ctx).Err(err).Msg("couldn't parse user id")
 		return nil, err
 	}
 
 	cid, err := uuid.Parse(r.CategoryId)
 	if err != nil {
+		log.Ctx(ctx).Err(err).Msg("couldn't parse category id")
 		return nil, err
 	}
 
 	_, err = s.store.CreateFeedback(ctx, uid, cid, r.Title, r.Body)
 	if err != nil {
+		log.Ctx(ctx).Err(err).Msg("couldn't create feedback")
 		return nil, err
 	}
 
@@ -36,11 +40,13 @@ func (s *service) SvcCreateFeedback(ctx context.Context, r *feedbacksvcpb.SvcCre
 func (s *service) SvcGetFeedbackById(ctx context.Context, r *feedbacksvcpb.SvcGetFeedbackByIdRequest) (*feedbacksvcpb.SvcGetFeedbackByIdResponse, error) {
 	id, err := uuid.Parse(r.Id)
 	if err != nil {
+		log.Ctx(ctx).Err(err).Msg("couldn't parse feedback id")
 		return nil, err
 	}
 
 	feedback, err := s.store.GetFeedbackById(ctx, id)
 	if err != nil {
+		log.Ctx(ctx).Err(err).Msg("couldn't get feedback by id")
 		return nil, err
 	}
 
@@ -48,6 +54,7 @@ func (s *service) SvcGetFeedbackById(ctx context.Context, r *feedbacksvcpb.SvcGe
 
 	feedbackCategories, err := s.store.ListFeedbackCategory(ctx)
 	if err != nil {
+		log.Ctx(ctx).Err(err).Msg("couldn't get feedback categories")
 		return nil, err
 	}
 
@@ -66,11 +73,13 @@ func (s *service) SvcGetFeedbackById(ctx context.Context, r *feedbacksvcpb.SvcGe
 func (s *service) SvcGetFeedbackByUserId(ctx context.Context, r *feedbacksvcpb.SvcGetFeedbackByUserIdRequest) (*feedbacksvcpb.SvcGetFeedbackByUserIdResponse, error) {
 	uid, err := uuid.Parse(r.UserId)
 	if err != nil {
+		log.Ctx(ctx).Err(err).Msg("couldn't parse user id")
 		return nil, err
 	}
 
 	fs, err := s.store.ListFeedbackByUserId(ctx, uid)
 	if err != nil {
+		log.Ctx(ctx).Err(err).Msg("couldn't get feedback by user id")
 		return nil, err
 	}
 
@@ -81,6 +90,7 @@ func (s *service) SvcGetFeedbackByUserId(ctx context.Context, r *feedbacksvcpb.S
 
 	fcs, err := s.store.ListFeedbackCategory(ctx)
 	if err != nil {
+		log.Ctx(ctx).Err(err).Msg("couldn't get feedback categories")
 		return nil, err
 	}
 
@@ -101,6 +111,7 @@ func (s *service) SvcGetFeedbackByUserId(ctx context.Context, r *feedbacksvcpb.S
 func (s *service) SvcGetFeedbackCategories(ctx context.Context, r *feedbacksvcpb.SvcGetFeedbackCategoriesRequest) (*feedbacksvcpb.SvcGetFeedbackCategoriesResponse, error) {
 	fcs, err := s.store.ListFeedbackCategory(ctx)
 	if err != nil {
+		log.Ctx(ctx).Err(err).Msg("couldn't get feedback categories")
 		return nil, err
 	}
 

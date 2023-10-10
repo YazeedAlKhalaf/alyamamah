@@ -13,13 +13,13 @@ type service struct {
 	store store.Store
 }
 
-func (*service) CreateFeedback(context.Context, *feedbacksvcpb.SvcCreateFeedbackRequest) (*feedbacksvcpb.SvcCreateFeedbackResponse, error) {
+func (*service) SvcCreateFeedback(context.Context, *feedbacksvcpb.SvcCreateFeedbackRequest) (*feedbacksvcpb.SvcCreateFeedbackResponse, error) {
 	// TODO: implement me
 
 	return &feedbacksvcpb.SvcCreateFeedbackResponse{}, nil
 }
 
-func (*service) GetFeedbackById(context.Context, *feedbacksvcpb.SvcGetFeedbackByIdRequest) (*feedbacksvcpb.SvcGetFeedbackByIdResponse, error) {
+func (*service) SvcGetFeedbackById(context.Context, *feedbacksvcpb.SvcGetFeedbackByIdRequest) (*feedbacksvcpb.SvcGetFeedbackByIdResponse, error) {
 	// TODO: implement me
 
 	return &feedbacksvcpb.SvcGetFeedbackByIdResponse{
@@ -37,7 +37,7 @@ func (*service) GetFeedbackById(context.Context, *feedbacksvcpb.SvcGetFeedbackBy
 	}, nil
 }
 
-func (*service) GetFeedbackByUserId(context.Context, *feedbacksvcpb.SvcGetFeedbackByUserIdRequest) (*feedbacksvcpb.SvcGetFeedbackByUserIdResponse, error) {
+func (*service) SvcGetFeedbackByUserId(context.Context, *feedbacksvcpb.SvcGetFeedbackByUserIdRequest) (*feedbacksvcpb.SvcGetFeedbackByUserIdResponse, error) {
 	// TODO: implement me
 
 	return &feedbacksvcpb.SvcGetFeedbackByUserIdResponse{
@@ -68,7 +68,7 @@ func (*service) GetFeedbackByUserId(context.Context, *feedbacksvcpb.SvcGetFeedba
 	}, nil
 }
 
-func (*service) GetFeedbackCategories(context.Context, *feedbacksvcpb.SvcGetFeedbackCategoriesRequest) (*feedbacksvcpb.SvcGetFeedbackCategoriesResponse, error) {
+func (*service) SvcGetFeedbackCategories(context.Context, *feedbacksvcpb.SvcGetFeedbackCategoriesRequest) (*feedbacksvcpb.SvcGetFeedbackCategoriesResponse, error) {
 	// TODO: implement me
 
 	return &feedbacksvcpb.SvcGetFeedbackCategoriesResponse{

@@ -5,6 +5,7 @@ import (
 
 	feedbacksvcpb "github.com/YazeedAlKhalaf/alyamamah/quasar/pkg/feedback/proto"
 	"github.com/YazeedAlKhalaf/alyamamah/quasar/pkg/feedback/store"
+	"github.com/google/uuid"
 )
 
 type service struct {
@@ -13,58 +14,87 @@ type service struct {
 	store store.Store
 }
 
-func (*service) SvcCreateFeedback(ctx context.Context, r *feedbacksvcpb.SvcCreateFeedbackRequest) (*feedbacksvcpb.SvcCreateFeedbackResponse, error) {
-	// TODO: implement me
+func (s *service) SvcCreateFeedback(ctx context.Context, r *feedbacksvcpb.SvcCreateFeedbackRequest) (*feedbacksvcpb.SvcCreateFeedbackResponse, error) {
+	uid, err := uuid.Parse(r.UserId)
+	if err != nil {
+		return nil, err
+	}
+
+	cid, err := uuid.Parse(r.CategoryId)
+	if err != nil {
+		return nil, err
+	}
+
+	_, err = s.store.CreateFeedback(ctx, uid, cid, r.Title, r.Body)
+	if err != nil {
+		return nil, err
+	}
 
 	return &feedbacksvcpb.SvcCreateFeedbackResponse{}, nil
 }
 
 func (s *service) SvcGetFeedbackById(ctx context.Context, r *feedbacksvcpb.SvcGetFeedbackByIdRequest) (*feedbacksvcpb.SvcGetFeedbackByIdResponse, error) {
-	// TODO: implement me
+	id, err := uuid.Parse(r.Id)
+	if err != nil {
+		return nil, err
+	}
+
+	feedback, err := s.store.GetFeedbackById(ctx, id)
+	if err != nil {
+		return nil, err
+	}
+
+	svcFeedback := mapStoreFeedbackToSvcFeedback(feedback)
+
+	feedbackCategories, err := s.store.ListFeedbackCategory(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	feedbackCategoriesMap := make(map[uuid.UUID]*feedbacksvcpb.SvcFeedbackCategory, len(feedbackCategories))
+	for i := range feedbackCategories {
+		feedbackCategoriesMap[feedbackCategories[i].ID] = mapStoreFeedbackCategoryToSvcFeedbackCategory(feedbackCategories[i])
+	}
+
+	svcFeedback.Category = feedbackCategoriesMap[feedback.CategoryID]
 
 	return &feedbacksvcpb.SvcGetFeedbackByIdResponse{
-		FeedbackItem: &feedbacksvcpb.SvcFeedbackItem{
-			Id:    "some-feedback-uuid-1",
-			Title: "We need a parking solution",
-			Body:  "The parking area is too small for the number of students we have.",
-			Category: &feedbacksvcpb.SvcFeedbackCategory{
-				Id:     "some-feedback-category-uuid-1",
-				NameAr: "تجربة الطالب",
-				NameEn: "Student Experience",
-			},
-			UserId: "some-user-uuid",
-		},
+		FeedbackItem: svcFeedback,
 	}, nil
 }
 
 func (s *service) SvcGetFeedbackByUserId(ctx context.Context, r *feedbacksvcpb.SvcGetFeedbackByUserIdRequest) (*feedbacksvcpb.SvcGetFeedbackByUserIdResponse, error) {
-	// TODO: implement me
+	uid, err := uuid.Parse(r.UserId)
+	if err != nil {
+		return nil, err
+	}
+
+	fs, err := s.store.ListFeedbackByUserId(ctx, uid)
+	if err != nil {
+		return nil, err
+	}
+
+	fisp := make([]*feedbacksvcpb.SvcFeedbackItem, len(fs))
+	for i := range fs {
+		fisp[i] = mapStoreFeedbackToSvcFeedback(fs[i])
+	}
+
+	fcs, err := s.store.ListFeedbackCategory(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	fcsp := make(map[uuid.UUID]*feedbacksvcpb.SvcFeedbackCategory, len(fcs))
+	for i := range fcs {
+		fcsp[fcs[i].ID] = mapStoreFeedbackCategoryToSvcFeedbackCategory(fcs[i])
+	}
+
+	for i := range fisp {
+		fisp[i].Category = fcsp[fs[i].CategoryID]
+	}
 
 	return &feedbacksvcpb.SvcGetFeedbackByUserIdResponse{
-		FeedbackItems: []*feedbacksvcpb.SvcFeedbackItem{
-			{
-				Id:    "some-feedback-uuid-1",
-				Title: "We need a parking solution",
-				Body:  "The parking area is too small for the number of students we have.",
-				Category: &feedbacksvcpb.SvcFeedbackCategory{
-					Id:     "some-feedback-category-uuid-1",
-					NameAr: "تجربة الطالب",
-					NameEn: "Student Experience",
-				},
-				UserId: "some-user-uuid",
-			},
-			{
-				Id:    "some-feedback-uuid-2",
-				Title: "We need restaurants on campus",
-				Body:  "The food court is too small for the number of students we have.",
-				Category: &feedbacksvcpb.SvcFeedbackCategory{
-					Id:     "some-feedback-category-uuid-1",
-					NameAr: "تجربة الطالب",
-					NameEn: "Student Experience",
-				},
-				UserId: "some-user-uuid",
-			},
-		},
+		FeedbackItems: fisp,
 	}, nil
 }
 

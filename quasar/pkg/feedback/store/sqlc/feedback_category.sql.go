@@ -9,24 +9,6 @@ import (
 	"context"
 )
 
-const createFeedbackCategory = `-- name: CreateFeedbackCategory :one
-INSERT INTO feedback_category (name_ar, name_en)
-VALUES ($1, $2)
-RETURNING id, name_ar, name_en
-`
-
-type CreateFeedbackCategoryParams struct {
-	NameAr string
-	NameEn string
-}
-
-func (q *Queries) CreateFeedbackCategory(ctx context.Context, arg CreateFeedbackCategoryParams) (FeedbackCategory, error) {
-	row := q.db.QueryRowContext(ctx, createFeedbackCategory, arg.NameAr, arg.NameEn)
-	var i FeedbackCategory
-	err := row.Scan(&i.ID, &i.NameAr, &i.NameEn)
-	return i, err
-}
-
 const listFeedbackCategory = `-- name: ListFeedbackCategory :many
 SELECT id, name_ar, name_en FROM feedback_category
 `

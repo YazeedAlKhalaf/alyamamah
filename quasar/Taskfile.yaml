@@ -31,6 +31,7 @@ tasks:
     deps:
       - sqlc-gen
       # - mock-gen
+      - gen-proto
   
   test:
     desc: Run tests for all packages.

@@ -19,7 +19,7 @@ RETURNING id, user_id, category_id, title, body, created_at, updated_at
 
 type CreateFeedbackParams struct {
 	UserID     uuid.UUID
-	CategoryID uuid.NullUUID
+	CategoryID uuid.UUID
 	Title      string
 	Body       string
 }

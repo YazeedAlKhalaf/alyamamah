@@ -12,7 +12,7 @@ CREATE TABLE feedback_category (
 CREATE TABLE feedback (
     id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
     user_id UUID NOT NULL,
-    category_id UUID REFERENCES feedback_category(id),
+    category_id UUID REFERENCES feedback_category(id) NOT NULL,
     title TEXT NOT NULL,
     body TEXT NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),

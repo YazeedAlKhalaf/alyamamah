@@ -9,11 +9,10 @@ import (
 )
 
 type Store interface {
-	CreateFeedback(ctx context.Context, userID uuid.UUID, categoryID uuid.NullUUID, title string, body string) (*sqlc.Feedback, error)
+	CreateFeedback(ctx context.Context, userID uuid.UUID, categoryID uuid.UUID, title string, body string) (*sqlc.Feedback, error)
 	GetFeedbackById(ctx context.Context, id uuid.UUID) (*sqlc.Feedback, error)
 	ListFeedbackByUserId(ctx context.Context, userID uuid.UUID) ([]*sqlc.Feedback, error)
 
-	CreateFeedbackCategory(ctx context.Context, nameAr string, nameEn string) (*sqlc.FeedbackCategory, error)
 	ListFeedbackCategory(ctx context.Context) ([]*sqlc.FeedbackCategory, error)
 }
 
@@ -21,8 +20,13 @@ type store struct {
 	queries sqlc.Queries
 }
 
-func (s *store) CreateFeedback(ctx context.Context, userID uuid.UUID, categoryID uuid.NullUUID, title string, body string) (*sqlc.Feedback, error) {
-	f, err := s.queries.CreateFeedback(ctx, sqlc.CreateFeedbackParams{})
+func (s *store) CreateFeedback(ctx context.Context, userID uuid.UUID, categoryID uuid.UUID, title string, body string) (*sqlc.Feedback, error) {
+	f, err := s.queries.CreateFeedback(ctx, sqlc.CreateFeedbackParams{
+		UserID:     userID,
+		CategoryID: categoryID,
+		Title:      title,
+		Body:       body,
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -51,18 +55,6 @@ func (s *store) ListFeedbackByUserId(ctx context.Context, userID uuid.UUID) ([]*
 	}
 
 	return fp, nil
-}
-
-func (s *store) CreateFeedbackCategory(ctx context.Context, nameAr string, nameEn string) (*sqlc.FeedbackCategory, error) {
-	fc, err := s.queries.CreateFeedbackCategory(ctx, sqlc.CreateFeedbackCategoryParams{
-		NameAr: nameAr,
-		NameEn: nameEn,
-	})
-	if err != nil {
-		return nil, err
-	}
-
-	return &fc, nil
 }
 
 func (s *store) ListFeedbackCategory(ctx context.Context) ([]*sqlc.FeedbackCategory, error) {

@@ -13,7 +13,7 @@ import (
 type Feedback struct {
 	ID         uuid.UUID
 	UserID     uuid.UUID
-	CategoryID uuid.NullUUID
+	CategoryID uuid.UUID
 	Title      string
 	Body       string
 	CreatedAt  time.Time

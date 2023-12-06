@@ -18,11 +18,18 @@ message CreateFeedbackRequest {
     string title = 1;
     string body = 2;
     string category_id = 3;
-    
+
     string student_id = 4;
     string student_name = 5;
     string student_email = 6;
     string student_phone = 7;
+    string student_major = 8;
+    string student_join_semester = 9;
+    string student_current_semester = 10;
+    string student_gender = 11;
+    int32 student_remaining_hours = 12;
+    int32 student_taken_hours = 13;
+    int32 student_total_hours = 14;
 }
 
 message CreateFeedbackResponse {}

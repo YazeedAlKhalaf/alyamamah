@@ -176,6 +176,13 @@ class CreateFeedbackRequest extends $pb.GeneratedMessage {
     $core.String? studentName,
     $core.String? studentEmail,
     $core.String? studentPhone,
+    $core.String? studentMajor,
+    $core.String? studentJoinSemester,
+    $core.String? studentCurrentSemester,
+    $core.String? studentGender,
+    $core.int? studentRemainingHours,
+    $core.int? studentTakenHours,
+    $core.int? studentTotalHours,
   }) {
     final $result = create();
     if (title != null) {
@@ -199,6 +206,27 @@ class CreateFeedbackRequest extends $pb.GeneratedMessage {
     if (studentPhone != null) {
       $result.studentPhone = studentPhone;
     }
+    if (studentMajor != null) {
+      $result.studentMajor = studentMajor;
+    }
+    if (studentJoinSemester != null) {
+      $result.studentJoinSemester = studentJoinSemester;
+    }
+    if (studentCurrentSemester != null) {
+      $result.studentCurrentSemester = studentCurrentSemester;
+    }
+    if (studentGender != null) {
+      $result.studentGender = studentGender;
+    }
+    if (studentRemainingHours != null) {
+      $result.studentRemainingHours = studentRemainingHours;
+    }
+    if (studentTakenHours != null) {
+      $result.studentTakenHours = studentTakenHours;
+    }
+    if (studentTotalHours != null) {
+      $result.studentTotalHours = studentTotalHours;
+    }
     return $result;
   }
   CreateFeedbackRequest._() : super();
@@ -213,6 +241,13 @@ class CreateFeedbackRequest extends $pb.GeneratedMessage {
     ..aOS(5, _omitFieldNames ? '' : 'studentName')
     ..aOS(6, _omitFieldNames ? '' : 'studentEmail')
     ..aOS(7, _omitFieldNames ? '' : 'studentPhone')
+    ..aOS(8, _omitFieldNames ? '' : 'studentMajor')
+    ..aOS(9, _omitFieldNames ? '' : 'studentJoinSemester')
+    ..aOS(10, _omitFieldNames ? '' : 'studentCurrentSemester')
+    ..aOS(11, _omitFieldNames ? '' : 'studentGender')
+    ..a<$core.int>(12, _omitFieldNames ? '' : 'studentRemainingHours', $pb.PbFieldType.O3)
+    ..a<$core.int>(13, _omitFieldNames ? '' : 'studentTakenHours', $pb.PbFieldType.O3)
+    ..a<$core.int>(14, _omitFieldNames ? '' : 'studentTotalHours', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
 
@@ -299,6 +334,69 @@ class CreateFeedbackRequest extends $pb.GeneratedMessage {
   $core.bool hasStudentPhone() => $_has(6);
   @$pb.TagNumber(7)
   void clearStudentPhone() => clearField(7);
+
+  @$pb.TagNumber(8)
+  $core.String get studentMajor => $_getSZ(7);
+  @$pb.TagNumber(8)
+  set studentMajor($core.String v) { $_setString(7, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasStudentMajor() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearStudentMajor() => clearField(8);
+
+  @$pb.TagNumber(9)
+  $core.String get studentJoinSemester => $_getSZ(8);
+  @$pb.TagNumber(9)
+  set studentJoinSemester($core.String v) { $_setString(8, v); }
+  @$pb.TagNumber(9)
+  $core.bool hasStudentJoinSemester() => $_has(8);
+  @$pb.TagNumber(9)
+  void clearStudentJoinSemester() => clearField(9);
+
+  @$pb.TagNumber(10)
+  $core.String get studentCurrentSemester => $_getSZ(9);
+  @$pb.TagNumber(10)
+  set studentCurrentSemester($core.String v) { $_setString(9, v); }
+  @$pb.TagNumber(10)
+  $core.bool hasStudentCurrentSemester() => $_has(9);
+  @$pb.TagNumber(10)
+  void clearStudentCurrentSemester() => clearField(10);
+
+  @$pb.TagNumber(11)
+  $core.String get studentGender => $_getSZ(10);
+  @$pb.TagNumber(11)
+  set studentGender($core.String v) { $_setString(10, v); }
+  @$pb.TagNumber(11)
+  $core.bool hasStudentGender() => $_has(10);
+  @$pb.TagNumber(11)
+  void clearStudentGender() => clearField(11);
+
+  @$pb.TagNumber(12)
+  $core.int get studentRemainingHours => $_getIZ(11);
+  @$pb.TagNumber(12)
+  set studentRemainingHours($core.int v) { $_setSignedInt32(11, v); }
+  @$pb.TagNumber(12)
+  $core.bool hasStudentRemainingHours() => $_has(11);
+  @$pb.TagNumber(12)
+  void clearStudentRemainingHours() => clearField(12);
+
+  @$pb.TagNumber(13)
+  $core.int get studentTakenHours => $_getIZ(12);
+  @$pb.TagNumber(13)
+  set studentTakenHours($core.int v) { $_setSignedInt32(12, v); }
+  @$pb.TagNumber(13)
+  $core.bool hasStudentTakenHours() => $_has(12);
+  @$pb.TagNumber(13)
+  void clearStudentTakenHours() => clearField(13);
+
+  @$pb.TagNumber(14)
+  $core.int get studentTotalHours => $_getIZ(13);
+  @$pb.TagNumber(14)
+  set studentTotalHours($core.int v) { $_setSignedInt32(13, v); }
+  @$pb.TagNumber(14)
+  $core.bool hasStudentTotalHours() => $_has(13);
+  @$pb.TagNumber(14)
+  void clearStudentTotalHours() => clearField(14);
 }
 
 class CreateFeedbackResponse extends $pb.GeneratedMessage {

@@ -184,12 +184,26 @@ class _FeedbackViewState extends ConsumerState<FeedbackView> {
                 FilledButton.tonal(
                   onPressed: () async {
                     final actorDetails = ref.read(actorDetailsProvider);
-                    final studentId = actorDetails?.sessionInfo.userId ?? '';
+                    final studentId = actorDetails?.sessionInfo.uniNo ?? '';
                     final studentName =
                         '${actorDetails?.sessionInfo.actorName} - ${actorDetails?.sessionInfo.actorNameEn}';
                     final studentEmail =
                         actorDetails?.sessionInfo.academicMail ?? '';
                     final studentPhone = actorDetails?.sessionInfo.mobile ?? '';
+                    final studentMajor =
+                        actorDetails?.sessionInfo.majorName ?? '';
+                    final studentJoinSemester =
+                        actorDetails?.sessionInfo.joinSemester.toString() ?? '';
+                    final studentCurrentSemester =
+                        actorDetails?.sessionInfo.currentSemester ?? '';
+                    final studentGender =
+                        actorDetails?.sessionInfo.genderDes ?? '';
+                    final studentPlanRemainingHours =
+                        actorDetails?.sessionInfo.planRemainHrs ?? 0;
+                    final studentPlanTakenHours =
+                        actorDetails?.sessionInfo.planTakenHrs ?? 0;
+                    final studentPlanTotalHours =
+                        actorDetails?.sessionInfo.planTotalHrs ?? 0;
 
                     await ref
                         .read(feedbackViewModelProvider.notifier)
@@ -198,6 +212,13 @@ class _FeedbackViewState extends ConsumerState<FeedbackView> {
                           studentName: studentName,
                           studentEmail: studentEmail,
                           studentPhone: studentPhone,
+                          studentMajor: studentMajor,
+                          studentJoinSemester: studentJoinSemester,
+                          studentCurrentSemester: studentCurrentSemester,
+                          studentGender: studentGender,
+                          studentRemainingHours: studentPlanRemainingHours,
+                          studentTakenHours: studentPlanTakenHours,
+                          studentTotalHours: studentPlanTotalHours,
                         );
                   },
                   child: switch (feedbackState.status) {

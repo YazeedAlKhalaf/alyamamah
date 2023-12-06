@@ -61,6 +61,13 @@ const CreateFeedbackRequest$json = {
     {'1': 'student_name', '3': 5, '4': 1, '5': 9, '10': 'studentName'},
     {'1': 'student_email', '3': 6, '4': 1, '5': 9, '10': 'studentEmail'},
     {'1': 'student_phone', '3': 7, '4': 1, '5': 9, '10': 'studentPhone'},
+    {'1': 'student_major', '3': 8, '4': 1, '5': 9, '10': 'studentMajor'},
+    {'1': 'student_join_semester', '3': 9, '4': 1, '5': 9, '10': 'studentJoinSemester'},
+    {'1': 'student_current_semester', '3': 10, '4': 1, '5': 9, '10': 'studentCurrentSemester'},
+    {'1': 'student_gender', '3': 11, '4': 1, '5': 9, '10': 'studentGender'},
+    {'1': 'student_remaining_hours', '3': 12, '4': 1, '5': 5, '10': 'studentRemainingHours'},
+    {'1': 'student_taken_hours', '3': 13, '4': 1, '5': 5, '10': 'studentTakenHours'},
+    {'1': 'student_total_hours', '3': 14, '4': 1, '5': 5, '10': 'studentTotalHours'},
   ],
 };
 
@@ -70,7 +77,13 @@ final $typed_data.Uint8List createFeedbackRequestDescriptor = $convert.base64Dec
     'ABKAlSBGJvZHkSHwoLY2F0ZWdvcnlfaWQYAyABKAlSCmNhdGVnb3J5SWQSHQoKc3R1ZGVudF9p'
     'ZBgEIAEoCVIJc3R1ZGVudElkEiEKDHN0dWRlbnRfbmFtZRgFIAEoCVILc3R1ZGVudE5hbWUSIw'
     'oNc3R1ZGVudF9lbWFpbBgGIAEoCVIMc3R1ZGVudEVtYWlsEiMKDXN0dWRlbnRfcGhvbmUYByAB'
-    'KAlSDHN0dWRlbnRQaG9uZQ==');
+    'KAlSDHN0dWRlbnRQaG9uZRIjCg1zdHVkZW50X21ham9yGAggASgJUgxzdHVkZW50TWFqb3ISMg'
+    'oVc3R1ZGVudF9qb2luX3NlbWVzdGVyGAkgASgJUhNzdHVkZW50Sm9pblNlbWVzdGVyEjgKGHN0'
+    'dWRlbnRfY3VycmVudF9zZW1lc3RlchgKIAEoCVIWc3R1ZGVudEN1cnJlbnRTZW1lc3RlchIlCg'
+    '5zdHVkZW50X2dlbmRlchgLIAEoCVINc3R1ZGVudEdlbmRlchI2ChdzdHVkZW50X3JlbWFpbmlu'
+    'Z19ob3VycxgMIAEoBVIVc3R1ZGVudFJlbWFpbmluZ0hvdXJzEi4KE3N0dWRlbnRfdGFrZW5faG'
+    '91cnMYDSABKAVSEXN0dWRlbnRUYWtlbkhvdXJzEi4KE3N0dWRlbnRfdG90YWxfaG91cnMYDiAB'
+    'KAVSEXN0dWRlbnRUb3RhbEhvdXJz');
 
 @$core.Deprecated('Use createFeedbackResponseDescriptor instead')
 const CreateFeedbackResponse$json = {

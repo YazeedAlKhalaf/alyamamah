@@ -42,6 +42,13 @@ class FeedbackRepository {
     required String studentName,
     required String studentEmail,
     required String studentPhone,
+    required String studentMajor,
+    required String studentJoinSemester,
+    required String studentCurrentSemester,
+    required String studentGender,
+    required int studentRemainingHours,
+    required int studentTakenHours,
+    required int studentTotalHours,
   }) async {
     try {
       final request = CreateFeedbackRequest(
@@ -52,6 +59,13 @@ class FeedbackRepository {
         studentName: studentName,
         studentEmail: studentEmail,
         studentPhone: studentPhone,
+        studentMajor: studentMajor,
+        studentJoinSemester: studentJoinSemester,
+        studentCurrentSemester: studentCurrentSemester,
+        studentGender: studentGender,
+        studentRemainingHours: studentRemainingHours,
+        studentTakenHours: studentTakenHours,
+        studentTotalHours: studentTotalHours,
       );
 
       final resp = await _feedbackClient.createFeedback(request);

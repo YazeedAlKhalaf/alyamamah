@@ -11,7 +11,7 @@ import (
 )
 
 type Store interface {
-	CreateFeedback(ctx context.Context, userID uuid.UUID, categoryID uuid.UUID, title string, body string, studentId string, studentName string, studentEmail string, studentPhone string) (*sqlc.Feedback, error)
+	CreateFeedback(ctx context.Context, userID uuid.UUID, categoryID uuid.UUID, title string, body string, studentId string, studentName string, studentEmail string, studentPhone string, studentMajor string, studentJoinSemester string, studentCurrentSemester string, studentGender string, studentRemainingHours int32, studentTakenHours int32, studentTotalHours int32) (*sqlc.Feedback, error)
 	GetFeedbackById(ctx context.Context, id uuid.UUID) (*sqlc.Feedback, error)
 	ListFeedbackByUserId(ctx context.Context, userID uuid.UUID) ([]*sqlc.Feedback, error)
 
@@ -22,28 +22,23 @@ type store struct {
 	queries sqlc.Queries
 }
 
-func (s *store) CreateFeedback(ctx context.Context, userID uuid.UUID, categoryID uuid.UUID, title string, body string, studentId string, studentName string, studentEmail string, studentPhone string) (*sqlc.Feedback, error) {
+func (s *store) CreateFeedback(ctx context.Context, userID uuid.UUID, categoryID uuid.UUID, title string, body string, studentId string, studentName string, studentEmail string, studentPhone string, studentMajor string, studentJoinSemester string, studentCurrentSemester string, studentGender string, studentRemainingHours int32, studentTakenHours int32, studentTotalHours int32) (*sqlc.Feedback, error) {
 	f, err := s.queries.CreateFeedback(ctx, sqlc.CreateFeedbackParams{
-		UserID:     userID,
-		CategoryID: categoryID,
-		Title:      title,
-		Body:       body,
-		StudentID: sql.NullString{
-			String: strings.TrimSpace(studentId),
-			Valid:  len(strings.TrimSpace(studentId)) > 0,
-		},
-		StudentName: sql.NullString{
-			String: strings.TrimSpace(studentName),
-			Valid:  len(strings.TrimSpace(studentName)) > 0,
-		},
-		StudentEmail: sql.NullString{
-			String: strings.TrimSpace(studentEmail),
-			Valid:  len(strings.TrimSpace(studentEmail)) > 0,
-		},
-		StudentPhone: sql.NullString{
-			String: strings.TrimSpace(studentPhone),
-			Valid:  len(strings.TrimSpace(studentPhone)) > 0,
-		},
+		UserID:                 userID,
+		CategoryID:             categoryID,
+		Title:                  title,
+		Body:                   body,
+		StudentID:              sql.NullString{String: strings.TrimSpace(studentId), Valid: len(strings.TrimSpace(studentId)) > 0},
+		StudentName:            sql.NullString{String: strings.TrimSpace(studentName), Valid: len(strings.TrimSpace(studentName)) > 0},
+		StudentEmail:           sql.NullString{String: strings.TrimSpace(studentEmail), Valid: len(strings.TrimSpace(studentEmail)) > 0},
+		StudentPhone:           sql.NullString{String: strings.TrimSpace(studentPhone), Valid: len(strings.TrimSpace(studentPhone)) > 0},
+		StudentMajor:           sql.NullString{String: strings.TrimSpace(studentMajor), Valid: len(strings.TrimSpace(studentMajor)) > 0},
+		StudentJoinSemester:    sql.NullString{String: strings.TrimSpace(studentJoinSemester), Valid: len(strings.TrimSpace(studentJoinSemester)) > 0},
+		StudentCurrentSemester: sql.NullString{String: strings.TrimSpace(studentCurrentSemester), Valid: len(strings.TrimSpace(studentCurrentSemester)) > 0},
+		StudentGender:          sql.NullString{String: strings.TrimSpace(studentGender), Valid: len(strings.TrimSpace(studentGender)) > 0},
+		StudentRemainingHours:  sql.NullInt32{Int32: studentRemainingHours, Valid: studentRemainingHours > 0},
+		StudentTakenHours:      sql.NullInt32{Int32: studentTakenHours, Valid: studentTakenHours > 0},
+		StudentTotalHours:      sql.NullInt32{Int32: studentTotalHours, Valid: studentTotalHours > 0},
 	})
 	if err != nil {
 		log.Ctx(ctx).Err(err).Msg("couldn't create feedback")

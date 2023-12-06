@@ -26,6 +26,14 @@ message SvcCreateFeedbackRequest {
     string student_name = 6;
     string student_email = 7;
     string student_phone = 8;
+    string student_major = 9;
+    string student_join_semester = 10;
+    string student_current_semester = 11;
+    string student_gender = 12;
+    int32 student_remaining_hours = 13;
+    int32 student_taken_hours = 14;
+    int32 student_total_hours = 15;
+
 }
 
 message SvcCreateFeedbackResponse {}

@@ -13,20 +13,27 @@ import (
 )
 
 const createFeedback = `-- name: CreateFeedback :one
-INSERT INTO feedback (user_id, category_id, title, body, student_id, student_name, student_email, student_phone)
-VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-RETURNING id, user_id, category_id, title, body, created_at, updated_at, student_id, student_name, student_email, student_phone
+INSERT INTO feedback (user_id, category_id, title, body, student_id, student_name, student_email, student_phone, student_major, student_join_semester, student_current_semester, student_gender, student_remaining_hours, student_taken_hours, student_total_hours)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
+RETURNING id, user_id, category_id, title, body, created_at, updated_at, student_id, student_name, student_email, student_phone, student_major, student_join_semester, student_current_semester, student_gender, student_remaining_hours, student_taken_hours, student_total_hours
 `
 
 type CreateFeedbackParams struct {
-	UserID       uuid.UUID
-	CategoryID   uuid.UUID
-	Title        string
-	Body         string
-	StudentID    sql.NullString
-	StudentName  sql.NullString
-	StudentEmail sql.NullString
-	StudentPhone sql.NullString
+	UserID                 uuid.UUID
+	CategoryID             uuid.UUID
+	Title                  string
+	Body                   string
+	StudentID              sql.NullString
+	StudentName            sql.NullString
+	StudentEmail           sql.NullString
+	StudentPhone           sql.NullString
+	StudentMajor           sql.NullString
+	StudentJoinSemester    sql.NullString
+	StudentCurrentSemester sql.NullString
+	StudentGender          sql.NullString
+	StudentRemainingHours  sql.NullInt32
+	StudentTakenHours      sql.NullInt32
+	StudentTotalHours      sql.NullInt32
 }
 
 func (q *Queries) CreateFeedback(ctx context.Context, arg CreateFeedbackParams) (Feedback, error) {
@@ -39,6 +46,13 @@ func (q *Queries) CreateFeedback(ctx context.Context, arg CreateFeedbackParams) 
 		arg.StudentName,
 		arg.StudentEmail,
 		arg.StudentPhone,
+		arg.StudentMajor,
+		arg.StudentJoinSemester,
+		arg.StudentCurrentSemester,
+		arg.StudentGender,
+		arg.StudentRemainingHours,
+		arg.StudentTakenHours,
+		arg.StudentTotalHours,
 	)
 	var i Feedback
 	err := row.Scan(
@@ -53,12 +67,19 @@ func (q *Queries) CreateFeedback(ctx context.Context, arg CreateFeedbackParams) 
 		&i.StudentName,
 		&i.StudentEmail,
 		&i.StudentPhone,
+		&i.StudentMajor,
+		&i.StudentJoinSemester,
+		&i.StudentCurrentSemester,
+		&i.StudentGender,
+		&i.StudentRemainingHours,
+		&i.StudentTakenHours,
+		&i.StudentTotalHours,
 	)
 	return i, err
 }
 
 const getFeedbackById = `-- name: GetFeedbackById :one
-SELECT id, user_id, category_id, title, body, created_at, updated_at, student_id, student_name, student_email, student_phone FROM feedback
+SELECT id, user_id, category_id, title, body, created_at, updated_at, student_id, student_name, student_email, student_phone, student_major, student_join_semester, student_current_semester, student_gender, student_remaining_hours, student_taken_hours, student_total_hours FROM feedback
 WHERE id = $1
 `
 
@@ -77,12 +98,19 @@ func (q *Queries) GetFeedbackById(ctx context.Context, id uuid.UUID) (Feedback, 
 		&i.StudentName,
 		&i.StudentEmail,
 		&i.StudentPhone,
+		&i.StudentMajor,
+		&i.StudentJoinSemester,
+		&i.StudentCurrentSemester,
+		&i.StudentGender,
+		&i.StudentRemainingHours,
+		&i.StudentTakenHours,
+		&i.StudentTotalHours,
 	)
 	return i, err
 }
 
 const listFeedbackByUserId = `-- name: ListFeedbackByUserId :many
-SELECT id, user_id, category_id, title, body, created_at, updated_at, student_id, student_name, student_email, student_phone FROM feedback
+SELECT id, user_id, category_id, title, body, created_at, updated_at, student_id, student_name, student_email, student_phone, student_major, student_join_semester, student_current_semester, student_gender, student_remaining_hours, student_taken_hours, student_total_hours FROM feedback
 WHERE user_id = $1
 ORDER BY created_at DESC
 `
@@ -108,6 +136,13 @@ func (q *Queries) ListFeedbackByUserId(ctx context.Context, userID uuid.UUID) ([
 			&i.StudentName,
 			&i.StudentEmail,
 			&i.StudentPhone,
+			&i.StudentMajor,
+			&i.StudentJoinSemester,
+			&i.StudentCurrentSemester,
+			&i.StudentGender,
+			&i.StudentRemainingHours,
+			&i.StudentTakenHours,
+			&i.StudentTotalHours,
 		); err != nil {
 			return nil, err
 		}

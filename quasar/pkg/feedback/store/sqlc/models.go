@@ -12,17 +12,24 @@ import (
 )
 
 type Feedback struct {
-	ID           uuid.UUID
-	UserID       uuid.UUID
-	CategoryID   uuid.UUID
-	Title        string
-	Body         string
-	CreatedAt    time.Time
-	UpdatedAt    time.Time
-	StudentID    sql.NullString
-	StudentName  sql.NullString
-	StudentEmail sql.NullString
-	StudentPhone sql.NullString
+	ID                     uuid.UUID
+	UserID                 uuid.UUID
+	CategoryID             uuid.UUID
+	Title                  string
+	Body                   string
+	CreatedAt              time.Time
+	UpdatedAt              time.Time
+	StudentID              sql.NullString
+	StudentName            sql.NullString
+	StudentEmail           sql.NullString
+	StudentPhone           sql.NullString
+	StudentMajor           sql.NullString
+	StudentJoinSemester    sql.NullString
+	StudentCurrentSemester sql.NullString
+	StudentGender          sql.NullString
+	StudentRemainingHours  sql.NullInt32
+	StudentTakenHours      sql.NullInt32
+	StudentTotalHours      sql.NullInt32
 }
 
 type FeedbackCategory struct {

@@ -193,7 +193,7 @@ class _FeedbackViewState extends ConsumerState<FeedbackView> {
                     final studentMajor =
                         actorDetails?.sessionInfo.majorName ?? '';
                     final studentJoinSemester =
-                        actorDetails?.sessionInfo.joinSemester.toString() ?? '';
+                        actorDetails?.sessionInfo.joinSemester ?? '';
                     final studentCurrentSemester =
                         actorDetails?.sessionInfo.currentSemester ?? '';
                     final studentGender =

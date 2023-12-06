@@ -196,6 +196,15 @@
   "title": "العنوان",
   "category": "التصنيف",
   "body": "الموضوع",
-  "submit": "أرسل",
-  "failed_to_load_feedback_categories": "فشل في تحميل التصنيفات"
+  "send": "أرسل",
+  "failed_to_load_feedback_categories": "فشل في تحميل التصنيفات",
+  "please_enter_a_title": "رجاء أدخل عنواناً",
+  "title_must_be_at_least_three_characters": "يجب أن يكون العنوان على الأقل 3 أحرف",
+  "title_must_be_at_most_one_hundred_characters": "يجب أن يكون العنوان على الأكثر 100 حرف",
+  "please_select_a_category": "رجاد اختر تصنيفاً",
+  "please_enter_a_body": "رجاء أدخل موضوعاً",
+  "body_must_be_at_least_ten_characters": "يجب أن يكون الموضوع على الأقل 10 أحرف",
+  "body_must_be_at_most_one_thousand_characters": "يجب أن يكون الموضوع على الأكثر 1,000 حرف",
+  "failed_to_send_feedback": "فشل إرسال الملاحظات",
+  "feedback_sent_successfully": "أرسلت الملاحظات بنجاح"
 }

@@ -196,6 +196,15 @@
   "title": "Title",
   "category": "Category",
   "body": "Body",
-  "submit": "Submit",
-  "failed_to_load_feedback_categories": "Failed to load feedback categories"
+  "send": "Send",
+  "failed_to_load_feedback_categories": "Failed to load feedback categories",
+  "please_enter_a_title": "Please enter a title",
+  "title_must_be_at_least_three_characters": "Title must be at least 3 characters",
+  "title_must_be_at_most_one_hundred_characters": "Title must be at most 100 characters",
+  "please_select_a_category": "Please select a category",
+  "please_enter_a_body": "Please enter a body",
+  "body_must_be_at_least_ten_characters": "Body must be at least 10 characters",
+  "body_must_be_at_most_one_thousand_characters": "Body must be at most 1,000 characters",
+  "failed_to_send_feedback": "Failed to send feedback",
+  "feedback_sent_successfully": "Feedback sent successfully"
 }

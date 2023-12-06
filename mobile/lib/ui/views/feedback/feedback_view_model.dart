@@ -1,11 +1,15 @@
 import 'package:alyamamah/core/repository/feedback/feedback_repository.dart';
 import 'package:alyamamah/core/repository/feedback/feedback_respoitory_exception.dart';
+import 'package:alyamamah/gen/proto/feedback.pb.dart';
 import 'package:alyamamah/ui/views/feedback/feedback_state.dart';
+import 'package:alyamamah/ui/views/feedback/models/feedback_body.dart';
+import 'package:alyamamah/ui/views/feedback/models/feedback_category_formz.dart';
+import 'package:alyamamah/ui/views/feedback/models/feedback_title.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logging/logging.dart';
 
 final feedbackViewModelProvider =
-    StateNotifierProvider<FeedbackViewModel, FeedbackState>(
+    StateNotifierProvider.autoDispose<FeedbackViewModel, FeedbackState>(
   (ref) => FeedbackViewModel(
     feedbackRepository: ref.read(feedbackRepositoryProvider),
   ),
@@ -39,6 +43,82 @@ class FeedbackViewModel extends StateNotifier<FeedbackState> {
       state = state.copyWith(
         status: FeedbackStatus.errorLoadingCategories,
         categories: [],
+      );
+    }
+  }
+
+  void onTitleChanged(String value) {
+    final FeedbackTitle title;
+    if (state.validateOnUserInteraction) {
+      title = FeedbackTitle.dirty(value: value);
+    } else {
+      title = FeedbackTitle.pure(value: value);
+    }
+
+    state = state.copyWith(
+      title: title,
+    );
+  }
+
+  void onBodyChanged(
+    String value,
+  ) {
+    final FeedbackBody body;
+    if (state.validateOnUserInteraction) {
+      body = FeedbackBody.dirty(value: value);
+    } else {
+      body = FeedbackBody.pure(value: value);
+    }
+
+    state = state.copyWith(
+      body: body,
+    );
+  }
+
+  void onCategoryChanged(FeedbackCategory? value) {
+    state = state.copyWith(
+      category: FormzFeedbackCategory.dirty(value: value),
+    );
+  }
+
+  Future<void> sendFeedback() async {
+    if (state.status == FeedbackStatus.sendingFeedback) {
+      return;
+    }
+
+    final title = state.title;
+    final body = state.body;
+    final category = state.category;
+
+    if (title.isNotValid || body.isNotValid || category.isNotValid) {
+      state = state.copyWith(
+        validateOnUserInteraction: true,
+        title: FeedbackTitle.dirty(value: title.value),
+        body: FeedbackBody.dirty(value: body.value),
+        category: FormzFeedbackCategory.dirty(value: category.value),
+      );
+      return;
+    }
+
+    try {
+      state = state.copyWith(
+        status: FeedbackStatus.sendingFeedback,
+      );
+
+      await _feedbackRepository.createFeedback(
+        title: title.value,
+        body: body.value,
+        categoryId: category.value?.id ?? state.categories.first.id,
+      );
+
+      state = state.copyWith(
+        status: FeedbackStatus.sentFeedback,
+      );
+    } on FeedbackRepositoryException catch (e) {
+      _log.severe('failed to submit feedback', e);
+
+      state = state.copyWith(
+        status: FeedbackStatus.errorSendingFeedback,
       );
     }
   }

@@ -35,9 +35,17 @@ class FeedbackRepository {
   }
 
   Future<CreateFeedbackResponse> createFeedback({
-    required CreateFeedbackRequest request,
+    required String title,
+    required String body,
+    required String categoryId,
   }) async {
     try {
+      final request = CreateFeedbackRequest(
+        title: title,
+        body: body,
+        categoryId: categoryId,
+      );
+
       final resp = await _feedbackClient.createFeedback(request);
 
       return resp;

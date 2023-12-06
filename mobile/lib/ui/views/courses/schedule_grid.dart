@@ -11,12 +11,12 @@ class ScheduleGrid extends ConsumerWidget {
   final double scrollOffset;
 
   const ScheduleGrid({
-    Key? key,
+    super.key,
     required this.cellHeight,
     required this.horizontalSegments,
     required this.startHour,
     required this.scrollOffset,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

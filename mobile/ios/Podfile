@@ -37,9 +37,15 @@ end
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
-
-    # Start of the permission_handler configuration
     target.build_configurations.each do |config|
+      # shim for CocoaPods issue, should remove when 1.13.0 is released
+      # more info: https://github.com/CocoaPods/CocoaPods/issues/12012#issuecomment-1659803356
+      # fix PR: https://github.com/CocoaPods/CocoaPods/pull/12009
+      # flutter PR: https://github.com/flutter/flutter/pull/135447
+      xcconfig_path = config.base_configuration_reference.real_path
+      xcconfig = File.read(xcconfig_path)
+      xcconfig_mod = xcconfig.gsub(/DT_TOOLCHAIN_DIR/, "TOOLCHAIN_DIR")
+      File.open(xcconfig_path, "w") { |file| file << xcconfig_mod }
    
       # You can enable the permissions needed here. For example to enable camera
       # permission, just remove the `#` character in front so it looks like this:
@@ -95,6 +101,5 @@ post_install do |installer|
       ]
   
     end 
-    # End of the permission_handler configuration
   end
 end

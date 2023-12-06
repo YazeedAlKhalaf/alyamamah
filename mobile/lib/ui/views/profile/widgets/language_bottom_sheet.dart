@@ -1,9 +1,9 @@
 import 'package:alyamamah/core/extensions/build_context.dart';
 import 'package:alyamamah/core/extensions/locale.dart';
 import 'package:alyamamah/core/services/locale/locale_service.dart';
-import 'package:alyamamah/gen/l10n/app_localizations.dart';
 import 'package:alyamamah/ui/widgets/yu_bottom_sheet.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LanguageBottomSheet extends ConsumerWidget {

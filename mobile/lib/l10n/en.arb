@@ -192,5 +192,10 @@
   "twitter_dm": "Twitter DM",
   "failed_to_launch_twitter_app": "Failed to launch Twitter app.",
   "feedback_for_student_council": "Feedback for Student Council",
-  "voice_your_concerns": "Voice Your Concerns!"
+  "voice_your_concerns": "Voice Your Concerns!",
+  "title": "Title",
+  "category": "Category",
+  "body": "Body",
+  "submit": "Submit",
+  "failed_to_load_feedback_categories": "Failed to load feedback categories"
 }

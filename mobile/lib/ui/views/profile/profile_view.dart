@@ -4,6 +4,7 @@ import 'package:alyamamah/core/extensions/locale.dart';
 import 'package:alyamamah/core/extensions/string.dart';
 import 'package:alyamamah/core/extensions/theme_mode.dart';
 import 'package:alyamamah/core/providers/actor_details/actor_details_notifier.dart';
+import 'package:alyamamah/core/providers/feature_flags/feature_flags_state_notifier.dart';
 import 'package:alyamamah/core/services/theme/theme_service.dart';
 import 'package:alyamamah/ui/views/profile/profile_view_model.dart';
 import 'package:alyamamah/ui/views/profile/widgets/language_bottom_sheet.dart';
@@ -75,44 +76,47 @@ class ProfileView extends ConsumerWidget {
                 ),
               ],
             ),
-            const SizedBox(height: Constants.padding),
-            SectionContainer(
-              showTopPadding: false,
-              children: [
-                ListTile(
-                  leading: CircleAvatar(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(999),
-                      child: Image.asset(
-                        'assets/images/student-council-logo.png',
+            if (ref
+                .watch(featureFlagsStateNotifierProvider)
+                .isStudentCouncilFeedbackEnabled) ...[
+              const SizedBox(height: Constants.padding),
+              SectionContainer(
+                showTopPadding: false,
+                children: [
+                  ListTile(
+                    leading: CircleAvatar(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(999),
+                        child: Image.asset(
+                          'assets/images/student-council-logo.png',
+                        ),
                       ),
                     ),
-                  ),
-                  title: Text(
-                    context.s.feedback_for_student_council,
-                    style: context.textTheme.titleMedium?.copyWith(
-                      color: context.colorScheme.onSecondaryContainer,
-                    ),
-                  ),
-                  subtitle: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        context.s.voice_your_concerns,
-                        style: context.textTheme.bodyMedium,
-                        textDirection: TextDirection.ltr,
+                    title: Text(
+                      context.s.feedback_for_student_council,
+                      style: context.textTheme.titleMedium?.copyWith(
+                        color: context.colorScheme.onSecondaryContainer,
                       ),
-                    ],
+                    ),
+                    subtitle: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          context.s.voice_your_concerns,
+                          style: context.textTheme.bodyMedium,
+                        ),
+                      ],
+                    ),
+                    trailing: const Icon(Icons.chevron_right_rounded),
+                    onTap: () async {
+                      await ref
+                          .read(profileViewModelProvider)
+                          .navigateToFeedbackRoute();
+                    },
                   ),
-                  trailing: const Icon(Icons.chevron_right_rounded),
-                  onTap: () async {
-                    await ref
-                        .read(profileViewModelProvider)
-                        .navigateToFeedbackRoute();
-                  },
-                ),
-              ],
-            ),
+                ],
+              ),
+            ],
             const SizedBox(height: Constants.padding),
             SectionContainer(
               children: [

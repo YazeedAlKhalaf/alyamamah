@@ -3,12 +3,14 @@ class FeatureFlagsState {
   final bool isScheduleHourLabelsEnabled;
   final bool isNumberGradesEnabled;
   final bool isAppEnabled;
+  final bool isStudentCouncilFeedbackEnabled;
 
   FeatureFlagsState({
     this.isScheduleBuilderEnabled = false,
     this.isScheduleHourLabelsEnabled = false,
     this.isNumberGradesEnabled = false,
     this.isAppEnabled = true,
+    this.isStudentCouncilFeedbackEnabled = false,
   });
 
   FeatureFlagsState copyWith({
@@ -16,12 +18,14 @@ class FeatureFlagsState {
     required bool isScheduleHourLabelsEnabled,
     required bool isNumberGradesEnabled,
     required bool isAppEnabled,
+    required bool isStudentCouncilFeedbackEnabled,
   }) {
     return FeatureFlagsState(
       isScheduleBuilderEnabled: isScheduleBuilderEnabled,
       isScheduleHourLabelsEnabled: isScheduleHourLabelsEnabled,
       isNumberGradesEnabled: isNumberGradesEnabled,
       isAppEnabled: isAppEnabled,
+      isStudentCouncilFeedbackEnabled: isStudentCouncilFeedbackEnabled,
     );
   }
 
@@ -32,7 +36,9 @@ class FeatureFlagsState {
     return other.isScheduleBuilderEnabled == isScheduleBuilderEnabled &&
         other.isScheduleHourLabelsEnabled == isScheduleHourLabelsEnabled &&
         other.isNumberGradesEnabled == isNumberGradesEnabled &&
-        other.isAppEnabled == isAppEnabled;
+        other.isAppEnabled == isAppEnabled &&
+        other.isStudentCouncilFeedbackEnabled ==
+            isStudentCouncilFeedbackEnabled;
   }
 
   @override
@@ -40,5 +46,6 @@ class FeatureFlagsState {
       isScheduleBuilderEnabled.hashCode ^
       isScheduleHourLabelsEnabled.hashCode ^
       isNumberGradesEnabled.hashCode ^
-      isAppEnabled.hashCode;
+      isAppEnabled.hashCode ^
+      isStudentCouncilFeedbackEnabled.hashCode;
 }

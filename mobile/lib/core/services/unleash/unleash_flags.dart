@@ -4,4 +4,5 @@ class UnleashFlags {
   static const String scheduleHoursLabels = 'schedule-hour-labels';
   static const String numberGrades = 'number-grade';
   static const String appEnabled = 'app-enabled';
+  static const String studentCouncilFeedback = 'student-council-feedback';
 }

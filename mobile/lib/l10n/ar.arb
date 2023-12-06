@@ -192,5 +192,10 @@
   "twitter_dm": "رسالة عبر تويتر",
   "failed_to_launch_twitter_app": "فشل في فتح تطبيق تويتر.",
   "feedback_for_student_council": "ملاحظات للمجلس الطلّابي",
-  "voice_your_concerns": "أعرب عن مخاوفك!"
+  "voice_your_concerns": "أعرب عن مخاوفك!",
+  "title": "العنوان",
+  "category": "التصنيف",
+  "body": "الموضوع",
+  "submit": "أرسل",
+  "failed_to_load_feedback_categories": "فشل في تحميل التصنيفات"
 }

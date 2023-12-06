@@ -51,10 +51,14 @@ func (s *server) CreateFeedback(ctx context.Context, r *feedbackpb.CreateFeedbac
 	}
 
 	_, err = s.feedbackSvc.SvcCreateFeedback(ctx, &feedbacksvcpb.SvcCreateFeedbackRequest{
-		UserId:     user.ID,
-		Title:      r.Title,
-		Body:       r.Body,
-		CategoryId: r.CategoryId,
+		UserId:       user.ID,
+		Title:        r.Title,
+		Body:         r.Body,
+		CategoryId:   r.CategoryId,
+		StudentId:    r.StudentId,
+		StudentName:  r.StudentName,
+		StudentEmail: r.StudentEmail,
+		StudentPhone: r.StudentPhone,
 	})
 	if err != nil {
 		log.Ctx(ctx).Err(err).Msg("couldn't create feedback")

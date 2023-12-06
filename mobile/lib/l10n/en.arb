@@ -206,5 +206,6 @@
   "body_must_be_at_least_ten_characters": "Body must be at least 10 characters",
   "body_must_be_at_most_one_thousand_characters": "Body must be at most 1,000 characters",
   "failed_to_send_feedback": "Failed to send feedback",
-  "feedback_sent_successfully": "Feedback sent successfully"
+  "feedback_sent_successfully": "Feedback sent successfully",
+  "share_my_contact_information": "Share my contact information"
 }

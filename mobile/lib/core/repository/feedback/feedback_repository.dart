@@ -38,12 +38,20 @@ class FeedbackRepository {
     required String title,
     required String body,
     required String categoryId,
+    required String studentId,
+    required String studentName,
+    required String studentEmail,
+    required String studentPhone,
   }) async {
     try {
       final request = CreateFeedbackRequest(
         title: title,
         body: body,
         categoryId: categoryId,
+        studentId: studentId,
+        studentName: studentName,
+        studentEmail: studentEmail,
+        studentPhone: studentPhone,
       );
 
       final resp = await _feedbackClient.createFeedback(request);

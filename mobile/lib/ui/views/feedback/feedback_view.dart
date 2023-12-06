@@ -1,5 +1,6 @@
 import 'package:alyamamah/core/constants.dart';
 import 'package:alyamamah/core/extensions/build_context.dart';
+import 'package:alyamamah/core/providers/actor_details/actor_details_notifier.dart';
 import 'package:alyamamah/gen/proto/feedback.pbgrpc.dart';
 import 'package:alyamamah/ui/views/feedback/feedback_state.dart';
 import 'package:alyamamah/ui/views/feedback/feedback_view_model.dart';
@@ -170,12 +171,34 @@ class _FeedbackViewState extends ConsumerState<FeedbackView> {
                     ],
                   ),
                 ),
-                const SizedBox(height: Constants.padding),
+                const SizedBox(height: Constants.padding / 2),
+                CheckboxListTile(
+                  value: feedbackState.shareMyContactInformation,
+                  title: Text(context.s.share_my_contact_information),
+                  controlAffinity: ListTileControlAffinity.leading,
+                  onChanged: ref
+                      .read(feedbackViewModelProvider.notifier)
+                      .onShareMyContactInformationChanged,
+                ),
+                const SizedBox(height: Constants.padding / 2),
                 FilledButton.tonal(
                   onPressed: () async {
+                    final actorDetails = ref.read(actorDetailsProvider);
+                    final studentId = actorDetails?.sessionInfo.userId ?? '';
+                    final studentName =
+                        '${actorDetails?.sessionInfo.actorName} - ${actorDetails?.sessionInfo.actorNameEn}';
+                    final studentEmail =
+                        actorDetails?.sessionInfo.academicMail ?? '';
+                    final studentPhone = actorDetails?.sessionInfo.mobile ?? '';
+
                     await ref
                         .read(feedbackViewModelProvider.notifier)
-                        .sendFeedback();
+                        .sendFeedback(
+                          studentId: studentId,
+                          studentName: studentName,
+                          studentEmail: studentEmail,
+                          studentPhone: studentPhone,
+                        );
                   },
                   child: switch (feedbackState.status) {
                     FeedbackStatus.sendingFeedback => const ButtonLoading(),

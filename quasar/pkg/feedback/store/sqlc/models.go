@@ -5,19 +5,24 @@
 package sqlc
 
 import (
+	"database/sql"
 	"time"
 
 	"github.com/google/uuid"
 )
 
 type Feedback struct {
-	ID         uuid.UUID
-	UserID     uuid.UUID
-	CategoryID uuid.UUID
-	Title      string
-	Body       string
-	CreatedAt  time.Time
-	UpdatedAt  time.Time
+	ID           uuid.UUID
+	UserID       uuid.UUID
+	CategoryID   uuid.UUID
+	Title        string
+	Body         string
+	CreatedAt    time.Time
+	UpdatedAt    time.Time
+	StudentID    sql.NullString
+	StudentName  sql.NullString
+	StudentEmail sql.NullString
+	StudentPhone sql.NullString
 }
 
 type FeedbackCategory struct {

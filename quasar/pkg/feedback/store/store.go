@@ -3,6 +3,7 @@ package store
 import (
 	"context"
 	"database/sql"
+	"strings"
 
 	"github.com/YazeedAlKhalaf/alyamamah/quasar/pkg/feedback/store/sqlc"
 	"github.com/google/uuid"
@@ -10,7 +11,7 @@ import (
 )
 
 type Store interface {
-	CreateFeedback(ctx context.Context, userID uuid.UUID, categoryID uuid.UUID, title string, body string) (*sqlc.Feedback, error)
+	CreateFeedback(ctx context.Context, userID uuid.UUID, categoryID uuid.UUID, title string, body string, studentId string, studentName string, studentEmail string, studentPhone string) (*sqlc.Feedback, error)
 	GetFeedbackById(ctx context.Context, id uuid.UUID) (*sqlc.Feedback, error)
 	ListFeedbackByUserId(ctx context.Context, userID uuid.UUID) ([]*sqlc.Feedback, error)
 
@@ -21,12 +22,28 @@ type store struct {
 	queries sqlc.Queries
 }
 
-func (s *store) CreateFeedback(ctx context.Context, userID uuid.UUID, categoryID uuid.UUID, title string, body string) (*sqlc.Feedback, error) {
+func (s *store) CreateFeedback(ctx context.Context, userID uuid.UUID, categoryID uuid.UUID, title string, body string, studentId string, studentName string, studentEmail string, studentPhone string) (*sqlc.Feedback, error) {
 	f, err := s.queries.CreateFeedback(ctx, sqlc.CreateFeedbackParams{
 		UserID:     userID,
 		CategoryID: categoryID,
 		Title:      title,
 		Body:       body,
+		StudentID: sql.NullString{
+			String: strings.TrimSpace(studentId),
+			Valid:  len(strings.TrimSpace(studentId)) > 0,
+		},
+		StudentName: sql.NullString{
+			String: strings.TrimSpace(studentName),
+			Valid:  len(strings.TrimSpace(studentName)) > 0,
+		},
+		StudentEmail: sql.NullString{
+			String: strings.TrimSpace(studentEmail),
+			Valid:  len(strings.TrimSpace(studentEmail)) > 0,
+		},
+		StudentPhone: sql.NullString{
+			String: strings.TrimSpace(studentPhone),
+			Valid:  len(strings.TrimSpace(studentPhone)) > 0,
+		},
 	})
 	if err != nil {
 		log.Ctx(ctx).Err(err).Msg("couldn't create feedback")

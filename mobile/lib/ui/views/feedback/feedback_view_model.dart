@@ -81,7 +81,18 @@ class FeedbackViewModel extends StateNotifier<FeedbackState> {
     );
   }
 
-  Future<void> sendFeedback() async {
+  void onShareMyContactInformationChanged(bool? value) {
+    state = state.copyWith(
+      shareMyContactInformation: value,
+    );
+  }
+
+  Future<void> sendFeedback({
+    required String studentId,
+    required String studentName,
+    required String studentEmail,
+    required String studentPhone,
+  }) async {
     if (state.status == FeedbackStatus.sendingFeedback) {
       return;
     }
@@ -105,10 +116,21 @@ class FeedbackViewModel extends StateNotifier<FeedbackState> {
         status: FeedbackStatus.sendingFeedback,
       );
 
+      if (!state.shareMyContactInformation) {
+        studentId = '';
+        studentName = '';
+        studentEmail = '';
+        studentPhone = '';
+      }
+
       await _feedbackRepository.createFeedback(
         title: title.value,
         body: body.value,
         categoryId: category.value?.id ?? state.categories.first.id,
+        studentId: studentId,
+        studentName: studentName,
+        studentEmail: studentEmail,
+        studentPhone: studentPhone,
       );
 
       state = state.copyWith(

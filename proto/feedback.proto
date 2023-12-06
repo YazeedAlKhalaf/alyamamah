@@ -18,6 +18,11 @@ message CreateFeedbackRequest {
     string title = 1;
     string body = 2;
     string category_id = 3;
+    
+    string student_id = 4;
+    string student_name = 5;
+    string student_email = 6;
+    string student_phone = 7;
 }
 
 message CreateFeedbackResponse {}

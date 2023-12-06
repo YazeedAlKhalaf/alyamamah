@@ -57,13 +57,20 @@ const CreateFeedbackRequest$json = {
     {'1': 'title', '3': 1, '4': 1, '5': 9, '10': 'title'},
     {'1': 'body', '3': 2, '4': 1, '5': 9, '10': 'body'},
     {'1': 'category_id', '3': 3, '4': 1, '5': 9, '10': 'categoryId'},
+    {'1': 'student_id', '3': 4, '4': 1, '5': 9, '10': 'studentId'},
+    {'1': 'student_name', '3': 5, '4': 1, '5': 9, '10': 'studentName'},
+    {'1': 'student_email', '3': 6, '4': 1, '5': 9, '10': 'studentEmail'},
+    {'1': 'student_phone', '3': 7, '4': 1, '5': 9, '10': 'studentPhone'},
   ],
 };
 
 /// Descriptor for `CreateFeedbackRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List createFeedbackRequestDescriptor = $convert.base64Decode(
     'ChVDcmVhdGVGZWVkYmFja1JlcXVlc3QSFAoFdGl0bGUYASABKAlSBXRpdGxlEhIKBGJvZHkYAi'
-    'ABKAlSBGJvZHkSHwoLY2F0ZWdvcnlfaWQYAyABKAlSCmNhdGVnb3J5SWQ=');
+    'ABKAlSBGJvZHkSHwoLY2F0ZWdvcnlfaWQYAyABKAlSCmNhdGVnb3J5SWQSHQoKc3R1ZGVudF9p'
+    'ZBgEIAEoCVIJc3R1ZGVudElkEiEKDHN0dWRlbnRfbmFtZRgFIAEoCVILc3R1ZGVudE5hbWUSIw'
+    'oNc3R1ZGVudF9lbWFpbBgGIAEoCVIMc3R1ZGVudEVtYWlsEiMKDXN0dWRlbnRfcGhvbmUYByAB'
+    'KAlSDHN0dWRlbnRQaG9uZQ==');
 
 @$core.Deprecated('Use createFeedbackResponseDescriptor instead')
 const CreateFeedbackResponse$json = {

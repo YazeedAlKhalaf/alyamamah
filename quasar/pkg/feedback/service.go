@@ -28,7 +28,7 @@ func (s *service) SvcCreateFeedback(ctx context.Context, r *feedbacksvcpb.SvcCre
 		return nil, err
 	}
 
-	_, err = s.store.CreateFeedback(ctx, uid, cid, r.Title, r.Body)
+	_, err = s.store.CreateFeedback(ctx, uid, cid, r.Title, r.Body, r.StudentId, r.StudentName, r.StudentEmail, r.StudentPhone)
 	if err != nil {
 		log.Ctx(ctx).Err(err).Msg("couldn't create feedback")
 		return nil, err

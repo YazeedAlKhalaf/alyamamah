@@ -7,21 +7,26 @@ package sqlc
 
 import (
 	"context"
+	"database/sql"
 
 	"github.com/google/uuid"
 )
 
 const createFeedback = `-- name: CreateFeedback :one
-INSERT INTO feedback (user_id, category_id, title, body)
-VALUES ($1, $2, $3, $4)
-RETURNING id, user_id, category_id, title, body, created_at, updated_at
+INSERT INTO feedback (user_id, category_id, title, body, student_id, student_name, student_email, student_phone)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+RETURNING id, user_id, category_id, title, body, created_at, updated_at, student_id, student_name, student_email, student_phone
 `
 
 type CreateFeedbackParams struct {
-	UserID     uuid.UUID
-	CategoryID uuid.UUID
-	Title      string
-	Body       string
+	UserID       uuid.UUID
+	CategoryID   uuid.UUID
+	Title        string
+	Body         string
+	StudentID    sql.NullString
+	StudentName  sql.NullString
+	StudentEmail sql.NullString
+	StudentPhone sql.NullString
 }
 
 func (q *Queries) CreateFeedback(ctx context.Context, arg CreateFeedbackParams) (Feedback, error) {
@@ -30,6 +35,10 @@ func (q *Queries) CreateFeedback(ctx context.Context, arg CreateFeedbackParams) 
 		arg.CategoryID,
 		arg.Title,
 		arg.Body,
+		arg.StudentID,
+		arg.StudentName,
+		arg.StudentEmail,
+		arg.StudentPhone,
 	)
 	var i Feedback
 	err := row.Scan(
@@ -40,12 +49,16 @@ func (q *Queries) CreateFeedback(ctx context.Context, arg CreateFeedbackParams) 
 		&i.Body,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.StudentID,
+		&i.StudentName,
+		&i.StudentEmail,
+		&i.StudentPhone,
 	)
 	return i, err
 }
 
 const getFeedbackById = `-- name: GetFeedbackById :one
-SELECT id, user_id, category_id, title, body, created_at, updated_at FROM feedback
+SELECT id, user_id, category_id, title, body, created_at, updated_at, student_id, student_name, student_email, student_phone FROM feedback
 WHERE id = $1
 `
 
@@ -60,12 +73,16 @@ func (q *Queries) GetFeedbackById(ctx context.Context, id uuid.UUID) (Feedback, 
 		&i.Body,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.StudentID,
+		&i.StudentName,
+		&i.StudentEmail,
+		&i.StudentPhone,
 	)
 	return i, err
 }
 
 const listFeedbackByUserId = `-- name: ListFeedbackByUserId :many
-SELECT id, user_id, category_id, title, body, created_at, updated_at FROM feedback
+SELECT id, user_id, category_id, title, body, created_at, updated_at, student_id, student_name, student_email, student_phone FROM feedback
 WHERE user_id = $1
 ORDER BY created_at DESC
 `
@@ -87,6 +104,10 @@ func (q *Queries) ListFeedbackByUserId(ctx context.Context, userID uuid.UUID) ([
 			&i.Body,
 			&i.CreatedAt,
 			&i.UpdatedAt,
+			&i.StudentID,
+			&i.StudentName,
+			&i.StudentEmail,
+			&i.StudentPhone,
 		); err != nil {
 			return nil, err
 		}

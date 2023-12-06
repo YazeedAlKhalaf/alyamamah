@@ -172,6 +172,10 @@ class CreateFeedbackRequest extends $pb.GeneratedMessage {
     $core.String? title,
     $core.String? body,
     $core.String? categoryId,
+    $core.String? studentId,
+    $core.String? studentName,
+    $core.String? studentEmail,
+    $core.String? studentPhone,
   }) {
     final $result = create();
     if (title != null) {
@@ -183,6 +187,18 @@ class CreateFeedbackRequest extends $pb.GeneratedMessage {
     if (categoryId != null) {
       $result.categoryId = categoryId;
     }
+    if (studentId != null) {
+      $result.studentId = studentId;
+    }
+    if (studentName != null) {
+      $result.studentName = studentName;
+    }
+    if (studentEmail != null) {
+      $result.studentEmail = studentEmail;
+    }
+    if (studentPhone != null) {
+      $result.studentPhone = studentPhone;
+    }
     return $result;
   }
   CreateFeedbackRequest._() : super();
@@ -193,6 +209,10 @@ class CreateFeedbackRequest extends $pb.GeneratedMessage {
     ..aOS(1, _omitFieldNames ? '' : 'title')
     ..aOS(2, _omitFieldNames ? '' : 'body')
     ..aOS(3, _omitFieldNames ? '' : 'categoryId')
+    ..aOS(4, _omitFieldNames ? '' : 'studentId')
+    ..aOS(5, _omitFieldNames ? '' : 'studentName')
+    ..aOS(6, _omitFieldNames ? '' : 'studentEmail')
+    ..aOS(7, _omitFieldNames ? '' : 'studentPhone')
     ..hasRequiredFields = false
   ;
 
@@ -243,6 +263,42 @@ class CreateFeedbackRequest extends $pb.GeneratedMessage {
   $core.bool hasCategoryId() => $_has(2);
   @$pb.TagNumber(3)
   void clearCategoryId() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get studentId => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set studentId($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasStudentId() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearStudentId() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.String get studentName => $_getSZ(4);
+  @$pb.TagNumber(5)
+  set studentName($core.String v) { $_setString(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasStudentName() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearStudentName() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.String get studentEmail => $_getSZ(5);
+  @$pb.TagNumber(6)
+  set studentEmail($core.String v) { $_setString(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasStudentEmail() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearStudentEmail() => clearField(6);
+
+  @$pb.TagNumber(7)
+  $core.String get studentPhone => $_getSZ(6);
+  @$pb.TagNumber(7)
+  set studentPhone($core.String v) { $_setString(6, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasStudentPhone() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearStudentPhone() => clearField(7);
 }
 
 class CreateFeedbackResponse extends $pb.GeneratedMessage {

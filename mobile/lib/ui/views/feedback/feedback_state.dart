@@ -21,6 +21,7 @@ class FeedbackState {
   final FeedbackBody body;
   final FormzFeedbackCategory category;
   final bool validateOnUserInteraction;
+  final bool shareMyContactInformation;
 
   FeedbackState({
     this.status = FeedbackStatus.unknown,
@@ -29,6 +30,7 @@ class FeedbackState {
     this.body = const FeedbackBody.pure(),
     this.category = const FormzFeedbackCategory.pure(),
     this.validateOnUserInteraction = false,
+    this.shareMyContactInformation = true,
   });
 
   FeedbackState copyWith({
@@ -38,6 +40,7 @@ class FeedbackState {
     FeedbackBody? body,
     FormzFeedbackCategory? category,
     bool? validateOnUserInteraction,
+    bool? shareMyContactInformation,
   }) {
     return FeedbackState(
       status: status ?? this.status,
@@ -47,6 +50,8 @@ class FeedbackState {
       category: category ?? this.category,
       validateOnUserInteraction:
           validateOnUserInteraction ?? this.validateOnUserInteraction,
+      shareMyContactInformation:
+          shareMyContactInformation ?? this.shareMyContactInformation,
     );
   }
 
@@ -59,7 +64,8 @@ class FeedbackState {
         other.title == title &&
         other.body == body &&
         other.category == category &&
-        other.validateOnUserInteraction == validateOnUserInteraction;
+        other.validateOnUserInteraction == validateOnUserInteraction &&
+        other.shareMyContactInformation == shareMyContactInformation;
   }
 
   @override
@@ -69,6 +75,7 @@ class FeedbackState {
         title.hashCode ^
         body.hashCode ^
         category.hashCode ^
-        validateOnUserInteraction.hashCode;
+        validateOnUserInteraction.hashCode ^
+        shareMyContactInformation.hashCode;
   }
 }

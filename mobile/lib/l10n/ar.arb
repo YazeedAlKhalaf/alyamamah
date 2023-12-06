@@ -206,5 +206,6 @@
   "body_must_be_at_least_ten_characters": "يجب أن يكون الموضوع على الأقل 10 أحرف",
   "body_must_be_at_most_one_thousand_characters": "يجب أن يكون الموضوع على الأكثر 1,000 حرف",
   "failed_to_send_feedback": "فشل إرسال الملاحظات",
-  "feedback_sent_successfully": "أرسلت الملاحظات بنجاح"
+  "feedback_sent_successfully": "أرسلت الملاحظات بنجاح",
+  "share_my_contact_information": "شارك معلومات التواصل الخاصة بي"
 }

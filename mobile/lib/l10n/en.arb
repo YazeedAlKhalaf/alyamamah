@@ -211,5 +211,6 @@
   "feedbacks": "Feedbacks",
   "error_loading_feedbacks": "Error loading feedbacks",
   "create_feedback": "Create Feedback",
-  "share_concerns_with_the_student_council": "Share concerns with the Student Council"
+  "share_concerns_with_the_student_council": "Share concerns with the Student Council",
+  "finals": "Finals"
 }

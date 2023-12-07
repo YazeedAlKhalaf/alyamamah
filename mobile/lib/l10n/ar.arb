@@ -211,5 +211,6 @@
   "feedbacks": "الملاحظات",
   "error_loading_feedbacks": "خطأ في تحميل الملاحظات",
   "create_feedback": "أنشئ ملاحظة",
-  "share_concerns_with_the_student_council": "شارك المخاوف مع المجلس الطلابي"
+  "share_concerns_with_the_student_council": "شارك المخاوف مع المجلس الطلابي",
+  "finals": "النهائي"
 }

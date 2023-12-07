@@ -12,6 +12,9 @@ enum FeedbackStatus {
   sendingFeedback,
   sentFeedback,
   errorSendingFeedback,
+  loadingFeedbacks,
+  loadedFeedbacks,
+  errorLoadingFeedbacks,
 }
 
 class FeedbackState {
@@ -22,6 +25,7 @@ class FeedbackState {
   final FormzFeedbackCategory category;
   final bool validateOnUserInteraction;
   final bool shareMyContactInformation;
+  final List<FeedbackItem> feedbacks;
 
   FeedbackState({
     this.status = FeedbackStatus.unknown,
@@ -31,6 +35,7 @@ class FeedbackState {
     this.category = const FormzFeedbackCategory.pure(),
     this.validateOnUserInteraction = false,
     this.shareMyContactInformation = true,
+    this.feedbacks = const [],
   });
 
   FeedbackState copyWith({
@@ -41,6 +46,7 @@ class FeedbackState {
     FormzFeedbackCategory? category,
     bool? validateOnUserInteraction,
     bool? shareMyContactInformation,
+    List<FeedbackItem>? feedbacks,
   }) {
     return FeedbackState(
       status: status ?? this.status,
@@ -52,6 +58,7 @@ class FeedbackState {
           validateOnUserInteraction ?? this.validateOnUserInteraction,
       shareMyContactInformation:
           shareMyContactInformation ?? this.shareMyContactInformation,
+      feedbacks: feedbacks ?? this.feedbacks,
     );
   }
 
@@ -65,7 +72,8 @@ class FeedbackState {
         other.body == body &&
         other.category == category &&
         other.validateOnUserInteraction == validateOnUserInteraction &&
-        other.shareMyContactInformation == shareMyContactInformation;
+        other.shareMyContactInformation == shareMyContactInformation &&
+        listEquals(other.feedbacks, feedbacks);
   }
 
   @override
@@ -76,6 +84,7 @@ class FeedbackState {
         body.hashCode ^
         category.hashCode ^
         validateOnUserInteraction.hashCode ^
-        shareMyContactInformation.hashCode;
+        shareMyContactInformation.hashCode ^
+        feedbacks.hashCode;
   }
 }

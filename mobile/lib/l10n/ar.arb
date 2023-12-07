@@ -207,5 +207,9 @@
   "body_must_be_at_most_one_thousand_characters": "يجب أن يكون الموضوع على الأكثر 1,000 حرف",
   "failed_to_send_feedback": "فشل إرسال الملاحظات",
   "feedback_sent_successfully": "أرسلت الملاحظات بنجاح",
-  "share_my_contact_information": "شارك معلومات التواصل الخاصة بي"
+  "share_my_contact_information": "شارك معلومات التواصل الخاصة بي",
+  "feedbacks": "الملاحظات",
+  "error_loading_feedbacks": "خطأ في تحميل الملاحظات",
+  "create_feedback": "أنشئ ملاحظة",
+  "share_concerns_with_the_student_council": "شارك المخاوف مع المجلس الطلابي"
 }

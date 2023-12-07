@@ -79,7 +79,7 @@ class _FeedbackViewState extends ConsumerState<FeedbackView> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.s.feedback_for_student_council),
+        title: Text(context.s.create_feedback),
       ),
       body: SafeArea(
         child: SingleChildScrollView(

@@ -6,4 +6,5 @@ tasks:
     cmds:
       - mkdir -p quasar/pkg/api/auth && protoc --go_out=quasar/pkg/api/auth --go_opt=paths=source_relative --go-grpc_out=quasar/pkg/api/auth --go-grpc_opt=paths=source_relative proto/auth.proto
       - mkdir -p quasar/pkg/api/feedback && protoc --go_out=quasar/pkg/api/feedback --go_opt=paths=source_relative --go-grpc_out=quasar/pkg/api/feedback --go-grpc_opt=paths=source_relative proto/feedback.proto
+      - protoc --dart_out=grpc:mobile/lib/gen/ google/protobuf/timestamp.proto
       - protoc --dart_out=grpc:mobile/lib/gen/ proto/*.proto

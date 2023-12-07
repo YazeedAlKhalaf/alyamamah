@@ -165,4 +165,25 @@ class FeedbackViewModel extends StateNotifier<FeedbackState> {
       );
     }
   }
+
+  Future<void> getFeedbacks() async {
+    try {
+      state = state.copyWith(
+        status: FeedbackStatus.loadingFeedbacks,
+      );
+
+      final resp = await _feedbackRepository.getFeedback();
+
+      state = state.copyWith(
+        status: FeedbackStatus.loadedFeedbacks,
+        feedbacks: resp.feedbackItems,
+      );
+    } on FeedbackRepositoryException catch (e) {
+      _log.severe('failed to get feedbacks', e);
+
+      state = state.copyWith(
+        status: FeedbackStatus.errorLoadingFeedbacks,
+      );
+    }
+  }
 }

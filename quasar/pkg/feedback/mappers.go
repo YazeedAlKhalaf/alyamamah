@@ -3,6 +3,7 @@ package feedbacksvc
 import (
 	feedbacksvcpb "github.com/YazeedAlKhalaf/alyamamah/quasar/pkg/feedback/proto"
 	"github.com/YazeedAlKhalaf/alyamamah/quasar/pkg/feedback/store/sqlc"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 // mapStoreFeedbackToSvcFeedback maps a feedback from the store to a feedback for the service, but the category
@@ -17,7 +18,8 @@ func mapStoreFeedbackToSvcFeedback(f *sqlc.Feedback) *feedbacksvcpb.SvcFeedbackI
 			NameAr: "",
 			NameEn: "",
 		},
-		UserId: f.UserID.String(),
+		UserId:    f.UserID.String(),
+		CreatedAt: timestamppb.New(f.CreatedAt),
 	}
 }
 

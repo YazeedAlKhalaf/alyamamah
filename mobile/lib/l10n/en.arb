@@ -207,5 +207,9 @@
   "body_must_be_at_most_one_thousand_characters": "Body must be at most 1,000 characters",
   "failed_to_send_feedback": "Failed to send feedback",
   "feedback_sent_successfully": "Feedback sent successfully",
-  "share_my_contact_information": "Share my contact information"
+  "share_my_contact_information": "Share my contact information",
+  "feedbacks": "Feedbacks",
+  "error_loading_feedbacks": "Error loading feedbacks",
+  "create_feedback": "Create Feedback",
+  "share_concerns_with_the_student_council": "Share concerns with the Student Council"
 }

@@ -48,7 +48,7 @@ class ProfileView extends ConsumerWidget {
                   leading:
                       const CircleAvatar(child: Icon(Icons.person_rounded)),
                   title: Text(
-                    (Localizations.localeOf(context).languageCode == 'ar'
+                    (context.isArabic
                             ? actorDetails?.sessionInfo.actorName ?? ''
                             : (actorDetails?.sessionInfo.actorNameEn ?? '')
                                 .toTitleCase())
@@ -111,7 +111,7 @@ class ProfileView extends ConsumerWidget {
                     onTap: () async {
                       await ref
                           .read(profileViewModelProvider)
-                          .navigateToFeedbackRoute();
+                          .navigateToFeedbackListRoute();
                     },
                   ),
                 ],

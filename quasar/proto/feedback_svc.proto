@@ -2,6 +2,8 @@ syntax = "proto3";
 
 option go_package = "github.com/YazeedAlKhalaf/alyamamah/quasar/pkg/feedback;feedbacksvcpb";
 
+import "google/protobuf/timestamp.proto";
+
 message SvcFeedbackCategory {
     string id = 1;
     string name_ar = 2;
@@ -14,6 +16,7 @@ message SvcFeedbackItem {
     string body = 3;
     SvcFeedbackCategory category = 4;
     string user_id = 5;
+    google.protobuf.Timestamp created_at = 6;
 }
 
 message SvcCreateFeedbackRequest {

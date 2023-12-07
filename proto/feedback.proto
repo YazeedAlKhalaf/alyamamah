@@ -2,6 +2,8 @@ syntax = "proto3";
 
 option go_package = "github.com/YazeedAlKhalaf/alyamamah/quasar/pkg/api/feedback;feedbackpb";
 
+import "google/protobuf/timestamp.proto";
+
 message GetFeedbackCategoriesRequest {}
 
 message FeedbackCategory {
@@ -39,6 +41,7 @@ message FeedbackItem {
     string title = 2;
     string body = 3;
     FeedbackCategory category = 4;
+    google.protobuf.Timestamp created_at = 5;
 }
 
 message GetFeedbackRequest {

@@ -47,6 +47,12 @@ abstract class _$YURouter extends RootStackRouter {
         child: const CoursesView(),
       );
     },
+    FeedbackListRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const FeedbackListView(),
+      );
+    },
     FeedbackRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -225,6 +231,20 @@ class CoursesRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'CoursesRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [FeedbackListView]
+class FeedbackListRoute extends PageRouteInfo<void> {
+  const FeedbackListRoute({List<PageRouteInfo>? children})
+      : super(
+          FeedbackListRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'FeedbackListRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

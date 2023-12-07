@@ -102,6 +102,7 @@ const FeedbackItem$json = {
     {'1': 'title', '3': 2, '4': 1, '5': 9, '10': 'title'},
     {'1': 'body', '3': 3, '4': 1, '5': 9, '10': 'body'},
     {'1': 'category', '3': 4, '4': 1, '5': 11, '6': '.FeedbackCategory', '10': 'category'},
+    {'1': 'created_at', '3': 5, '4': 1, '5': 11, '6': '.google.protobuf.Timestamp', '10': 'createdAt'},
   ],
 };
 
@@ -109,7 +110,8 @@ const FeedbackItem$json = {
 final $typed_data.Uint8List feedbackItemDescriptor = $convert.base64Decode(
     'CgxGZWVkYmFja0l0ZW0SDgoCaWQYASABKAlSAmlkEhQKBXRpdGxlGAIgASgJUgV0aXRsZRISCg'
     'Rib2R5GAMgASgJUgRib2R5Ei0KCGNhdGVnb3J5GAQgASgLMhEuRmVlZGJhY2tDYXRlZ29yeVII'
-    'Y2F0ZWdvcnk=');
+    'Y2F0ZWdvcnkSOQoKY3JlYXRlZF9hdBgFIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbX'
+    'BSCWNyZWF0ZWRBdA==');
 
 @$core.Deprecated('Use getFeedbackRequestDescriptor instead')
 const GetFeedbackRequest$json = {

@@ -15,9 +15,10 @@ func mapSvcFeedbackCategoryToPbFeedbackCategory(fc *feedbacksvcpb.SvcFeedbackCat
 
 func mapSvcFeedbackItemToPbFeedbackItem(fi *feedbacksvcpb.SvcFeedbackItem) *feedbackpb.FeedbackItem {
 	return &feedbackpb.FeedbackItem{
-		Id:       fi.Id,
-		Title:    fi.Title,
-		Body:     fi.Body,
-		Category: mapSvcFeedbackCategoryToPbFeedbackCategory(fi.Category),
+		Id:        fi.Id,
+		Title:     fi.Title,
+		Body:      fi.Body,
+		Category:  mapSvcFeedbackCategoryToPbFeedbackCategory(fi.Category),
+		CreatedAt: fi.CreatedAt,
 	}
 }

@@ -79,9 +79,13 @@ class FeedbackRepository {
   }
 
   Future<GetFeedbackResponse> getFeedback({
-    required GetFeedbackRequest request,
+    String? id,
   }) async {
     try {
+      final request = GetFeedbackRequest(
+        id: id,
+      );
+
       final resp = await _feedbackClient.getFeedback(request);
 
       return resp;

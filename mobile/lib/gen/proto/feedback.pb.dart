@@ -13,6 +13,8 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
+import '../google/protobuf/timestamp.pb.dart' as $2;
+
 class GetFeedbackCategoriesRequest extends $pb.GeneratedMessage {
   factory GetFeedbackCategoriesRequest() => create();
   GetFeedbackCategoriesRequest._() : super();
@@ -437,6 +439,7 @@ class FeedbackItem extends $pb.GeneratedMessage {
     $core.String? title,
     $core.String? body,
     FeedbackCategory? category,
+    $2.Timestamp? createdAt,
   }) {
     final $result = create();
     if (id != null) {
@@ -451,6 +454,9 @@ class FeedbackItem extends $pb.GeneratedMessage {
     if (category != null) {
       $result.category = category;
     }
+    if (createdAt != null) {
+      $result.createdAt = createdAt;
+    }
     return $result;
   }
   FeedbackItem._() : super();
@@ -462,6 +468,7 @@ class FeedbackItem extends $pb.GeneratedMessage {
     ..aOS(2, _omitFieldNames ? '' : 'title')
     ..aOS(3, _omitFieldNames ? '' : 'body')
     ..aOM<FeedbackCategory>(4, _omitFieldNames ? '' : 'category', subBuilder: FeedbackCategory.create)
+    ..aOM<$2.Timestamp>(5, _omitFieldNames ? '' : 'createdAt', subBuilder: $2.Timestamp.create)
     ..hasRequiredFields = false
   ;
 
@@ -523,6 +530,17 @@ class FeedbackItem extends $pb.GeneratedMessage {
   void clearCategory() => clearField(4);
   @$pb.TagNumber(4)
   FeedbackCategory ensureCategory() => $_ensure(3);
+
+  @$pb.TagNumber(5)
+  $2.Timestamp get createdAt => $_getN(4);
+  @$pb.TagNumber(5)
+  set createdAt($2.Timestamp v) { setField(5, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasCreatedAt() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearCreatedAt() => clearField(5);
+  @$pb.TagNumber(5)
+  $2.Timestamp ensureCreatedAt() => $_ensure(4);
 }
 
 class GetFeedbackRequest extends $pb.GeneratedMessage {

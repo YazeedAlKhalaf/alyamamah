@@ -25,6 +25,18 @@ extension StringX on String {
     return TimeOfDay(hour: hour, minute: minute);
   }
 
+  TimeOfDay map24ToTimeOfDay() {
+    // ' 11:30 '
+    final trimmed = trim();
+
+    // ['11', '30']
+    final timeParts = trimmed.split(':');
+    int hour = int.parse(timeParts[0].trim());
+    int minute = int.parse(timeParts[1].trim());
+
+    return TimeOfDay(hour: hour, minute: minute);
+  }
+
   bool isValidUrl() {
     final RegExp regex = RegExp(
       r'^(https?:\/\/)?' // Optional protocol (http or https)

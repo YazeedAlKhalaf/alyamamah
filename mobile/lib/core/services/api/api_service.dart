@@ -2,10 +2,12 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:alyamamah/core/constants.dart';
+import 'package:alyamamah/core/extensions/string.dart';
 import 'package:alyamamah/core/models/absence.dart';
 import 'package:alyamamah/core/models/actor_details.dart';
 import 'package:alyamamah/core/models/course_result.dart';
 import 'package:alyamamah/core/models/do_registration_response.dart';
+import 'package:alyamamah/core/models/final_exam.dart';
 import 'package:alyamamah/core/models/offered_course.dart';
 import 'package:alyamamah/core/models/registration_hours.dart';
 import 'package:alyamamah/core/models/schedule.dart';
@@ -22,6 +24,8 @@ import 'package:dio/io.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:html/parser.dart' as parser;
+import 'package:intl/intl.dart' as intl;
 import 'package:logging/logging.dart';
 import 'package:sentry_dio/sentry_dio.dart';
 
@@ -463,6 +467,53 @@ class ApiService {
       if (e is ApiServiceException) rethrow;
 
       _log.severe('getRelatedCourses | unexpected exception: $e.');
+      throw const ApiServiceException();
+    }
+  }
+
+  Future<List<FinalExam>> getFinalExams() async {
+    try {
+      final response = await _dio.get(
+        '/ui/student/final_exams/index/finalExamsIndex.faces',
+      );
+
+      if (response.statusCode != 200) {
+        _log.severe('getFinalExams | non 200 status code.');
+        throw const ApiServiceException();
+      }
+
+      final document = parser.parse(response.data);
+      final table = document.querySelector('[id*="finalExamsTable"]');
+      final exams = <FinalExam>[];
+
+      if (table != null) {
+        var rows = table.getElementsByTagName('tr');
+
+        for (var i = 1; i < rows.length; i++) {
+          var cells = rows[i].getElementsByTagName('td');
+          var examDate = intl.DateFormat('dd-MM-yyyy').parse(
+            cells[7].text.trim(),
+          );
+
+          var exam = FinalExam(
+            courseCode: cells[0].text.trim(),
+            courseName: cells[1].text.trim(),
+            courseSection: cells[2].text.trim(),
+            examRoom: cells[3].text.trim(),
+            examDay: cells[4].text.trim(),
+            examTime: cells[5].text.trim().map24ToTimeOfDay(),
+            examDate: examDate,
+          );
+
+          exams.add(exam);
+        }
+      }
+
+      return exams;
+    } catch (e) {
+      if (e is ApiServiceException) rethrow;
+
+      _log.severe('getFinalExams | unexpected exception: $e.');
       throw const ApiServiceException();
     }
   }

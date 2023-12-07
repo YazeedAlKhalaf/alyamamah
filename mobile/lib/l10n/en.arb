@@ -212,5 +212,7 @@
   "error_loading_feedbacks": "Error loading feedbacks",
   "create_feedback": "Create Feedback",
   "share_concerns_with_the_student_council": "Share concerns with the Student Council",
-  "finals": "Finals"
+  "finals": "Finals",
+  "something_went_wrong": "Something Went Wrong",
+  "failed_to_load_finals": "Failed to load finals"
 }

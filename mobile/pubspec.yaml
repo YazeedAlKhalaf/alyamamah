@@ -25,9 +25,9 @@ dependencies:
   hijri: 3.0.0
   flutter_svg: 2.0.9
   collection: any
-  firebase_core: 2.24.0
-  firebase_analytics: 10.7.2
-  firebase_messaging: 14.7.6
+  firebase_core: 2.24.1
+  firebase_analytics: 10.7.3
+  firebase_messaging: 14.7.7
   sentry_flutter: 7.13.2
   sentry_logging: 7.13.2
   sentry_dio: 7.13.2

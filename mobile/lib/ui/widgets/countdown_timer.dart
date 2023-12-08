@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:alyamamah/core/constants.dart';
+import 'package:alyamamah/core/extensions/build_context.dart';
 import 'package:flutter/material.dart';
 
 class CountdownTimerWidget extends StatefulWidget {
@@ -42,21 +44,32 @@ class _CountdownTimerWidgetState extends State<CountdownTimerWidget> {
   @override
   Widget build(BuildContext context) {
     if (_timeLeft.isNegative) {
-      return const Text(
-        'Exam has started',
-        style: TextStyle(
-          color: Colors.red,
-          fontWeight: FontWeight.bold,
-          fontSize: 16,
+      return Container(
+        padding: const EdgeInsets.symmetric(
+          vertical: Constants.spacing,
+          horizontal: Constants.padding,
+        ),
+        decoration: BoxDecoration(
+          color: context.colorScheme.errorContainer,
+          borderRadius: BorderRadius.circular(Constants.spacing),
+        ),
+        child: Text(
+          context.s.exam_has_started,
+          style: context.textTheme.headlineSmall?.copyWith(
+            color: context.colorScheme.onErrorContainer,
+          ),
         ),
       );
     }
 
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      padding: const EdgeInsets.symmetric(
+        vertical: Constants.spacing,
+        horizontal: Constants.padding,
+      ),
       decoration: BoxDecoration(
         color: Colors.blue.shade100,
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(Constants.spacing),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.5),
@@ -69,13 +82,13 @@ class _CountdownTimerWidgetState extends State<CountdownTimerWidget> {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          _buildTimePart(_timeLeft.inDays, 'days'),
+          _buildTimePart(_timeLeft.inDays, context.s.days),
           _buildDot(),
-          _buildTimePart(_timeLeft.inHours.remainder(24), 'hours'),
+          _buildTimePart(_timeLeft.inHours.remainder(24), context.s.hours),
           _buildDot(),
-          _buildTimePart(_timeLeft.inMinutes.remainder(60), 'min'),
+          _buildTimePart(_timeLeft.inMinutes.remainder(60), context.s.min),
           _buildDot(),
-          _buildTimePart(_timeLeft.inSeconds.remainder(60), 'sec'),
+          _buildTimePart(_timeLeft.inSeconds.remainder(60), context.s.sec),
         ],
       ),
     );

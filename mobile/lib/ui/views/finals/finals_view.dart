@@ -1,3 +1,4 @@
+import 'package:alyamamah/core/constants.dart';
 import 'package:alyamamah/core/extensions/build_context.dart';
 import 'package:alyamamah/core/models/final_exam.dart';
 import 'package:alyamamah/ui/views/finals/finals_state.dart';
@@ -31,8 +32,13 @@ class _FinalsViewState extends ConsumerState<FinalsView> {
     final finalsVM = ref.read(finalsViewModelProvider.notifier);
 
     return Scaffold(
-      appBar: AppBar(title: Text(context.s.finals)),
-      body: FinalsBody(finalsState: finalsState, finalsVM: finalsVM),
+      appBar: AppBar(
+        title: Text(context.s.finals),
+      ),
+      body: FinalsBody(
+        finalsState: finalsState,
+        finalsVM: finalsVM,
+      ),
     );
   }
 }
@@ -91,10 +97,15 @@ class FinalsList extends ConsumerWidget {
         itemBuilder: (context, index) {
           final date = dates[index];
           final exams = finalsVM.getExamsForDate(date);
-          bool isToday = date.day == today.day &&
+          final isToday = date.day == today.day &&
               date.month == today.month &&
               date.year == today.year;
-          return DateExamRow(date: date, exams: exams, isToday: isToday);
+
+          return DateExamRow(
+            date: date,
+            exams: exams,
+            isToday: isToday,
+          );
         },
       ),
     );
@@ -116,8 +127,9 @@ class DateExamRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      color: isToday ? Theme.of(context).highlightColor : Colors.transparent,
+      padding: const EdgeInsets.symmetric(vertical: Constants.spacing),
+      color:
+          isToday ? context.colorScheme.primaryContainer : Colors.transparent,
       child: Row(
         children: [
           DateColumn(date: date),
@@ -130,26 +142,34 @@ class DateExamRow extends StatelessWidget {
 
 class DateColumn extends StatelessWidget {
   final DateTime date;
+  final bool isToday;
 
   const DateColumn({
     super.key,
     required this.date,
+    this.isToday = false,
   });
 
   @override
   Widget build(BuildContext context) {
+    final locale = Localizations.localeOf(context).languageCode;
+
     return SizedBox(
       width: 60,
       child: Column(
         children: [
           Text(
-            intl.DateFormat('EE').format(date),
-            style: const TextStyle(fontWeight: FontWeight.bold),
-          ), // Weekday
+            intl.DateFormat('EE', locale).format(date),
+            style: context.textTheme.titleMedium,
+          ),
           Text(
-            intl.DateFormat('dd').format(date),
-            style: const TextStyle(fontSize: 16),
-          ), // Date
+            intl.DateFormat('dd', locale).format(date),
+            style: context.textTheme.headlineSmall,
+          ),
+          Text(
+            intl.DateFormat('MMM', locale).format(date),
+            style: context.textTheme.titleSmall,
+          ),
         ],
       ),
     );
@@ -165,6 +185,7 @@ class ExamsColumn extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: exams.map((exam) => ExamDetailCard(exam: exam)).toList(),
       ),
     );
@@ -174,40 +195,50 @@ class ExamsColumn extends StatelessWidget {
 class ExamDetailCard extends StatelessWidget {
   final FinalExam exam;
 
-  const ExamDetailCard({super.key, required this.exam});
-
-  String getFormattedTime(DateTime examDateTime) {
-    return intl.DateFormat('h:mm a').format(examDateTime);
-  }
+  const ExamDetailCard({
+    super.key,
+    required this.exam,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final examDate = intl.DateFormat('EEEE, MMMM d').format(exam.examDate);
+    final locale = Localizations.localeOf(context).languageCode;
+    final examDate = intl.DateFormat('EEEE, MMMM d', locale).format(
+      exam.examDate,
+    );
     final examTime = exam.examTime.format(context);
 
     return Card(
       elevation: 4,
-      margin: const EdgeInsets.all(8),
+      margin: const EdgeInsets.all(Constants.spacing),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(Constants.padding),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               exam.courseName,
-              style: Theme.of(context).textTheme.titleLarge,
+              style: context.textTheme.titleLarge,
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: Constants.spacing),
             Text(
-              '${exam.courseCode} - Room: ${exam.examRoom}',
-              style: Theme.of(context).textTheme.titleMedium,
+              exam.courseCode,
+              style: context.textTheme.titleMedium,
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: Constants.spacing),
             Text(
-              'Date: $examDate\nTime: $examTime',
-              style: Theme.of(context).textTheme.titleSmall,
+              '${context.s.room_colon} ${exam.examRoom}',
+              style: context.textTheme.titleSmall,
             ),
-            const SizedBox(height: 16),
+            Text(
+              '${context.s.date_colon} $examDate',
+              style: context.textTheme.titleSmall,
+            ),
+            Text(
+              '${context.s.time_colon} $examTime',
+              style: context.textTheme.titleSmall,
+            ),
+            const SizedBox(height: Constants.padding),
             CountdownTimerWidget(exam.examDate),
           ],
         ),

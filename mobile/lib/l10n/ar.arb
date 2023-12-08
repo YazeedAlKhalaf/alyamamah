@@ -214,5 +214,14 @@
   "share_concerns_with_the_student_council": "شارك المخاوف مع المجلس الطلابي",
   "finals": "النهائي",
   "something_went_wrong": "حدث خطأ",
-  "failed_to_load_finals": "فشل في تحميل مواعيد الاختبارات النهائية"
+  "failed_to_load_finals": "فشل في تحميل مواعيد الاختبارات النهائية",
+  "room_colon": "القاعة:",
+  "course_code_colon": "رمز المقرر:",
+  "date_colon": "التاريخ:",
+  "time_colon": "الوقت:",
+  "days": "أيام",
+  "hours": "ساعات",
+  "min": "دقيقة",
+  "sec": "ثانية",
+  "exam_has_started": "الاختبار بدأ"
 }

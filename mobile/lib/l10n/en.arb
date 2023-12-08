@@ -214,5 +214,14 @@
   "share_concerns_with_the_student_council": "Share concerns with the Student Council",
   "finals": "Finals",
   "something_went_wrong": "Something Went Wrong",
-  "failed_to_load_finals": "Failed to load finals"
+  "failed_to_load_finals": "Failed to load finals",
+  "room_colon": "Room:",
+  "course_code_colon": "Course Code:",
+  "date_colon": "Date:",
+  "time_colon": "Time:",
+  "days": "Days",
+  "hours": "Hours",
+  "min": "Min",
+  "sec": "Sec",
+  "exam_has_started": "Exam has started"
 }

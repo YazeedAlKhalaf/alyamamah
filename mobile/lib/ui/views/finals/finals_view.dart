@@ -60,7 +60,7 @@ class FinalsBody extends ConsumerWidget {
       );
     }
 
-    if (finalsState.finals.isNotEmpty) {
+    if (finalsState.finals.isEmpty) {
       return EmptyView(
         title: context.s.you_dont_have_finals,
         subtitle: context.s.it_seems_that_you_dont_have_any_final_exams_yet,

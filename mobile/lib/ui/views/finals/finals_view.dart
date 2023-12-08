@@ -4,6 +4,7 @@ import 'package:alyamamah/core/models/final_exam.dart';
 import 'package:alyamamah/ui/views/finals/finals_state.dart';
 import 'package:alyamamah/ui/views/finals/finals_view_model.dart';
 import 'package:alyamamah/ui/widgets/countdown_timer.dart';
+import 'package:alyamamah/ui/widgets/empty_view.dart';
 import 'package:alyamamah/ui/widgets/error_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -28,58 +29,58 @@ class _FinalsViewState extends ConsumerState<FinalsView> {
 
   @override
   Widget build(BuildContext context) {
-    final finalsState = ref.watch(finalsViewModelProvider);
-    final finalsVM = ref.read(finalsViewModelProvider.notifier);
-
     return Scaffold(
       appBar: AppBar(
         title: Text(context.s.finals),
       ),
-      body: FinalsBody(
-        finalsState: finalsState,
-        finalsVM: finalsVM,
-      ),
+      body: const FinalsBody(),
     );
   }
 }
 
-class FinalsBody extends StatelessWidget {
-  final FinalsState finalsState;
-  final FinalsViewModel finalsVM;
-
-  const FinalsBody({
-    super.key,
-    required this.finalsState,
-    required this.finalsVM,
-  });
+class FinalsBody extends ConsumerWidget {
+  const FinalsBody({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    switch (finalsState.status) {
-      case FinalsStatus.loadingFinals:
-        return const Center(child: CircularProgressIndicator());
-      case FinalsStatus.errorLoadingFinals:
-        return ErrorView(
-          title: context.s.something_went_wrong,
-          subtitle: context.s.failed_to_load_finals,
-          onRefresh: () => finalsVM.getFinalExams(),
-        );
-      default:
-        return FinalsList(finalsVM: finalsVM);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final finalsState = ref.watch(finalsViewModelProvider);
+    final finalsVM = ref.read(finalsViewModelProvider.notifier);
+
+    if (finalsState.status == FinalsStatus.loadingFinals) {
+      return const Center(child: CircularProgressIndicator());
     }
+
+    if (finalsState.status == FinalsStatus.errorLoadingFinals) {
+      return ErrorView(
+        title: context.s.something_went_wrong,
+        subtitle: context.s.failed_to_load_finals,
+        onRefresh: () async {
+          await finalsVM.getFinalExams();
+        },
+      );
+    }
+
+    if (finalsState.finals.isNotEmpty) {
+      return EmptyView(
+        title: context.s.you_dont_have_finals,
+        subtitle: context.s.it_seems_that_you_dont_have_any_final_exams_yet,
+        onRefresh: () async {
+          await finalsVM.getFinalExams();
+        },
+      );
+    }
+
+    return const FinalsList();
   }
 }
 
 class FinalsList extends ConsumerWidget {
-  final FinalsViewModel finalsVM;
-
-  const FinalsList({
-    super.key,
-    required this.finalsVM,
-  });
+  const FinalsList({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final finalsVM = ref.read(finalsViewModelProvider.notifier);
+
     final startDate = finalsVM.firstExamDate;
     final endDate = finalsVM.lastExamDate;
     final today = DateTime.now();

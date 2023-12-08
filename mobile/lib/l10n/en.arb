@@ -223,5 +223,7 @@
   "hours": "Hours",
   "min": "Min",
   "sec": "Sec",
-  "exam_has_started": "Exam has started"
+  "exam_has_started": "Exam has started",
+  "you_dont_have_finals": "You Don't Have Finals",
+  "it_seems_that_you_dont_have_any_final_exams_yet": "It seems that you don't have any final exams yet."
 }

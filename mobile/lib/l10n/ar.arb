@@ -223,5 +223,7 @@
   "hours": "ساعات",
   "min": "دقيقة",
   "sec": "ثانية",
-  "exam_has_started": "الاختبار بدأ"
+  "exam_has_started": "الاختبار بدأ",
+  "you_dont_have_finals": "لا يوجد لديك اختبارات نهائية",
+  "it_seems_that_you_dont_have_any_final_exams_yet": "يبدو أنه ليس لديك أي اختبارات نهائية بعد"
 }

@@ -30,83 +30,73 @@ class _FinalsViewState extends ConsumerState<FinalsView> {
     final finalsState = ref.watch(finalsViewModelProvider);
     final finalsVM = ref.read(finalsViewModelProvider.notifier);
 
+    return Scaffold(
+      appBar: AppBar(title: Text(context.s.finals)),
+      body: FinalsBody(finalsState: finalsState, finalsVM: finalsVM),
+    );
+  }
+}
+
+class FinalsBody extends StatelessWidget {
+  final FinalsState finalsState;
+  final FinalsViewModel finalsVM;
+
+  const FinalsBody({
+    super.key,
+    required this.finalsState,
+    required this.finalsVM,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    switch (finalsState.status) {
+      case FinalsStatus.loadingFinals:
+        return const Center(child: CircularProgressIndicator());
+      case FinalsStatus.errorLoadingFinals:
+        return ErrorView(
+          title: context.s.something_went_wrong,
+          subtitle: context.s.failed_to_load_finals,
+          onRefresh: () => finalsVM.getFinalExams(),
+        );
+      default:
+        return FinalsList(finalsVM: finalsVM);
+    }
+  }
+}
+
+class FinalsList extends ConsumerWidget {
+  final FinalsViewModel finalsVM;
+
+  const FinalsList({
+    super.key,
+    required this.finalsVM,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
     final startDate = finalsVM.firstExamDate;
     final endDate = finalsVM.lastExamDate;
-
+    final today = DateTime.now();
     List<DateTime> dates = List.generate(
-      endDate.difference(startDate).inDays + 1, // +1 to include the last day
+      endDate.difference(startDate).inDays + 1,
       (index) => startDate.add(Duration(days: index)),
     );
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(context.s.finals),
-      ),
-      body: switch (finalsState.status) {
-        FinalsStatus.loadingFinals => const Center(
-            child: CircularProgressIndicator(),
-          ),
-        FinalsStatus.errorLoadingFinals => ErrorView(
-            title: context.s.something_went_wrong,
-            subtitle: context.s.failed_to_load_finals,
-            onRefresh: () async {
-              await ref.read(finalsViewModelProvider.notifier).getFinalExams();
-            },
-          ),
-        _ => RefreshIndicator(
-            onRefresh: () async {
-              await ref.read(finalsViewModelProvider.notifier).getFinalExams();
-            },
-            child: ListView.builder(
-              itemCount: dates.length,
-              itemBuilder: (context, index) {
-                final date = dates[index];
-                final exams = finalsVM.getExamsForDate(date);
-
-                return DateExamRow(date: date, exams: exams);
-              },
-            ),
-
-            // child: ListView.builder(
-            //   itemCount: finalsState.finals.length,
-            //   itemBuilder: (context, index) {
-            //     final finalExam = finalsState.finals[index];
-
-            //     return Card(
-            //       child: ListTile(
-            //         title: Text(finalExam.courseCode),
-            //         subtitle: Text(finalExam.courseName),
-            //         trailing: Column(
-            //           mainAxisAlignment: MainAxisAlignment.center,
-            //           crossAxisAlignment: CrossAxisAlignment.end,
-            //           children: [
-            //             if (finalExam.isToday)
-            //               const Text(
-            //                 'Today',
-            //                 style: TextStyle(
-            //                   color: Colors.red,
-            //                 ),
-            //               ),
-            //             Text(
-            //               intl.DateFormat('yyyy-MM-dd – kk:mm').format(
-            //                 finalExam.examDate,
-            //               ),
-            //             ),
-            //             if (!finalExam.isToday)
-            //               Text(
-            //                 '${finalExam.timeUntilExam.inDays} days remaining',
-            //               ),
-            //             if (finalExam.isToday ||
-            //                 finalExam.timeUntilExam.inDays <= 7)
-            //               CountdownTimerWidget(finalExam.examDate),
-            //           ],
-            //         ),
-            //       ),
-            //     );
-            //   },
-            // ),
-          ),
+    return RefreshIndicator(
+      onRefresh: () async {
+        await ref.read(finalsViewModelProvider.notifier).getFinalExams();
       },
+      child: ListView.builder(
+        itemCount: dates.length,
+        itemBuilder: (context, index) {
+          final date = dates[index];
+          final exams = finalsVM.getExamsForDate(date);
+          bool isToday = date.day == today.day &&
+              date.month == today.month &&
+              date.year == today.year;
+          return DateExamRow(date: date, exams: exams, isToday: isToday);
+        },
+      ),
     );
   }
 }
@@ -114,31 +104,69 @@ class _FinalsViewState extends ConsumerState<FinalsView> {
 class DateExamRow extends StatelessWidget {
   final DateTime date;
   final List<FinalExam> exams;
+  final bool isToday;
 
-  const DateExamRow({super.key, required this.date, required this.exams});
+  const DateExamRow({
+    super.key,
+    required this.date,
+    required this.exams,
+    this.isToday = false,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        // Left side - Date
-        SizedBox(
-          width: 60,
-          child: Column(
-            children: [
-              Text(intl.DateFormat('EE').format(date)), // Weekday
-              Text(intl.DateFormat('dd').format(date)), // Date
-            ],
-          ),
-        ),
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      color: isToday ? Theme.of(context).highlightColor : Colors.transparent,
+      child: Row(
+        children: [
+          DateColumn(date: date),
+          ExamsColumn(exams: exams),
+        ],
+      ),
+    );
+  }
+}
 
-        // Right side - Exams
-        Expanded(
-          child: Column(
-            children: exams.map((exam) => ExamDetailCard(exam: exam)).toList(),
-          ),
-        ),
-      ],
+class DateColumn extends StatelessWidget {
+  final DateTime date;
+
+  const DateColumn({
+    super.key,
+    required this.date,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 60,
+      child: Column(
+        children: [
+          Text(
+            intl.DateFormat('EE').format(date),
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ), // Weekday
+          Text(
+            intl.DateFormat('dd').format(date),
+            style: const TextStyle(fontSize: 16),
+          ), // Date
+        ],
+      ),
+    );
+  }
+}
+
+class ExamsColumn extends StatelessWidget {
+  final List<FinalExam> exams;
+
+  const ExamsColumn({super.key, required this.exams});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Column(
+        children: exams.map((exam) => ExamDetailCard(exam: exam)).toList(),
+      ),
     );
   }
 }
@@ -148,25 +176,38 @@ class ExamDetailCard extends StatelessWidget {
 
   const ExamDetailCard({super.key, required this.exam});
 
-  String getFormattedTime(TimeOfDay time) {
-    final now = DateTime.now();
-    final dt = DateTime(now.year, now.month, now.day, time.hour, time.minute);
-    return intl.DateFormat('h:mm a').format(dt);
+  String getFormattedTime(DateTime examDateTime) {
+    return intl.DateFormat('h:mm a').format(examDateTime);
   }
 
   @override
   Widget build(BuildContext context) {
+    final examDate = intl.DateFormat('EEEE, MMMM d').format(exam.examDate);
+    final examTime = getFormattedTime(exam.examDate);
+
     return Card(
-      child: ListTile(
-        title: Text(
-          exam.courseName,
-        ),
-        subtitle: Column(
+      elevation: 4,
+      margin: const EdgeInsets.all(8),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              '${exam.courseCode} - ${exam.examRoom}\n${getFormattedTime(exam.examTime)}',
+              exam.courseName,
+              style: Theme.of(context).textTheme.titleLarge,
             ),
+            const SizedBox(height: 8),
+            Text(
+              '${exam.courseCode} - Room: ${exam.examRoom}',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Date: $examDate\nTime: $examTime',
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
+            const SizedBox(height: 16),
             CountdownTimerWidget(exam.examDate),
           ],
         ),

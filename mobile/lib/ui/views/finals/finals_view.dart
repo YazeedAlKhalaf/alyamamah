@@ -204,7 +204,7 @@ class ExamDetailCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final locale = Localizations.localeOf(context).languageCode;
-    final examDate = intl.DateFormat('EEEE, MMMM d', locale).format(
+    final examDate = intl.DateFormat('EEEE, MMMM d, yyyy', locale).format(
       exam.examDate,
     );
     final examTime = exam.examTime.format(context);

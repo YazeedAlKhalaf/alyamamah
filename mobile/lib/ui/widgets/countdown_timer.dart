@@ -80,7 +80,8 @@ class _CountdownTimerWidgetState extends State<CountdownTimerWidget> {
         ],
       ),
       child: Row(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           _buildTimePart(_timeLeft.inDays, context.s.days),
           _buildDot(),

@@ -183,7 +183,7 @@ class ExamDetailCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final examDate = intl.DateFormat('EEEE, MMMM d').format(exam.examDate);
-    final examTime = getFormattedTime(exam.examDate);
+    final examTime = exam.examTime.format(context);
 
     return Card(
       elevation: 4,

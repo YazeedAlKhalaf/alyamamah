@@ -295,6 +295,14 @@ class ExamDetailCard extends StatelessWidget {
     );
     final examTime = exam.examTime.format(context);
 
+    final combinedDateTime = DateTime(
+      exam.examDate.year,
+      exam.examDate.month,
+      exam.examDate.day,
+      exam.examTime.hour,
+      exam.examTime.minute,
+    );
+
     return Card(
       elevation: 4,
       margin: const EdgeInsets.all(Constants.spacing),
@@ -326,7 +334,7 @@ class ExamDetailCard extends StatelessWidget {
               style: context.textTheme.titleSmall,
             ),
             const SizedBox(height: Constants.padding),
-            CountdownTimerWidget(exam.examDate),
+            CountdownTimerWidget(combinedDateTime),
           ],
         ),
       ),

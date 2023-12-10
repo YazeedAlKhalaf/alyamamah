@@ -228,5 +228,8 @@
   "it_seems_that_you_dont_have_any_final_exams_yet": "يبدو أنه ليس لديك أي اختبارات نهائية بعد",
   "one_day_break": "فسحة يوم واحد: {date}",
   "from_to": "من {from} إلى {to}",
-  "break_duration": "مدّة الفسحة: {days, plural, =0{صفر أيام} =1{يوم واحد} other{{days} أيام}}"
+  "break_duration": "مدّة الفسحة: {days, plural, =0{صفر أيام} =1{يوم واحد} other{{days} أيام}}",
+  "exam_ended": "انتهى الإمتحان",
+  "exam_starts_in": "الإمتحان يبدأ في غضون",
+  "exam_ends_in": "الإمتحان ينتهي في غضون"
 }

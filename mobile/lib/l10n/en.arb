@@ -228,5 +228,8 @@
   "it_seems_that_you_dont_have_any_final_exams_yet": "It seems that you don't have any final exams yet.",
   "one_day_break": "One-day break on {date}",
   "from_to": "From {from} to {to}",
-  "break_duration": "Break Duration: {days, plural, =0{Zero Days} =1{One Day} other{{days} Days}}"
+  "break_duration": "Break Duration: {days, plural, =0{Zero Days} =1{One Day} other{{days} Days}}",
+  "exam_ended": "Exam Ended",
+  "exam_starts_in": "Exam Starts In",
+  "exam_ends_in": "Exam Ends In"
 }

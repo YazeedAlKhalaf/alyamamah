@@ -61,4 +61,11 @@ class FinalsViewModel extends StateNotifier<FinalsState> {
             exam.examDate.day == date.day)
         .toList();
   }
+
+  bool hasExamOnDate(DateTime date) {
+    return state.finals.any((exam) =>
+        exam.examDate.year == date.year &&
+        exam.examDate.month == date.month &&
+        exam.examDate.day == date.day);
+  }
 }

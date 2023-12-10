@@ -83,31 +83,117 @@ class FinalsList extends ConsumerWidget {
 
     final startDate = finalsVM.firstExamDate;
     final endDate = finalsVM.lastExamDate;
-    final today = DateTime.now();
     List<DateTime> dates = List.generate(
       endDate.difference(startDate).inDays + 1,
       (index) => startDate.add(Duration(days: index)),
     );
+
+    final Map<dynamic, List<FinalExam>> scheduleMap = {};
+    DateTime? lastExamDate;
+
+    for (var date in dates) {
+      final exams = finalsVM.getExamsForDate(date);
+      if (exams.isNotEmpty) {
+        scheduleMap[date] = exams;
+        lastExamDate = date;
+      } else if (lastExamDate != null) {
+        DateTime nextExamDate = dates.firstWhere(
+          (d) => d.isAfter(date) && finalsVM.hasExamOnDate(d),
+          orElse: () => endDate.add(const Duration(days: 1)),
+        );
+        if (nextExamDate.difference(date).inDays > 1) {
+          String breakKey =
+              '${date.toString()} - ${nextExamDate.subtract(const Duration(days: 1)).toString()}';
+          scheduleMap[breakKey] = [];
+          lastExamDate = null;
+        }
+      }
+    }
 
     return RefreshIndicator(
       onRefresh: () async {
         await ref.read(finalsViewModelProvider.notifier).getFinalExams();
       },
       child: ListView.builder(
-        itemCount: dates.length,
+        itemCount: scheduleMap.keys.length,
         itemBuilder: (context, index) {
-          final date = dates[index];
-          final exams = finalsVM.getExamsForDate(date);
-          final isToday = date.day == today.day &&
-              date.month == today.month &&
-              date.year == today.year;
+          var key = scheduleMap.keys.elementAt(index);
+          List<FinalExam> exams = scheduleMap[key]!;
 
-          return DateExamRow(
-            date: date,
-            exams: exams,
-            isToday: isToday,
-          );
+          if (key is DateTime) {
+            return DateExamRow(
+              date: key,
+              exams: exams,
+              isToday: key.isAtSameMomentAs(DateTime.now()),
+            );
+          } else if (key is String) {
+            final dates = key.split(' - ');
+            DateTime start = DateTime.parse(dates[0]);
+            DateTime end = DateTime.parse(dates[1]);
+            return BreakIntervalTile(
+              startDate: start,
+              endDate: end,
+            );
+          } else {
+            return const SizedBox.shrink();
+          }
         },
+      ),
+    );
+  }
+}
+
+class BreakIntervalTile extends StatelessWidget {
+  final DateTime startDate;
+  final DateTime endDate;
+
+  const BreakIntervalTile({
+    super.key,
+    required this.startDate,
+    required this.endDate,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final daysDifference = endDate.difference(startDate).inDays + 1;
+
+    final locale = Localizations.localeOf(context).languageCode;
+    final formattedStartDate = intl.DateFormat('EE, dd MMM', locale).format(
+      startDate,
+    );
+    final formattedEndDate = intl.DateFormat('EE, dd MMM', locale).format(
+      endDate,
+    );
+
+    return Card(
+      elevation: 4,
+      margin: const EdgeInsets.symmetric(
+        horizontal: Constants.padding,
+        vertical: Constants.spacing,
+      ),
+      color: context.colorScheme.primaryContainer,
+      child: ListTile(
+        isThreeLine: true,
+        title: Text(
+          context.s.break_word,
+          style: context.textTheme.titleLarge,
+          textAlign: TextAlign.center,
+        ),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              context.s.break_duration(daysDifference),
+              style: context.textTheme.bodyLarge,
+              textAlign: TextAlign.center,
+            ),
+            Text(
+              context.s.from_to(formattedStartDate, formattedEndDate),
+              style: context.textTheme.bodyLarge,
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
       ),
     );
   }

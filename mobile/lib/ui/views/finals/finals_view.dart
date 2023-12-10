@@ -304,40 +304,71 @@ class ExamDetailCard extends StatelessWidget {
     );
 
     return Card(
-      elevation: 4,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(Constants.padding),
+      ),
+      elevation: 5,
       margin: const EdgeInsets.all(Constants.spacing),
-      child: Padding(
+      child: Container(
+        decoration: BoxDecoration(
+          color: context.colorScheme.secondaryContainer,
+          borderRadius: BorderRadius.circular(15),
+        ),
         padding: const EdgeInsets.all(Constants.padding),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               exam.courseName,
-              style: context.textTheme.titleLarge,
+              style: context.textTheme.titleLarge?.copyWith(
+                color: context.colorScheme.primary,
+              ),
             ),
             const SizedBox(height: Constants.spacing),
             Text(
               exam.courseCode,
-              style: context.textTheme.titleMedium,
+              style: context.textTheme.titleMedium?.copyWith(
+                color: context.colorScheme.secondary,
+              ),
             ),
             const SizedBox(height: Constants.spacing),
-            Text(
+            _buildDetailRow(
+              Icons.location_on,
               '${context.s.room_colon} ${exam.examRoom}',
-              style: context.textTheme.titleSmall,
+              context,
             ),
-            Text(
+            const SizedBox(height: Constants.spacing),
+            _buildDetailRow(
+              Icons.calendar_today,
               '${context.s.date_colon} $examDate',
-              style: context.textTheme.titleSmall,
+              context,
             ),
-            Text(
+            const SizedBox(height: Constants.spacing),
+            _buildDetailRow(
+              Icons.access_time,
               '${context.s.time_colon} $examTime',
-              style: context.textTheme.titleSmall,
+              context,
             ),
             const SizedBox(height: Constants.padding),
             CountdownTimerWidget(combinedDateTime),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildDetailRow(IconData icon, String text, BuildContext context) {
+    return Row(
+      children: [
+        Icon(icon, color: context.colorScheme.onSurface, size: 20),
+        const SizedBox(width: Constants.spacing),
+        Text(
+          text,
+          style: context.textTheme.titleSmall?.copyWith(
+            color: context.colorScheme.onSurface,
+          ),
+        ),
+      ],
     );
   }
 }

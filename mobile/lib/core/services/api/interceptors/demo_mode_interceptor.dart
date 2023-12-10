@@ -5,6 +5,7 @@ import 'package:alyamamah/core/services/api/fixtures/acitivity_courses.dart';
 import 'package:alyamamah/core/services/api/fixtures/actor_details_response.dart';
 import 'package:alyamamah/core/services/api/fixtures/course_results_response.dart';
 import 'package:alyamamah/core/services/api/fixtures/do_registration_response.dart';
+import 'package:alyamamah/core/services/api/fixtures/final_exams_response.dart';
 import 'package:alyamamah/core/services/api/fixtures/get_attempted_courses_response.dart';
 import 'package:alyamamah/core/services/api/fixtures/get_registration_hours_response.dart';
 import 'package:alyamamah/core/services/api/fixtures/offered_courses_response.dart';
@@ -141,6 +142,12 @@ class DemoModeInterceptor extends Interceptor {
           requestOptions: options,
           statusCode: 200,
           data: activityCoursesSuccessResponse,
+        );
+      case '/ui/student/final_exams/index/finalExamsIndex.faces':
+        return Response(
+          requestOptions: options,
+          statusCode: 200,
+          data: finalExamsResponse,
         );
     }
     return null;

@@ -166,30 +166,47 @@ class BreakIntervalTile extends StatelessWidget {
     );
 
     return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15), // Rounded corners
+      ),
       elevation: 4,
       margin: const EdgeInsets.symmetric(
         horizontal: Constants.padding,
         vertical: Constants.spacing,
       ),
       color: context.colorScheme.primaryContainer,
-      child: ListTile(
-        isThreeLine: true,
-        title: Text(
-          context.s.break_word,
-          style: context.textTheme.titleLarge,
-          textAlign: TextAlign.center,
-        ),
-        subtitle: Column(
+      child: Padding(
+        padding: const EdgeInsets.all(Constants.padding),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            Icon(
+              Icons.pause_circle_filled,
+              color: context.colorScheme.secondary,
+              size: 30,
+            ),
+            const SizedBox(height: Constants.spacing),
             Text(
-              context.s.break_duration(daysDifference),
-              style: context.textTheme.bodyLarge,
+              context.s.break_word,
+              style: context.textTheme.titleLarge?.copyWith(
+                color: context.colorScheme.onPrimaryContainer,
+              ),
               textAlign: TextAlign.center,
             ),
+            const SizedBox(height: Constants.spacing),
+            Text(
+              context.s.break_duration(daysDifference),
+              style: context.textTheme.bodyLarge?.copyWith(
+                color: context.colorScheme.onPrimaryContainer,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: Constants.spacing / 2),
             Text(
               context.s.from_to(formattedStartDate, formattedEndDate),
-              style: context.textTheme.bodyLarge,
+              style: context.textTheme.bodyLarge
+                  ?.copyWith(color: context.colorScheme.onPrimaryContainer),
               textAlign: TextAlign.center,
             ),
           ],

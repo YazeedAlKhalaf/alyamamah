@@ -20,7 +20,7 @@ class PrivacyPolicyAndTermsOfUseWidget extends StatelessWidget {
           child: Text(
             context.s.privacy_policy,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: Theme.of(context).colorScheme.secondary,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
           ),
         ),
@@ -37,7 +37,7 @@ class PrivacyPolicyAndTermsOfUseWidget extends StatelessWidget {
           child: Text(
             context.s.terms_of_use,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: Theme.of(context).colorScheme.secondary,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
           ),
         ),

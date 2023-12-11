@@ -169,7 +169,7 @@ class BreakIntervalTile extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15), // Rounded corners
       ),
-      elevation: 4,
+      elevation: 0,
       margin: const EdgeInsets.symmetric(
         horizontal: Constants.padding,
         vertical: Constants.spacing,
@@ -324,7 +324,7 @@ class ExamDetailCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(Constants.padding),
       ),
-      elevation: 5,
+      elevation: 0,
       margin: const EdgeInsets.all(Constants.spacing),
       child: Container(
         decoration: BoxDecoration(

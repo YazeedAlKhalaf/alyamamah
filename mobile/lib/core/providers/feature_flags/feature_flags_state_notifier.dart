@@ -43,6 +43,9 @@ class FeatureFlagsStateNotifier extends StateNotifier<FeatureFlagsState> {
       isStudentCouncilFeedbackEnabled: _unleashService.isEnabled(
         UnleashFlags.studentCouncilFeedback,
       ),
+      isShareContactInfoEnabled: _unleashService.isEnabled(
+        UnleashFlags.shareContactInfo,
+      ),
     );
   }
 
@@ -63,6 +66,9 @@ class FeatureFlagsStateNotifier extends StateNotifier<FeatureFlagsState> {
       ),
       isStudentCouncilFeedbackEnabled: _unleashService.isEnabled(
         UnleashFlags.studentCouncilFeedback,
+      ),
+      isShareContactInfoEnabled: _unleashService.isEnabled(
+        UnleashFlags.shareContactInfo,
       ),
     );
   }

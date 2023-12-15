@@ -1,6 +1,7 @@
 import 'package:alyamamah/core/constants.dart';
 import 'package:alyamamah/core/extensions/build_context.dart';
 import 'package:alyamamah/core/providers/actor_details/actor_details_notifier.dart';
+import 'package:alyamamah/core/providers/feature_flags/feature_flags_state_notifier.dart';
 import 'package:alyamamah/gen/proto/feedback.pb.dart' as feedbackpb;
 import 'package:alyamamah/ui/views/feedback/feedback_state.dart';
 import 'package:alyamamah/ui/views/feedback/feedback_view_model.dart';
@@ -76,6 +77,7 @@ class _FeedbackViewState extends ConsumerState<FeedbackView> {
     });
 
     final feedbackState = ref.watch(feedbackViewModelProvider);
+    final featureFlagsState = ref.watch(featureFlagsStateNotifierProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -172,15 +174,17 @@ class _FeedbackViewState extends ConsumerState<FeedbackView> {
                     ],
                   ),
                 ),
-                const SizedBox(height: Constants.padding / 2),
-                CheckboxListTile(
-                  value: feedbackState.shareMyContactInformation,
-                  title: Text(context.s.share_my_contact_information),
-                  controlAffinity: ListTileControlAffinity.leading,
-                  onChanged: ref
-                      .read(feedbackViewModelProvider.notifier)
-                      .onShareMyContactInformationChanged,
-                ),
+                if (featureFlagsState.isShareContactInfoEnabled) ...[
+                  const SizedBox(height: Constants.padding / 2),
+                  CheckboxListTile(
+                    value: feedbackState.shareMyContactInformation,
+                    title: Text(context.s.share_my_contact_information),
+                    controlAffinity: ListTileControlAffinity.leading,
+                    onChanged: ref
+                        .read(feedbackViewModelProvider.notifier)
+                        .onShareMyContactInformationChanged,
+                  ),
+                ],
                 const SizedBox(height: Constants.padding / 2),
                 FilledButton.tonal(
                   onPressed: () async {

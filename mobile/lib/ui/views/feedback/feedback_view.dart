@@ -66,6 +66,7 @@ class _FeedbackViewState extends ConsumerState<FeedbackView> {
           );
           break;
         case FeedbackStatus.sentFeedback:
+          ref.read(feedbackViewModelProvider.notifier).getFeedbacks();
           YUSnackBar.show(
             context,
             message: context.s.feedback_sent_successfully,
@@ -174,8 +175,8 @@ class _FeedbackViewState extends ConsumerState<FeedbackView> {
                     ],
                   ),
                 ),
+                const SizedBox(height: Constants.padding / 2),
                 if (featureFlagsState.isShareContactInfoEnabled) ...[
-                  const SizedBox(height: Constants.padding / 2),
                   CheckboxListTile(
                     value: feedbackState.shareMyContactInformation,
                     title: Text(context.s.share_my_contact_information),
@@ -184,8 +185,24 @@ class _FeedbackViewState extends ConsumerState<FeedbackView> {
                         .read(feedbackViewModelProvider.notifier)
                         .onShareMyContactInformationChanged,
                   ),
+                ] else ...[
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.info_outline_rounded,
+                        color: context.colorScheme.secondary,
+                      ),
+                      const SizedBox(width: Constants.padding),
+                      Text(
+                        context.s.we_might_collect_minimal_contact_information,
+                        style: context.textTheme.labelMedium?.copyWith(
+                          color: context.colorScheme.secondary,
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
-                const SizedBox(height: Constants.padding / 2),
+                const SizedBox(height: Constants.padding),
                 FilledButton.tonal(
                   onPressed: () async {
                     final actorDetails = ref.read(actorDetailsProvider);

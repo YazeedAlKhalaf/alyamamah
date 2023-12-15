@@ -233,5 +233,7 @@
   "exam_starts_in": "الإمتحان يبدأ في غضون",
   "exam_ends_in": "الإمتحان ينتهي في غضون",
   "hide_ended_exams": "إخفاء الاختبارات المنتهية",
-  "show_ended_exams": "إظهار الاختبارات المنتهية"
+  "show_ended_exams": "إظهار الاختبارات المنتهية",
+  "your_feedbacks": "ملاحظاتك",
+  "we_might_collect_minimal_contact_information": "قد نقوم بجمع معلومات التواصل الخاصة بك بشكل محدود"
 }

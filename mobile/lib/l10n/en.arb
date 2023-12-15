@@ -233,5 +233,7 @@
   "exam_starts_in": "Exam Starts In",
   "exam_ends_in": "Exam Ends In",
   "hide_ended_exams": "Hide Ended Exams",
-  "show_ended_exams": "Show Ended Exams"
+  "show_ended_exams": "Show Ended Exams",
+  "your_feedbacks": "Your Feedbacks",
+  "we_might_collect_minimal_contact_information": "We might collect minimal contact information to help you with your feedback."
 }

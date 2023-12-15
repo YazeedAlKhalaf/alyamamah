@@ -1,6 +1,7 @@
 import 'package:alyamamah/core/constants.dart';
 import 'package:alyamamah/core/extensions/build_context.dart';
 import 'package:alyamamah/core/router/yu_router.dart';
+import 'package:alyamamah/gen/proto/feedback.pb.dart' as feedbackpb;
 import 'package:alyamamah/ui/views/feedback/feedback_state.dart';
 import 'package:alyamamah/ui/views/feedback/feedback_view_model.dart';
 import 'package:alyamamah/ui/widgets/error_view.dart';
@@ -58,12 +59,10 @@ class _FeedbackListViewState extends ConsumerState<FeedbackListView> {
                     showTopPadding: false,
                     children: [
                       ListTile(
-                        leading: CircleAvatar(
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(999),
-                            child: Image.asset(
-                              'assets/images/student-council-logo.png',
-                            ),
+                        leading: const CircleAvatar(
+                          child: Icon(
+                            Icons.add_rounded,
+                            size: 30,
                           ),
                         ),
                         title: Text(
@@ -96,6 +95,16 @@ class _FeedbackListViewState extends ConsumerState<FeedbackListView> {
                 ),
                 const SliverPadding(
                   padding: EdgeInsets.all(Constants.padding),
+                ),
+                SliverToBoxAdapter(
+                  child: Text(
+                    context.s.your_feedbacks,
+                    style: context.textTheme.titleMedium,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                const SliverPadding(
+                  padding: EdgeInsets.all(Constants.spacing),
                 ),
                 SliverList.separated(
                   itemCount: feedbackState.feedbacks.length,
@@ -131,18 +140,26 @@ class _FeedbackListViewState extends ConsumerState<FeedbackListView> {
                                     : feedback.category.nameEn,
                                 style: context.textTheme.bodySmall,
                               ),
-                              const SizedBox(height: Constants.spacing),
+                              const SizedBox(height: Constants.spacing / 2),
+                              Text(
+                                '$createdAtDay, $createdAtDate',
+                                style: context.textTheme.bodySmall?.copyWith(
+                                  color:
+                                      context.colorScheme.onSecondaryContainer,
+                                ),
+                              ),
+                              if (feedback.statuses.isNotEmpty) ...[
+                                const SizedBox(height: Constants.spacing / 2),
+                                FeedbackStatusChip(
+                                  status: feedback.statuses.first,
+                                ),
+                              ],
+                              const SizedBox(height: Constants.spacing / 2),
                               Text(
                                 feedback.body,
                                 style: context.textTheme.bodyMedium,
                               ),
                             ],
-                          ),
-                          trailing: Text(
-                            '$createdAtDay\n$createdAtDate',
-                            style: context.textTheme.bodySmall?.copyWith(
-                              color: context.colorScheme.onSecondaryContainer,
-                            ),
                           ),
                         ),
                       ],
@@ -156,6 +173,31 @@ class _FeedbackListViewState extends ConsumerState<FeedbackListView> {
             ),
           ),
       },
+    );
+  }
+}
+
+class FeedbackStatusChip extends StatelessWidget {
+  final feedbackpb.FeedbackStatus status;
+
+  const FeedbackStatusChip({
+    super.key,
+    required this.status,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Chip(
+      label: Text(
+        context.isArabic ? status.nameAr : status.nameEn,
+        style: context.textTheme.labelMedium?.copyWith(
+          color: context.colorScheme.onTertiaryContainer,
+        ),
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(Constants.spacing),
+      ),
+      backgroundColor: context.colorScheme.tertiaryContainer,
     );
   }
 }

@@ -14,7 +14,7 @@ class Constants {
   static const String twitterLink = 'https://twitter.com/YazeedAlKhalaf';
   static const String semesterProgressLink =
       'https://alyamamah-semester-progress.netlify.app';
-  static const String tuwaiqClassroomsLink = 'https://tc.gdscyu.com';
+  static const String tuwaiqClassroomsLink = 'https://tc-gdscyu.netlify.app/';
 
   static const String usernameKey = 'username';
   static const String passwordKey = 'password';

@@ -193,10 +193,13 @@ class _FeedbackViewState extends ConsumerState<FeedbackView> {
                         color: context.colorScheme.secondary,
                       ),
                       const SizedBox(width: Constants.padding),
-                      Text(
-                        context.s.we_might_collect_minimal_contact_information,
-                        style: context.textTheme.labelMedium?.copyWith(
-                          color: context.colorScheme.secondary,
+                      Expanded(
+                        child: Text(
+                          context
+                              .s.we_might_collect_minimal_contact_information,
+                          style: context.textTheme.labelMedium?.copyWith(
+                            color: context.colorScheme.secondary,
+                          ),
                         ),
                       ),
                     ],

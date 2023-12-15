@@ -18,7 +18,6 @@ CREATE OR REPLACE FUNCTION create_initial_feedback_status()
 RETURNS TRIGGER AS $$
 BEGIN
     INSERT INTO feedback_status_history (feedback_id, status_id, created_at)
-    -- TODO: fill with id of the initial status, once seed data is created.
     VALUES (NEW.id, '2c0d4bb4-0a9e-4173-a8fa-2890f7aaef66', now());
     RETURN NEW;
 END;

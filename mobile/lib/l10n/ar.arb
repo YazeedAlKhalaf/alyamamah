@@ -231,5 +231,7 @@
   "break_duration": "مدّة الفسحة: {days, plural, =0{صفر أيام} =1{يوم واحد} other{{days} أيام}}",
   "exam_ended": "انتهى الإمتحان",
   "exam_starts_in": "الإمتحان يبدأ في غضون",
-  "exam_ends_in": "الإمتحان ينتهي في غضون"
+  "exam_ends_in": "الإمتحان ينتهي في غضون",
+  "hide_ended_exams": "إخفاء الاختبارات المنتهية",
+  "show_ended_exams": "إظهار الاختبارات المنتهية"
 }

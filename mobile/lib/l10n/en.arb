@@ -231,5 +231,7 @@
   "break_duration": "Break Duration: {days, plural, =0{Zero Days} =1{One Day} other{{days} Days}}",
   "exam_ended": "Exam Ended",
   "exam_starts_in": "Exam Starts In",
-  "exam_ends_in": "Exam Ends In"
+  "exam_ends_in": "Exam Ends In",
+  "hide_ended_exams": "Hide Ended Exams",
+  "show_ended_exams": "Show Ended Exams"
 }

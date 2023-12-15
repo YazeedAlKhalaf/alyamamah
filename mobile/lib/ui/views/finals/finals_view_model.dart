@@ -68,4 +68,8 @@ class FinalsViewModel extends StateNotifier<FinalsState> {
         exam.examDate.month == date.month &&
         exam.examDate.day == date.day);
   }
+
+  void toggleShowEndedExams() {
+    state = state.copyWith(showEndedExams: !state.showEndedExams);
+  }
 }

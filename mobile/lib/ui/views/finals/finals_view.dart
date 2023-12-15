@@ -29,9 +29,21 @@ class _FinalsViewState extends ConsumerState<FinalsView> {
 
   @override
   Widget build(BuildContext context) {
+    final finalsState = ref.watch(finalsViewModelProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(context.s.finals),
+        actions: [
+          TextButton(
+            onPressed:
+                ref.read(finalsViewModelProvider.notifier).toggleShowEndedExams,
+            child: switch (finalsState.showEndedExams) {
+              true => Text(context.s.hide_ended_exams),
+              false => Text(context.s.show_ended_exams),
+            },
+          ),
+        ],
       ),
       body: const FinalsBody(),
     );
@@ -80,6 +92,7 @@ class FinalsList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final finalsVM = ref.read(finalsViewModelProvider.notifier);
+    final finalsState = ref.watch(finalsViewModelProvider);
 
     final startDate = finalsVM.firstExamDate;
     final endDate = finalsVM.lastExamDate;
@@ -91,7 +104,7 @@ class FinalsList extends ConsumerWidget {
     final Map<dynamic, List<FinalExam>> scheduleMap = {};
     DateTime? lastExamDate;
 
-    for (var date in dates) {
+    for (final date in dates) {
       final exams = finalsVM.getExamsForDate(date);
       if (exams.isNotEmpty) {
         scheduleMap[date] = exams;
@@ -116,11 +129,17 @@ class FinalsList extends ConsumerWidget {
       },
       child: ListView.builder(
         itemCount: scheduleMap.keys.length,
-        itemBuilder: (context, index) {
-          var key = scheduleMap.keys.elementAt(index);
+        itemBuilder: (BuildContext context, int index) {
+          final key = scheduleMap.keys.elementAt(index);
           List<FinalExam> exams = scheduleMap[key]!;
 
           if (key is DateTime) {
+            if (key.add(const Duration(hours: 2)).isBefore(DateTime.now())) {
+              if (!finalsState.showEndedExams) {
+                return const SizedBox.shrink();
+              }
+            }
+
             return DateExamRow(
               date: key,
               exams: exams,
@@ -128,8 +147,9 @@ class FinalsList extends ConsumerWidget {
             );
           } else if (key is String) {
             final dates = key.split(' - ');
-            DateTime start = DateTime.parse(dates[0]);
-            DateTime end = DateTime.parse(dates[1]);
+            final start = DateTime.parse(dates[0]);
+            final end = DateTime.parse(dates[1]);
+
             return BreakIntervalTile(
               startDate: start,
               endDate: end,

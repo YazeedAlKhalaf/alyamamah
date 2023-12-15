@@ -23,6 +23,7 @@ import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:html/parser.dart' as parser;
 import 'package:intl/intl.dart' as intl;
@@ -489,19 +490,32 @@ class ApiService {
       if (table != null) {
         var rows = table.getElementsByTagName('tr');
 
-        for (var i = 1; i < rows.length; i++) {
-          var cells = rows[i].getElementsByTagName('td');
-          var examDate = intl.DateFormat('dd-MM-yyyy').parse(
-            cells[7].text.trim(),
-          );
+        for (int i = 1; i < rows.length; i++) {
+          final cells = rows[i].getElementsByTagName('td');
 
-          var exam = FinalExam(
+          final DateTime examDate;
+          try {
+            examDate = intl.DateFormat('dd-MM-yyyy').parse(
+              cells[7].text.trim(),
+            );
+          } catch (e) {
+            continue;
+          }
+
+          final TimeOfDay examTime;
+          try {
+            examTime = cells[5].text.trim().map24ToTimeOfDay();
+          } catch (e) {
+            continue;
+          }
+
+          final exam = FinalExam(
             courseCode: cells[0].text.trim(),
             courseName: cells[1].text.trim(),
             courseSection: cells[2].text.trim(),
             examRoom: cells[3].text.trim(),
             examDay: cells[4].text.trim(),
-            examTime: cells[5].text.trim().map24ToTimeOfDay(),
+            examTime: examTime,
             examDate: examDate,
           );
 

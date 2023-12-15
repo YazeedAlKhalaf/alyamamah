@@ -1,6 +1,6 @@
 import 'package:alyamamah/core/repository/feedback/feedback_repository.dart';
 import 'package:alyamamah/core/repository/feedback/feedback_respoitory_exception.dart';
-import 'package:alyamamah/gen/proto/feedback.pb.dart';
+import 'package:alyamamah/gen/proto/feedback.pb.dart' as feedbackpb;
 import 'package:alyamamah/ui/views/feedback/feedback_state.dart';
 import 'package:alyamamah/ui/views/feedback/models/feedback_body.dart';
 import 'package:alyamamah/ui/views/feedback/models/feedback_category_formz.dart';
@@ -75,7 +75,7 @@ class FeedbackViewModel extends StateNotifier<FeedbackState> {
     );
   }
 
-  void onCategoryChanged(FeedbackCategory? value) {
+  void onCategoryChanged(feedbackpb.FeedbackCategory? value) {
     state = state.copyWith(
       category: FormzFeedbackCategory.dirty(value: value),
     );

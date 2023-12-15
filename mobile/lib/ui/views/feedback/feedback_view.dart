@@ -1,7 +1,7 @@
 import 'package:alyamamah/core/constants.dart';
 import 'package:alyamamah/core/extensions/build_context.dart';
 import 'package:alyamamah/core/providers/actor_details/actor_details_notifier.dart';
-import 'package:alyamamah/gen/proto/feedback.pbgrpc.dart';
+import 'package:alyamamah/gen/proto/feedback.pb.dart' as feedbackpb;
 import 'package:alyamamah/ui/views/feedback/feedback_state.dart';
 import 'package:alyamamah/ui/views/feedback/feedback_view_model.dart';
 import 'package:alyamamah/ui/views/feedback/models/feedback_body.dart';
@@ -35,8 +35,8 @@ class _FeedbackViewState extends ConsumerState<FeedbackView> {
     });
   }
 
-  List<DropdownMenuItem<FeedbackCategory>> getFeedbackCategoryItems({
-    required List<FeedbackCategory> feedbackCategories,
+  List<DropdownMenuItem<feedbackpb.FeedbackCategory>> getFeedbackCategoryItems({
+    required List<feedbackpb.FeedbackCategory> feedbackCategories,
     required Locale locale,
   }) {
     return feedbackCategories.map(
@@ -122,7 +122,8 @@ class _FeedbackViewState extends ConsumerState<FeedbackView> {
                           showFalse: ShimmerLoading(
                             isLoading: feedbackState.status ==
                                 FeedbackStatus.loadingCategories,
-                            child: DropdownButtonFormField<FeedbackCategory>(
+                            child: DropdownButtonFormField<
+                                feedbackpb.FeedbackCategory>(
                               items: getFeedbackCategoryItems(
                                 feedbackCategories: feedbackState.categories,
                                 locale: Localizations.localeOf(context),

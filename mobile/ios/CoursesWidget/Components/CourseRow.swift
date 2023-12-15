@@ -20,12 +20,16 @@ struct CourseRow: View {
                 .fill(course.color)
                 .frame(width: 15, height: 15)
             Text("\(course.courseCode) @ \(course.roomName)")
-                .font(.caption)
+                .font(.caption2)
                 .bold()
+                .lineLimit(1)
+                .truncationMode(.tail)
             Spacer()
             Text("\(course.startTime.formattedByPeriod) - \(course.endTime.formattedByPeriod)")
-                .font(.caption)
+                .font(.caption2)
                 .foregroundColor(.gray)
+                .lineLimit(1)
+                .truncationMode(.tail)
         }
     }
 }

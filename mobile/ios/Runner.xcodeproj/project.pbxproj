@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		05257D1C2B2C8ED0005E3AF1 /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05257D1B2B2C8ED0005E3AF1 /* ViewExtensions.swift */; };
 		054FFCEC2A951DAD003602A9 /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054FFCEB2A951DAD003602A9 /* ColorExtensions.swift */; };
 		054FFCF12A95205B003602A9 /* TimeOfDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054FFCF02A95205B003602A9 /* TimeOfDay.swift */; };
 		054FFD072A9546AF003602A9 /* DayCourses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054FFD062A9546AF003602A9 /* DayCourses.swift */; };
@@ -69,6 +70,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		05257D1B2B2C8ED0005E3AF1 /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
 		054FFCEB2A951DAD003602A9 /* ColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
 		054FFCF02A95205B003602A9 /* TimeOfDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeOfDay.swift; sourceTree = "<group>"; };
 		054FFD062A9546AF003602A9 /* DayCourses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayCourses.swift; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 			children = (
 				054FFCEB2A951DAD003602A9 /* ColorExtensions.swift */,
 				054FFD132A954CD8003602A9 /* CalendarExtensions.swift */,
+				05257D1B2B2C8ED0005E3AF1 /* ViewExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -453,6 +456,7 @@
 				05E1735329BC9FE1001C8AF0 /* CoursesWidget.swift in Sources */,
 				054FFD182A954FB3003602A9 /* Utils.swift in Sources */,
 				05E1736529BCA860001C8AF0 /* CourseRow.swift in Sources */,
+				05257D1C2B2C8ED0005E3AF1 /* ViewExtensions.swift in Sources */,
 				054FFD1B2A955508003602A9 /* CoursesAccessoryWidget.swift in Sources */,
 				054FFD072A9546AF003602A9 /* DayCourses.swift in Sources */,
 				05E1735129BC9FE1001C8AF0 /* CoursesWidgetBundle.swift in Sources */,

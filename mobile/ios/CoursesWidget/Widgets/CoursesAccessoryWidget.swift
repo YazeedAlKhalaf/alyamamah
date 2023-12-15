@@ -72,6 +72,10 @@ struct CoursesAccessoryWidgetProvider: TimelineProvider {
             )!
         }
         
+        if entries.isEmpty {
+            entries.append(CoursesAccessoryWidgetEntry(date: now, course: nil))
+        }
+        
         let timeline = Timeline(
             entries: entries,
             policy: .after(nextUpdateDate)
@@ -115,6 +119,7 @@ struct CoursesAccessoryWidgetEntryView: View {
             }
         }
         .padding(.horizontal, 2)
+        .widgetBackground(Color.clear)
     }
 }
 
@@ -132,6 +137,7 @@ struct CoursesAccessoryWidget: Widget {
         .configurationDisplayName("Courses Schedule")
         .description("Always be on top of your courses schedule!")
         .supportedFamilies([.accessoryRectangular])
+        .contentMarginsDisabled()
     }
 }
 

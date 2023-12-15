@@ -71,7 +71,7 @@ struct CoursesWidgetEntryView : View {
             Divider()
             Spacer()
             VStack(spacing: 10) {
-                if ((entry.courses[day]?.isEmpty) == true) {
+                if ((entry.courses[day]?.isEmpty) == true || entry.courses[day] == nil) {
                     Spacer()
                     Text("You have no classes today 😎")
                     Spacer()
@@ -83,6 +83,7 @@ struct CoursesWidgetEntryView : View {
             }
         }
         .padding()
+        .widgetBackground(Color.black)
     }
 }
 
@@ -99,6 +100,7 @@ struct CoursesWidget: Widget {
         .configurationDisplayName("Courses Schedule")
         .description("Always be on top of your courses schedule!")
         .supportedFamilies([.systemMedium, .systemLarge])
+        .contentMarginsDisabled()
     }
 }
 

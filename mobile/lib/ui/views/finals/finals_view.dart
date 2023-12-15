@@ -167,7 +167,7 @@ class BreakIntervalTile extends StatelessWidget {
 
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15), // Rounded corners
+        borderRadius: BorderRadius.circular(15),
       ),
       elevation: 0,
       margin: const EdgeInsets.symmetric(

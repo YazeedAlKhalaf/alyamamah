@@ -10,6 +10,13 @@ message SvcFeedbackCategory {
     string name_en = 3;
 }
 
+message SvcFeedbackStatus {
+    string id = 1;
+    string name_ar = 2;
+    string name_en = 3;
+    google.protobuf.Timestamp created_at = 4;
+}
+
 message SvcFeedbackItem {
     string id = 1;
     string title = 2;
@@ -17,6 +24,7 @@ message SvcFeedbackItem {
     SvcFeedbackCategory category = 4;
     string user_id = 5;
     google.protobuf.Timestamp created_at = 6;
+    repeated SvcFeedbackStatus statuses = 7;
 }
 
 message SvcCreateFeedbackRequest {

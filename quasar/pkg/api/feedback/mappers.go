@@ -13,6 +13,23 @@ func mapSvcFeedbackCategoryToPbFeedbackCategory(fc *feedbacksvcpb.SvcFeedbackCat
 	}
 }
 
+func mapSvcFeedbackStatusToPbFeedbackStatus(fs *feedbacksvcpb.SvcFeedbackStatus) *feedbackpb.FeedbackStatus {
+	return &feedbackpb.FeedbackStatus{
+		Id:        fs.Id,
+		NameAr:    fs.NameAr,
+		NameEn:    fs.NameEn,
+		CreatedAt: fs.CreatedAt,
+	}
+}
+
+func mapSvcFeedbackStatusesToPbFeedbackStatuses(fss []*feedbacksvcpb.SvcFeedbackStatus) []*feedbackpb.FeedbackStatus {
+	fs := make([]*feedbackpb.FeedbackStatus, len(fss))
+	for i := range fss {
+		fs[i] = mapSvcFeedbackStatusToPbFeedbackStatus(fss[i])
+	}
+	return fs
+}
+
 func mapSvcFeedbackItemToPbFeedbackItem(fi *feedbacksvcpb.SvcFeedbackItem) *feedbackpb.FeedbackItem {
 	return &feedbackpb.FeedbackItem{
 		Id:        fi.Id,
@@ -20,5 +37,6 @@ func mapSvcFeedbackItemToPbFeedbackItem(fi *feedbacksvcpb.SvcFeedbackItem) *feed
 		Body:      fi.Body,
 		Category:  mapSvcFeedbackCategoryToPbFeedbackCategory(fi.Category),
 		CreatedAt: fi.CreatedAt,
+		Statuses:  mapSvcFeedbackStatusesToPbFeedbackStatuses(fi.Statuses),
 	}
 }

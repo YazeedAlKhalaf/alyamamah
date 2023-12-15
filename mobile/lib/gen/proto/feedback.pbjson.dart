@@ -94,6 +94,23 @@ const CreateFeedbackResponse$json = {
 final $typed_data.Uint8List createFeedbackResponseDescriptor = $convert.base64Decode(
     'ChZDcmVhdGVGZWVkYmFja1Jlc3BvbnNl');
 
+@$core.Deprecated('Use feedbackStatusDescriptor instead')
+const FeedbackStatus$json = {
+  '1': 'FeedbackStatus',
+  '2': [
+    {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
+    {'1': 'name_ar', '3': 2, '4': 1, '5': 9, '10': 'nameAr'},
+    {'1': 'name_en', '3': 3, '4': 1, '5': 9, '10': 'nameEn'},
+    {'1': 'created_at', '3': 4, '4': 1, '5': 11, '6': '.google.protobuf.Timestamp', '10': 'createdAt'},
+  ],
+};
+
+/// Descriptor for `FeedbackStatus`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List feedbackStatusDescriptor = $convert.base64Decode(
+    'Cg5GZWVkYmFja1N0YXR1cxIOCgJpZBgBIAEoCVICaWQSFwoHbmFtZV9hchgCIAEoCVIGbmFtZU'
+    'FyEhcKB25hbWVfZW4YAyABKAlSBm5hbWVFbhI5CgpjcmVhdGVkX2F0GAQgASgLMhouZ29vZ2xl'
+    'LnByb3RvYnVmLlRpbWVzdGFtcFIJY3JlYXRlZEF0');
+
 @$core.Deprecated('Use feedbackItemDescriptor instead')
 const FeedbackItem$json = {
   '1': 'FeedbackItem',
@@ -103,6 +120,7 @@ const FeedbackItem$json = {
     {'1': 'body', '3': 3, '4': 1, '5': 9, '10': 'body'},
     {'1': 'category', '3': 4, '4': 1, '5': 11, '6': '.FeedbackCategory', '10': 'category'},
     {'1': 'created_at', '3': 5, '4': 1, '5': 11, '6': '.google.protobuf.Timestamp', '10': 'createdAt'},
+    {'1': 'statuses', '3': 6, '4': 3, '5': 11, '6': '.FeedbackStatus', '10': 'statuses'},
   ],
 };
 
@@ -111,7 +129,8 @@ final $typed_data.Uint8List feedbackItemDescriptor = $convert.base64Decode(
     'CgxGZWVkYmFja0l0ZW0SDgoCaWQYASABKAlSAmlkEhQKBXRpdGxlGAIgASgJUgV0aXRsZRISCg'
     'Rib2R5GAMgASgJUgRib2R5Ei0KCGNhdGVnb3J5GAQgASgLMhEuRmVlZGJhY2tDYXRlZ29yeVII'
     'Y2F0ZWdvcnkSOQoKY3JlYXRlZF9hdBgFIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbX'
-    'BSCWNyZWF0ZWRBdA==');
+    'BSCWNyZWF0ZWRBdBIrCghzdGF0dXNlcxgGIAMoCzIPLkZlZWRiYWNrU3RhdHVzUghzdGF0dXNl'
+    'cw==');
 
 @$core.Deprecated('Use getFeedbackRequestDescriptor instead')
 const GetFeedbackRequest$json = {

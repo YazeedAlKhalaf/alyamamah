@@ -37,3 +37,16 @@ type FeedbackCategory struct {
 	NameAr string
 	NameEn string
 }
+
+type FeedbackStatus struct {
+	ID     uuid.UUID
+	NameAr string
+	NameEn string
+}
+
+type FeedbackStatusHistory struct {
+	ID         uuid.UUID
+	FeedbackID uuid.UUID
+	StatusID   uuid.UUID
+	CreatedAt  time.Time
+}

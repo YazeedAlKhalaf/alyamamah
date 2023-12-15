@@ -433,6 +433,100 @@ class CreateFeedbackResponse extends $pb.GeneratedMessage {
   static CreateFeedbackResponse? _defaultInstance;
 }
 
+class FeedbackStatus extends $pb.GeneratedMessage {
+  factory FeedbackStatus({
+    $core.String? id,
+    $core.String? nameAr,
+    $core.String? nameEn,
+    $2.Timestamp? createdAt,
+  }) {
+    final $result = create();
+    if (id != null) {
+      $result.id = id;
+    }
+    if (nameAr != null) {
+      $result.nameAr = nameAr;
+    }
+    if (nameEn != null) {
+      $result.nameEn = nameEn;
+    }
+    if (createdAt != null) {
+      $result.createdAt = createdAt;
+    }
+    return $result;
+  }
+  FeedbackStatus._() : super();
+  factory FeedbackStatus.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory FeedbackStatus.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'FeedbackStatus', createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..aOS(2, _omitFieldNames ? '' : 'nameAr')
+    ..aOS(3, _omitFieldNames ? '' : 'nameEn')
+    ..aOM<$2.Timestamp>(4, _omitFieldNames ? '' : 'createdAt', subBuilder: $2.Timestamp.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  FeedbackStatus clone() => FeedbackStatus()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  FeedbackStatus copyWith(void Function(FeedbackStatus) updates) => super.copyWith((message) => updates(message as FeedbackStatus)) as FeedbackStatus;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static FeedbackStatus create() => FeedbackStatus._();
+  FeedbackStatus createEmptyInstance() => create();
+  static $pb.PbList<FeedbackStatus> createRepeated() => $pb.PbList<FeedbackStatus>();
+  @$core.pragma('dart2js:noInline')
+  static FeedbackStatus getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<FeedbackStatus>(create);
+  static FeedbackStatus? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get id => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set id($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get nameAr => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set nameAr($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasNameAr() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearNameAr() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get nameEn => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set nameEn($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasNameEn() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearNameEn() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $2.Timestamp get createdAt => $_getN(3);
+  @$pb.TagNumber(4)
+  set createdAt($2.Timestamp v) { setField(4, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasCreatedAt() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearCreatedAt() => clearField(4);
+  @$pb.TagNumber(4)
+  $2.Timestamp ensureCreatedAt() => $_ensure(3);
+}
+
 class FeedbackItem extends $pb.GeneratedMessage {
   factory FeedbackItem({
     $core.String? id,
@@ -440,6 +534,7 @@ class FeedbackItem extends $pb.GeneratedMessage {
     $core.String? body,
     FeedbackCategory? category,
     $2.Timestamp? createdAt,
+    $core.Iterable<FeedbackStatus>? statuses,
   }) {
     final $result = create();
     if (id != null) {
@@ -457,6 +552,9 @@ class FeedbackItem extends $pb.GeneratedMessage {
     if (createdAt != null) {
       $result.createdAt = createdAt;
     }
+    if (statuses != null) {
+      $result.statuses.addAll(statuses);
+    }
     return $result;
   }
   FeedbackItem._() : super();
@@ -469,6 +567,7 @@ class FeedbackItem extends $pb.GeneratedMessage {
     ..aOS(3, _omitFieldNames ? '' : 'body')
     ..aOM<FeedbackCategory>(4, _omitFieldNames ? '' : 'category', subBuilder: FeedbackCategory.create)
     ..aOM<$2.Timestamp>(5, _omitFieldNames ? '' : 'createdAt', subBuilder: $2.Timestamp.create)
+    ..pc<FeedbackStatus>(6, _omitFieldNames ? '' : 'statuses', $pb.PbFieldType.PM, subBuilder: FeedbackStatus.create)
     ..hasRequiredFields = false
   ;
 
@@ -541,6 +640,9 @@ class FeedbackItem extends $pb.GeneratedMessage {
   void clearCreatedAt() => clearField(5);
   @$pb.TagNumber(5)
   $2.Timestamp ensureCreatedAt() => $_ensure(4);
+
+  @$pb.TagNumber(6)
+  $core.List<FeedbackStatus> get statuses => $_getList(5);
 }
 
 class GetFeedbackRequest extends $pb.GeneratedMessage {

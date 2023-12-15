@@ -50,7 +50,13 @@ func (s *service) SvcGetFeedbackById(ctx context.Context, r *feedbacksvcpb.SvcGe
 		return nil, err
 	}
 
-	svcFeedback := mapStoreFeedbackToSvcFeedback(feedback)
+	feedbackHistoryWithStatuses, err := s.store.ListFeedbackStatusHistoryByFeedbackId(ctx, feedback.ID)
+	if err != nil {
+		log.Ctx(ctx).Err(err).Msg("couldn't get feedback status history by feedback id")
+		return nil, err
+	}
+
+	svcFeedback := mapStoreFeedbackToSvcFeedback(feedback, feedbackHistoryWithStatuses)
 
 	feedbackCategories, err := s.store.ListFeedbackCategory(ctx)
 	if err != nil {
@@ -85,7 +91,13 @@ func (s *service) SvcGetFeedbackByUserId(ctx context.Context, r *feedbacksvcpb.S
 
 	fisp := make([]*feedbacksvcpb.SvcFeedbackItem, len(fs))
 	for i := range fs {
-		fisp[i] = mapStoreFeedbackToSvcFeedback(fs[i])
+		feedbackHistoryWithStatuses, err := s.store.ListFeedbackStatusHistoryByFeedbackId(ctx, fs[i].ID)
+		if err != nil {
+			log.Ctx(ctx).Err(err).Msg("couldn't get feedback status history by feedback id")
+			return nil, err
+		}
+
+		fisp[i] = mapStoreFeedbackToSvcFeedback(fs[i], feedbackHistoryWithStatuses)
 	}
 
 	fcs, err := s.store.ListFeedbackCategory(ctx)

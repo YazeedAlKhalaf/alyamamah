@@ -16,6 +16,8 @@ type Store interface {
 	ListFeedbackByUserId(ctx context.Context, userID uuid.UUID) ([]*sqlc.Feedback, error)
 
 	ListFeedbackCategory(ctx context.Context) ([]*sqlc.FeedbackCategory, error)
+
+	ListFeedbackStatusHistoryByFeedbackId(ctx context.Context, feedbackID uuid.UUID) ([]*sqlc.ListFeedbackStatusHistoryByFeedbackIdRow, error)
 }
 
 type store struct {
@@ -86,6 +88,21 @@ func (s *store) ListFeedbackCategory(ctx context.Context) ([]*sqlc.FeedbackCateg
 	}
 
 	return fcp, nil
+}
+
+func (s *store) ListFeedbackStatusHistoryByFeedbackId(ctx context.Context, feedbackID uuid.UUID) ([]*sqlc.ListFeedbackStatusHistoryByFeedbackIdRow, error) {
+	fsh, err := s.queries.ListFeedbackStatusHistoryByFeedbackId(ctx, feedbackID)
+	if err != nil {
+		log.Ctx(ctx).Err(err).Msg("couldn't list feedback status history by feedback id")
+		return nil, err
+	}
+
+	fshp := make([]*sqlc.ListFeedbackStatusHistoryByFeedbackIdRow, len(fsh))
+	for i := range fsh {
+		fshp[i] = &fsh[i]
+	}
+
+	return fshp, nil
 }
 
 func NewStore(conn *sql.DB) Store {

@@ -20,17 +20,17 @@ dependencies:
   cookie_jar: 3.0.1 # check this
   logging: 1.2.0
   shared_preferences: 2.2.2
-  home_widget: 0.4.0
-  url_launcher: 6.2.1
+  home_widget: 0.4.1
+  url_launcher: 6.2.2
   hijri: 3.0.0
   flutter_svg: 2.0.9
   collection: any
-  firebase_core: 2.24.1
-  firebase_analytics: 10.7.3
-  firebase_messaging: 14.7.7
-  sentry_flutter: 7.13.2
-  sentry_logging: 7.13.2
-  sentry_dio: 7.13.2
+  firebase_core: 2.24.2
+  firebase_analytics: 10.7.4
+  firebase_messaging: 14.7.9
+  sentry_flutter: 7.14.0
+  sentry_logging: 7.14.0
+  sentry_dio: 7.14.0
   flutter_animate: 4.3.0
   unleash_proxy_client_flutter: 1.4.0
   permission_handler: 11.1.0
@@ -45,7 +45,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  mocktail: 1.0.1
+  mocktail: 1.0.2
   golden_toolkit: 0.15.0
 
   flutter_lints: 3.0.1

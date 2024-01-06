@@ -19,10 +19,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 @RoutePage()
 class ScheduleBuilderView extends ConsumerStatefulWidget {
   final List<OfferedCourse> offeredCourses;
+  final List<OfferedCourse> coursesToDelete;
 
   const ScheduleBuilderView({
     super.key,
     required this.offeredCourses,
+    required this.coursesToDelete,
   });
 
   @override
@@ -75,7 +77,9 @@ class _ScheduleBuilderViewState extends ConsumerState<ScheduleBuilderView> {
 
                   await ref
                       .read(scheduleBuilderViewModelProvider.notifier)
-                      .submitSchedule();
+                      .submitSchedule(
+                        coursesToDelete: widget.coursesToDelete,
+                      );
                 },
                 onPaymentFailure: () async {
                   ref.read(yuRouterProvider).popUntil(
@@ -198,7 +202,9 @@ class _ScheduleBuilderViewState extends ConsumerState<ScheduleBuilderView> {
                       _ => () async {
                           await ref
                               .read(scheduleBuilderViewModelProvider.notifier)
-                              .submitSchedule();
+                              .submitSchedule(
+                                coursesToDelete: widget.coursesToDelete,
+                              );
                         },
                     },
                     child: switch (scheduleBuilderViewState.status) {

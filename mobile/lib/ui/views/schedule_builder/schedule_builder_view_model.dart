@@ -321,35 +321,67 @@ class ScheduleBuilderViewModel extends StateNotifier<ScheduleBuilderViewState> {
     state = state.copyWith(offeredCoursesSchedules: updatedSchedules);
   }
 
-  Future<void> submitSchedule() async {
+  Future<void> submitSchedule({
+    required List<OfferedCourse> coursesToDelete,
+  }) async {
     try {
       state = state.copyWith(status: ScheduleBuilderViewStatus.submitting);
 
-      final mainCourses = state
-          .offeredCoursesSchedules[state.selectedScheduleIndex].offeredCourses
+      final mainCoursesToDelete = coursesToDelete
           // '2' represents lecture
           // '7' represents lab
           .where((element) => element.activityCode == '2')
+          // 1 means add
+          // 2 means registered
+          // 3 means delete
+          // 4 is not there, i guess :)
+          // 5 means update
+          .map((e) => e.copyWith(status: 3))
           .toList();
 
-      final response = await _apiService.doRegistration(
-        courses: mainCourses,
+      final responseDelete = await _apiService.doRegistration(
+        courses: mainCoursesToDelete,
       );
 
-      switch (response.itemValue) {
+      switch (responseDelete.itemValue) {
         case '1':
-          state = state.copyWith(
-            status: ScheduleBuilderViewStatus.submitted,
+          final mainCoursesToAdd = state
+              .offeredCoursesSchedules[state.selectedScheduleIndex]
+              .offeredCourses
+              // '2' represents lecture
+              // '7' represents lab
+              .where((element) => element.activityCode == '2')
+              .toList();
+
+          final response = await _apiService.doRegistration(
+            courses: mainCoursesToAdd,
           );
-          break;
-        case '2':
-          state = state.copyWith(
-            status: ScheduleBuilderViewStatus.paymentRequired,
-            paymentRequiredMessage: response.itemDesc,
-          );
+
+          switch (response.itemValue) {
+            case '1':
+              state = state.copyWith(
+                status: ScheduleBuilderViewStatus.submitted,
+              );
+              break;
+            case '2':
+              state = state.copyWith(
+                status: ScheduleBuilderViewStatus.paymentRequired,
+                paymentRequiredMessage: response.itemDesc,
+              );
+              break;
+            default:
+              _log.severe(
+                  'unexpected response submitting the schedule: $response');
+              state = state.copyWith(
+                status: ScheduleBuilderViewStatus.errorSubmitting,
+              );
+              break;
+          }
           break;
         default:
-          _log.severe('unexpected response submitting the schedule: $response');
+          _log.severe(
+            'unexpected response deleting courses from schedule: $responseDelete',
+          );
           state = state.copyWith(
             status: ScheduleBuilderViewStatus.errorSubmitting,
           );

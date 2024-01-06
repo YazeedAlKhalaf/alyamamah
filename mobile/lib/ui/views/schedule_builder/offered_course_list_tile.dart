@@ -6,12 +6,14 @@ import 'package:flutter/material.dart';
 class OfferedCourseListTile extends StatelessWidget {
   final OfferedCourse offeredCourse;
   final bool isSelected;
+  final bool isDeleting;
   final void Function() onTap;
 
   const OfferedCourseListTile({
     super.key,
     required this.offeredCourse,
     required this.isSelected,
+    required this.isDeleting,
     required this.onTap,
   });
 
@@ -19,11 +21,17 @@ class OfferedCourseListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final backgroundColor = switch (isSelected) {
       true => context.colorScheme.tertiaryContainer,
-      false => context.colorScheme.secondaryContainer
+      false => switch (isDeleting) {
+          true => context.colorScheme.errorContainer,
+          false => context.colorScheme.secondaryContainer
+        }
     };
     final foregroundColor = switch (isSelected) {
       true => context.colorScheme.onTertiaryContainer,
-      false => context.colorScheme.onSecondaryContainer
+      false => switch (isDeleting) {
+          true => context.colorScheme.onErrorContainer,
+          false => context.colorScheme.onSecondaryContainer
+        }
     };
 
     return Padding(

@@ -35,6 +35,7 @@ class OfferedCoursesViewModel extends StateNotifier<OfferedCoursesViewState> {
       state = state.copyWith(
         status: OfferedCoursesViewStatus.loaded,
         offeredCourses: [...offeredCourses, ...attemptedCourses],
+        attemptedCourses: attemptedCourses,
         registrationHours: Optional(registrationHours),
         selectedCourseCodes:
             attemptedCourses.map((course) => course.courseCode).toSet(),

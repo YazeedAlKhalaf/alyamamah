@@ -113,6 +113,7 @@ abstract class _$YURouter extends RootStackRouter {
         child: ScheduleBuilderView(
           key: args.key,
           offeredCourses: args.offeredCourses,
+          coursesToDelete: args.coursesToDelete,
         ),
       );
     },
@@ -406,12 +407,14 @@ class ScheduleBuilderRoute extends PageRouteInfo<ScheduleBuilderRouteArgs> {
   ScheduleBuilderRoute({
     Key? key,
     required List<OfferedCourse> offeredCourses,
+    required List<OfferedCourse> coursesToDelete,
     List<PageRouteInfo>? children,
   }) : super(
           ScheduleBuilderRoute.name,
           args: ScheduleBuilderRouteArgs(
             key: key,
             offeredCourses: offeredCourses,
+            coursesToDelete: coursesToDelete,
           ),
           initialChildren: children,
         );
@@ -426,15 +429,18 @@ class ScheduleBuilderRouteArgs {
   const ScheduleBuilderRouteArgs({
     this.key,
     required this.offeredCourses,
+    required this.coursesToDelete,
   });
 
   final Key? key;
 
   final List<OfferedCourse> offeredCourses;
 
+  final List<OfferedCourse> coursesToDelete;
+
   @override
   String toString() {
-    return 'ScheduleBuilderRouteArgs{key: $key, offeredCourses: $offeredCourses}';
+    return 'ScheduleBuilderRouteArgs{key: $key, offeredCourses: $offeredCourses, coursesToDelete: $coursesToDelete}';
   }
 }
 

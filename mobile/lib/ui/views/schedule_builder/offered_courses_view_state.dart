@@ -13,6 +13,7 @@ enum OfferedCoursesViewStatus {
 class OfferedCoursesViewState {
   final OfferedCoursesViewStatus status;
   final List<OfferedCourse> offeredCourses;
+  final List<OfferedCourse> attemptedCourses;
   final Set<String> selectedCourseCodes;
   final RegistrationHours? registrationHours;
 
@@ -35,6 +36,14 @@ class OfferedCoursesViewState {
       )
       .toList();
 
+  List<OfferedCourse> get offeredCoursesToDelete => attemptedCourses
+      .where(
+        (offeredCourse) => !selectedCourseCodes.contains(
+          offeredCourse.courseCode,
+        ),
+      )
+      .toList();
+
   List<OfferedCourse> get uniqueNameCourses {
     final seenNames = <String>{};
     final uniqueCourses = <OfferedCourse>[];
@@ -52,6 +61,7 @@ class OfferedCoursesViewState {
   OfferedCoursesViewState({
     this.status = OfferedCoursesViewStatus.unknown,
     this.offeredCourses = const [],
+    this.attemptedCourses = const [],
     this.selectedCourseCodes = const {},
     this.registrationHours,
   });
@@ -59,12 +69,14 @@ class OfferedCoursesViewState {
   OfferedCoursesViewState copyWith({
     OfferedCoursesViewStatus? status,
     List<OfferedCourse>? offeredCourses,
+    List<OfferedCourse>? attemptedCourses,
     Set<String>? selectedCourseCodes,
     Optional<RegistrationHours?>? registrationHours,
   }) {
     return OfferedCoursesViewState(
       status: status ?? this.status,
       offeredCourses: offeredCourses ?? this.offeredCourses,
+      attemptedCourses: attemptedCourses ?? this.attemptedCourses,
       selectedCourseCodes: selectedCourseCodes ?? this.selectedCourseCodes,
       registrationHours: registrationHours == null
           ? this.registrationHours
@@ -78,6 +90,7 @@ class OfferedCoursesViewState {
 
     return other.status == status &&
         listEquals(other.offeredCourses, offeredCourses) &&
+        listEquals(other.attemptedCourses, attemptedCourses) &&
         setEquals(other.selectedCourseCodes, selectedCourseCodes) &&
         other.registrationHours == registrationHours;
   }
@@ -86,6 +99,7 @@ class OfferedCoursesViewState {
   int get hashCode {
     return status.hashCode ^
         offeredCourses.hashCode ^
+        attemptedCourses.hashCode ^
         selectedCourseCodes.hashCode ^
         registrationHours.hashCode;
   }

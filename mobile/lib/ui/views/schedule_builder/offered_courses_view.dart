@@ -147,6 +147,11 @@ class _OfferedCoursesViewState extends ConsumerState<OfferedCoursesView> {
                           isSelected: offeredCoursesViewState
                               .selectedCourseCodes
                               .contains(offeredCourse.courseCode),
+                          isDeleting: offeredCoursesViewState
+                              .offeredCoursesToDelete
+                              .any((course) =>
+                                  course.courseCode ==
+                                  offeredCourse.courseCode),
                           onTap: () {
                             ref
                                 .read(offeredCoursesViewModelProvider.notifier)
@@ -174,17 +179,12 @@ class _OfferedCoursesViewState extends ConsumerState<OfferedCoursesView> {
                               99999)
                   ? null
                   : () async {
-                      final selectedCourseCodes =
-                          offeredCoursesViewState.selectedCourseCodes;
-                      final offeredCourses = offeredCoursesViewState
-                          .offeredCourses
-                          .where((element) {
-                        return selectedCourseCodes.contains(element.courseCode);
-                      }).toList();
-
                       await ref.read(yuRouterProvider).push(
                             ScheduleBuilderRoute(
-                              offeredCourses: offeredCourses,
+                              offeredCourses: offeredCoursesViewState
+                                  .selectedOfferedCourses,
+                              coursesToDelete: offeredCoursesViewState
+                                  .offeredCoursesToDelete,
                             ),
                           );
                     },

@@ -103,26 +103,27 @@ class ScheduleBuilderViewModel extends StateNotifier<ScheduleBuilderViewState> {
       bool hasConflicts = false;
 
       for (final course in expandedCombination) {
-        final timeTable = course.timeTable[0];
-        if (!_isFree(scheduleDays, timeTable, course, conflicts)) {
-          hasConflicts = true;
-          break;
-        }
-        for (final day in timeTable.days) {
-          final scheduleEntry = ScheduleEntry(
-            startTime: timeTable.startTime,
-            endTime: timeTable.endTime,
-            room: timeTable.room,
-            activityDesc: course.activityDesc,
-            courseName: course.courseName,
-            courseCode: course.courseCode,
-            instructor: course.teacherName,
-            creditHours: course.creditHours.toString(),
-            campusName: course.campusName,
-            courseDeleted: false,
-            section: course.sectionSeq,
-          );
-          scheduleDays[day]!.add(scheduleEntry);
+        for (final timeTable in course.timeTable) {
+          if (!_isFree(scheduleDays, timeTable, course, conflicts)) {
+            hasConflicts = true;
+            break;
+          }
+          for (final day in timeTable.days) {
+            final scheduleEntry = ScheduleEntry(
+              startTime: timeTable.startTime,
+              endTime: timeTable.endTime,
+              room: timeTable.room,
+              activityDesc: course.activityDesc,
+              courseName: course.courseName,
+              courseCode: course.courseCode,
+              instructor: course.teacherName,
+              creditHours: course.creditHours.toString(),
+              campusName: course.campusName,
+              courseDeleted: false,
+              section: course.sectionSeq,
+            );
+            scheduleDays[day]!.add(scheduleEntry);
+          }
         }
       }
 

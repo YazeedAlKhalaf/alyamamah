@@ -100,7 +100,9 @@ class _CoursesViewState extends ConsumerState<CoursesView> {
             IconButton(
               icon: const Icon(Icons.edit_calendar_rounded),
               onPressed: () {
-                ref.read(yuRouterProvider).push(const OfferedCoursesRoute());
+                ref
+                    .read(yuRouterProvider)
+                    .push(const ScheduleBuilderIntroRoute());
               },
             ),
         ],
@@ -146,7 +148,7 @@ class _CoursesViewState extends ConsumerState<CoursesView> {
                             onPressed: () async {
                               await ref
                                   .read(yuRouterProvider)
-                                  .push(const OfferedCoursesRoute());
+                                  .push(const ScheduleBuilderIntroRoute());
                             },
                             icon: const Icon(Icons.calendar_month_rounded),
                             label: Text(context.s.build_my_schedule),

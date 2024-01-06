@@ -13,6 +13,7 @@ import 'package:alyamamah/ui/views/onboarding/onboarding_view.dart';
 import 'package:alyamamah/ui/views/permissions/notification_permission_view.dart';
 import 'package:alyamamah/ui/views/profile/profile_view.dart';
 import 'package:alyamamah/ui/views/schedule_builder/offered_courses_view.dart';
+import 'package:alyamamah/ui/views/schedule_builder/schedule_builder_intro_view.dart';
 import 'package:alyamamah/ui/views/schedule_builder/schedule_builder_view.dart';
 import 'package:alyamamah/ui/views/startup/startup_view.dart';
 import 'package:alyamamah/ui/views/student_info/student_info_view.dart';
@@ -48,5 +49,6 @@ class YURouter extends _$YURouter {
     AutoRoute(page: ScheduleBuilderRoute.page),
     AutoRoute(page: FeedbackRoute.page),
     AutoRoute(page: FeedbackListRoute.page),
+    AutoRoute(page: ScheduleBuilderIntroRoute.page)
   ];
 }

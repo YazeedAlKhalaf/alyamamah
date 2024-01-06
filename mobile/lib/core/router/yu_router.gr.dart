@@ -106,6 +106,12 @@ abstract class _$YURouter extends RootStackRouter {
         child: const ProfileView(),
       );
     },
+    ScheduleBuilderIntroRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ScheduleBuilderIntroView(),
+      );
+    },
     ScheduleBuilderRoute.name: (routeData) {
       final args = routeData.argsAs<ScheduleBuilderRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -397,6 +403,20 @@ class ProfileRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'ProfileRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ScheduleBuilderIntroView]
+class ScheduleBuilderIntroRoute extends PageRouteInfo<void> {
+  const ScheduleBuilderIntroRoute({List<PageRouteInfo>? children})
+      : super(
+          ScheduleBuilderIntroRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ScheduleBuilderIntroRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

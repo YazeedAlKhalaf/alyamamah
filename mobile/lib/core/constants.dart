@@ -26,6 +26,8 @@ class Constants {
   static const String linkKey = 'link';
   static const String scheduleDaysKey = 'scheduleDays';
   static const String absencesKey = 'absences';
+  static const String didAskForScheduleBuilderReviewKey =
+      'didAskForScheduleBuilderReview';
 
   static const String sentryDsn =
       'https://78cdadfd10c6445b9cd6d3cd44c0a66b@o4505085364862976.ingest.sentry.io/4505085366894592';

@@ -165,6 +165,25 @@ class SharedPrefsService {
     await _sharedPreferences.remove(Constants.absencesKey);
   }
 
+  Future<void> saveDidAskForScheduleBuilderReview() async {
+    await _sharedPreferences.setBool(
+      Constants.didAskForScheduleBuilderReviewKey,
+      true,
+    );
+  }
+
+  bool? getDidAskForScheduleBuilderReview() {
+    return _sharedPreferences.getBool(
+      Constants.didAskForScheduleBuilderReviewKey,
+    );
+  }
+
+  Future<void> deleteDidAskForScheduleBuilderReview() async {
+    await _sharedPreferences.remove(
+      Constants.didAskForScheduleBuilderReviewKey,
+    );
+  }
+
   Future<void> deleteEverything() async {
     await _sharedPreferences.clear();
   }

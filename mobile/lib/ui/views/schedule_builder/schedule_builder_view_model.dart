@@ -6,6 +6,8 @@ import 'package:alyamamah/core/models/offered_course.dart';
 import 'package:alyamamah/core/models/time_table.dart';
 import 'package:alyamamah/core/services/api/api_service.dart';
 import 'package:alyamamah/core/services/api/api_service_exception.dart';
+import 'package:alyamamah/core/services/in_app_review/in_app_review_service.dart';
+import 'package:alyamamah/core/services/shared_prefs/shared_prefs_service.dart';
 import 'package:alyamamah/ui/views/courses/models/schedule_entry.dart';
 import 'package:alyamamah/ui/views/schedule_builder/models/conflict.dart';
 import 'package:alyamamah/ui/views/schedule_builder/models/offered_courses_schedule.dart';
@@ -19,15 +21,25 @@ final scheduleBuilderViewModelProvider =
     StateNotifierProvider<ScheduleBuilderViewModel, ScheduleBuilderViewState>(
   (ref) => ScheduleBuilderViewModel(
     apiService: ref.read(apiServiceProvider),
+    sharedPrefsService: ref.read(sharedPrefsServiceProvider),
+    inAppReviewService: ref.read(inAppReviewServiceProvider),
   ),
 );
 
 class ScheduleBuilderViewModel extends StateNotifier<ScheduleBuilderViewState> {
   final _log = Logger('ScheduleBuilderViewModel');
-  final ApiService _apiService;
 
-  ScheduleBuilderViewModel({required ApiService apiService})
-      : _apiService = apiService,
+  final ApiService _apiService;
+  final SharedPrefsService _sharedPrefsService;
+  final InAppReviewService _inAppReviewService;
+
+  ScheduleBuilderViewModel({
+    required ApiService apiService,
+    required SharedPrefsService sharedPrefsService,
+    required InAppReviewService inAppReviewService,
+  })  : _apiService = apiService,
+        _sharedPrefsService = sharedPrefsService,
+        _inAppReviewService = inAppReviewService,
         super(ScheduleBuilderViewState());
 
   void setSelectedScheduleIndex(int index) {
@@ -356,6 +368,20 @@ class ScheduleBuilderViewModel extends StateNotifier<ScheduleBuilderViewState> {
               state = state.copyWith(
                 status: ScheduleBuilderViewStatus.submitted,
               );
+
+              final didAskForReview =
+                  _sharedPrefsService.getDidAskForScheduleBuilderReview() ==
+                      true;
+              if (!didAskForReview) {
+                // Ask for review after 1.5 seconds, so that he has time to
+                // see the schedule just registered.
+                // Since he is happy at this point, it will be a great time to ask :)
+                Future.delayed(const Duration(milliseconds: 1500), () async {
+                  await _inAppReviewService.requestReview();
+                  _sharedPrefsService.saveDidAskForScheduleBuilderReview();
+                });
+              }
+
               break;
             case '2':
               state = state.copyWith(

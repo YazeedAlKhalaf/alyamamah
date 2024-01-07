@@ -1,6 +1,5 @@
 import 'package:alyamamah/core/extensions/build_context.dart';
 import 'package:alyamamah/core/extensions/map_day_schedule_entries.dart';
-import 'package:alyamamah/core/providers/actor_details/actor_details_notifier.dart';
 import 'package:alyamamah/core/providers/feature_flags/feature_flags_state_notifier.dart';
 import 'package:alyamamah/core/router/yu_router.dart';
 import 'package:alyamamah/core/utils.dart';
@@ -41,7 +40,6 @@ class _CoursesViewState extends ConsumerState<CoursesView> {
   Widget build(BuildContext context) {
     final coursesViewModel = ref.watch(coursesViewModelProvider);
     final featureFlagsState = ref.watch(featureFlagsStateNotifierProvider);
-    final actorDetails = ref.watch(actorDetailsProvider);
 
     int lowestStartHour = 10000000000000;
     for (final e in coursesViewModel.scheduleDays.entries) {

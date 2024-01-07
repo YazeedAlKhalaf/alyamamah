@@ -1,7 +1,7 @@
 name: alyamamah
 description: An app for alyamamah university students.
 publish_to: "none"
-version: 0.1.0+45
+version: 0.1.0+46
 
 environment:
   sdk: ">=3.0.5 <4.0.0"

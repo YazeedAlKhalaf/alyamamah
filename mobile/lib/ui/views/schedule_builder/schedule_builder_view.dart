@@ -64,6 +64,8 @@ class _ScheduleBuilderViewState extends ConsumerState<ScheduleBuilderView> {
                 .your_schedule_has_been_set_successfully__you_can_view_it_in_the_courses_tab,
           );
 
+          ref.read(coursesViewModelProvider).getStudentSchedule();
+
           ref.read(yuRouterProvider).popUntil(
                 ModalRoute.withName(MainRoute.name),
               );
@@ -167,7 +169,9 @@ class _ScheduleBuilderViewState extends ConsumerState<ScheduleBuilderView> {
                 }()
             },
           ),
-          if (!allCoursesHaveConflicts)
+          if (!allCoursesHaveConflicts &&
+              scheduleBuilderViewState.status !=
+                  ScheduleBuilderViewStatus.generating)
             Container(
               color: ElevationOverlay.applySurfaceTint(
                 context.colorScheme.surface,
@@ -214,6 +218,13 @@ class ScheduleBuilderBottomNavBar extends ConsumerWidget {
     final scheduleBuilderViewState = ref.watch(
       scheduleBuilderViewModelProvider,
     );
+
+    if (scheduleBuilderViewState.offeredCoursesSchedules.isEmpty ||
+        scheduleBuilderViewState.status ==
+            ScheduleBuilderViewStatus.generating) {
+      return const SizedBox.shrink();
+    }
+
     final currentSchedule = scheduleBuilderViewState.offeredCoursesSchedules[
         scheduleBuilderViewState.selectedScheduleIndex];
 

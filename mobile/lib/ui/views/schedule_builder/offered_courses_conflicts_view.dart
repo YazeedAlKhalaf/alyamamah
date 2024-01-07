@@ -34,6 +34,7 @@ class OfferedCoursesConflictsView extends ConsumerWidget {
           return Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: Constants.padding,
+              vertical: Constants.spacing,
             ),
             child: Container(
               decoration: BoxDecoration(

@@ -15,6 +15,7 @@ import 'package:alyamamah/ui/widgets/yu_snack_bar.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 @RoutePage()
 class ScheduleBuilderView extends ConsumerStatefulWidget {
@@ -33,9 +34,13 @@ class ScheduleBuilderView extends ConsumerStatefulWidget {
 }
 
 class _ScheduleBuilderViewState extends ConsumerState<ScheduleBuilderView> {
+  late PageController pageController;
+
   @override
   void initState() {
     super.initState();
+
+    pageController = PageController();
 
     Future(() {
       ref
@@ -120,76 +125,104 @@ class _ScheduleBuilderViewState extends ConsumerState<ScheduleBuilderView> {
             ),
           ),
         ),
-        body: switch (scheduleBuilderViewState.status) {
-          ScheduleBuilderViewStatus.generating => const Center(
-              child: CircularProgressIndicator(),
-            ),
-          _ => () {
-              if (allCoursesHaveConflicts) {
-                return Padding(
-                  padding: const EdgeInsets.all(Constants.padding),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Text(
-                        '🤔',
-                        textAlign: TextAlign.center,
-                        style: context.textTheme.displayLarge,
-                      ),
-                      const SizedBox(height: Constants.spacing),
-                      Text(
-                        context.s
-                            .all_the_courses_that_you_have_selected_have_conflicts_please_remove_some_courses_and_try_again,
-                        textAlign: TextAlign.center,
-                        style: context.textTheme.titleMedium,
-                      ),
-                      const SizedBox(height: Constants.spacing),
-                      FilledButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text(
-                          context.s.go_back,
-                        ),
-                      ),
-                    ],
+        body: Column(
+          children: [
+            Expanded(
+              child: switch (scheduleBuilderViewState.status) {
+                ScheduleBuilderViewStatus.generating => const Center(
+                    child: CircularProgressIndicator(),
                   ),
-                );
-              }
+                _ => () {
+                    if (allCoursesHaveConflicts) {
+                      return Padding(
+                        padding: const EdgeInsets.all(Constants.padding),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Text(
+                              '🤔',
+                              textAlign: TextAlign.center,
+                              style: context.textTheme.displayLarge,
+                            ),
+                            const SizedBox(height: Constants.spacing),
+                            Text(
+                              context.s
+                                  .all_the_courses_that_you_have_selected_have_conflicts_please_remove_some_courses_and_try_again,
+                              textAlign: TextAlign.center,
+                              style: context.textTheme.titleMedium,
+                            ),
+                            const SizedBox(height: Constants.spacing),
+                            FilledButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text(
+                                context.s.go_back,
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
 
-              return PageView.builder(
-                onPageChanged: (int pageIndex) {
-                  ref
-                      .read(scheduleBuilderViewModelProvider.notifier)
-                      .setSelectedScheduleIndex(pageIndex);
-                },
-                itemCount:
-                    scheduleBuilderViewState.offeredCoursesSchedules.length,
-                itemBuilder: (BuildContext context, int index) {
-                  final offeredCoursesSchedule =
-                      scheduleBuilderViewState.offeredCoursesSchedules[index];
+                    return PageView.builder(
+                      controller: pageController,
+                      onPageChanged: (int pageIndex) {
+                        ref
+                            .read(scheduleBuilderViewModelProvider.notifier)
+                            .setSelectedScheduleIndex(pageIndex);
+                      },
+                      itemCount: scheduleBuilderViewState
+                          .offeredCoursesSchedules.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final offeredCoursesSchedule = scheduleBuilderViewState
+                            .offeredCoursesSchedules[index];
 
-                  if (offeredCoursesSchedule.hasConflicts) {
-                    return OfferedCoursesConflictsView(
-                      conflicts: offeredCoursesSchedule.conflicts,
-                      offeredCourses: widget.offeredCourses,
+                        if (offeredCoursesSchedule.hasConflicts) {
+                          return OfferedCoursesConflictsView(
+                            conflicts: offeredCoursesSchedule.conflicts,
+                            offeredCourses: widget.offeredCourses,
+                          );
+                        }
+
+                        return CoursesSchedule(
+                          scheduleDays: offeredCoursesSchedule.scheduleDays,
+                          onCourseTap: (ScheduleEntry scheduleEntry) async {
+                            await ref
+                                .read(coursesViewModelProvider)
+                                .navigateToCourseDetails(scheduleEntry);
+                          },
+                          onRefresh: () async {},
+                        );
+                      },
                     );
-                  }
-
-                  return CoursesSchedule(
-                    scheduleDays: offeredCoursesSchedule.scheduleDays,
-                    onCourseTap: (ScheduleEntry scheduleEntry) async {
-                      await ref
-                          .read(coursesViewModelProvider)
-                          .navigateToCourseDetails(scheduleEntry);
-                    },
-                    onRefresh: () async {},
-                  );
-                },
-              );
-            }()
-        },
+                  }()
+              },
+            ),
+            Container(
+              color: ElevationOverlay.applySurfaceTint(
+                context.colorScheme.surface,
+                context.colorScheme.surfaceTint,
+                3,
+              ),
+              width: double.infinity,
+              child: Column(
+                children: [
+                  const SizedBox(height: Constants.padding),
+                  SmoothPageIndicator(
+                    controller: pageController,
+                    count:
+                        scheduleBuilderViewState.offeredCoursesSchedules.length,
+                    effect: ScrollingDotsEffect(
+                      activeDotColor: context.colorScheme.primary,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
         bottomNavigationBar: switch (allCoursesHaveConflicts) {
           true => null,
           false => BottomAppBar(

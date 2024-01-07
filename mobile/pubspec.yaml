@@ -42,6 +42,7 @@ dependencies:
   formz: 0.6.1
   html: 0.15.4
   smooth_page_indicator: 1.1.0
+  in_app_review: 2.0.8
 
 dev_dependencies:
   flutter_test:

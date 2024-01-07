@@ -94,9 +94,7 @@ class _CoursesViewState extends ConsumerState<CoursesView> {
           //     await ref.read(coursesViewModelProvider).toggleRamadanMode();
           //   },
           // ),
-          if ((actorDetails?.sessionInfo.regChangeSectionPeriod == true ||
-                  actorDetails?.sessionInfo.regDeleteCoursesPeriod == true) &&
-              featureFlagsState.isScheduleBuilderEnabled)
+          if (featureFlagsState.isScheduleBuilderEnabled)
             IconButton(
               icon: const Icon(Icons.edit_calendar_rounded),
               onPressed: () {
@@ -141,9 +139,7 @@ class _CoursesViewState extends ConsumerState<CoursesView> {
                           icon: const Icon(Icons.book_rounded),
                           label: Text(context.s.choose_semester),
                         ),
-                        if (actorDetails?.sessionInfo.regAddCoursesPeriod ==
-                                true &&
-                            featureFlagsState.isScheduleBuilderEnabled)
+                        if (featureFlagsState.isScheduleBuilderEnabled)
                           FilledButton.tonalIcon(
                             onPressed: () async {
                               await ref

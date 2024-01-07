@@ -37,28 +37,62 @@ class ScheduleBuilderIntroView extends ConsumerWidget {
                 child: Column(
                   children: [
                     Text(
-                      'Steps to Build Your Schedule',
+                      context.s.steps_to_build_your_schedule,
                       style: context.textTheme.titleLarge,
                     ),
                     Text(
-                      'Process should take 3-5 minutes',
+                      context.s.process_should_take_3_5_minutes,
                       style: context.textTheme.bodyLarge?.copyWith(
                         color:
                             Theme.of(context).colorScheme.onSecondaryContainer,
                       ),
                     ),
-                    const ListTile(
-                      leading: Icon(Icons.list),
-                      title: Text('Select courses you plan to take'),
+                    ListTile(
+                      leading: CircleAvatar(
+                        child: Text(
+                          '1',
+                          style: context.textTheme.titleLarge,
+                        ),
+                      ),
+                      title: Text(
+                        context.s.select_courses_you_plan_to_take,
+                      ),
                     ),
-                    const ListTile(
-                      leading: Icon(Icons.calendar_today),
-                      title: Text('Browse all the possible combinations'),
+                    ListTile(
+                      leading: CircleAvatar(
+                        child: Text(
+                          '2',
+                          style: context.textTheme.titleLarge,
+                        ),
+                      ),
+                      title: Text(
+                        context.s
+                            .browse_all_the_possible_combinations_of_the_courses_sections_you_selected,
+                      ),
                     ),
-                    const ListTile(
-                      leading: Icon(Icons.check_circle),
-                      title:
-                          Text('Register your the courses, and pay if needed!'),
+                    ListTile(
+                      leading: CircleAvatar(
+                        child: Text(
+                          '3',
+                          style: context.textTheme.titleLarge,
+                        ),
+                      ),
+                      title: Text(
+                        context.s
+                            .register_the_courses_from_the_schedule_combination_you_like,
+                      ),
+                    ),
+                    ListTile(
+                      leading: CircleAvatar(
+                        child: Text(
+                          '4',
+                          style: context.textTheme.titleLarge,
+                        ),
+                      ),
+                      title: Text(
+                        context.s
+                            .if_you_didnt_pay_yet_you_will_be_redirected_to_the_official_payments_page,
+                      ),
                     ),
                   ],
                 ),
@@ -72,7 +106,7 @@ class ScheduleBuilderIntroView extends ConsumerWidget {
                     .push(const OfferedCoursesRoute());
               },
               icon: const Icon(Icons.calendar_month_rounded),
-              label: Text(context.s.build_my_schedule),
+              label: Text(context.s.start_building_schedule),
             ),
             const Spacer(),
             const Spacer(),

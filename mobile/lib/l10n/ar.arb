@@ -235,5 +235,12 @@
   "hide_ended_exams": "إخفاء الاختبارات المنتهية",
   "show_ended_exams": "إظهار الاختبارات المنتهية",
   "your_feedbacks": "ملاحظاتك",
-  "we_might_collect_minimal_contact_information": "قد نقوم بجمع معلومات التواصل الخاصة بك بشكل محدود"
+  "we_might_collect_minimal_contact_information": "قد نقوم بجمع معلومات التواصل الخاصة بك بشكل محدود",
+  "steps_to_build_your_schedule": "خطوات إنشاء جدولك",
+  "process_should_take_3_5_minutes": "ستستغرق العمليّة 3-5 دقائق",
+  "select_courses_you_plan_to_take": "اختر المقررات التي تخطط لدراستها",
+  "browse_all_the_possible_combinations_of_the_courses_sections_you_selected": "تصفح جميع التركيبات الممكنة لشعب المقررات التي اخترتها",
+  "register_the_courses_from_the_schedule_combination_you_like": "سجّل المقررات من تركيبة الجدول التي تناسبك",
+  "if_you_didnt_pay_yet_you_will_be_redirected_to_the_official_payments_page": "إذا لم تدفع بعد، سيتم توجيهك إلى صفحة الدفع الرسمية",
+  "start_building_schedule": "ابدأ إنشاء الجدول"
 }

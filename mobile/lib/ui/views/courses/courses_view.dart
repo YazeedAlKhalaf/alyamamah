@@ -97,10 +97,16 @@ class _CoursesViewState extends ConsumerState<CoursesView> {
           if (featureFlagsState.isScheduleBuilderEnabled)
             IconButton(
               icon: const Icon(Icons.edit_calendar_rounded),
-              onPressed: () {
-                ref
-                    .read(yuRouterProvider)
-                    .push(const ScheduleBuilderIntroRoute());
+              onPressed: () async {
+                if (coursesViewModel.scheduleDays.isAllDaysEmpty) {
+                  await ref
+                      .read(yuRouterProvider)
+                      .push(const ScheduleBuilderIntroRoute());
+                } else {
+                  await ref
+                      .read(yuRouterProvider)
+                      .push(const OfferedCoursesRoute());
+                }
               },
             ),
         ],
@@ -142,9 +148,16 @@ class _CoursesViewState extends ConsumerState<CoursesView> {
                         if (featureFlagsState.isScheduleBuilderEnabled)
                           FilledButton.tonalIcon(
                             onPressed: () async {
-                              await ref
-                                  .read(yuRouterProvider)
-                                  .push(const ScheduleBuilderIntroRoute());
+                              if (coursesViewModel
+                                  .scheduleDays.isAllDaysEmpty) {
+                                await ref
+                                    .read(yuRouterProvider)
+                                    .push(const ScheduleBuilderIntroRoute());
+                              } else {
+                                await ref
+                                    .read(yuRouterProvider)
+                                    .push(const OfferedCoursesRoute());
+                              }
                             },
                             icon: const Icon(Icons.calendar_month_rounded),
                             label: Text(context.s.build_my_schedule),

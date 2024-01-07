@@ -235,5 +235,12 @@
   "hide_ended_exams": "Hide Ended Exams",
   "show_ended_exams": "Show Ended Exams",
   "your_feedbacks": "Your Feedbacks",
-  "we_might_collect_minimal_contact_information": "We might collect minimal contact information to help you with your feedback."
+  "we_might_collect_minimal_contact_information": "We might collect minimal contact information to help you with your feedback.",
+  "steps_to_build_your_schedule": "Steps to Build Your Schedule",
+  "process_should_take_3_5_minutes": "Process should take 3-5 minutes",
+  "select_courses_you_plan_to_take": "Select courses you plan to take",
+  "browse_all_the_possible_combinations_of_the_courses_sections_you_selected": "Browses all the possible combinations of the courses sections you selected",
+  "register_the_courses_from_the_schedule_combination_you_like": "Register the courses from the schedule combination you like",
+  "if_you_didnt_pay_yet_you_will_be_redirected_to_the_official_payments_page": "If you didn't pay yet, you will be redirected to the official payments page",
+  "start_building_schedule": "Start Building Schedule"
 }

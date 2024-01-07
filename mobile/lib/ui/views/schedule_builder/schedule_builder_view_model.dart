@@ -328,9 +328,6 @@ class ScheduleBuilderViewModel extends StateNotifier<ScheduleBuilderViewState> {
       state = state.copyWith(status: ScheduleBuilderViewStatus.submitting);
 
       final mainCoursesToDelete = coursesToDelete
-          // '2' represents lecture
-          // '7' represents lab
-          .where((element) => element.activityCode == '2')
           // 1 means add
           // 2 means registered
           // 3 means delete
@@ -348,9 +345,6 @@ class ScheduleBuilderViewModel extends StateNotifier<ScheduleBuilderViewState> {
           final mainCoursesToAdd = state
               .offeredCoursesSchedules[state.selectedScheduleIndex]
               .offeredCourses
-              // '2' represents lecture
-              // '7' represents lab
-              .where((element) => element.activityCode == '2')
               .toList();
 
           final response = await _apiService.doRegistration(

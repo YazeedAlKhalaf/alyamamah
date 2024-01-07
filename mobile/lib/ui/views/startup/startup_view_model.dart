@@ -112,6 +112,7 @@ class StartupViewModel extends ChangeNotifier {
             'handleStartup | accessToken is null, getting a new one.',
           );
 
+          await _firebaseMessagingService.init();
           final fcmToken = await _firebaseMessagingService.getToken();
           final loginResponse = await _authRepository.login(
             username: username,

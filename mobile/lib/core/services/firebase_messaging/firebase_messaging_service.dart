@@ -14,6 +14,19 @@ class FirebaseMessagingService {
     required FirebaseMessaging firebaseMessaging,
   }) : _firebaseMessaging = firebaseMessaging;
 
+  Future<void> init() async {
+    try {
+      await _firebaseMessaging.setAutoInitEnabled(true);
+      await _firebaseMessaging.setForegroundNotificationPresentationOptions(
+        alert: true,
+        badge: true,
+        sound: true,
+      );
+    } catch (e) {
+      return;
+    }
+  }
+
   Future<String?> getToken() async {
     try {
       return _firebaseMessaging.getToken();

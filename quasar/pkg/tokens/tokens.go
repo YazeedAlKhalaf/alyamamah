@@ -14,7 +14,7 @@ var (
 )
 
 const (
-	tokenValidity = time.Hour * 3
+	tokenValidity = time.Hour * 24 * 7
 	issuer        = "https://yu.alkhalaf.dev"
 )
 

@@ -69,16 +69,16 @@ class ScheduleBuilderViewModel extends StateNotifier<ScheduleBuilderViewState> {
 
     state = state.copyWith(status: ScheduleBuilderViewStatus.generating);
 
-    final comprehensiveCourses = <OfferedCourse>[];
-    for (var course in selectedCourses) {
-      final relatedCourses = await _apiService.getRelatedCourses(
-        offeredCourse: course,
-      );
-      final newCourse = course.copyWith(
-        activityCourses: relatedCourses,
-      );
-      comprehensiveCourses.add(newCourse);
+    final futures = <Future<OfferedCourse>>[];
+    for (final course in selectedCourses) {
+      futures.add(_apiService.getRelatedCourses(offeredCourse: course).then(
+            (relatedCourses) => course.copyWith(
+              activityCourses: relatedCourses,
+            ),
+          ));
     }
+
+    final comprehensiveCourses = await Future.wait(futures);
 
     // Run the heavy computation in the background, isolate :)
     final schedules = await compute(

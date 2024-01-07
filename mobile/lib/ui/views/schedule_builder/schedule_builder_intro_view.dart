@@ -1,6 +1,7 @@
 import 'package:alyamamah/core/constants.dart';
 import 'package:alyamamah/core/extensions/build_context.dart';
 import 'package:alyamamah/core/router/yu_router.dart';
+import 'package:alyamamah/ui/widgets/blockquote_text.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -66,8 +67,7 @@ class ScheduleBuilderIntroView extends ConsumerWidget {
                         ),
                       ),
                       title: Text(
-                        context.s
-                            .browse_all_the_possible_combinations_of_the_courses_sections_you_selected,
+                        context.s.browse_all_possible_combinations,
                       ),
                     ),
                     ListTile(
@@ -78,20 +78,15 @@ class ScheduleBuilderIntroView extends ConsumerWidget {
                         ),
                       ),
                       title: Text(
-                        context.s
-                            .register_the_courses_from_the_schedule_combination_you_like,
+                        context.s.select_the_combination_you_see_best,
                       ),
                     ),
-                    ListTile(
-                      leading: CircleAvatar(
-                        child: Text(
-                          '4',
-                          style: context.textTheme.titleLarge,
-                        ),
-                      ),
-                      title: Text(
-                        context.s
-                            .if_you_didnt_pay_yet_you_will_be_redirected_to_the_official_payments_page,
+                    const SizedBox(height: Constants.padding),
+                    BlockquoteText(
+                      context.s
+                          .if_you_didnt_pay_yet_you_will_be_redirected_to_the_official_edugate_page,
+                      style: context.textTheme.bodyMedium?.copyWith(
+                        color: context.colorScheme.onSecondaryContainer,
                       ),
                     ),
                   ],

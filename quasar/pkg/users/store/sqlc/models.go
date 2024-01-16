@@ -12,9 +12,20 @@ import (
 )
 
 type User struct {
+	ID              uuid.UUID
+	Username        string
+	FcmToken        sql.NullString
+	CreatedAt       time.Time
+	UpdatedAt       time.Time
+	IsEmailVerified bool
+}
+
+type VerifyEmail struct {
 	ID        uuid.UUID
 	Username  string
-	FcmToken  sql.NullString
+	Token     string
+	ExpiresAt time.Time
+	UsedAt    sql.NullTime
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }

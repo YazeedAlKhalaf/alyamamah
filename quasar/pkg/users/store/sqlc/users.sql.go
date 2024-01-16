@@ -13,7 +13,7 @@ import (
 const createUser = `-- name: CreateUser :one
 INSERT INTO users (username, fcm_token)
 VALUES ($1, $2)
-RETURNING id, username, fcm_token, created_at, updated_at
+RETURNING id, username, fcm_token, created_at, updated_at, is_email_verified
 `
 
 type CreateUserParams struct {
@@ -30,12 +30,13 @@ func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (User, e
 		&i.FcmToken,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.IsEmailVerified,
 	)
 	return i, err
 }
 
 const getUserByUsername = `-- name: GetUserByUsername :one
-SELECT id, username, fcm_token, created_at, updated_at FROM users WHERE username = $1
+SELECT id, username, fcm_token, created_at, updated_at, is_email_verified FROM users WHERE username = $1
 `
 
 func (q *Queries) GetUserByUsername(ctx context.Context, username string) (User, error) {
@@ -47,6 +48,7 @@ func (q *Queries) GetUserByUsername(ctx context.Context, username string) (User,
 		&i.FcmToken,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.IsEmailVerified,
 	)
 	return i, err
 }
@@ -55,7 +57,7 @@ const updateFcmTokenByUsername = `-- name: UpdateFcmTokenByUsername :one
 UPDATE users
 SET fcm_token = $1
 WHERE username = $2
-RETURNING id, username, fcm_token, created_at, updated_at
+RETURNING id, username, fcm_token, created_at, updated_at, is_email_verified
 `
 
 type UpdateFcmTokenByUsernameParams struct {
@@ -72,6 +74,33 @@ func (q *Queries) UpdateFcmTokenByUsername(ctx context.Context, arg UpdateFcmTok
 		&i.FcmToken,
 		&i.CreatedAt,
 		&i.UpdatedAt,
+		&i.IsEmailVerified,
+	)
+	return i, err
+}
+
+const updateIsEmailedVerifiedByUsername = `-- name: UpdateIsEmailedVerifiedByUsername :one
+UPDATE users
+SET is_email_verified = $1
+WHERE username = $2
+RETURNING id, username, fcm_token, created_at, updated_at, is_email_verified
+`
+
+type UpdateIsEmailedVerifiedByUsernameParams struct {
+	IsEmailVerified bool
+	Username        string
+}
+
+func (q *Queries) UpdateIsEmailedVerifiedByUsername(ctx context.Context, arg UpdateIsEmailedVerifiedByUsernameParams) (User, error) {
+	row := q.db.QueryRowContext(ctx, updateIsEmailedVerifiedByUsername, arg.IsEmailVerified, arg.Username)
+	var i User
+	err := row.Scan(
+		&i.ID,
+		&i.Username,
+		&i.FcmToken,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+		&i.IsEmailVerified,
 	)
 	return i, err
 }

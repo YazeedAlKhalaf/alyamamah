@@ -33,10 +33,37 @@ const LoginResponse$json = {
   '1': 'LoginResponse',
   '2': [
     {'1': 'access_token', '3': 1, '4': 1, '5': 9, '10': 'accessToken'},
+    {'1': 'next_step', '3': 2, '4': 1, '5': 9, '10': 'nextStep'},
   ],
 };
 
 /// Descriptor for `LoginResponse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List loginResponseDescriptor = $convert.base64Decode(
-    'Cg1Mb2dpblJlc3BvbnNlEiEKDGFjY2Vzc190b2tlbhgBIAEoCVILYWNjZXNzVG9rZW4=');
+    'Cg1Mb2dpblJlc3BvbnNlEiEKDGFjY2Vzc190b2tlbhgBIAEoCVILYWNjZXNzVG9rZW4SGwoJbm'
+    'V4dF9zdGVwGAIgASgJUghuZXh0U3RlcA==');
+
+@$core.Deprecated('Use verifyEmailRequestDescriptor instead')
+const VerifyEmailRequest$json = {
+  '1': 'VerifyEmailRequest',
+  '2': [
+    {'1': 'code', '3': 1, '4': 1, '5': 9, '10': 'code'},
+  ],
+};
+
+/// Descriptor for `VerifyEmailRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List verifyEmailRequestDescriptor = $convert.base64Decode(
+    'ChJWZXJpZnlFbWFpbFJlcXVlc3QSEgoEY29kZRgBIAEoCVIEY29kZQ==');
+
+@$core.Deprecated('Use verifyEmailResponseDescriptor instead')
+const VerifyEmailResponse$json = {
+  '1': 'VerifyEmailResponse',
+  '2': [
+    {'1': 'access_token', '3': 2, '4': 1, '5': 9, '10': 'accessToken'},
+  ],
+};
+
+/// Descriptor for `VerifyEmailResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List verifyEmailResponseDescriptor = $convert.base64Decode(
+    'ChNWZXJpZnlFbWFpbFJlc3BvbnNlEiEKDGFjY2Vzc190b2tlbhgCIAEoCVILYWNjZXNzVG9rZW'
+    '4=');
 

@@ -10,8 +10,18 @@ message LoginRequest {
 
 message LoginResponse {
     string access_token = 1;
+    string next_step = 2;
+}
+
+message VerifyEmailRequest {
+    string code = 1;
+}
+
+message VerifyEmailResponse {
+    string access_token = 2;
 }
 
 service Auth {
     rpc Login(LoginRequest) returns (LoginResponse);
+    rpc VerifyEmail(VerifyEmailRequest) returns (VerifyEmailResponse);
 }

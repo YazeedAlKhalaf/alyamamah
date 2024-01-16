@@ -25,6 +25,10 @@ class AuthClient extends $grpc.Client {
       '/Auth/Login',
       ($0.LoginRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.LoginResponse.fromBuffer(value));
+  static final _$verifyEmail = $grpc.ClientMethod<$0.VerifyEmailRequest, $0.VerifyEmailResponse>(
+      '/Auth/VerifyEmail',
+      ($0.VerifyEmailRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.VerifyEmailResponse.fromBuffer(value));
 
   AuthClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -34,6 +38,10 @@ class AuthClient extends $grpc.Client {
 
   $grpc.ResponseFuture<$0.LoginResponse> login($0.LoginRequest request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$login, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.VerifyEmailResponse> verifyEmail($0.VerifyEmailRequest request, {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$verifyEmail, request, options: options);
   }
 }
 
@@ -49,11 +57,23 @@ abstract class AuthServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.LoginRequest.fromBuffer(value),
         ($0.LoginResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.VerifyEmailRequest, $0.VerifyEmailResponse>(
+        'VerifyEmail',
+        verifyEmail_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.VerifyEmailRequest.fromBuffer(value),
+        ($0.VerifyEmailResponse value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.LoginResponse> login_Pre($grpc.ServiceCall call, $async.Future<$0.LoginRequest> request) async {
     return login(call, await request);
   }
 
+  $async.Future<$0.VerifyEmailResponse> verifyEmail_Pre($grpc.ServiceCall call, $async.Future<$0.VerifyEmailRequest> request) async {
+    return verifyEmail(call, await request);
+  }
+
   $async.Future<$0.LoginResponse> login($grpc.ServiceCall call, $0.LoginRequest request);
+  $async.Future<$0.VerifyEmailResponse> verifyEmail($grpc.ServiceCall call, $0.VerifyEmailRequest request);
 }

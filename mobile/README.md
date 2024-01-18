@@ -63,7 +63,8 @@ cd alyamamah/mobile
 4. Fetch dependencies:
 
 ```
-flutter pub get
+flutter pub get 
+test
 ```
 
 5. Run the app (ensure you have a simulator, emulator, or real device connected):
